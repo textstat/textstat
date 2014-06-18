@@ -7,6 +7,9 @@ class textstatistics:
 			text = text.replace(" ","")
 		return len(text)
 
+	def lexicon():
+		return None
+
 
 if __name__ == '__main__':
 	TS = textstatistics()
