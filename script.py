@@ -1,24 +1,26 @@
 import string
 
 class textstatistics:
+	''' Constructor to set object parameters. '''
 	def __init__(self):
 		return None
 
+	''' Character Count Function '''
 	def charcount(self, text, ignore_spaces = True):
 		if ignore_spaces:
 			text = text.replace(" ","")
 		return len(text)
 
-	def lexicon_count(self, text):
-        count = 0
-		text_date = text
-		exclude = set(string.punctuation)
-		text_date = ''.join(ch for ch in text_date if ch not in exclude)
-		count = len(text_date.split())
+	''' # Consider alnums/digits etc'''
+	def lexicon_count(self, text, removepunct = True):
+		exclude = list(set(string.punctuation))
+		if removepunct:
+			text = ''.join(ch for ch in text if ch not in exclude)
+		count = len(text.split())
 		return count
 
-	def syllable_count(self,text):
-		count = 0
+	''' '''
+	def syllable_count(self, text):
 		vowels = 'aeiouy'
 		text = text.lower().strip(".:;?!)(")
 		if text[0] in vowels:
@@ -32,9 +34,51 @@ class textstatistics:
 		    count+=1
 		if count == 0:
 		    count +=1
-
 		count = count - (0.1*count)
 		return (round(count))
+
+	# Impleemet sentence count
+	def avg_sentence_length(self, text):
+		lc = lexicon_count(text)
+		sc = sentence_count(text)
+		return float(lc/sc)
+
+	# implement ASW Function
+	def Flesch_Reading_Ease(self, text):
+		ASL = avg_sentence_length(text)
+		ASW = avg_syllables_per_word(text)
+		RE = 206.835 - float(1.015 * ASL) - float(84.6 * ASW) 
+		return RE
+
+	def Flesch_Kincaid_Grade():
+		return None
+
+	def Fog_Scale():
+		return None
+
+	def SMOG_Index():
+		return None
+
+	def Coleman_Liau_Index():
+		return None
+
+	def Automated_Readability_Index():
+		return None
+
+	def Linsear_Write_Formula():
+		return None
+
+	def Syllable_Count():
+		return None
+
+	def Gunning_Fog_Score():
+		return None
+
+	def Dale_Chall_Readability_Score():
+		return None
+
+	def Spache_Readability_Score():
+		return None
 
 
 
