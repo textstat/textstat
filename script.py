@@ -9,8 +9,13 @@ class textstatistics:
 			text = text.replace(" ","")
 		return len(text)
 
-	def lexicon():
-		return None
+	def lexicon_count(self, text):
+        count = 0
+		text_date = text
+		exclude = set(string.punctuation)
+		text_date = ''.join(ch for ch in text_date if ch not in exclude)
+		count = len(text_date.split())
+		return count
 
 	def syllable_count(self,text):
 		count = 0
@@ -30,16 +35,6 @@ class textstatistics:
 
 		count = count - (0.1*count)
 		return (round(count))
-
-	
-	def word_count(self,text):
-		count = 0
-		text_date = text
-		exclude = set(string.punctuation)
-		text_date = ''.join(ch for ch in text_date if ch not in exclude)
-		count = len(text_date.split())
-		return count
-
 
 
 
@@ -71,7 +66,7 @@ After what seemed to be a long winter, Jan recovered fully from her illness but 
 	
 	print TS.charcount(test_data)
 	print TS.syllable_count(test_data)
-	print TS.word_count(test_data)
+	print TS.lexicon_count(test_data)
 
 
 
