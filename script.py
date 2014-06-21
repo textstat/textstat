@@ -1,17 +1,16 @@
 import string
+import re
 
 class textstatistics:
-	''' Constructor to set object parameters. '''
+
 	def __init__(self):
 		return None
 
-	''' Character Count Function '''
 	def charcount(self, text, ignore_spaces = True):
 		if ignore_spaces:
 			text = text.replace(" ","")
 		return len(text)
 
-	''' # Consider alnums/digits etc'''
 	def lexicon_count(self, text, removepunct = True):
 		exclude = list(set(string.punctuation))
 		if removepunct:
@@ -19,56 +18,87 @@ class textstatistics:
 		count = len(text.split())
 		return count
 
-	''' '''
 	def syllable_count(self, text):
+		count = 0
 		vowels = 'aeiouy'
 		text = text.lower().strip(".:;?!)(")
 		if text[0] in vowels:
-		    count +=1
+		    count += 1
 		for index in range(1,len(text)):
 		    if text[index] in vowels and text[index-1] not in vowels:
-		        count +=1
+		        count += 1
 		if text.endswith('e'):
 		    count -= 1
 		if text.endswith('le'):
-		    count+=1
+		    count += 1
 		if count == 0:
-		    count +=1
+		    count += 1
 		count = count - (0.1*count)
 		return (round(count))
 
-	# Impleemet sentence count
+	def sentence_count(self, text):
+		text = ''.join(text)
+		sentences = re.split(r' *[\.\?!][\'"\)\]]* *', text)
+		return len(sentences)
+
 	def avg_sentence_length(self, text):
-		lc = lexicon_count(text)
-		sc = sentence_count(text)
+		lc = self.lexicon_count(text)
+		sc = self.sentence_count(text)
 		return float(lc/sc)
 
-	# implement ASW Function
-	def Flesch_Reading_Ease(self, text):
-		ASL = avg_sentence_length(text)
-		ASW = avg_syllables_per_word(text)
-		RE = 206.835 - float(1.015 * ASL) - float(84.6 * ASW) 
-		return RE
+	def avg_syllables_per_word(self, text):
+		sum_syll = 0
+		lc = self.lexicon_count(text)
+		for word in test_data.split():
+			wrds = TS.syllable_count(word)
+			sum_syll += wrds
+		ASPW = float(sum_syll)/lc 
+		return ASPW
 
-	def Flesch_Kincaid_Grade():
+	def flesch_reading_ease(self, text):
+		ASL = self.avg_sentence_length(text)
+		ASW = self.avg_syllables_per_word(text)
+		FRE = 206.835 - float(1.015 * ASL) - float(84.6 * ASW) 
+		return FRE
+
+	def flesch_kincaid_grade(self, text):
+		ASL = self.avg_sentence_length(text)
+		ASW = self.avg_syllables_per_word(text)
+		FKRA = float(0.39 * ASL) + float(11.8 * ASW) - 15.59 
+		return FKRA
+
+	def fog_scale(self, text):
+		ASL = self.avg_sentence_length(text)
+		PHW = ''' CALCULATE THIS %age of hard words'''
+		GL = 0.4 * (ASL + PHW) 
 		return None
 
-	def Fog_Scale():
-		return None
+	def polysyllabcount(self, text):
+		count = 0
+		for word in test_data.split():
+			wrds = TS.syllable_count(word)
+			if wrds >= 3:
+				count += 1
+		return count
 
-	def SMOG_Index():
-		return None
+	def SMOG_Index(self, text):
+		poly_syllab = self.polysyllabcount(text)
+		SMOG = 3 + poly_syllab**(1/2) 
+		return SMOG
 
-	def Coleman_Liau_Index():
-		return None
+	## Incomplete
+	def Coleman_Liau_Index(self, text):
+		CLI = 0.058 * L - 0.296 * S - 15.8
+		return CLI
 
-	def Automated_Readability_Index():
-		return None
+	def Automated_Readability_Index(self, text):
+		chrs = self.charcount(text)
+		wrds = self.lexicon_count(text)
+		snts = self.sentence_count(text)
+		ARI = 4.71 * ( float(chrs)/wds ) + 0.5 * ( float(wds)/snts ) - 21.43
+		return ARI
 
 	def Linsear_Write_Formula():
-		return None
-
-	def Syllable_Count():
 		return None
 
 	def Gunning_Fog_Score():
@@ -108,9 +138,14 @@ After what seemed to be a long winter, Jan recovered fully from her illness but 
 
 	TS = textstatistics()
 	
-	print TS.charcount(test_data)
-	print TS.syllable_count(test_data)
-	print TS.lexicon_count(test_data)
+	#print TS.charcount(test_data)
+	#print TS.syllable_count(test_data)
+	#lc = TS.lexicon_count(test_data)
+
+	#print TS.flesch_reading_ease(test_data)
+	print TS.SMOG_Index(test_data)
+	#print TS.flesch_kincaid_grade(test_data)	
+
 
 
 
