@@ -73,7 +73,8 @@ returns the Flesch Reading Ease Score. Following table is helpful to access the 
 
 function name - flesch_kincaid_grade(text)
 
-returns the grade score using the Flesch-Kincaid Grade Formula. For example a score of 9.3 means that a ninth grader would be able to read the document.
+returns the grade score using the Flesch-Kincaid Grade Formula.
+</n>For example a score of 9.3 means that a ninth grader would be able to read the document.
 
 ## The Fog Scale (Gunning FOG Formula)
 function name - gunning_fog(text)
@@ -88,7 +89,7 @@ return the SMOG index of the given text.
 function name - automated_readability_index(text)
 
 returns the ARI(Automated Readability Index) which outputs a number that approximates the grade level needed to comprehend the text.
-For example if the ARI is 6.5, then the grade level to comprehend the text is 6th to 7th grade.
+</n>For example if the ARI is 6.5, then the grade level to comprehend the text is 6th to 7th grade.
 
 ## The Coleman-Liau Index
 function name - coleman_liau_index(text)
@@ -104,17 +105,7 @@ returns the grade level using the Lisear Write Formula
 function name - dale_chall_readability_score(text)
 
 Different from other tests, since it uses a lookup table of most commonly used 3000 english words.
-Thus it returns the grade level using the New Dale-Chall Formula. Following table is helpful to access the ease of readability in a document based upon this score. 
-
-ADJUSTED SCORE	GRADE LEVEL
-4.9 and Below	Grade 4 and Below
-5.0 to 5.9	Grades 5 - 6
-6.0 to 6.9	Grades 7 - 8
-7.0 to 7.9	Grades 9 - 10
-8.0 to 8.9	Grades 11 - 12
-9.0 to 9.9	Grades 13 - 15 (College)
-10 and Above	Grades 16 and Above (College Graduate)
-
+Thus it returns the grade level using the New Dale-Chall Formula.
 ## Readability Consensus based upon all the above tests
 function name - readability_consensus(text)
 Based upon all the above tests returns the best grade level under which the given text belongs to.
@@ -122,9 +113,9 @@ Based upon all the above tests returns the best grade level under which the give
 
 Usage
 ----------
-	
-	from textstat.textstat import textstat
-	if __name__ == '__main__':
+```python
+from textstat.textstat import textstat
+if __name__ == '__main__':
 		test_data = """Playing games has always been thought to be important to the development of well-balanced and creative children; however, what part, if any, they should play in the lives of adults has never been researched that deeply. I believe that playing games is every bit as important for adults as for children. Not only is taking time out to play games with our children and other adults valuable to building interpersonal relationships but is also a wonderful way to release built up tension."""
 
 	print textstat.flesch_reading_ease(test_data)
@@ -136,6 +127,7 @@ Usage
 	print textstat.linsear_write_formula(test_data)
 	print textstat.gunning_fog(test_data)
 	print textstat.text_standard(test_data)
+```
 
 the arguement (text) for all the functions defined remains same - 
 i.e the text for which statistics needs to be calculated
