@@ -1,42 +1,36 @@
 textstat
 ========
 
-Calculate statistics from text
+Python package to calculate statistics from text, which helps to decide readability, complexity and grade level of a particular corpus.
 
 
-Features
---------
+Install
+-------
 
-1. Syllable Count
-2. Lexicon Count
-3. Sentence Count
-4. The Flesch Reading Ease formula
-5. The Flesch-Kincaid Grade Level
-6. The Fog Scale (Gunning FOG Formula)
-7. The SMOG Index
-8. Automated Readability Index
-9. The Coleman-Liau Index
-10. Linsear Write Formula
-11. Dale-Chall Readability Score
-12. Readability Consensus based upon all the above tests
+You can install textstat either via the Python Package Index (PyPI) or from source.
 
-Installation
-----------
+To install using pip:
 
-	pip install textstat
-
-Usage
-----------
+	$ pip install textstat
 	
-	from textstat.textstat import textstat
-	if __name__ == '__main__':
-		test_data = """Playing games has always been thought to be important to the development of well-balanced and creative children; however, what part, if any, they should play in the lives of adults has never been researched that deeply. I believe that playing games is every bit as important for adults as for children. Not only is taking time out to play games with our children and other adults valuable to building interpersonal relationships but is also a wonderful way to release built up tension."""
+To install using easy_install:
+	
+	$ easy_install textstat
 
-	print textstat.syllable_count(test_data) #demo function
+Downloading and installing from source
 
+Download the latest version of textstat from http://pypi.python.org/pypi/textstat/
 
-the arguement (text) for all the functions defined remains same - 
-i.e the text for which statistics needs to be calculated
+You can install it by doing the following,:
+
+    $ tar xfz textstat-*.tar.gz
+   
+    $ cd textstat-*/
+   
+    $ python setup.py build
+   
+    $ python setup.py install # as root
+
 
 #List of Functions
 
@@ -125,6 +119,26 @@ ADJUSTED SCORE	GRADE LEVEL
 function name - readability_consensus(text)
 Based upon all the above tests returns the best grade level under which the given text belongs to.
 
+
+Usage
+----------
+	
+	from textstat.textstat import textstat
+	if __name__ == '__main__':
+		test_data = """Playing games has always been thought to be important to the development of well-balanced and creative children; however, what part, if any, they should play in the lives of adults has never been researched that deeply. I believe that playing games is every bit as important for adults as for children. Not only is taking time out to play games with our children and other adults valuable to building interpersonal relationships but is also a wonderful way to release built up tension."""
+
+	print textstat.flesch_reading_ease(test_data)
+	print textstat.smog_index(test_data)
+	print textstat.flesch_kincaid_grade(test_data)	print textstat.coleman_liau_index(test_data)
+	print textstat.automated_readability_index(test_data)
+	print textstat.dale_chall_readability_score(test_data)
+	print textstat.difficult_words(test_data)
+	print textstat.linsear_write_formula(test_data)
+	print textstat.gunning_fog(test_data)
+	print textstat.text_standard(test_data)
+
+the arguement (text) for all the functions defined remains same - 
+i.e the text for which statistics needs to be calculated
 
 
 

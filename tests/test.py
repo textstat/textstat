@@ -1,9 +1,4 @@
-from textstat.textstat1 import textstat
-
-
-
-
-
+from textstat.textstat import textstat
 
 if __name__ == '__main__':
 
