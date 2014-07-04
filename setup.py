@@ -5,7 +5,7 @@ setup(
     packages = ['textstat'],
     version = '0.1.3',
     description = 'Calculat statistics from text',
-    author = 'Shivam Bansal, Chaitaniya Aggarwal',
+    author = 'Shivam Bansal, Chaitanya Aggarwal',
     author_email = 'shivam5992@gmail.com, chaitanya.citupes@gmail.com',
     url = 'https://github.com/shivam5992/textstat',
     long_description=open('README.md').read(),
