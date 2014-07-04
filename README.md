@@ -32,15 +32,16 @@ You can install it by doing the following,:
     $ python setup.py install # as root
 
 
-#List of Functions
+List of Functions
+----
 
-## Syllable Count
+### Syllable Count
 
 function name - syllable_count(text)
 
 returns - the number of syllables present in the given text.
 
-## Lexicon Count
+### Lexicon Count
 
 function name - lexicon_count(text, TRUE/FALSE)
 
@@ -48,14 +49,14 @@ Calculates the number of words present in the text.
 TRUE/FALSE specifies whether we need to take in account in punctuation symbols while counting lexicons or not.
 Default value is TRUE, which removes the punctuation before counting lexicons.
 
-## Sentence Count
+### Sentence Count
 
 function name - sentence_count(text)
 
 returns the number of sentences present in the given text.
 
 
-## The Flesch Reading Ease formula
+### The Flesch Reading Ease formula
 
 function name - flesch_reading_ease(text)
 
@@ -69,7 +70,7 @@ returns the Flesch Reading Ease Score. Following table is helpful to access the 
 * 30-49 : Difficult 
 * 0-29 : Very Confusing
 
-## The The Flesch-Kincaid Grade Level
+### The The Flesch-Kincaid Grade Level
 
 function name - flesch_kincaid_grade(text)
 
@@ -80,33 +81,33 @@ returns the grade score using the Flesch-Kincaid Grade Formula.
 function name - gunning_fog(text)
 returns the FOG index of the given text.
 
-## The SMOG Index
+### The SMOG Index
 function name - smog_index(text)
 
 return the SMOG index of the given text.
 
-## Automated Readability Index
+### Automated Readability Index
 function name - automated_readability_index(text)
 
 returns the ARI(Automated Readability Index) which outputs a number that approximates the grade level needed to comprehend the text.
 </n>For example if the ARI is 6.5, then the grade level to comprehend the text is 6th to 7th grade.
 
-## The Coleman-Liau Index
+### The Coleman-Liau Index
 function name - coleman_liau_index(text)
 
 returns the grade level of the text using the Coleman-Liau Formula
 
-## Linsear Write Formula
+### Linsear Write Formula
 function name - linsear_write_formula(text)
 
 returns the grade level using the Lisear Write Formula
 
-## Dale-Chall Readability Score
+### Dale-Chall Readability Score
 function name - dale_chall_readability_score(text)
 
 Different from other tests, since it uses a lookup table of most commonly used 3000 english words.
 Thus it returns the grade level using the New Dale-Chall Formula.
-## Readability Consensus based upon all the above tests
+### Readability Consensus based upon all the above tests
 function name - readability_consensus(text)
 Based upon all the above tests returns the best grade level under which the given text belongs to.
 
