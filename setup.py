@@ -9,6 +9,8 @@ setup(
     author_email='shivam5992@gmail.com, chaitanya.citupes@gmail.com',
     url='https://github.com/shivam5992/textstat',
     long_description=open('README.md').read(),
+    package_data={'': ['easy_word_list']},
+    include_package_data=True,
     license='MIT',
     classifiers=(
         "Programming Language :: Python",
