@@ -120,17 +120,17 @@ class textstatistics:
                 text_list = text.split()
 
                 for i, value in enumerate(text_list):
-                                if i <= 101:
-                                        if self.syllable_count(value) < 3:
-                                                easy_word.append(value)
-                                        elif self.syllable_count(value) > 3:
-                                                difficult_word.append(value)
-                                        text = ' '.join(text_list[:100])
-                                        Number = float((len(easy_word)*1 + len(difficult_word)*3)/self.sentence_count(text))
-                                        if Number > 20:
-                                                Number /= 2
-                                        else:
-                                                Number = (Number-2)/2
+                    if i <= 101:
+                            if self.syllable_count(value) < 3:
+                                    easy_word.append(value)
+                            elif self.syllable_count(value) > 3:
+                                    difficult_word.append(value)
+                            text = ' '.join(text_list[:100])
+                            Number = float((len(easy_word)*1 + len(difficult_word)*3)/self.sentence_count(text))
+                            if Number > 20:
+                                    Number /= 2
+                            else:
+                                    Number = (Number-2)/2
                 return float(Number)
 
         def difficult_words(self, text):
