@@ -219,7 +219,8 @@ class textstatistics:
                 grade.append(int(lower))
                 grade.append(int(upper))
                 #################################### Finding the Readability Consensus based upon all the above tests #################################################
-                d = {x: grade.count(x) for x in grade}
+                # d = {x: grade.count(x) for x in grade}
+                d = dict([(x, grade.count(x)) for x in grade])
                 sorted_x = sorted(d.iteritems(), key=operator.itemgetter(1))
                 final_grade = str((sorted_x)[len(sorted_x)-1])
                 score = final_grade.split(',')[0].strip('(')
