@@ -25,18 +25,19 @@ class textstatistics:
                 count = 0
                 vowels = 'aeiouy'
                 text = text.lower().strip(".:;?!)(")
-                if text[0] in vowels:
-                    count += 1
-                for index in range(1, len(text)):
-                    if text[index] in vowels and text[index-1] not in vowels:
+                if text is not None and text != "":
+                    if text[0] in vowels:
                         count += 1
-                if text.endswith('e'):
-                    count -= 1
-                if text.endswith('le'):
-                    count += 1
-                if count == 0:
-                    count += 1
-                count = count - (0.1*count)
+                    for index in range(1, len(text)):
+                        if text[index] in vowels and text[index-1] not in vowels:
+                            count += 1
+                    if text.endswith('e'):
+                        count -= 1
+                    if text.endswith('le'):
+                        count += 1
+                    if count == 0:
+                        count += 1
+                    count = count - (0.1*count)
                 return (round(count))
 
         def sentence_count(self, text):
