@@ -1,4 +1,4 @@
-from textstat.textstat import textstat
+from textstat1.textstat import textstat
 
 if __name__ == '__main__':
 
@@ -21,7 +21,7 @@ At last, bursting from the mountainside, the town came into view. Barely slowing
 
 After what seemed to be a long winter, Jan recovered fully from her illness but Bob never recovered from his fright. They moved into the little town so as to be near help in times of crisis, and have lived there ever since"""
 
-        test_data = """Playing games has always been thought to be important to the development of well-balanced and creative children; however, what part, if any, they should play in the lives of adults has never been researched that deeply. I believe that playing games is every bit as important for adults as for children. Not only is taking time out to play games with our children and other adults valuable to building interpersonal relationships but is also a wonderful way to release built up tension.
+        test_data = """Playing ... games has always been thought to be important to the development of well-balanced and creative children; however, what part, if any, they should play in the lives of adults has never been researched that deeply. I believe that playing games is every bit as important for adults as for children. Not only is taking time out to play games with our children and other adults valuable to building interpersonal relationships but is also a wonderful way to release built up tension.
 
 There's nothing my husband enjoys more after a hard day of work than to come home and play a game of Chess with someone. This enables him to unwind from the day's activities and to discuss the highs and lows of the day in a non-threatening, kick back environment. One of my most memorable wedding gifts, a Backgammon set, was received by a close friend. I asked him why in the world he had given us such a gift. He replied that he felt that an important aspect of marriage was for a couple to never quit playing games together. Over the years, as I have come to purchase and play, with other couples & coworkers, many games like: Monopoly, Chutes & Ladders, Mastermind, Dweebs, Geeks, & Weirdos, etc. I can reflect on the integral part they have played in our weekends and our "shut-off the T.V. and do something more stimulating" weeks. They have enriched my life and made it more interesting. Sadly, many adults forget that games even exist and have put them away in the cupboards, forgotten until the grandchildren come over.
 
