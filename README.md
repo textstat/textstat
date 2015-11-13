@@ -11,11 +11,15 @@ You can install textstat either via the Python Package Index (PyPI) or from sour
 
 To install using pip:
 
+```python
 	$ pip install textstat
-	
+```	
+
 To install using easy_install:
-	
+
+```python	
 	$ easy_install textstat
+```
 
 Downloading and installing from source
 
@@ -23,6 +27,7 @@ Download the latest version of textstat from http://pypi.python.org/pypi/textsta
 
 You can install it by doing the following,:
 
+```python
     $ tar xfz textstat-*.tar.gz
    
     $ cd textstat-*/
@@ -30,7 +35,7 @@ You can install it by doing the following,:
     $ python setup.py build
    
     $ python setup.py install # as root
-
+```
 
 List of Functions
 ----
