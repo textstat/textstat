@@ -113,7 +113,7 @@ function name - dale_chall_readability_score(text)
 Different from other tests, since it uses a lookup table of most commonly used 3000 english words.
 Thus it returns the grade level using the New Dale-Chall Formula.
 ### Readability Consensus based upon all the above tests
-function name - readability_consensus(text)
+function name - text_standard(text)
 Based upon all the above tests returns the best grade level under which the given text belongs to.
 
 
