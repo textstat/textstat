@@ -1,3 +1,4 @@
+from __future__ import print_function
 import string
 import re
 import math
@@ -79,7 +80,7 @@ class textstatistics:
 			ASL = float(lc/sc)
 			return round(lc/sc, 1)
 		except:
-			print "Error(ASL): Sentence Count is Zero, Cannot Divide"
+			print("Error(ASL): Sentence Count is Zero, Cannot Divide")
 			return
 		
 
@@ -90,7 +91,7 @@ class textstatistics:
 			ASPW = float(syllable)/float(words)
 			return round(ASPW, 1)
 		except:
-			print "Error(ASyPW): Number of words are zero, cannot divide"
+			print("Error(ASyPW): Number of words are zero, cannot divide")
 			return
 
 
@@ -99,7 +100,7 @@ class textstatistics:
 			ALPW = float(float(self.char_count(text))/float(self.lexicon_count(text)))
 			return round(ALPW, 2)
 		except:
-			print "Error(ALPW): Number of words are zero, cannot divide"
+			print("Error(ALPW): Number of words are zero, cannot divide")
 			return
 
 
@@ -108,7 +109,7 @@ class textstatistics:
 			ASPW = float(float(self.sentence_count(text))/float(self.lexicon_count(text)))
 			return round(ASPW, 2)
 		except:
-			print "Error(AStPW): Number of words are zero, cannot divide"
+			print("Error(AStPW): Number of words are zero, cannot divide")
 			return
 
 
@@ -142,7 +143,7 @@ class textstatistics:
 				SMOG = (1.043 * (30*(poly_syllab/self.sentence_count(text)))**.5) + 3.1291
 				return round(SMOG, 1)
 			except:
-				print "Error(SI): Sentence count is zero, cannot divide"
+				print("Error(SI): Sentence count is zero, cannot divide")
 		else:
 			return 0
 
@@ -164,7 +165,7 @@ class textstatistics:
 			ARI = (4.71 * round(a, 2)) + (0.5*round(b, 2)) - 21.43
 			return round(ARI, 1)
 		except:
-			print "Error(ARI) : Sentence count is zero, cannot divide"
+			print("Error(ARI) : Sentence count is zero, cannot divide")
 			return
 
 
@@ -188,7 +189,7 @@ class textstatistics:
 					else:
 						Number = (Number-2)/2
 				except Exception as E:
-					print "Error (LWF): ", E
+					print("Error (LWF): ", E)
 		return float(Number)
 
 
@@ -209,7 +210,7 @@ class textstatistics:
 		if word_count > 0:
 			per = float(count)/float(word_count)*100
 		else:
-			print "Error(DCRS): Word Count is zero cannot divide"
+			print("Error(DCRS): Word Count is zero cannot divide")
 			return 
 		difficult_words = 100-per
 		if difficult_words > 5:
@@ -225,7 +226,7 @@ class textstatistics:
 			grade = 0.4*(self.avg_sentence_length(text) + per_diff_words)
 			return grade
 		except:
-			print "Error(GF): Word Count is Zero, cannot divide"
+			print("Error(GF): Word Count is Zero, cannot divide")
 
 
 	def text_standard(self, text):
@@ -295,7 +296,7 @@ class textstatistics:
 		
 		#################################### Finding the Readability Consensus based upon all the above tests #################################################
 		d = dict([(x, grade.count(x)) for x in grade])
-		sorted_x = sorted(d.iteritems(), key=operator.itemgetter(1))
+		sorted_x = sorted(d.items(), key=operator.itemgetter(1))
 		final_grade = str((sorted_x)[len(sorted_x)-1])
 		score = final_grade.split(',')[0].strip('(')
 		return str(int(score)-1) + "th " + "and " + str(int(score)) + "th grade"

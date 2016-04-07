@@ -1,4 +1,5 @@
-from textstat1.textstat import textstat
+from __future__ import print_function
+from textstat.textstat import textstat
 
 if __name__ == '__main__':
 
@@ -28,23 +29,23 @@ There's nothing my husband enjoys more after a hard day of work than to come hom
 All too often, adults get so caught up in working to pay the bills and keeping up with the "Joneses'" that they neglect to harness the fun in life; the fun that can be the reward of enjoying a relaxing game with another person. It has been said that "man is that he might have joy" but all too often we skate through life without much of it. Playing games allows us to: relax, learn something new and stimulating, interact with people on a different more comfortable level, and to enjoy non-threatening competition. For these reasons, adults should place a higher priority on playing games in their lives"""
 
         TS = textstat
-        print "flesch_reading_ease"
-        print TS.flesch_reading_ease(test_data)
-        print "SMOG"
-        print TS.smog_index(test_data)
-        print "flesch_kincaid_grade"
-        print TS.flesch_kincaid_grade(test_data)
-        print "Coleman_Liau_Index"
-        print TS.coleman_liau_index(test_data)
-        print "Automated_Readability_Index"
-        print TS.automated_readability_index(test_data)
-        print "Dale_Chall_Readability_Score"
-        print TS.dale_chall_readability_score(test_data)
-        print "difficult_words"
-        print TS.difficult_words(test_data)
-        print "Linsear_Write_Formula"
-        print TS.linsear_write_formula(test_data)
-        print "gunning_fog"
-        print TS.gunning_fog(test_data)
-        print "text_standard"
-        print TS.text_standard(test_data)
+        print("flesch_reading_ease")
+        print(TS.flesch_reading_ease(test_data))
+        print("SMOG")
+        print(TS.smog_index(test_data))
+        print("flesch_kincaid_grade")
+        print(TS.flesch_kincaid_grade(test_data))
+        print("Coleman_Liau_Index")
+        print(TS.coleman_liau_index(test_data))
+        print("Automated_Readability_Index")
+        print(TS.automated_readability_index(test_data))
+        print("Dale_Chall_Readability_Score")
+        print(TS.dale_chall_readability_score(test_data))
+        print("difficult_words")
+        print(TS.difficult_words(test_data))
+        print("Linsear_Write_Formula")
+        print(TS.linsear_write_formula(test_data))
+        print( "gunning_fog")
+        print(TS.gunning_fog(test_data))
+        print("text_standard")
+        print(TS.text_standard(test_data))
