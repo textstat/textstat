@@ -5,7 +5,7 @@ import re
 import math
 import operator
 
-exclude = list(set(string.punctuation))
+exclude = list(string.punctuation)
 easy_word_set = set([ln.strip() for ln in pkg_resources.resource_stream('textstat', 'easy_words.txt')])
 
 
@@ -155,9 +155,9 @@ class textstatistics:
             b = (float(wrds)/float(snts))
             ARI = (4.71 * round(a, 2)) + (0.5*round(b, 2)) - 21.43
             return round(ARI, 1)
-        except:
+        except Exception as E:
             print("Error(ARI) : Sentence count is zero, cannot divide")
-            return
+            return None
 
     def linsear_write_formula(self, text):
         easy_word = []
@@ -199,7 +199,7 @@ class textstatistics:
             per = float(count)/float(word_count)*100
         else:
             print("Error(DCRS): Word Count is zero cannot divide")
-            return
+            return None
         difficult_words = 100-per
         if difficult_words > 5:
             score = (0.1579 * difficult_words) + (0.0496 * self.avg_sentence_length(text)) + 3.6365
