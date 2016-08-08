@@ -3,10 +3,10 @@ from setuptools import setup
 setup(
     name='textstat',
     packages=['textstat'],
-    version='0.2',
+    version='0.3',
     description='Calculate statistical features from text',
     author='Shivam Bansal, Chaitanya Aggarwal',
-    author_email='shivam5992@gmail.com, chaitanya.citupes@gmail.com',
+    author_email='shivam5992@gmail.com',
     url='https://github.com/shivam5992/textstat',
     long_description=open('README.md').read(),
     package_data={'': ['easy_word_list']},
