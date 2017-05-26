@@ -215,6 +215,20 @@ class textstatistics:
         except:
             print("Error(GF): Word Count is Zero, cannot divide")
 
+    def lix(self, text):
+    	words = text.split()
+
+    	words_len = len(words)
+    	long_words = len([wrd for wrd in words if len(wrd)>6])
+    	sentences = self.sentence_count(text)
+
+    	per_long_words = (float(long_words) * 100)/words_len
+    	asl = self.avg_sentence_length(text)
+    	lix = asl + per_long_words
+
+    	return lix 
+
+
     def text_standard(self, text):
         grade = []
 
