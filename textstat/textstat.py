@@ -4,6 +4,7 @@ import string
 import re
 import math
 import operator
+from pyphen import Pyphen
 
 exclude = list(string.punctuation)
 easy_word_set = set([ln.strip() for ln in pkg_resources.resource_stream('textstat', 'easy_words.txt')])
@@ -32,14 +33,12 @@ class textstatistics:
         count = len(text.split())
         return count
 
-    def syllable_count(self, text):
+    def syllable_count(self, text, lang='en_US'):
         """
         Function to calculate syllable words in a text.
         I/P - a text
         O/P - number of syllable words
         """
-        count = 0
-        vowels = 'aeiouy'
         text = text.lower()
         text = "".join(x for x in text if x not in exclude)
 
@@ -48,18 +47,11 @@ class textstatistics:
         elif len(text) == 0:
             return 0
         else:
-            if text[0] in vowels:
-                count += 1
-            for index in range(1, len(text)):
-                if text[index] in vowels and text[index-1] not in vowels:
-                    count += 1
-            if text.endswith('e'):
-                count -= 1
-            if text.endswith('le'):
-                count += 1
-            if count == 0:
-                count += 1
-            count = count - (0.1*count)
+            dic = Pyphen(lang=lang)
+            count = 0
+            for word in text.split(' '):
+                word_hyphenated = dic.inserted(word)
+                count += max(1, word_hyphenated.count("-") + 1)
             return count
 
     def sentence_count(self, text):
