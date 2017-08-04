@@ -1,7 +1,7 @@
 textstat
 ========
 
-Python package to calculate statistics from text, which helps to decide readability, complexity and grade level of a particular corpus.
+Python package to calculate statistics from text to determine readability, complexity and grade level of a particular corpus.
 
 
 Install
@@ -105,12 +105,12 @@ returns the grade level of the text using the Coleman-Liau Formula
 ### Linsear Write Formula
 function name - linsear_write_formula(text)
 
-returns the grade level using the Lisear Write Formula
+returns the grade level using the Linsear Write Formula
 
 ### Dale-Chall Readability Score
 function name - dale_chall_readability_score(text)
 
-Different from other tests, since it uses a lookup table of most commonly used 3000 english words.
+Different from other tests, since it uses a lookup table of the most commonly used 3000 English words.
 Thus it returns the grade level using the New Dale-Chall Formula.
 ### Readability Consensus based upon all the above tests
 function name - text_standard(text)
@@ -135,8 +135,8 @@ if __name__ == '__main__':
 	print textstat.text_standard(test_data)
 ```
 
-the arguement (text) for all the functions defined remains same - 
-i.e the text for which statistics needs to be calculated
+the argument (text) for all the defined functions remains the same - 
+i.e the text for which statistics need to be calculated
 
 
 
