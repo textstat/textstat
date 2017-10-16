@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import division
 import pkg_resources
 import string
 import re
@@ -7,7 +8,12 @@ import operator
 from pyphen import Pyphen
 
 exclude = list(string.punctuation)
-easy_word_set = set([ln.strip() for ln in pkg_resources.resource_stream('textstat', 'easy_words.txt')])
+easy_word_set = set([ln.decode('utf-8').strip() for ln in pkg_resources.resource_stream('textstat', 'easy_words.txt')])
+
+
+def legacy_round(number, points=0):
+    p = 10 ** points
+    return float(math.floor((number * p) + math.copysign(0.5, number))) / p
 
 
 class textstatistics:
@@ -70,7 +76,7 @@ class textstatistics:
         sc = self.sentence_count(text)
         try:
             ASL = float(lc/sc)
-            return round(lc/sc, 1)
+            return legacy_round(lc/sc, 1)
         except:
             print("Error(ASL): Sentence Count is Zero, Cannot Divide")
             return
@@ -80,7 +86,7 @@ class textstatistics:
         words = self.lexicon_count(text)
         try:
             ASPW = float(syllable)/float(words)
-            return round(ASPW, 1)
+            return legacy_round(ASPW, 1)
         except:
             print("Error(ASyPW): Number of words are zero, cannot divide")
             return
@@ -88,7 +94,7 @@ class textstatistics:
     def avg_letter_per_word(self, text):
         try:
             ALPW = float(float(self.char_count(text))/float(self.lexicon_count(text)))
-            return round(ALPW, 2)
+            return legacy_round(ALPW, 2)
         except:
             print("Error(ALPW): Number of words are zero, cannot divide")
             return
@@ -96,7 +102,7 @@ class textstatistics:
     def avg_sentence_per_word(self, text):
         try:
             ASPW = float(float(self.sentence_count(text))/float(self.lexicon_count(text)))
-            return round(ASPW, 2)
+            return legacy_round(ASPW, 2)
         except:
             print("Error(AStPW): Number of words are zero, cannot divide")
             return
@@ -105,13 +111,13 @@ class textstatistics:
         ASL = self.avg_sentence_length(text)
         ASW = self.avg_syllables_per_word(text)
         FRE = 206.835 - float(1.015 * ASL) - float(84.6 * ASW)
-        return round(FRE, 2)
+        return legacy_round(FRE, 2)
 
     def flesch_kincaid_grade(self, text):
         ASL = self.avg_sentence_length(text)
         ASW = self.avg_syllables_per_word(text)
         FKRA = float(0.39 * ASL) + float(11.8 * ASW) - 15.59
-        return round(FKRA, 1)
+        return legacy_round(FKRA, 1)
 
     def polysyllabcount(self, text):
         count = 0
@@ -126,17 +132,17 @@ class textstatistics:
             try:
                 poly_syllab = self.polysyllabcount(text)
                 SMOG = (1.043 * (30*(poly_syllab/self.sentence_count(text)))**.5) + 3.1291
-                return round(SMOG, 1)
+                return legacy_round(SMOG, 1)
             except:
                 print("Error(SI): Sentence count is zero, cannot divide")
         else:
             return 0
 
     def coleman_liau_index(self, text):
-        L = round(self.avg_letter_per_word(text)*100, 2)
-        S = round(self.avg_sentence_per_word(text)*100, 2)
+        L = legacy_round(self.avg_letter_per_word(text)*100, 2)
+        S = legacy_round(self.avg_sentence_per_word(text)*100, 2)
         CLI = float((0.058 * L) - (0.296 * S) - 15.8)
-        return round(CLI, 2)
+        return legacy_round(CLI, 2)
 
     def automated_readability_index(self, text):
         chrs = self.char_count(text)
@@ -145,8 +151,8 @@ class textstatistics:
         try:
             a = (float(chrs)/float(wrds))
             b = (float(wrds)/float(snts))
-            ARI = (4.71 * round(a, 2)) + (0.5*round(b, 2)) - 21.43
-            return round(ARI, 1)
+            ARI = (4.71 * legacy_round(a, 2)) + (0.5*legacy_round(b, 2)) - 21.43
+            return legacy_round(ARI, 1)
         except Exception as E:
             print("Error(ARI) : Sentence count is zero, cannot divide")
             return None
@@ -197,7 +203,7 @@ class textstatistics:
             score = (0.1579 * difficult_words) + (0.0496 * self.avg_sentence_length(text)) + 3.6365
         else:
             score = (0.1579 * difficult_words) + (0.0496 * self.avg_sentence_length(text))
-        return round(score, 2)
+        return legacy_round(score, 2)
 
     def gunning_fog(self, text):
         try:
@@ -208,24 +214,24 @@ class textstatistics:
             print("Error(GF): Word Count is Zero, cannot divide")
 
     def lix(self, text):
-    	words = text.split()
+        words = text.split()
 
-    	words_len = len(words)
-    	long_words = len([wrd for wrd in words if len(wrd)>6])
-    	sentences = self.sentence_count(text)
+        words_len = len(words)
+        long_words = len([wrd for wrd in words if len(wrd)>6])
+        sentences = self.sentence_count(text)
 
-    	per_long_words = (float(long_words) * 100)/words_len
-    	asl = self.avg_sentence_length(text)
-    	lix = asl + per_long_words
+        per_long_words = (float(long_words) * 100)/words_len
+        asl = self.avg_sentence_length(text)
+        lix = asl + per_long_words
 
-    	return lix 
+        return lix 
 
 
     def text_standard(self, text):
         grade = []
 
         # Appending Flesch Kincaid Grade
-        lower = round(self.flesch_kincaid_grade(text))
+        lower = legacy_round(self.flesch_kincaid_grade(text))
         upper = math.ceil(self.flesch_kincaid_grade(text))
         grade.append(int(lower))
         grade.append(int(upper))
@@ -251,37 +257,37 @@ class textstatistics:
             grade.append(13)
 
         # Appending SMOG Index
-        lower = round(self.smog_index(text))
+        lower = legacy_round(self.smog_index(text))
         upper = math.ceil(self.smog_index(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Coleman_Liau_Index
-        lower = round(self.coleman_liau_index(text))
+        lower = legacy_round(self.coleman_liau_index(text))
         upper = math.ceil(self.coleman_liau_index(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Automated_Readability_Index
-        lower = round(self.automated_readability_index(text))
+        lower = legacy_round(self.automated_readability_index(text))
         upper = math.ceil(self.automated_readability_index(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Dale_Chall_Readability_Score
-        lower = round(self.dale_chall_readability_score(text))
+        lower = legacy_round(self.dale_chall_readability_score(text))
         upper = math.ceil(self.dale_chall_readability_score(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Linsear_Write_Formula
-        lower = round(self.linsear_write_formula(text))
+        lower = legacy_round(self.linsear_write_formula(text))
         upper = math.ceil(self.linsear_write_formula(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Gunning Fog Index
-        lower = round(self.gunning_fog(text))
+        lower = legacy_round(self.gunning_fog(text))
         upper = math.ceil(self.gunning_fog(text))
         grade.append(int(lower))
         grade.append(int(upper))
