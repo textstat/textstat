@@ -155,19 +155,19 @@ class Test_TextStat(unittest.TestCase):
     def test_difficult_words(self):
         result = textstat.difficult_words(self.long_test)
 
-        self.assertEqual(94, result)
+        self.assertEqual(62, result)
 
 
     def test_dale_chall_readability_score(self):
         score = textstat.dale_chall_readability_score(self.long_test)
 
-        self.assertEqual(8.71, score)
+        self.assertEqual(7.35, score)
 
 
     def test_gunning_fog(self):
         score = textstat.gunning_fog(self.long_test)
 
-        self.assertEqual(20.867526881720433, score)
+        self.assertEqual(17.426666666666666, score)
 
 
     def test_lix(self):
