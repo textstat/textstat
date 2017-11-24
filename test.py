@@ -180,3 +180,21 @@ class Test_TextStat(unittest.TestCase):
         standard = textstat.text_standard(self.long_test)
 
         self.assertEqual("9th and 10th grade", standard)
+
+
+    def test_lru_caching(self):
+        #Clear any cache
+        textstat.sentence_count._cache.clear()
+        textstat.avg_sentence_length._cache.clear()
+
+        #Make a call that uses `sentence_count`
+        textstat.avg_sentence_length(self.long_test)
+
+        #Test that `sentence_count` was called
+        self.assertEqual(textstat.sentence_count._cache.misses, 1)
+
+        #Call `avg_sentence_length` again
+        textstat.avg_sentence_length(self.long_test)
+
+        #Test that `sentence_count` wasn't called again
+        self.assertEqual(textstat.sentence_count._cache.lookups, 1)
