@@ -11,7 +11,7 @@ setup(
     long_description=open('README.md').read(),
     package_data={'': ['easy_word_list']},
     include_package_data=True,
-    install_requires=['pyphen'],
+    install_requires=['pyphen', 'repoze.lru'],
     license='MIT',
     classifiers=(
         "Programming Language :: Python",
