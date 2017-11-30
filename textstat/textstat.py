@@ -19,7 +19,7 @@ def legacy_round(number, points=0):
 
 class textstatistics:
     def __init__(self):
-        return None
+        pass
 
     @repoze.lru.lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
