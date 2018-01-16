@@ -248,7 +248,8 @@ class textstatistics:
 
 
     @repoze.lru.lru_cache(maxsize=128)
-    def text_standard(self, text):
+    def text_standard(self, text, float_output=None):
+
         grade = []
 
         # Appending Flesch Kincaid Grade
@@ -318,6 +319,10 @@ class textstatistics:
         sorted_x = sorted(d.items(), key=operator.itemgetter(1))
         final_grade = str((sorted_x)[len(sorted_x)-1])
         score = final_grade.split(',')[0].strip('(')
-        return str(int(score)-1) + "th " + "and " + str(int(score)) + "th grade"
+
+        if float_output:
+            return score
+        else:
+            return str(int(score)-1) + "th " + "and " + str(int(score)) + "th grade"
 
 textstat = textstatistics()
