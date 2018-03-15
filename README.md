@@ -65,7 +65,11 @@ returns the number of sentences present in the given text.
 
 function name - flesch_reading_ease(text)
 
-returns the Flesch Reading Ease Score. Following table is helpful to access the ease of readability in a document.
+returns the Flesch Reading Ease Score.
+
+The following table can be helpful to assess the ease of readability in a document. However, the table is an
+example of values. While the maximum score is 121.22, there is no limit on how low the score can be.
+A negative score is valid.
 
 * 90-100 : Very Easy 
 * 80-89 : Easy 
@@ -74,6 +78,8 @@ returns the Flesch Reading Ease Score. Following table is helpful to access the 
 * 50-59 : Fairly Difficult 
 * 30-49 : Difficult 
 * 0-29 : Very Confusing
+
+Further reading: https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease
 
 ### The The Flesch-Kincaid Grade Level
 
