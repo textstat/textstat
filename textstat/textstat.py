@@ -181,7 +181,6 @@ class textstatistics:
         difficult_word = []
         text_list = text.split()
 
-        Number = 0
         for i, value in enumerate(text_list):
             if i <= 101:
                 try:
@@ -189,15 +188,15 @@ class textstatistics:
                         easy_word.append(value)
                     elif self.syllable_count(value) > 3:
                         difficult_word.append(value)
-                    text = ' '.join(text_list[:100])
-                    Number = float((len(easy_word)*1 + len(difficult_word)*3)/self.sentence_count(text))
-                    if Number > 20:
-                        Number /= 2
-                    else:
-                        Number = (Number-2)/2
                 except Exception as E:
                     print("Error (LWF): ", E)
-        return float(Number)
+        text = ' '.join(text_list[:100])
+        Number = float((len(easy_word)*1 + len(difficult_word)*3)/self.sentence_count(text))
+        if Number > 20:
+            Number /= 2
+        else:
+            Number = (Number-2)/2
+        return Number
 
     @repoze.lru.lru_cache(maxsize=128)
     def difficult_words(self, text):
