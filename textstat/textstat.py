@@ -186,7 +186,7 @@ class textstatistics:
                 try:
                     if self.syllable_count(value) < 3:
                         easy_word.append(value)
-                    elif self.syllable_count(value) > 3:
+                    else:
                         difficult_word.append(value)
                 except Exception as E:
                     print("Error (LWF): ", E)
