@@ -149,7 +149,7 @@ class Test_TextStat(unittest.TestCase):
     def test_linsear_write_formula(self):
         result = textstat.linsear_write_formula(self.long_test)
 
-        self.assertEqual(12.875, result)
+        self.assertEqual(14.75, result)
 
 
     def test_difficult_words(self):
