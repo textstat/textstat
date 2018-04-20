@@ -3,7 +3,7 @@
 
 import unittest
 
-from textstat.textstat import textstat
+import textstat
 
 
 class Test_TextStat(unittest.TestCase):
