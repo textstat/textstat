@@ -11,14 +11,14 @@ You can install textstat either via the Python Package Index (PyPI) or from sour
 
 To install using pip:
 
-```python
-	$ pip install textstat
+```shell
+$ pip install textstat
 ```	
 
 To install using easy_install:
 
-```python	
-	$ easy_install textstat
+```shell	
+$ easy_install textstat
 ```
 
 Downloading and installing from source
@@ -27,14 +27,14 @@ Download the latest version of textstat from http://pypi.python.org/pypi/textsta
 
 You can install it by doing the following,:
 
-```python
-    $ tar xfz textstat-*.tar.gz
-   
-    $ cd textstat-*/
-   
-    $ python setup.py build
-   
-    $ python setup.py install # as root
+```shell
+$ tar xfz textstat-*.tar.gz
+
+$ cd textstat-*/
+
+$ python setup.py build
+
+$ python setup.py install # as root
 ```
 
 List of Functions
@@ -126,7 +126,8 @@ Based upon all the above tests returns the best grade level under which the give
 Usage
 ----------
 ```python
-from textstat.textstat import textstat
+import textstat
+
 if __name__ == '__main__':
 		test_data = """Playing games has always been thought to be important to the development of well-balanced and creative children; however, what part, if any, they should play in the lives of adults has never been researched that deeply. I believe that playing games is every bit as important for adults as for children. Not only is taking time out to play games with our children and other adults valuable to building interpersonal relationships but is also a wonderful way to release built up tension."""
 
