@@ -212,3 +212,36 @@ grade level required to understand the text.
 
 Optional `float_output` allows the score to be returned as a
 `float`. Defaults to `False`.
+
+
+
+## Contributing
+
+If you find any problems, you should open an
+[issue](https://github.com/shivam5992/textstat/issues).
+
+If you can fix an issue you've found, or another issue, you should open
+a [pull request](https://github.com/shivam5992/textstat/pulls).
+
+1. Fork this repository on GitHub to start making your changes to the master
+branch (or branch off of it).
+2. Write a test which shows that the bug was fixed or that the feature works as expected.
+3. Send a pull request!
+
+### Development setup
+
+> It is recommended you use a [virtual environment](
+https://docs.python.org/3/tutorial/venv.html), or [Pipenv](
+https://docs.pipenv.org/) to keep your development work isolated from your
+systems Python installation.
+
+```bash
+$ git clone https://github.com/<yourname>/textstat.git  # Clone the repo from your fork
+$ cd textstat
+$ pip install -r requirements.txt  # Install all dependencies
+
+$ # Make changes
+
+$ python -m unittest test.py  # Run tests
+```
+
