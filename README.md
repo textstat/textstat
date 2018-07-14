@@ -74,104 +74,141 @@ python setup.py install # as root
 
 ### Syllable Count
 
-function name - syllable_count(text)
+```python
+textstat.syllable_count(text, lang='en_US')
+```
 
 Returns the number of syllables present in the given text.
 
+Uses the Python module [Pyphen](https://github.com/Kozea/Pyphen)
+for syllable calculation. Optional `lang` specifies to
+Pyphen which language dictionary to use.
+
+Default is `'en_US'`, `'en_GB'` will also work.
+
+
 ### Lexicon Count
 
-function name - lexicon_count(text, TRUE/FALSE)
+```python
+textstat.lexicon_count(text, removepunct=True)
+```
 
 Calculates the number of words present in the text.
-TRUE/FALSE specifies whether we need to take
+Optional `removepunct` specifies whether we need to take
 punctuation symbols into account while counting lexicons.
-Default value is TRUE, which removes the punctuation before counting
-lexicon items.
+Default value is `True`, which removes the punctuation
+before counting lexicon items.
 
 ### Sentence Count
 
-function name - sentence_count(text)
+```python
+textstat.sentence_count(text)
+```
 
 Returns the number of sentences present in the given text.
 
 
 ### The Flesch Reading Ease formula
 
-function name - flesch_reading_ease(text)
+```python
+textstat.flesch_reading_ease(text)
+```
 
 Returns the Flesch Reading Ease Score.
 
-The following table can be helpful to assess the ease of readability in a document.
-However, the table is an example of values.
-While the maximum score is 121.22, there is no limit on how low the score can be.
-A negative score is valid.
+The following table can be helpful to assess the ease of
+readability in a document.
 
-* 90-100 : Very Easy
-* 80-89 : Easy
-* 70-79 : Fairly Easy
-* 60-69 : Standard
-* 50-59 : Fairly Difficult
-* 30-49 : Difficult
-* 0-29 : Very Confusing
+The table is an _example_ of values. While the
+maximum score is 121.22, there is no limit on how low
+the score can be. A negative score is valid.
 
-Further reading: https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease
+| Score |    Difficulty     |
+|-------|-------------------|
+|90-100 | Very Easy         |
+| 80-89 | Easy              |
+| 70-79 | Fairly Easy       |
+| 60-69 | Standard          |
+| 50-59 | Fairly Difficult  |
+| 30-49 | Difficult         |
+| 0-29  | Very Confusing    |
 
-### The The Flesch-Kincaid Grade Level
+> Further reading on [Wikipedia](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease)
 
-function name - flesch_kincaid_grade(text)
+### The Flesch-Kincaid Grade Level
+
+```python
+textstat.flesch_kincaid_grade(text)
+```
 
 Returns the grade score using the Flesch-Kincaid Grade Formula.
 
 For example, a score of 9.3 means that a ninth grader would be able to
 read the document.
 
-## The Fog Scale (Gunning FOG Formula)
+### The Fog Scale (Gunning FOG Formula)
 
-function name - gunning_fog(text)
+```python
+textstat.gunning_fog(text)
+```
 
 Returns the FOG index of the given text.
 
 ### The SMOG Index
 
-function name - smog_index(text)
+```python
+textstat.smog_index(text)
+```
 
 Returns the SMOG index of the given text.
 
 ### Automated Readability Index
 
-function name - automated_readability_index(text)
+```python
+textstat.automated_readability_index(text)
+```
 
-Returns the ARI (Automated Readability Index)
-which outputs a number that approximates the
-grade level needed to comprehend the text.
+Returns the ARI (Automated Readability Index) which outputs
+a number that approximates the grade level needed to
+comprehend the text.
 
-For example if the ARI is 6.5, then the grade level to comprehend the text is
-6th to 7th grade.
+For example if the ARI is 6.5, then the grade level to comprehend
+the text is 6th to 7th grade.
 
 ### The Coleman-Liau Index
 
-function name - coleman_liau_index(text)
+```python
+textstat.coleman_liau_index(text)
+```
 
 Returns the grade level of the text using the Coleman-Liau Formula.
 
 ### Linsear Write Formula
 
-function name - linsear_write_formula(text)
+```python
+textstat.linsear_write_formula(text)
+```
 
 Returns the grade level using the Linsear Write Formula.
 
 ### Dale-Chall Readability Score
 
-function name - dale_chall_readability_score(text)
+```python
+textstat.dale_chall_readability_score(text)
+```
 
-Different from other tests,
-since it uses a lookup table of the most commonly used 3000 English words.
-Thus it returns the grade level using the New Dale-Chall Formula.
+Different from other tests, since it uses a lookup table
+of the most commonly used 3000 English words. Thus it returns
+the grade level using the New Dale-Chall Formula.
 
 ### Readability Consensus based upon all the above tests
 
-function name - text_standard(text)
+```python
+textstat.text_standard(text, float_output=False)
+```
 
-Based upon all the above tests,
-returns the estimated school grade level required to understand the text.
+Based upon all the above tests, returns the estimated school
+grade level required to understand the text.
 
+Optional `float_output` allows the score to be returned as a
+`float`. Defaults to `False`.
