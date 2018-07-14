@@ -1,44 +1,76 @@
-textstat
-========
-
+# textstat 
 Python package to calculate statistics from text to determine readability, complexity and grade level of a particular corpus.
 
+## Usage
 
-Install
--------
+```python
+>>> import textstat
+
+>>> test_data = (
+    "Playing games has always been thought to be important to "
+    "the development of well-balanced and creative children; "
+    "however, what part, if any, they should play in the lives "
+    "of adults has never been researched that deeply. I believe "
+    "that playing games is every bit as important for adults "
+    "as for children. Not only is taking time out to play games "
+    "with our children and other adults valuable to building "
+    "interpersonal relationships but is also a wonderful way "
+    "to release built up tension."
+)
+
+>>> textstat.flesch_reading_ease(test_data)
+>>> textstat.smog_index(test_data)
+>>> textstat.flesch_kincaid_grade(test_data)
+>>> textstat.coleman_liau_index(test_data)
+>>> textstat.automated_readability_index(test_data)
+>>> textstat.dale_chall_readability_score(test_data)
+>>> textstat.difficult_words(test_data)
+>>> textstat.linsear_write_formula(test_data)
+>>> textstat.gunning_fog(test_data)
+>>> textstat.text_standard(test_data)
+```
+
+The argument (text) for all the defined functions remains the same -
+i.e the text for which statistics need to be calculated.
+
+## Install
 
 You can install textstat either via the Python Package Index (PyPI) or from source.
 
-To install using pip:
+#### Install using pip
 
 ```shell
-$ pip install textstat
+pip install textstat
 ```
 
-To install using easy_install:
+#### Install using easy_install
 
 ```shell
-$ easy_install textstat
+easy_install textstat
 ```
 
-Downloading and installing from source
+#### Install lastest version from GitHub
+
+```shell
+git clone https://github.com/shivam5992/textstat.git
+cd textstat
+pip install .
+```
+
+#### Install from PyPI
 
 Download the latest version of textstat from http://pypi.python.org/pypi/textstat/
 
-You can install it by doing the following,:
+You can install it by doing the following:
 
 ```shell
-$ tar xfz textstat-*.tar.gz
-
-$ cd textstat-*/
-
-$ python setup.py build
-
-$ python setup.py install # as root
+tar xfz textstat-*.tar.gz
+cd textstat-*/
+python setup.py build
+python setup.py install # as root
 ```
 
-List of Functions
-----
+## List of Functions
 
 ### Syllable Count
 
@@ -143,34 +175,3 @@ function name - text_standard(text)
 Based upon all the above tests,
 returns the estimated school grade level required to understand the text.
 
-
-Usage
-----------
-```python
-import textstat
-
-if __name__ == '__main__':
-    test_data = "Playing games has always been thought to be important to" \
-        " the development of well-balanced and creative children; however, what part," \
-        " if any, they should play in the lives of adults has never been researched" \
-        " that deeply." \
-        " I believe that playing games is every bit as important for adults" \
-        " as for children."
-        " Not only is taking time out to play games with our children and other adults" \
-        " valuable to building interpersonal relationships but is also a wonderful way" \
-        " to release built up tension."
-
-    print textstat.flesch_reading_ease(test_data)
-    print textstat.smog_index(test_data)
-    print textstat.flesch_kincaid_grade(test_data)
-    print textstat.coleman_liau_index(test_data)
-    print textstat.automated_readability_index(test_data)
-    print textstat.dale_chall_readability_score(test_data)
-    print textstat.difficult_words(test_data)
-    print textstat.linsear_write_formula(test_data)
-    print textstat.gunning_fog(test_data)
-    print textstat.text_standard(test_data)
-```
-
-The argument (text) for all the defined functions remains the same -
-i.e the text for which statistics need to be calculated.
