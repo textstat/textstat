@@ -55,17 +55,15 @@ class textstatistics:
         text = text.lower()
         text = "".join(x for x in text if x not in exclude)
 
-        if text is None:
+        if not text:
             return 0
-        elif len(text) == 0:
-            return 0
-        else:
-            dic = Pyphen(lang=lang)
-            count = 0
-            for word in text.split(' '):
-                word_hyphenated = dic.inserted(word)
-                count += max(1, word_hyphenated.count("-") + 1)
-            return count
+
+        dic = Pyphen(lang=lang)
+        count = 0
+        for word in text.split(' '):
+            word_hyphenated = dic.inserted(word)
+            count += max(1, word_hyphenated.count("-") + 1)
+        return count
 
     @repoze.lru.lru_cache(maxsize=128)
     def sentence_count(self, text):
@@ -86,9 +84,8 @@ class textstatistics:
         try:
             ASL = float(lc/sc)
             return legacy_round(lc/sc, 1)
-        except:
-            print("Error(ASL): Sentence Count is Zero, Cannot Divide")
-            return
+        except ZeroDivisionError:
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def avg_syllables_per_word(self, text):
@@ -97,27 +94,24 @@ class textstatistics:
         try:
             ASPW = float(syllable)/float(words)
             return legacy_round(ASPW, 1)
-        except:
-            print("Error(ASyPW): Number of words are zero, cannot divide")
-            return
+        except ZeroDivisionError:
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def avg_letter_per_word(self, text):
         try:
             ALPW = float(float(self.char_count(text))/float(self.lexicon_count(text)))
             return legacy_round(ALPW, 2)
-        except:
-            print("Error(ALPW): Number of words are zero, cannot divide")
-            return
+        except ZeroDivisionError:
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def avg_sentence_per_word(self, text):
         try:
             ASPW = float(float(self.sentence_count(text))/float(self.lexicon_count(text)))
             return legacy_round(ASPW, 2)
-        except:
-            print("Error(AStPW): Number of words are zero, cannot divide")
-            return
+        except ZeroDivisionError:
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def flesch_reading_ease(self, text):
@@ -149,10 +143,10 @@ class textstatistics:
                 poly_syllab = self.polysyllabcount(text)
                 SMOG = (1.043 * (30*(poly_syllab/self.sentence_count(text)))**.5) + 3.1291
                 return legacy_round(SMOG, 1)
-            except:
-                print("Error(SI): Sentence count is zero, cannot divide")
+            except ZeroDivisionError:
+                return 0.0
         else:
-            return 0
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def coleman_liau_index(self, text):
@@ -171,9 +165,8 @@ class textstatistics:
             b = (float(wrds)/float(snts))
             ARI = (4.71 * legacy_round(a, 2)) + (0.5*legacy_round(b, 2)) - 21.43
             return legacy_round(ARI, 1)
-        except Exception as E:
-            print("Error(ARI) : Sentence count is zero, cannot divide")
-            return None
+        except ZeroDivisionError:
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def linsear_write_formula(self, text):
@@ -212,11 +205,10 @@ class textstatistics:
     def dale_chall_readability_score(self, text):
         word_count = self.lexicon_count(text)
         count = word_count - self.difficult_words(text)
-        if word_count > 0:
+        try:
             per = float(count)/float(word_count)*100
-        else:
-            print("Error(DCRS): Word Count is zero cannot divide")
-            return None
+        except ZeroDivisionError:
+            return 0.0
         difficult_words = 100-per
         if difficult_words > 5:
             score = (0.1579 * difficult_words) + (0.0496 * self.avg_sentence_length(text)) + 3.6365
@@ -230,8 +222,8 @@ class textstatistics:
             per_diff_words = (self.difficult_words(text)/self.lexicon_count(text)*100) + 5
             grade = 0.4*(self.avg_sentence_length(text) + per_diff_words)
             return grade
-        except:
-            print("Error(GF): Word Count is Zero, cannot divide")
+        except ZeroDivisionError:
+            return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
     def lix(self, text):
