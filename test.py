@@ -71,7 +71,7 @@ class Test_TextStat(unittest.TestCase):
         count_punc = textstat.lexicon_count(self.long_test, removepunct=False)
 
         self.assertEqual(372, count)
-        self.assertEqual(376, count_punc)
+        self.assertEqual(375, count_punc)
 
 
     def test_syllable_count(self):
@@ -83,13 +83,13 @@ class Test_TextStat(unittest.TestCase):
     def test_sentence_count(self):
         count = textstat.sentence_count(self.long_test)
 
-        self.assertEqual(17, count)
+        self.assertEqual(16, count)
 
 
     def test_avg_sentence_length(self):
         avg = textstat.avg_sentence_length(self.long_test)
 
-        self.assertEqual(21.9, avg)
+        self.assertEqual(23.3, avg)
 
 
     def test_avg_syllables_per_word(self):
@@ -107,19 +107,19 @@ class Test_TextStat(unittest.TestCase):
     def test_avg_sentence_per_word(self):
         avg = textstat.avg_sentence_per_word(self.long_test)
 
-        self.assertEqual(0.05, avg)
+        self.assertEqual(0.04, avg)
 
 
     def test_flesch_reading_ease(self):
         score = textstat.flesch_reading_ease(self.long_test)
 
-        self.assertEqual(66.17, score)
+        self.assertEqual(64.75, score)
 
 
     def test_flesch_kincaid_grade(self):
         score = textstat.flesch_kincaid_grade(self.long_test)
 
-        self.assertEqual(9.5, score)
+        self.assertEqual(10.0, score)
 
 
     def test_polysyllabcount(self):
@@ -131,19 +131,19 @@ class Test_TextStat(unittest.TestCase):
     def test_smog_index(self):
         index = textstat.smog_index(self.long_test)
 
-        self.assertEqual(11.0, index)
+        self.assertEqual(11.2, index)
 
 
     def test_coleman_liau_index(self):
         index = textstat.coleman_liau_index(self.long_test)
 
-        self.assertEqual(9.98, index)
+        self.assertEqual(10.28, index)
 
 
     def test_automated_readability_index(self):
         index = textstat.automated_readability_index(self.long_test)
 
-        self.assertEqual(11.6, index)
+        self.assertEqual(12.3, index)
 
 
     def test_linsear_write_formula(self):
@@ -161,19 +161,19 @@ class Test_TextStat(unittest.TestCase):
     def test_dale_chall_readability_score(self):
         score = textstat.dale_chall_readability_score(self.long_test)
 
-        self.assertEqual(6.8, score)
+        self.assertEqual(6.87, score)
 
 
     def test_gunning_fog(self):
         score = textstat.gunning_fog(self.long_test)
 
-        self.assertEqual(16.028817204301074, score)
+        self.assertEqual(16.59, score)
 
 
     def test_lix(self):
         score = textstat.lix(self.long_test)
 
-        self.assertEqual(43.70851063829787, score)
+        self.assertEqual(45.11, score)
 
 
     def test_text_standard(self):
