@@ -75,7 +75,7 @@ class textstatistics:
         Sentence count of a text
         """
         ignore_count = 0
-        sentences = re.split(r' *[\.\?!][\'"\)\]]* *', text)
+        sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text)
         for sentence in sentences:
             if self.lexicon_count(sentence) <= 2:
                 ignore_count += 1
