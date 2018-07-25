@@ -247,7 +247,7 @@ class textstatistics:
                 + 5)
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
-            return grade
+            return legacy_round(grade, 2)
         except ZeroDivisionError:
             return 0.0
 
@@ -262,7 +262,7 @@ class textstatistics:
         asl = self.avg_sentence_length(text)
         lix = asl + per_long_words
 
-        return lix
+        return legacy_round(lix, 2)
 
     @repoze.lru.lru_cache(maxsize=128)
     def text_standard(self, text, float_output=None):
