@@ -8,6 +8,7 @@ import string
 import re
 import math
 import operator
+from collections import Counter
 
 import pkg_resources
 import repoze.lru
@@ -332,11 +333,10 @@ class textstatistics:
         grade.append(int(upper))
 
         # Finding the Readability Consensus based upon all the above tests
-        d = dict([(x, grade.count(x)) for x in grade])
-        sorted_x = sorted(d.items(), key=operator.itemgetter(1))
-        final_grade = str((sorted_x)[len(sorted_x)-1])
-        score = final_grade.split(',')[0].strip('(')
-
+        d = Counter(grade)
+        final_grade = d.most_common(1)
+        score = final_grade[0][0]
+        
         if float_output:
             return score
         else:
