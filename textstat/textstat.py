@@ -338,7 +338,7 @@ class textstatistics:
         score = final_grade[0][0]
         
         if float_output:
-            return score
+            return float(score)
         else:
             return "{}th and {}th grade".format(
                 str(int(score)-1), str(int(score))
