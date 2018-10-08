@@ -337,7 +337,12 @@ class textstatistics:
         final_grade = d.most_common(1)
         score = final_grade[0][0]
         
-        return score
+        if float_output:
+            return score
+        else:
+            return "{}th and {}th grade".format(
+                str(int(score)-1), str(int(score))
+            )
 
 
 textstat = textstatistics()
