@@ -1,4 +1,4 @@
-from textstat.textstat import textstat
+from .textstat import textstat
 
 
 __version__ = (0, 5, 0)
