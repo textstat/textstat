@@ -28,6 +28,7 @@ def legacy_round(number, points=0):
 
 
 class textstatistics:
+    text_encoding = "utf-8"
 
     @repoze.lru.lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
@@ -57,6 +58,9 @@ class textstatistics:
         I/P - a text
         O/P - number of syllable words
         """
+        if isinstance(text, bytes):
+            text = text.decode(self.text_encoding)
+
         text = text.lower()
         text = "".join(x for x in text if x not in exclude)
 

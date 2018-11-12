@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """Test suite for textstat
 """
 
@@ -198,3 +200,9 @@ class Test_TextStat(unittest.TestCase):
 
         #Test that `sentence_count` wasn't called again
         self.assertEqual(textstat.sentence_count._cache.lookups, 1)
+
+    def test_unicode_support(self):
+        textstat.text_standard(
+            "\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059")
+
+        textstat.text_standard(u"ありがとうございます")
