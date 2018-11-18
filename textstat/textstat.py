@@ -354,8 +354,8 @@ class textstatistics:
             lower_score = int(score) - 1
             upper_score = lower_score + 1
             return "{}{} and {}{} grade".format(
-                str(lower_score), get_grade_suffix(lower_score),
-                str(upper_score), get_grade_suffix(upper_score)
+                lower_score, get_grade_suffix(lower_score),
+                upper_score, get_grade_suffix(upper_score)
             )
 
 
