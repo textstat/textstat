@@ -11,6 +11,8 @@ import textstat
 class Test_TextStat(unittest.TestCase):
 
     def setUp(self):
+        self.short_test = "Cool dogs wear da sunglasses."
+
         self.long_test = ("Playing ... games has always been thought to be "
                           "important to the development of well-balanced and "
                           "creative children; however, what part, if any, "
@@ -182,6 +184,10 @@ class Test_TextStat(unittest.TestCase):
         standard = textstat.text_standard(self.long_test)
 
         self.assertEqual("9th and 10th grade", standard)
+
+        standard = textstat.text_standard(self.short_test)
+
+        self.assertEqual("2nd and 3rd grade", standard)
 
 
     def test_lru_caching(self):

@@ -2,3 +2,4 @@
 *.gz
 *egg*
 
+venv
