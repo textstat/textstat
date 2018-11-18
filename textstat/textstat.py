@@ -26,6 +26,13 @@ def legacy_round(number, points=0):
     p = 10 ** points
     return float(math.floor((number * p) + math.copysign(0.5, number))) / p
 
+ordinal_map = {1: 'th', 2: 'nd', 3: 'rd'}
+teens_map = {11: 'th', 12: 'th', 13: 'th'}
+def get_grade_suffix(grade):
+    """
+    Select correct ordinal suffix
+    """
+    return teens_map.get(grade % 100, ordinal_map.get(grade % 10, 'th'))
 
 class textstatistics:
     text_encoding = "utf-8"
@@ -340,12 +347,15 @@ class textstatistics:
         d = Counter(grade)
         final_grade = d.most_common(1)
         score = final_grade[0][0]
-        
+
         if float_output:
             return float(score)
         else:
-            return "{}th and {}th grade".format(
-                str(int(score)-1), str(int(score))
+            lower_score = int(score) - 1
+            upper_score = lower_score + 1
+            return "{}{} and {}{} grade".format(
+                str(lower_score), get_grade_suffix(lower_score),
+                str(upper_score), get_grade_suffix(upper_score)
             )
 
 
