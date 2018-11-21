@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='textstat',
     packages=['textstat'],
-    version='0.5.2',
+    version='0.5.3',
     description='Calculate statistical features from text',
     author='Shivam Bansal, Chaitanya Aggarwal',
     author_email='shivam5992@gmail.com',

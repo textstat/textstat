@@ -1,7 +1,7 @@
 from .textstat import textstat
 
 
-__version__ = (0, 5, 2)
+__version__ = (0, 5, 3)
 
 
 for attribute in dir(textstat):
