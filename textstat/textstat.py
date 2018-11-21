@@ -255,8 +255,7 @@ class textstatistics:
     def gunning_fog(self, text):
         try:
             per_diff_words = (
-                (self.difficult_words(text) / self.lexicon_count(text) * 100)
-                + 5)
+                (self.difficult_words(text) / self.lexicon_count(text) * 100))
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
             return legacy_round(grade, 2)
