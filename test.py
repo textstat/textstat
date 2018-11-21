@@ -171,7 +171,7 @@ class Test_TextStat(unittest.TestCase):
     def test_gunning_fog(self):
         score = textstat.gunning_fog(self.long_test)
 
-        self.assertEqual(16.59, score)
+        self.assertEqual(14.59, score)
 
 
     def test_lix(self):
