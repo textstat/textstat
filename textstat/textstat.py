@@ -25,6 +25,7 @@ def legacy_round(number, points=0):
     p = 10 ** points
     return float(math.floor((number * p) + math.copysign(0.5, number))) / p
 
+
 def get_grade_suffix(grade):
     """
     Select correct ordinal suffix
@@ -32,6 +33,7 @@ def get_grade_suffix(grade):
     ordinal_map = {1: 'st', 2: 'nd', 3: 'rd'}
     teens_map = {11: 'th', 12: 'th', 13: 'th'}
     return teens_map.get(grade % 100, ordinal_map.get(grade % 10, 'th'))
+
 
 class textstatistics:
     text_encoding = "utf-8"
