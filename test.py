@@ -70,6 +70,14 @@ class Test_TextStat(unittest.TestCase):
         self.assertEqual(2123, count_spaces)
 
 
+    def test_letter_count(self):
+        count = textstat.letter_count(self.long_test)
+        count_spaces = textstat.letter_count(self.long_test, ignore_spaces=False)
+
+        self.assertEqual(1688, count)
+        self.assertEqual(2061, count_spaces)
+
+
     def test_lexicon_count(self):
         count = textstat.lexicon_count(self.long_test)
         count_punc = textstat.lexicon_count(self.long_test, removepunct=False)
