@@ -113,7 +113,7 @@ class Test_TextStat(unittest.TestCase):
     def test_avg_letter_per_word(self):
         avg = textstat.avg_letter_per_word(self.long_test)
 
-        self.assertEqual(4.7, avg)
+        self.assertEqual(4.54, avg)
 
 
     def test_avg_sentence_per_word(self):
@@ -149,7 +149,7 @@ class Test_TextStat(unittest.TestCase):
     def test_coleman_liau_index(self):
         index = textstat.coleman_liau_index(self.long_test)
 
-        self.assertEqual(10.28, index)
+        self.assertEqual(9.35, index)
 
 
     def test_automated_readability_index(self):
@@ -191,7 +191,7 @@ class Test_TextStat(unittest.TestCase):
     def test_text_standard(self):
         standard = textstat.text_standard(self.long_test)
 
-        self.assertEqual("9th and 10th grade", standard)
+        self.assertEqual("14th and 15th grade", standard)
 
         standard = textstat.text_standard(self.short_test)
 
