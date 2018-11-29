@@ -14,7 +14,6 @@ import pkg_resources
 import repoze.lru
 from pyphen import Pyphen
 
-exclude = list(string.punctuation)
 
 easy_word_set = set([
     ln.decode('utf-8').strip() for ln in
@@ -48,13 +47,18 @@ class textstatistics:
             text = text.replace(" ", "")
         return len(text)
 
+
+    @staticmethod
+    def remove_punctuation(text):
+        return ''.join(ch for ch in text if ch not in string.punctuation)
+
     @repoze.lru.lru_cache(maxsize=128)
     def lexicon_count(self, text, removepunct=True):
         """
         Function to return total lexicon (words in lay terms) counts in a text
         """
         if removepunct:
-            text = ''.join(ch for ch in text if ch not in exclude)
+            text = self.remove_punctuation(text)
         count = len(text.split())
         return count
 
@@ -69,7 +73,7 @@ class textstatistics:
             text = text.decode(self.text_encoding)
 
         text = text.lower()
-        text = "".join(x for x in text if x not in exclude)
+        text = self.remove_punctuation(text)
 
         if not text:
             return 0
