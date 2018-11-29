@@ -126,10 +126,19 @@ class textstatistics:
             return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
-    def avg_letter_per_word(self, text):
+    def avg_character_per_word(self, text):
         try:
             letters_per_word = float(
                 self.char_count(text) / self.lexicon_count(text))
+            return legacy_round(letters_per_word, 2)
+        except ZeroDivisionError:
+            return 0.0
+
+    @repoze.lru.lru_cache(maxsize=128)
+    def avg_letter_per_word(self, text):
+        try:
+            letters_per_word = float(
+                self.letter_count(text) / self.lexicon_count(text))
             return legacy_round(letters_per_word, 2)
         except ZeroDivisionError:
             return 0.0
