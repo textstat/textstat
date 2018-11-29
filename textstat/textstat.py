@@ -47,6 +47,16 @@ class textstatistics:
             text = text.replace(" ", "")
         return len(text)
 
+    @repoze.lru.lru_cache(maxsize=128)
+    def letter_count(self, text, ignore_spaces=True):
+        """
+        Function to return total letter amount in a text,
+        pass the following parameter `ignore_spaces = False`
+        to ignore whitespaces
+        """
+        if ignore_spaces:
+            text = text.replace(" ", "")
+        return len(self.remove_punctuation(text))
 
     @staticmethod
     def remove_punctuation(text):
