@@ -14,7 +14,6 @@ import pkg_resources
 import repoze.lru
 from pyphen import Pyphen
 
-exclude = list(string.punctuation)
 
 easy_word_set = set([
     ln.decode('utf-8').strip() for ln in
@@ -26,6 +25,7 @@ def legacy_round(number, points=0):
     p = 10 ** points
     return float(math.floor((number * p) + math.copysign(0.5, number))) / p
 
+
 def get_grade_suffix(grade):
     """
     Select correct ordinal suffix
@@ -33,6 +33,7 @@ def get_grade_suffix(grade):
     ordinal_map = {1: 'st', 2: 'nd', 3: 'rd'}
     teens_map = {11: 'th', 12: 'th', 13: 'th'}
     return teens_map.get(grade % 100, ordinal_map.get(grade % 10, 'th'))
+
 
 class textstatistics:
     text_encoding = "utf-8"
@@ -49,12 +50,27 @@ class textstatistics:
         return len(text)
 
     @repoze.lru.lru_cache(maxsize=128)
+    def letter_count(self, text, ignore_spaces=True):
+        """
+        Function to return total letter amount in a text,
+        pass the following parameter `ignore_spaces = False`
+        to ignore whitespaces
+        """
+        if ignore_spaces:
+            text = text.replace(" ", "")
+        return len(self.remove_punctuation(text))
+
+    @staticmethod
+    def remove_punctuation(text):
+        return ''.join(ch for ch in text if ch not in string.punctuation)
+
+    @repoze.lru.lru_cache(maxsize=128)
     def lexicon_count(self, text, removepunct=True):
         """
         Function to return total lexicon (words in lay terms) counts in a text
         """
         if removepunct:
-            text = ''.join(ch for ch in text if ch not in exclude)
+            text = self.remove_punctuation(text)
         count = len(text.split())
         return count
 
@@ -69,7 +85,7 @@ class textstatistics:
             text = text.decode(self.text_encoding)
 
         text = text.lower()
-        text = "".join(x for x in text if x not in exclude)
+        text = self.remove_punctuation(text)
 
         if not text:
             return 0
@@ -112,10 +128,19 @@ class textstatistics:
             return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
-    def avg_letter_per_word(self, text):
+    def avg_character_per_word(self, text):
         try:
             letters_per_word = float(
                 self.char_count(text) / self.lexicon_count(text))
+            return legacy_round(letters_per_word, 2)
+        except ZeroDivisionError:
+            return 0.0
+
+    @repoze.lru.lru_cache(maxsize=128)
+    def avg_letter_per_word(self, text):
+        try:
+            letters_per_word = float(
+                self.letter_count(text) / self.lexicon_count(text))
             return legacy_round(letters_per_word, 2)
         except ZeroDivisionError:
             return 0.0
