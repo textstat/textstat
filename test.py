@@ -188,6 +188,12 @@ class Test_TextStat(unittest.TestCase):
         self.assertEqual(45.11, score)
 
 
+    def test_rix(self):
+        score = textstat.rix(self.long_test)
+
+        self.assertEqual(5.13, score, 'rix function')
+
+
     def test_text_standard(self):
         standard = textstat.text_standard(self.long_test)
 
