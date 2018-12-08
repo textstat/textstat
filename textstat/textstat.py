@@ -301,6 +301,23 @@ class textstatistics:
         return legacy_round(lix, 2)
 
     @repoze.lru.lru_cache(maxsize=128)
+    def rix(self, text):
+        """
+        A Rix ratio is simply the number of long words divided by the number of assessed sentences.
+        rix = LW/S
+        """
+        words = text.split()
+        long_words_count = len([wrd for wrd in words if len(wrd) > 6])
+        sentences_count = self.sentence_count(text)
+
+        try:
+            rix = long_words_count/sentences_count
+        except ZeroDivisionError:
+            rix = 0.00
+
+        return legacy_round(rix, 2)
+
+    @repoze.lru.lru_cache(maxsize=128)
     def text_standard(self, text, float_output=None):
 
         grade = []
