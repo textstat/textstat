@@ -247,12 +247,12 @@ class textstatistics:
         return number / 2
 
     @repoze.lru.lru_cache(maxsize=128)
-    def difficult_words(self, text):
+    def difficult_words(self, text, syllable_threshold=2):
         text_list = re.findall(r"[\w\='‘’]+", text.lower())
         diff_words_set = set()
         for value in text_list:
             if value not in easy_word_set:
-                if self.syllable_count(value) > 1:
+                if self.syllable_count(value) >= syllable_threshold:
                     diff_words_set.add(value)
         return len(diff_words_set)
 
@@ -280,7 +280,7 @@ class textstatistics:
     def gunning_fog(self, text):
         try:
             per_diff_words = (
-                (self.difficult_words(text) / self.lexicon_count(text) * 100))
+                (self.difficult_words(text, syllable_threshold=3) / self.lexicon_count(text) * 100))
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
             return legacy_round(grade, 2)
