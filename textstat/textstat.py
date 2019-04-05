@@ -411,7 +411,9 @@ class textstatistics:
         #find the average sentance length
         asl = total_no_of_words/count_of_sentences
         text_set = set(self.remove_punctuation(text).split())
+        #Count the number of words in the sample text that are not found on the Spache Revised Word List
         count_of_words_not_in_spache = len(text_set - easy_word_set)
+        #Percentage of Difficult Words (PDW)
         pdw = (count_of_words_not_in_spache/total_no_of_words) * 100
         if float_output is False:
            return int((0.141 * asl) + (0.086 * pdw) + 0.839)
