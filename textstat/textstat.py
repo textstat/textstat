@@ -9,7 +9,6 @@ import re
 import math
 import operator
 from collections import Counter
-
 import pkg_resources
 import repoze.lru
 from pyphen import Pyphen
@@ -398,6 +397,28 @@ class textstatistics:
                 lower_score, get_grade_suffix(lower_score),
                 upper_score, get_grade_suffix(upper_score)
             )
+    @repoze.lru.lru_cache(maxsize=128)
+    def spache_readability(self, text, float_output=False):
+        """
+        Function to calculate SPACHE readability formula for young readers.
+        I/P - a text
+        O/P - an int Spache Readability Index/Grade Level
+        """
+        #Count the total number of words in the sample text
+        total_no_of_words = self.lexicon_count(text)
+        #Count the number of sentences in the sample text
+        count_of_sentences = self.sentence_count(text)
+        #find the average sentance length
+        asl = total_no_of_words/count_of_sentences
+        text_set = set(self.remove_punctuation(text).split())
+        count_of_words_not_in_spache = len(text_set - easy_word_set)
+        pdw = (count_of_words_not_in_spache/total_no_of_words) * 100
+        if float_output is False:
+           return int((0.141 * asl) + (0.086 * pdw) + 0.839)
+        else:
+            return (0.141 * asl) + (0.086 * pdw) + 0.839
+
+
 
 
 textstat = textstatistics()
