@@ -100,7 +100,7 @@ class Test_TextStat(unittest.TestCase):
         count_punc = textstat.lexicon_count(self.long_test, removepunct=False)
 
         self.assertEqual(372, count)
-        self.assertEqual(375, count_punc)
+        self.assertEqual(376, count_punc)
 
     def test_syllable_count(self):
         count = textstat.syllable_count(self.long_test)
