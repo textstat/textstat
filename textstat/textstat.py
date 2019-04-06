@@ -279,7 +279,8 @@ class textstatistics:
     def gunning_fog(self, text):
         try:
             per_diff_words = (
-                (self.difficult_words(text, syllable_threshold=3) / self.lexicon_count(text) * 100))
+                (self.difficult_words(text, syllable_threshold=3)
+                    / self.lexicon_count(text) * 100))
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
             return legacy_round(grade, 2)
@@ -302,7 +303,8 @@ class textstatistics:
     @repoze.lru.lru_cache(maxsize=128)
     def rix(self, text):
         """
-        A Rix ratio is simply the number of long words divided by the number of assessed sentences.
+        A Rix ratio is simply the number of long words divided by
+        the number of assessed sentences.
         rix = LW/S
         """
         words = text.split()
