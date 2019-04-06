@@ -195,7 +195,7 @@ class Test_TextStat(unittest.TestCase):
     def test_text_standard(self):
         standard = textstat.text_standard(self.long_test)
 
-        self.assertEqual("14th and 15th grade", standard)
+        self.assertEqual("9th and 10th grade", standard)
 
         standard = textstat.text_standard(self.short_test)
 
