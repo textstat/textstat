@@ -2,6 +2,7 @@
 Python package to calculate statistics from text to determine readability, complexity and grade level of a particular corpus.
 
 [![Downloads](https://img.shields.io/badge/dynamic/json.svg?url=https://pypistats.org/api/packages/textstat/recent?mirrors=false&label=downloads&query=$.data.last_month&suffix=/month)](https://pypistats.org/packages/textstat)
+[![Build Status](https://travis-ci.com/shivam5992/textstat.svg?branch=master)](https://travis-ci.com/shivam5992/textstat)
 
 ## Usage
 
