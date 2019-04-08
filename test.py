@@ -238,4 +238,4 @@ class Test_TextStat(unittest.TestCase):
         textstat.text_standard(u"ありがとうございます")
     def test_spache_readability(self):
         #"spache readability"
-        self.assertEqual(textstat.spache_readability(self.easy_text), 3)
+        self.assertEqual(textstat.spache_readability(self.easy_text, False), 2)
