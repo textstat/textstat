@@ -61,6 +61,16 @@ class Test_TextStat(unittest.TestCase):
                           "place a higher priority on playing games in their "
                           "lives")
 
+        self.easy_text = ("Anna and her family love doing puzzles. Anna is best at little puzzles. "
+                          "Anna and her brother work on medium size puzzles together. Anna's Brother "
+                          "likes puzzles with cars in them."
+                          "When the whole family does a puzzle, they do really big puzzles. "
+                          "It can take them a week to finish a really big puzzle. "
+                          "Last year they did a puzzle with 500 pieces! "
+                          "Anna tries to finish one small puzzle a day by her. Her puzzles have about 50 pieces. "
+                          "They all glue their favorite puzzles together and frame them. The puzzles look so nice "
+                          "on the wall.")
+
 
     def test_char_count(self):
         count = textstat.char_count(self.long_test)
@@ -226,3 +236,6 @@ class Test_TextStat(unittest.TestCase):
             "\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059")
 
         textstat.text_standard(u"ありがとうございます")
+    def test_spache_readability(self):
+        #"spache readability"
+        self.assertEqual(textstat.spache_readability(self.easy_text, False), 2)
