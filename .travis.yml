@@ -1,1 +1,15 @@
 language: python
+python:
+    - "2.7"
+    - "3.6"
+    - "nightly"
+matrix:
+    allow_failures:
+        - python: "nightly"
+before_install:
+    - pip install pipenv
+    - pipenv install --dev --skip-lock
+script:
+    - pipenv run pycodestyle textstat/
+    - pipenv run pycodestyle test.py
+    - pipenv run pytest test.py
