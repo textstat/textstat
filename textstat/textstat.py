@@ -325,17 +325,13 @@ class textstatistics:
         I/P - a text
         O/P - an int Spache Readability Index/Grade Level
         """
-        #Count the total number of words in the sample text
         total_no_of_words = self.lexicon_count(text)
-        #Count the number of sentences in the sample text
         count_of_sentences = self.sentence_count(text)
-        #find the average sentance length
         asl = total_no_of_words/count_of_sentences
-        #Percentage of Difficult Words (PDW)
         pdw = (self.difficult_words(text)/total_no_of_words) * 100
         spache = (0.141 * asl) + (0.086 * pdw) + 0.839
         if not float_output:
-           return int(spache)
+            return int(spache)
         else:
             return spache
 

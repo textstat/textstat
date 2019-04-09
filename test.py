@@ -76,7 +76,6 @@ class Test_TextStat(unittest.TestCase):
             "so nice on the wall."
         )
 
-
     def test_char_count(self):
         count = textstat.char_count(self.long_test)
         count_spaces = textstat.char_count(
@@ -223,6 +222,8 @@ class Test_TextStat(unittest.TestCase):
             "\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059")
 
         textstat.text_standard(u"ありがとうございます")
+
     def test_spache_readability(self):
-        #"spache readability"
-        self.assertEqual(textstat.spache_readability(self.easy_text, False), 2)
+        spache = textstat.spache_readability(self.easy_text, False)
+
+        self.assertEqual(spache, 2)
