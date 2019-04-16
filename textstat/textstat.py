@@ -338,7 +338,7 @@ class textstatistics:
     @repoze.lru.lru_cache(maxsize=128)
     def dale_chall_readability_score_v2(self, text):
         """
-        Function to calculate new Dale Chall Readability formula for young readers.
+        Function to calculate New Dale Chall Readability formula.
         I/P - a text
         O/P - an int Dale Chall Readability Index/Grade Level
         """
@@ -349,7 +349,7 @@ class textstatistics:
         raw_score = 0.1579 * (pdw) + 0.0496 * asl
         adjusted_score = raw_score
         if raw_score > 0.05:
-           adjusted_score = raw_score + 3.6365
+            adjusted_score = raw_score + 3.6365
         return legacy_round(adjusted_score, 2)
 
     @repoze.lru.lru_cache(maxsize=128)

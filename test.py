@@ -229,5 +229,5 @@ class Test_TextStat(unittest.TestCase):
         self.assertEqual(spache, 2)
 
     def test_dale_chall_readability_score_v2(self):
-        dale_chall_score = textstat.dale_chall_readability_score_v2(self.long_test)
-        self.assertEqual(dale_chall_score, 6.87)
+        score = textstat.dale_chall_readability_score_v2(self.long_test)
+        self.assertEqual(score, 6.87)
