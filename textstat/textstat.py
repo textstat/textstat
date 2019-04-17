@@ -336,6 +336,23 @@ class textstatistics:
             return spache
 
     @repoze.lru.lru_cache(maxsize=128)
+    def dale_chall_readability_score_v2(self, text):
+        """
+        Function to calculate New Dale Chall Readability formula.
+        I/P - a text
+        O/P - an int Dale Chall Readability Index/Grade Level
+        """
+        total_no_of_words = self.lexicon_count(text)
+        count_of_sentences = self.sentence_count(text)
+        asl = total_no_of_words/count_of_sentences
+        pdw = (self.difficult_words(text)/total_no_of_words) * 100
+        raw_score = 0.1579 * (pdw) + 0.0496 * asl
+        adjusted_score = raw_score
+        if raw_score > 0.05:
+            adjusted_score = raw_score + 3.6365
+        return legacy_round(adjusted_score, 2)
+
+    @repoze.lru.lru_cache(maxsize=128)
     def text_standard(self, text, float_output=None):
 
         grade = []

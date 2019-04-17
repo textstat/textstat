@@ -227,3 +227,7 @@ class Test_TextStat(unittest.TestCase):
         spache = textstat.spache_readability(self.easy_text, False)
 
         self.assertEqual(spache, 2)
+
+    def test_dale_chall_readability_score_v2(self):
+        score = textstat.dale_chall_readability_score_v2(self.long_test)
+        self.assertEqual(score, 6.87)
