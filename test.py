@@ -195,6 +195,11 @@ def test_gunning_fog():
 
     assert score == 11.26
 
+    # FOG-PL
+    score_pl = textstat.gunning_fog(long_test, lang='pl_PL')
+
+    assert score_pl == 10.40
+
 
 def test_lix():
     score = textstat.lix(long_test)

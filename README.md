@@ -155,11 +155,15 @@ read the document.
 ### The Fog Scale (Gunning FOG Formula)
 
 ```python
-textstat.gunning_fog(text)
+textstat.gunning_fog(text, lang='en_US')
 ```
 
 Returns the FOG index of the given text. This is a grade formula in that
 a score of 9.3 means that a ninth grader would be able to read the document.
+Optional `lang` specifies to Pyphen which language dictionary to use and switches 
+between algorithm variations for different languages.
+
+Default is `'en_US'`, `'en_GB'` will also work. For `'pl_PL'`, FOG-PL variant will be used.
 
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Gunning_fog_index)
@@ -285,6 +289,6 @@ $ pip install -r requirements.txt  # Install all dependencies
 
 $ # Make changes
 
-$ python -m unittest test.py  # Run tests
+$ python -m pytest test.py  # Run tests
 ```
 
