@@ -7,7 +7,6 @@ from __future__ import division
 import string
 import re
 import math
-import operator
 from collections import Counter
 import pkg_resources
 import repoze.lru
@@ -18,6 +17,16 @@ easy_word_set = set([
     ln.decode('utf-8').strip() for ln in
     pkg_resources.resource_stream('textstat', 'easy_words.txt')
 ])
+
+
+langs = {
+    "en_US": {
+        "syllable_threshold": 3,
+    },
+    "pl_PL": {
+        "syllable_threshold": 4,
+    },
+}
 
 
 def legacy_round(number, points=0):
@@ -35,7 +44,24 @@ def get_grade_suffix(grade):
 
 
 class textstatistics:
+    __lang = "en_US"
     text_encoding = "utf-8"
+
+    def set_lang(self, lang):
+        self.__lang = lang
+        self.syllable_count._cache.clear()
+        self.avg_syllables_per_word._cache.clear()
+        self.flesch_reading_ease._cache.clear()
+        self.flesch_kincaid_grade._cache.clear()
+        self.polysyllabcount._cache.clear()
+        self.smog_index._cache.clear()
+        self.linsear_write_formula._cache.clear()
+        self.difficult_words._cache.clear()
+        self.dale_chall_readability_score._cache.clear()
+        self.gunning_fog._cache.clear()
+        self.spache_readability._cache.clear()
+        self.dale_chall_readability_score_v2._cache.clear()
+        self.text_standard._cache.clear()
 
     @repoze.lru.lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
@@ -74,7 +100,7 @@ class textstatistics:
         return count
 
     @repoze.lru.lru_cache(maxsize=128)
-    def syllable_count(self, text, lang='en_US'):
+    def syllable_count(self, text):
         """
         Function to calculate syllable words in a text.
         I/P - a text
@@ -89,7 +115,7 @@ class textstatistics:
         if not text:
             return 0
 
-        dic = Pyphen(lang=lang)
+        dic = Pyphen(lang=self.__lang)
         count = 0
         for word in text.split(' '):
             word_hyphenated = dic.inserted(word)
@@ -246,12 +272,12 @@ class textstatistics:
         return number / 2
 
     @repoze.lru.lru_cache(maxsize=128)
-    def difficult_words(self, text, syllable_threshold=2, lang='en_US'):
+    def difficult_words(self, text, syllable_threshold=2):
         text_list = re.findall(r"[\w\='‘’]+", text.lower())
         diff_words_set = set()
         for value in text_list:
             if value not in easy_word_set:
-                if self.syllable_count(value, lang) >= syllable_threshold:
+                if self.syllable_count(value) >= syllable_threshold:
                     diff_words_set.add(value)
         return len(diff_words_set)
 
@@ -276,13 +302,12 @@ class textstatistics:
         return legacy_round(score, 2)
 
     @repoze.lru.lru_cache(maxsize=128)
-    def gunning_fog(self, text, lang='en_US'):
+    def gunning_fog(self, text):
         try:
-            syllable_threshold = 4 if lang == 'pl_PL' else 3
+            syllable_threshold = self.__get_lang_cfg("syllable_threshold")
             per_diff_words = (
                 (self.difficult_words(text,
-                                      syllable_threshold=syllable_threshold,
-                                      lang=lang)
+                                      syllable_threshold=syllable_threshold)
                     / self.lexicon_count(text) * 100))
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
@@ -436,6 +461,10 @@ class textstatistics:
                 lower_score, get_grade_suffix(lower_score),
                 upper_score, get_grade_suffix(upper_score)
             )
+
+    def __get_lang_cfg(self, key):
+        config = langs.get(self.__lang, langs.get("en_US"))
+        return config[key]
 
 
 textstat = textstatistics()
