@@ -73,22 +73,36 @@ python setup.py build
 python setup.py install # as root
 ```
 
+## Language support
+By default functions implement algorithms for english language. 
+To change language, use:
+
+```python
+textstat.set_language(lang)
+``` 
+
+The language will be used for syllable calculation and to choose 
+variant of the formula.
+
+### Language variants
+All functions implement `en_US` language.
+
+|  Function   | Other languages |
+|-------------|-----------------|
+| gunning_fog | pl_PL           |
+
 ## List of Functions
 
 ### Syllable Count
 
 ```python
-textstat.syllable_count(text, lang='en_US')
+textstat.syllable_count(text)
 ```
 
 Returns the number of syllables present in the given text.
 
 Uses the Python module [Pyphen](https://github.com/Kozea/Pyphen)
-for syllable calculation. Optional `lang` specifies to
-Pyphen which language dictionary to use.
-
-Default is `'en_US'`, `'en_GB'` will also work.
-
+for syllable calculation.
 
 ### Lexicon Count
 
@@ -155,15 +169,11 @@ read the document.
 ### The Fog Scale (Gunning FOG Formula)
 
 ```python
-textstat.gunning_fog(text, lang='en_US')
+textstat.gunning_fog(text)
 ```
 
 Returns the FOG index of the given text. This is a grade formula in that
 a score of 9.3 means that a ninth grader would be able to read the document.
-Optional `lang` specifies to Pyphen which language dictionary to use and switches 
-between algorithm variations for different languages.
-
-Default is `'en_US'`, `'en_GB'` will also work. For `'pl_PL'`, FOG-PL variant will be used.
 
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Gunning_fog_index)
