@@ -4,6 +4,7 @@
 from __future__ import print_function
 from __future__ import division
 
+import warnings
 import string
 import re
 import math
@@ -100,12 +101,19 @@ class textstatistics:
         return count
 
     @repoze.lru.lru_cache(maxsize=128)
-    def syllable_count(self, text):
+    def syllable_count(self, text, lang=None):
         """
         Function to calculate syllable words in a text.
         I/P - a text
         O/P - number of syllable words
         """
+        if lang:
+            warnings.warn(
+                "The 'lang' argument has been moved to "
+                "'textstat.set_lang(<lang>)'. This argument will be removed "
+                "in the future.",
+                DeprecationWarning
+            )
         if isinstance(text, bytes):
             text = text.decode(self.text_encoding)
 
