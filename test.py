@@ -151,6 +151,36 @@ def test_flesch_reading_ease():
 
     assert score == 64.75
 
+    textstat.set_lang("de_DE")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 63.1
+
+    textstat.set_lang("es_ES")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 84.37
+
+    textstat.set_lang("fr_FR")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 80.31
+
+    textstat.set_lang("it_IT")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 89.27
+
+    textstat.set_lang("nl_NL")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 61.97
+
+    textstat.set_lang("ru_RU")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 116.45
+
 
 def test_flesch_kincaid_grade():
     textstat.set_lang("en_US")
@@ -285,3 +315,11 @@ def test_dale_chall_readability_score_v2():
     score = textstat.dale_chall_readability_score_v2(long_test)
 
     assert score == 6.87
+
+
+def test_default_lang_configs():
+    # Config from default en_US should be used
+    textstat.set_lang("en_GB")
+    score = textstat.flesch_reading_ease(long_test)
+
+    assert score == 64.75
