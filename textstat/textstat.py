@@ -13,12 +13,10 @@ import pkg_resources
 import repoze.lru
 from pyphen import Pyphen
 
-
 easy_word_set = set([
     ln.decode('utf-8').strip() for ln in
     pkg_resources.resource_stream('textstat', 'easy_words.txt')
 ])
-
 
 langs = {
     "en_US": {
@@ -192,9 +190,9 @@ class textstatistics:
         sentence_length = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
         flesch = (
-            206.835
-            - float(1.015 * sentence_length)
-            - float(84.6 * syllables_per_word)
+                206.835
+                - float(1.015 * sentence_length)
+                - float(84.6 * syllables_per_word)
         )
         return legacy_round(flesch, 2)
 
@@ -203,9 +201,9 @@ class textstatistics:
         sentence_lenth = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
         flesch = (
-            float(0.39 * sentence_lenth)
-            + float(11.8 * syllables_per_word)
-            - 15.59)
+                float(0.39 * sentence_lenth)
+                + float(11.8 * syllables_per_word)
+                - 15.59)
         return legacy_round(flesch, 1)
 
     @repoze.lru.lru_cache(maxsize=128)
@@ -225,8 +223,8 @@ class textstatistics:
             try:
                 poly_syllab = self.polysyllabcount(text)
                 smog = (
-                    (1.043 * (30 * (poly_syllab / sentences)) ** .5)
-                    + 3.1291)
+                        (1.043 * (30 * (poly_syllab / sentences)) ** .5)
+                        + 3.1291)
                 return legacy_round(smog, 1)
             except ZeroDivisionError:
                 return 0.0
@@ -235,8 +233,8 @@ class textstatistics:
 
     @repoze.lru.lru_cache(maxsize=128)
     def coleman_liau_index(self, text):
-        letters = legacy_round(self.avg_letter_per_word(text)*100, 2)
-        sentences = legacy_round(self.avg_sentence_per_word(text)*100, 2)
+        letters = legacy_round(self.avg_letter_per_word(text) * 100, 2)
+        sentences = legacy_round(self.avg_sentence_per_word(text) * 100, 2)
         coleman = float((0.058 * letters) - (0.296 * sentences) - 15.8)
         return legacy_round(coleman, 2)
 
@@ -246,12 +244,12 @@ class textstatistics:
         words = self.lexicon_count(text)
         sentences = self.sentence_count(text)
         try:
-            a = float(chrs)/float(words)
+            a = float(chrs) / float(words)
             b = float(words) / float(sentences)
             readability = (
-                (4.71 * legacy_round(a, 2))
-                + (0.5 * legacy_round(b, 2))
-                - 21.43)
+                    (4.71 * legacy_round(a, 2))
+                    + (0.5 * legacy_round(b, 2))
+                    - 21.43)
             return legacy_round(readability, 1)
         except ZeroDivisionError:
             return 0.0
@@ -302,8 +300,8 @@ class textstatistics:
         difficult_words = 100 - per
 
         score = (
-            (0.1579 * difficult_words)
-            + (0.0496 * self.avg_sentence_length(text)))
+                (0.1579 * difficult_words)
+                + (0.0496 * self.avg_sentence_length(text)))
 
         if difficult_words > 5:
             score += 3.6365
@@ -314,9 +312,10 @@ class textstatistics:
         try:
             syllable_threshold = self.__get_lang_cfg("syllable_threshold")
             per_diff_words = (
-                (len(self.difficult_words(text,
-                                      syllable_threshold=syllable_threshold))
-                    / self.lexicon_count(text) * 100))
+                (len(self.difficult_words(
+                    text,
+                    syllable_threshold=syllable_threshold))
+                 / self.lexicon_count(text) * 100))
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
             return legacy_round(grade, 2)
@@ -348,7 +347,7 @@ class textstatistics:
         sentences_count = self.sentence_count(text)
 
         try:
-            rix = long_words_count/sentences_count
+            rix = long_words_count / sentences_count
         except ZeroDivisionError:
             rix = 0.00
 
@@ -363,8 +362,8 @@ class textstatistics:
         """
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
-        asl = total_no_of_words/count_of_sentences
-        pdw = (len(self.difficult_words(text))/total_no_of_words) * 100
+        asl = total_no_of_words / count_of_sentences
+        pdw = (len(self.difficult_words(text)) / total_no_of_words) * 100
         spache = (0.141 * asl) + (0.086 * pdw) + 0.839
         if not float_output:
             return int(spache)
@@ -380,8 +379,8 @@ class textstatistics:
         """
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
-        asl = total_no_of_words/count_of_sentences
-        pdw = (len(self.difficult_words(text))/total_no_of_words) * 100
+        asl = total_no_of_words / count_of_sentences
+        pdw = (len(self.difficult_words(text)) / total_no_of_words) * 100
         raw_score = 0.1579 * (pdw) + 0.0496 * asl
         adjusted_score = raw_score
         if raw_score > 0.05:
