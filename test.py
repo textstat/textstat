@@ -5,7 +5,6 @@
 
 import textstat
 
-
 short_test = "Cool dogs wear da sunglasses."
 
 long_test = (
@@ -198,7 +197,55 @@ def test_difficult_words():
     textstat.set_lang("en_US")
     result = textstat.difficult_words(long_test)
 
-    assert result == 49
+    assert set(result) == set(['exist',
+                      'allows',
+                      'stimulating',
+                      'release',
+                      'reasons',
+                      'aspect',
+                      'enables',
+                      'creative',
+                      'keeping',
+                      'discuss',
+                      'enjoying',
+                      'activities',
+                      'mastermind',
+                      'couple',
+                      'relationships',
+                      'relaxing',
+                      'purchase',
+                      'backgammon',
+                      'interpersonal',
+                      'monopoly',
+                      'competition',
+                      'enjoys',
+                      'balanced',
+                      'sadly',
+                      "joneses'",
+                      'relax',
+                      'threatening',
+                      'interact',
+                      'researched',
+                      'environment',
+                      'memorable',
+                      'coworkers',
+                      'integral',
+                      'higher',
+                      'playing',
+                      'weekends',
+                      'enriched',
+                      'ladders',
+                      'comfortable',
+                      'unwind',
+                      'development',
+                      'neglect',
+                      'working',
+                      'cupboards',
+                      'couples',
+                      'tension',
+                      'priority',
+                      'reflect',
+                      'received'])
 
 
 def test_dale_chall_readability_score():

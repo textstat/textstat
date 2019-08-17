@@ -292,7 +292,7 @@ class textstatistics:
     @repoze.lru.lru_cache(maxsize=128)
     def dale_chall_readability_score(self, text):
         word_count = self.lexicon_count(text)
-        count = word_count - self.difficult_words(text)
+        count = word_count - len(self.difficult_words(text))
 
         try:
             per = float(count) / float(word_count) * 100
@@ -314,8 +314,8 @@ class textstatistics:
         try:
             syllable_threshold = self.__get_lang_cfg("syllable_threshold")
             per_diff_words = (
-                (self.difficult_words(text,
-                                      syllable_threshold=syllable_threshold)
+                (len(self.difficult_words(text,
+                                      syllable_threshold=syllable_threshold))
                     / self.lexicon_count(text) * 100))
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
@@ -364,7 +364,7 @@ class textstatistics:
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
         asl = total_no_of_words/count_of_sentences
-        pdw = (self.difficult_words(text)/total_no_of_words) * 100
+        pdw = (len(self.difficult_words(text))/total_no_of_words) * 100
         spache = (0.141 * asl) + (0.086 * pdw) + 0.839
         if not float_output:
             return int(spache)
@@ -381,7 +381,7 @@ class textstatistics:
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
         asl = total_no_of_words/count_of_sentences
-        pdw = (self.difficult_words(text)/total_no_of_words) * 100
+        pdw = (len(self.difficult_words(text))/total_no_of_words) * 100
         raw_score = 0.1579 * (pdw) + 0.0496 * asl
         adjusted_score = raw_score
         if raw_score > 0.05:
