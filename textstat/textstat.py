@@ -287,7 +287,7 @@ class textstatistics:
             if value not in easy_word_set:
                 if self.syllable_count(value) >= syllable_threshold:
                     diff_words_set.add(value)
-        return len(diff_words_set)
+        return list(diff_words_set)
 
     @repoze.lru.lru_cache(maxsize=128)
     def dale_chall_readability_score(self, text):
