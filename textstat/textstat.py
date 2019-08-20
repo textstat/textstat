@@ -21,11 +21,48 @@ easy_word_set = set([
 
 
 langs = {
-    "en_US": {
+    "en": {  # Default config
+        "fre_base": 206.835,
+        "fre_sentence_length": 1.015,
+        "fre_syll_per_word": 84.6,
         "syllable_threshold": 3,
     },
-    "pl_PL": {
+    "de": {
+        # Toni Amstad
+        "fre_base": 180,
+        "fre_sentence_length": 1,
+        "fre_syll_per_word": 58.5,
+    },
+    "es": {
+        # Fernandez Huerta Readability Formula
+        "fre_base": 206.84,
+        "fre_sentence_length": 1.02,
+        "fre_syll_per_word": 0.6,
+    },
+    "fr": {
+        "fre_base": 207,
+        "fre_sentence_length": 1.015,
+        "fre_syll_per_word": 73.6,
+    },
+    "it": {
+        # Flesch-Vacca
+        "fre_base": 217,
+        "fre_sentence_length": 1.3,
+        "fre_syll_per_word": 0.6,
+    },
+    "nl": {
+        # Flesch-Douma
+        "fre_base": 206.835,
+        "fre_sentence_length": 0.93,
+        "fre_syll_per_word": 77,
+    },
+    "pl": {
         "syllable_threshold": 4,
+    },
+    "ru": {
+        "fre_base": 206.835,
+        "fre_sentence_length": 1.3,
+        "fre_syll_per_word": 60.1,
     },
 }
 
@@ -151,11 +188,14 @@ class textstatistics:
             return 0.0
 
     @repoze.lru.lru_cache(maxsize=128)
-    def avg_syllables_per_word(self, text):
+    def avg_syllables_per_word(self, text, interval=None):
         syllable = self.syllable_count(text)
         words = self.lexicon_count(text)
         try:
-            syllables_per_word = float(syllable) / float(words)
+            if interval:
+                syllables_per_word = float(syllable) * interval / float(words)
+            else:
+                syllables_per_word = float(syllable) / float(words)
             return legacy_round(syllables_per_word, 1)
         except ZeroDivisionError:
             return 0.0
@@ -190,11 +230,16 @@ class textstatistics:
     @repoze.lru.lru_cache(maxsize=128)
     def flesch_reading_ease(self, text):
         sentence_length = self.avg_sentence_length(text)
-        syllables_per_word = self.avg_syllables_per_word(text)
+        s_interval = 100 if self.__get_lang_root() in ['es', 'it'] else None
+        syllables_per_word = self.avg_syllables_per_word(text, s_interval)
         flesch = (
-            206.835
-            - float(1.015 * sentence_length)
-            - float(84.6 * syllables_per_word)
+            self.__get_lang_cfg("fre_base")
+            - float(
+                self.__get_lang_cfg("fre_sentence_length") * sentence_length
+            )
+            - float(
+                self.__get_lang_cfg("fre_syll_per_word") * syllables_per_word
+            )
         )
         return legacy_round(flesch, 2)
 
@@ -471,8 +516,12 @@ class textstatistics:
             )
 
     def __get_lang_cfg(self, key):
-        config = langs.get(self.__lang, langs.get("en_US"))
-        return config[key]
+        default = langs.get("en")
+        config = langs.get(self.__get_lang_root(), default)
+        return config.get(key, default.get(key))
+
+    def __get_lang_root(self):
+        return self.__lang.split("_")[0]
 
 
 textstat = textstatistics()
