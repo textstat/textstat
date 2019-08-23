@@ -10,4 +10,4 @@ Pyphen = "*"
 [dev-packages]
 pycodestyle = "*"
 pytest = "*"
-
+ipython = "*"

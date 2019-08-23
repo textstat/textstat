@@ -5,7 +5,6 @@
 
 import textstat
 
-
 short_test = "Cool dogs wear da sunglasses."
 
 long_test = (
@@ -229,6 +228,13 @@ def test_difficult_words():
     result = textstat.difficult_words(long_test)
 
     assert result == 49
+
+
+def test_difficult_words_list():
+    textstat.set_lang("en_US")
+    result = textstat.difficult_words_list(short_test)
+
+    assert result == ["sunglasses"]
 
 
 def test_dale_chall_readability_score():
