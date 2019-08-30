@@ -528,7 +528,7 @@ class textstatistics:
     @repoze.lru.lru_cache(maxsize=128)
     def reading_time(self, text, ms_per_char=14.69):
         """
-        Function to calculate reading time based on Vera Demberg and Frank Keller (2008)
+        Function to calculate reading time (Demberg & Keller, 2008)
         I/P - a text
         O/P - reading time in millisecond
         """
