@@ -98,6 +98,7 @@ class textstatistics:
         self.spache_readability._cache.clear()
         self.dale_chall_readability_score_v2._cache.clear()
         self.text_standard._cache.clear()
+        self.reading_time._cache.clear()
 
     @repoze.lru.lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
@@ -523,6 +524,19 @@ class textstatistics:
                 lower_score, get_grade_suffix(lower_score),
                 upper_score, get_grade_suffix(upper_score)
             )
+
+    @repoze.lru.lru_cache(maxsize=128)
+    def reading_time(self, text, ms_per_char=14.69):
+        """
+        Function to calculate reading time based on Vera Demberg and Frank Keller (2008)
+        I/P - a text
+        O/P - reading time in millisecond
+        """
+        words = text.split()
+        nchars = map(len, words)
+        rt_per_word = map(lambda nchar: nchar * ms_per_char, nchars)
+        reading_time = sum(list(rt_per_word))
+        return legacy_round(reading_time, 2)
 
     def __get_lang_cfg(self, key):
         default = langs.get("en")
