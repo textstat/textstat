@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """Test suite for textstat
 """
 
@@ -306,7 +304,7 @@ def test_unicode_support():
     textstat.text_standard(
         "\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059")
 
-    textstat.text_standard(u"ありがとうございます")
+    textstat.text_standard("ありがとうございます")
 
 
 def test_spache_readability():
