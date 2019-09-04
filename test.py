@@ -282,6 +282,13 @@ def test_text_standard():
     assert standard == "2nd and 3rd grade"
 
 
+def test_reading_time():
+    textstat.set_lang("en_US")
+    score = textstat.reading_time(long_test)
+
+    assert score == 25.68
+
+
 def test_lru_caching():
     textstat.set_lang("en_US")
     # Clear any cache
