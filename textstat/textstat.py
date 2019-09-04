@@ -526,25 +526,18 @@ class textstatistics:
             )
 
     @repoze.lru.lru_cache(maxsize=128)
-    def reading_time(self, text, unit="minute", ms_per_char=14.69):
+    def reading_time(self, text, ms_per_char=14.69):
         """
         Function to calculate reading time (Demberg & Keller, 2008)
         I/P - a text
-        O/P - reading time in minute
+        O/P - reading time in second
         """
         words = text.split()
         nchars = map(len, words)
         rt_per_word = map(lambda nchar: nchar * ms_per_char, nchars)
         reading_time = sum(list(rt_per_word))
 
-        ms_to_unit = {"second": lambda ms: ms / 1000,
-                      "minute": lambda ms: ms / 1000 / 60,
-                      "hour": lambda ms: ms / 1000 / 60 / 60}
-
-        try:
-            return legacy_round(ms_to_unit[unit](reading_time), 2)
-        except KeyError:
-            print("'{}' is an invalid keyword argument for this function".format(unit))
+        return legacy_round(reading_time/1000, 2)
 
     def __get_lang_cfg(self, key):
         default = langs.get("en")

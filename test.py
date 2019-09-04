@@ -286,7 +286,7 @@ def test_reading_time():
     textstat.set_lang("en_US")
     score = textstat.reading_time(long_test)
 
-    assert score == 0.43
+    assert score == 25.68
 
 
 def test_lru_caching():
