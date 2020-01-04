@@ -290,20 +290,21 @@ def test_reading_time():
 def test_lru_caching():
     textstat.set_lang("en_US")
     # Clear any cache
-    textstat.sentence_count._cache.clear()
-    textstat.avg_sentence_length._cache.clear()
+    textstat.sentence_count.cache_clear()
+    textstat.avg_sentence_length.cache_clear()
 
     # Make a call that uses `sentence_count`
     textstat.avg_sentence_length(long_test)
 
     # Test that `sentence_count` was called
-    assert textstat.sentence_count._cache.misses == 1
+    assert textstat.sentence_count.cache_info().misses == 1
 
-    # Call `avg_sentence_length` again
+    # Call `avg_sentence_length` again, but clear it's cache first
+    textstat.avg_sentence_length.cache_clear()
     textstat.avg_sentence_length(long_test)
 
     # Test that `sentence_count` wasn't called again
-    assert textstat.sentence_count._cache.lookups == 1
+    assert textstat.sentence_count.cache_info().hits == 1
 
 
 def test_unicode_support():

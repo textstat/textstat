@@ -13,7 +13,7 @@ setup(
     long_description_content_type='text/markdown',
     package_data={'': ['easy_word_list']},
     include_package_data=True,
-    install_requires=['pyphen', 'repoze.lru'],
+    install_requires=['pyphen'],
     license='MIT',
     python_requires=">=3.6",
     classifiers=(
