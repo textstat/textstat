@@ -4,7 +4,7 @@ from io import open
 setup(
     name='textstat',
     packages=['textstat'],
-    version='0.5.7',
+    version='0.6.0',
     description='Calculate statistical features from text',
     author='Shivam Bansal, Chaitanya Aggarwal',
     author_email='shivam5992@gmail.com',
