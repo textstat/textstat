@@ -87,6 +87,7 @@ class textstatistics:
         self.smog_index.cache_clear()
         self.linsear_write_formula.cache_clear()
         self.difficult_words.cache_clear()
+        self.difficult_words_list.cache_clear()
         self.dale_chall_readability_score.cache_clear()
         self.gunning_fog.cache_clear()
         self.spache_readability.cache_clear()
@@ -321,7 +322,7 @@ class textstatistics:
     def difficult_words(self, text, syllable_threshold=2):
         return len(self.difficult_words_list(text, syllable_threshold))
 
-    @repoze.lru.lru_cache(maxsize=128)
+    @lru_cache(maxsize=128)
     def difficult_words_list(self, text, syllable_threshold=2):
         text_list = re.findall(r"[\w\='‘’]+", text.lower())
         diff_words_set = set()
@@ -513,7 +514,7 @@ class textstatistics:
                 upper_score, get_grade_suffix(upper_score)
             )
 
-    @repoze.lru.lru_cache(maxsize=128)
+    @lru_cache(maxsize=128)
     def reading_time(self, text, ms_per_char=14.69):
         """
         Function to calculate reading time (Demberg & Keller, 2008)
