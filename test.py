@@ -299,7 +299,8 @@ def test_lru_caching():
     # Test that `sentence_count` was called
     assert textstat.sentence_count.cache_info().misses == 1
 
-    # Call `avg_sentence_length` again
+    # Call `avg_sentence_length` again, but clear it's cache first
+    textstat.avg_sentence_length.cache_clear()
     textstat.avg_sentence_length(long_test)
 
     # Test that `sentence_count` wasn't called again
