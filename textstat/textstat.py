@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
-from __future__ import print_function
-from __future__ import division
-
 import warnings
 import string
 import re
@@ -13,10 +7,10 @@ import pkg_resources
 import repoze.lru
 from pyphen import Pyphen
 
-easy_word_set = set([
+easy_word_set = {
     ln.decode('utf-8').strip() for ln in
     pkg_resources.resource_stream('textstat', 'easy_words.txt')
-])
+}
 
 langs = {
     "en": {  # Default config
@@ -362,10 +356,10 @@ class textstatistics:
         try:
             syllable_threshold = self.__get_lang_cfg("syllable_threshold")
             per_diff_words = (
-                (self.difficult_words(
+                self.difficult_words(
                     text,
                     syllable_threshold=syllable_threshold)
-                 / self.lexicon_count(text) * 100))
+                / self.lexicon_count(text) * 100)
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
             return legacy_round(grade, 2)
