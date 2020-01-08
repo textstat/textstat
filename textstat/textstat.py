@@ -7,10 +7,6 @@ import pkg_resources
 from functools import lru_cache
 from pyphen import Pyphen
 
-easy_word_set = {
-    ln.decode('utf-8').strip() for ln in
-    pkg_resources.resource_stream('textstat', 'easy_words.txt')
-}
 
 langs = {
     "en": {  # Default config
@@ -326,6 +322,7 @@ class textstatistics:
     def difficult_words_list(self, text, syllable_threshold=2):
         text_list = re.findall(r"[\w\='‘’]+", text.lower())
         diff_words_set = set()
+        easy_word_set = self.__get_lang_easy_words()
         for value in text_list:
             if value not in easy_word_set:
                 if self.syllable_count(value) >= syllable_threshold:
@@ -535,6 +532,29 @@ class textstatistics:
 
     def __get_lang_root(self):
         return self.__lang.split("_")[0]
+
+    def __get_lang_easy_words(self):
+        try:
+            easy_word_set = {
+                ln.decode("utf-8").strip()
+                for ln in pkg_resources.resource_stream(
+                    "textstat",
+                    f"resources/{self.__get_lang_root()}/easy_words.txt",
+                )
+            }
+        except FileNotFoundError:
+            warnings.warn(
+                "There is no easy words vocabulary for "
+                f"{self.__lang}, using english.",
+                Warning,
+            )
+            easy_word_set = {
+                ln.decode("utf-8").strip()
+                for ln in pkg_resources.resource_stream(
+                    "textstat", f"resources/en/easy_words.txt"
+                )
+            }
+        return easy_word_set
 
 
 textstat = textstatistics()
