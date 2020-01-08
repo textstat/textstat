@@ -78,7 +78,7 @@ By default functions implement algorithms for english language.
 To change language, use:
 
 ```python
-textstat.set_language(lang)
+textstat.set_lang(lang)
 ``` 
 
 The language will be used for syllable calculation and to choose 
