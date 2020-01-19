@@ -12,7 +12,7 @@ before_install:
     - pipenv install --dev --skip-lock
     - pip install codespell flake8
 script:
-    - codespell
+    - codespell --skip=./textstat/resources/es/easy_words.txt
     - pipenv run pycodestyle textstat/
     - pipenv run pycodestyle test.py
     - flake8 .
