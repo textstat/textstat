@@ -52,7 +52,7 @@ pip install textstat
 easy_install textstat
 ```
 
-#### Install lastest version from GitHub
+#### Install latest version from GitHub
 
 ```shell
 git clone https://github.com/shivam5992/textstat.git
@@ -190,8 +190,8 @@ Returns the SMOG index of the given text. This is a grade formula in that
 a score of 9.3 means that a ninth grader would be able to read the document.
 
 Texts of fewer than 30 sentences are statistically invalid, because
-the SMOG formula was normed on 30-sentence samples. textstat requires atleast
-3 sentences for a result.
+the SMOG formula was normed on 30-sentence samples. textstat requires at
+least 3 sentences for a result.
 
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/SMOG)
