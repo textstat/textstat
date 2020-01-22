@@ -307,6 +307,24 @@ def test_lru_caching():
     assert textstat.sentence_count.cache_info().hits == 1
 
 
+def test_changing_lang_clears_cache():
+    textstat.set_lang("en_US")
+
+    # Clear any cache and call reading ease
+    textstat.flesch_reading_ease.cache_clear()
+    textstat.flesch_reading_ease(short_test)
+
+    # Check the cache has only been missed once
+    assert textstat.flesch_reading_ease.cache_info().misses == 1
+
+    # Change the language and recall reading ease
+    textstat.set_lang("fr")
+    textstat.flesch_reading_ease(short_test)
+
+    # Check the cache hasn't been hit again
+    assert textstat.flesch_reading_ease.cache_info().misses == 1
+
+
 def test_unicode_support():
     textstat.set_lang("en_US")
     textstat.text_standard(
