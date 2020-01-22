@@ -10,7 +10,6 @@ matrix:
 before_install:
     - pip install pipenv
     - pipenv install --dev --skip-lock
-    - pip install codespell flake8
 script:
     - pipenv run codespell -L paket --skip=./textstat/resources/*/easy_words.txt
     - pipenv run flake8 .
