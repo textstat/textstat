@@ -8,6 +8,6 @@ Pyphen = "*"
 "repoze.lru" = "*"
 
 [dev-packages]
-pycodestyle = "*"
-pytest = "*"
+codespell = "*"
+flake8 = "*"
 ipython = "*"
