@@ -73,23 +73,19 @@ class textstatistics:
     __lang = "en_US"
     text_encoding = "utf-8"
 
+    def _cache_clear(self):
+        caching_methods = [
+            method for method in dir(self)
+            if callable(getattr(self, method))
+            and hasattr(getattr(self, method), "cache_info")
+        ]
+
+        for method in caching_methods:
+            getattr(self, method).cache_clear()
+
     def set_lang(self, lang):
         self.__lang = lang
-        self.syllable_count.cache_clear()
-        self.avg_syllables_per_word.cache_clear()
-        self.flesch_reading_ease.cache_clear()
-        self.flesch_kincaid_grade.cache_clear()
-        self.polysyllabcount.cache_clear()
-        self.smog_index.cache_clear()
-        self.linsear_write_formula.cache_clear()
-        self.difficult_words.cache_clear()
-        self.difficult_words_list.cache_clear()
-        self.dale_chall_readability_score.cache_clear()
-        self.gunning_fog.cache_clear()
-        self.spache_readability.cache_clear()
-        self.dale_chall_readability_score_v2.cache_clear()
-        self.text_standard.cache_clear()
-        self.reading_time.cache_clear()
+        self._cache_clear()
 
     @lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
