@@ -2,6 +2,8 @@ master_doc = 'index'
 
 extensions = ['releases']
 
+releases_github_path = 'shivam5992/textstat'
+
 html_theme = 'alabaster'
 
 html_sidebars = {
