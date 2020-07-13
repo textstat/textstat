@@ -1,7 +1,5 @@
 master_doc = 'index'
 
-extensions = ['recommonmark']
-
 html_theme = 'alabaster'
 
 html_sidebars = {

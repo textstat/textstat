@@ -1,11 +1,14 @@
-# Textstat
+========
+Textstat
+========
 
 Python package to calculate statistics from text to determine
 readability, complexity and grade level of a particular corpus.
 
-## Usage
+Usage
+=====
 
-```python
+.. code-block:: python
 >>> import textstat
 
 >>> test_data = (
@@ -22,4 +25,10 @@ readability, complexity and grade level of a particular corpus.
 
 >>> textstat.text_standard(test_data)
 '12th and 13th grade'
-```
+
+
+.. toctree::
+    :hidden:
+    :glob:
+
+    *
