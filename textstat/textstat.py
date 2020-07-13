@@ -159,7 +159,7 @@ class textstatistics:
         Sentence count of a text
         """
         ignore_count = 0
-        sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text)
+        sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text) # Characters inside clases don't need to be escaped
         for sentence in sentences:
             if self.lexicon_count(sentence) <= 2:
                 ignore_count += 1
@@ -521,7 +521,24 @@ class textstatistics:
 
         return legacy_round(reading_time/1000, 2)
 
+    # Spanish readability tests
+    @lru_cache(maxsize=128)
+    def fernandez_huerta(self, text):
+        '''
+        Fernandez Huerta readability score
+        Let P = avg. syllables p. word
+            F = words per sentence
+        Then f_huerta = 206.85 - 60*P - 1.02*F
+        '''
+        sentence_lenth = self.avg_sentence_length(text)
+        syllables_per_word = self.avg_syllables_per_word(text)
+
+        f_huerta = (
+            206.85 - float(60 * syllables_per_word) - float(1.02 * sentence_lenth) )
+        return legacy_round(f_huerta, 1)
+
     def __get_lang_cfg(self, key):
+        """ Read as get lang config """
         default = langs.get("en")
         config = langs.get(self.__get_lang_root(), default)
         return config.get(key, default.get(key))
