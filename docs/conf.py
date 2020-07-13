@@ -1,3 +1,5 @@
+master_doc = 'index'
+
 html_theme = 'alabaster'
 
 html_sidebars = {
