@@ -12,3 +12,10 @@ html_sidebars = {
         'searchbox.html',
     ]
 }
+
+html_theme_options = {
+    'github_user': 'shivam5992',
+    'github_repo': 'textstat',
+    'github_type': 'star',
+    'description': 'Calculate statistics from text',
+}
