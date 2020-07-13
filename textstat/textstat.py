@@ -4,7 +4,7 @@ import re
 import math
 from collections import Counter
 import pkg_resources
-from functools import lru_cache, total_ordering
+from functools import lru_cache
 from pyphen import Pyphen
 
 
@@ -159,7 +159,7 @@ class textstatistics:
         Sentence count of a text
         """
         ignore_count = 0
-        sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text) # Characters inside clases don't need to be escaped
+        sentences = re.split(r' *[\.\?!][\'"\)\]]*[ |\n](?=[A-Z])', text)
         for sentence in sentences:
             if self.lexicon_count(sentence) <= 2:
                 ignore_count += 1
@@ -533,7 +533,7 @@ class textstatistics:
 
         f_huerta = (
             206.85 - float(60 * syllables_per_word) -
-            float(1.02 * sentence_lenth) )
+            float(1.02 * sentence_lenth))
         return legacy_round(f_huerta, 1)
 
     @lru_cache(maxsize=128)
@@ -548,7 +548,7 @@ class textstatistics:
 
         s_p = (
             self.__get_lang_cfg("fre_base") -
-            62.3 * (syllables / total_words) 
+            62.3 * (syllables / total_words)
             - (total_words / total_sentences)
         )
 
@@ -557,7 +557,7 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def gutierrez_polini(self, text):
         '''
-        Guttierrez de Polini index 
+        Guttierrez de Polini index
         https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
         '''
         total_words = self.lexicon_count(text)
@@ -570,7 +570,7 @@ class textstatistics:
         )
 
         return legacy_round(gut_pol, 2)
-    
+
     @lru_cache(maxsize=128)
     def crawford(self, text):
         '''
