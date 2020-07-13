@@ -3,7 +3,7 @@
 Python package to calculate statistics from text to determine
 readability, complexity and grade level of a particular corpus.
 
-## Useage
+## Usage
 
 ```python
 >>> import textstat
