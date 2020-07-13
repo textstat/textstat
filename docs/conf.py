@@ -1,5 +1,7 @@
 master_doc = 'index'
 
+extensions = ['releases']
+
 html_theme = 'alabaster'
 
 html_sidebars = {
