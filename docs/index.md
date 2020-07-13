@@ -1,4 +1,4 @@
-# textstat
+# Textstat
 
 Python package to calculate statistics from text to determine
 readability, complexity and grade level of a particular corpus.
@@ -22,44 +22,4 @@ readability, complexity and grade level of a particular corpus.
 
 >>> textstat.text_standard(test_data)
 '12th and 13th grade'
-```
-
-
-## Install
-
-You can install textstat either via the Python Package Index
-(PyPI) or from source.
-
-#### Install using pip
-
-```shell
-pip install textstat
-```
-
-#### Install using easy_install
-
-```shell
-easy_install textstat
-```
-
-#### Install latest version from GitHub
-
-```shell
-git clone https://github.com/shivam5992/textstat.git
-cd textstat
-pip install .
-```
-
-#### Install from PyPI
-
-Download the latest version of textstat from
-http://pypi.python.org/pypi/textstat/
-
-You can install it by doing the following:
-
-```shell
-tar xfz textstat-*.tar.gz
-cd textstat-*/
-python setup.py build
-python setup.py install # as root
 ```
