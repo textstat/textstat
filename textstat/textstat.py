@@ -547,7 +547,7 @@ class textstatistics:
             easy_word_set = {
                 ln.decode("utf-8").strip()
                 for ln in pkg_resources.resource_stream(
-                    "textstat", f"resources/en/easy_words.txt"
+                    "textstat", "resources/en/easy_words.txt"
                 )
             }
         return easy_word_set
