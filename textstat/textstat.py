@@ -4,7 +4,7 @@ import re
 import math
 from collections import Counter
 import pkg_resources
-from functools import lru_cache
+from functools import lru_cache, total_ordering
 from pyphen import Pyphen
 
 
@@ -570,7 +570,27 @@ class textstatistics:
         )
 
         return legacy_round(gut_pol, 2)
-        
+    
+    @lru_cache(maxsize=128)
+    def crawford(self, text):
+        '''
+        Crawford index
+        https://legible.es/blog/formula-de-crawford/
+        '''
+        total_sentences = self.sentence_count(text)
+        total_words = self.lexicon_count(text)
+        total_syllables = self.syllable_count(text)
+
+        # Calculating __ per 100 words
+        sentences_per_words = 100 * (total_sentences / total_words)
+        syllables_per_words = 100 * (total_syllables / total_words)
+
+        craw_years = (
+            -0.205 * sentences_per_words
+            + 0.049 * syllables_per_words - 3.407
+            )
+
+        return legacy_round(craw_years, 1)
 
     def __get_lang_cfg(self, key):
         """ Read as get lang config """
