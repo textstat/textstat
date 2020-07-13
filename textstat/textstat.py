@@ -526,16 +526,29 @@ class textstatistics:
     def fernandez_huerta(self, text):
         '''
         Fernandez Huerta readability score
-        Let P = avg. syllables p. word
-            F = words per sentence
-        Then f_huerta = 206.85 - 60*P - 1.02*F
+        https://legible.es/blog/lecturabilidad-fernandez-huerta/
         '''
         sentence_lenth = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
 
         f_huerta = (
-            206.85 - float(60 * syllables_per_word) - float(1.02 * sentence_lenth) )
+            206.85 - float(60 * syllables_per_word) -
+            float(1.02 * sentence_lenth) )
         return legacy_round(f_huerta, 1)
+
+    @lru_cache(maxsize=128)
+    def szigriszt_pazos(self, text):
+        syllables = self.syllable_count(text)
+        total_words = self.lexicon_count(text)
+        total_sentences = self.sentence_count(text)
+
+        s_p = (
+            self.__get_lang_cfg("fre_base") -
+            62.3 * (syllables / total_words) 
+            - (total_words / total_sentences)
+        )
+
+        return legacy_round(s_p, 2)
 
     def __get_lang_cfg(self, key):
         """ Read as get lang config """
