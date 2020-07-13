@@ -538,6 +538,10 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def szigriszt_pazos(self, text):
+        '''
+        Szigriszt Pazos readability score (1992)
+        https://legible.es/blog/perspicuidad-szigriszt-pazos/
+        '''
         syllables = self.syllable_count(text)
         total_words = self.lexicon_count(text)
         total_sentences = self.sentence_count(text)
@@ -549,6 +553,24 @@ class textstatistics:
         )
 
         return legacy_round(s_p, 2)
+
+    @lru_cache(maxsize=128)
+    def gutierrez_polini(self, text):
+        '''
+        Guttierrez de Polini index 
+        https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
+        '''
+        total_words = self.lexicon_count(text)
+        total_letters = self.letter_count(text)
+        total_sentences = self.sentence_count(text)
+
+        gut_pol = (
+            95.2 - 9.7 * (total_letters / total_words)
+            - 0.35 * (total_words / total_sentences)
+        )
+
+        return legacy_round(gut_pol, 2)
+        
 
     def __get_lang_cfg(self, key):
         """ Read as get lang config """
