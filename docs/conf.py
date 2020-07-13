@@ -14,6 +14,7 @@ html_sidebars = {
 }
 
 html_theme_options = {
+    'logo': 'textstat.png',
     'github_user': 'shivam5992',
     'github_repo': 'textstat',
     'github_type': 'star',
