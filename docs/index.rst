@@ -9,9 +9,10 @@ Usage
 =====
 
 .. code-block:: python
->>> import textstat
 
->>> test_data = (
+  >>> import textstat
+  
+  >>> test_data = (
     "Playing games has always been thought to be important to "
     "the development of well-balanced and creative children; "
     "however, what part, if any, they should play in the lives "
@@ -21,10 +22,10 @@ Usage
     "with our children and other adults valuable to building "
     "interpersonal relationships but is also a wonderful way "
     "to release built up tension."
-)
-
->>> textstat.text_standard(test_data)
-'12th and 13th grade'
+  )
+  
+  >>> textstat.text_standard(test_data)
+  '12th and 13th grade'
 
 
 .. toctree::
