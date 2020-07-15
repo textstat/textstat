@@ -89,6 +89,7 @@ long_spanish_text = (
 
 easy_spanish_text = "Hoy es un lindo día"
 
+
 def test_char_count():
     textstat.set_lang("en_US")
     count = textstat.char_count(long_test)
@@ -366,29 +367,34 @@ def test_dale_chall_readability_score_v2():
 
     assert score == 6.87
 
+
 def test_fernandez_huerta():
     textstat.set_lang("es")
     score = textstat.fernandez_huerta(long_spanish_text)
 
     assert score == 43.1
 
-def  test_szigriszt_pazos():
+
+def test_szigriszt_pazos():
     textstat.set_lang("es")
     score = textstat.szigriszt_pazos(long_spanish_text)
 
     assert score == 41.45
 
-def  test_gutierrez_polini():
+
+def test_gutierrez_polini():
     textstat.set_lang("es")
     score = textstat.gutierrez_polini(easy_spanish_text)
 
     assert score == 64.35
 
-def  test_crawford():
+
+def test_crawford():
     textstat.set_lang("es")
     score = textstat.crawford(long_spanish_text)
 
     assert score == 6.1
+
 
 def test_default_lang_configs():
     # Config from default en_US should be used
