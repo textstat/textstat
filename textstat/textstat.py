@@ -528,12 +528,12 @@ class textstatistics:
         Fernandez Huerta readability score
         https://legible.es/blog/lecturabilidad-fernandez-huerta/
         '''
-        sentence_lenth = self.avg_sentence_length(text)
+        sentence_length = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
 
         f_huerta = (
             206.85 - float(60 * syllables_per_word) -
-            float(1.02 * sentence_lenth))
+            float(1.02 * sentence_length))
         return legacy_round(f_huerta, 1)
 
     @lru_cache(maxsize=128)
