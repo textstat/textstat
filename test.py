@@ -370,25 +370,25 @@ def test_fernandez_huerta():
     textstat.set_lang("es")
     score = textstat.fernandez_huerta(long_spanish_text)
 
-    assert score == 73.1
+    assert score == 43.1
 
 def  test_szigriszt_pazos():
     textstat.set_lang("es")
-    score = textstat.fernandez_huerta(long_spanish_text)
+    score = textstat.szigriszt_pazos(long_spanish_text)
 
-    assert score == 68.81
+    assert score == 41.45
 
 def  test_gutierrez_polini():
     textstat.set_lang("es")
     score = textstat.gutierrez_polini(easy_spanish_text)
 
-    assert score == 49.99
+    assert score == 64.35
 
 def  test_crawford():
     textstat.set_lang("es")
-    score = textstat.crawford(easy_spanish_text)
+    score = textstat.crawford(long_spanish_text)
 
-    assert score == 4.0
+    assert score == 6.1
 
 def test_default_lang_configs():
     # Config from default en_US should be used
