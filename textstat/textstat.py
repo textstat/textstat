@@ -521,7 +521,79 @@ class textstatistics:
 
         return legacy_round(reading_time/1000, 2)
 
+    # Spanish readability tests
+    @lru_cache(maxsize=128)
+    def fernandez_huerta(self, text):
+        '''
+        Fernandez Huerta readability score
+        https://legible.es/blog/lecturabilidad-fernandez-huerta/
+        '''
+        sentence_length = self.avg_sentence_length(text)
+        syllables_per_word = self.avg_syllables_per_word(text)
+
+        f_huerta = (
+            206.85 - float(60 * syllables_per_word) -
+            float(1.02 * sentence_length))
+        return legacy_round(f_huerta, 1)
+
+    @lru_cache(maxsize=128)
+    def szigriszt_pazos(self, text):
+        '''
+        Szigriszt Pazos readability score (1992)
+        https://legible.es/blog/perspicuidad-szigriszt-pazos/
+        '''
+        syllables = self.syllable_count(text)
+        total_words = self.lexicon_count(text)
+        total_sentences = self.sentence_count(text)
+
+        s_p = (
+            self.__get_lang_cfg("fre_base") -
+            62.3 * (syllables / total_words)
+            - (total_words / total_sentences)
+        )
+
+        return legacy_round(s_p, 2)
+
+    @lru_cache(maxsize=128)
+    def gutierrez_polini(self, text):
+        '''
+        Guttierrez de Polini index
+        https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
+        '''
+        total_words = self.lexicon_count(text)
+        total_letters = self.letter_count(text)
+        total_sentences = self.sentence_count(text)
+
+        gut_pol = (
+            95.2 - 9.7 * (total_letters / total_words)
+            - 0.35 * (total_words / total_sentences)
+        )
+
+        return legacy_round(gut_pol, 2)
+
+    @lru_cache(maxsize=128)
+    def crawford(self, text):
+        '''
+        Crawford index
+        https://legible.es/blog/formula-de-crawford/
+        '''
+        total_sentences = self.sentence_count(text)
+        total_words = self.lexicon_count(text)
+        total_syllables = self.syllable_count(text)
+
+        # Calculating __ per 100 words
+        sentences_per_words = 100 * (total_sentences / total_words)
+        syllables_per_words = 100 * (total_syllables / total_words)
+
+        craw_years = (
+            -0.205 * sentences_per_words
+            + 0.049 * syllables_per_words - 3.407
+            )
+
+        return legacy_round(craw_years, 1)
+
     def __get_lang_cfg(self, key):
+        """ Read as get lang config """
         default = langs.get("en")
         config = langs.get(self.__get_lang_root(), default)
         return config.get(key, default.get(key))

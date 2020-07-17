@@ -68,6 +68,27 @@ easy_text = (
     "so nice on the wall."
 )
 
+long_spanish_text = (
+    "Muchos años después, frente al pelotón de fusilamiento,"
+    "el coronel Aureliano Buendía había de recordar aquella "
+    "tarde remota en que su padre lo llevó a conocer el hielo."
+    "Macondo era entonces una aldea de veinte casas de barro y"
+    "cañabrava construidas a la orilla de un río de aguas"
+    "diáfanas que se precipitaban por un lecho de piedras pulidas,"
+    "blancas y enormes como huevos prehistóricos. El mundo era tan"
+    "reciente, que muchas cosas carecían de nombre, y para mencionarlas"
+    "había que señalarlas con el dedo. Todos los años, por el mes de marzo,"
+    "una familia de gitanos desarrapados plantaba su carpa cerca"
+    "de la aldea, y con un grande alboroto de pitos y timbales daban a"
+    "conocer los nuevos inventos. Primero llevaron el imán."
+    "Un gitano corpulento, de barba montaraz y manos de gorrión, que se"
+    "presentó con el nombre de Melquíades, hizo una truculenta demostración"
+    "pública de lo que él mismo llamaba la octava maravilla de"
+    "los sabios alquimistas de Macedonia."
+)
+
+easy_spanish_text = "Hoy es un lindo día"
+
 
 def test_char_count():
     textstat.set_lang("en_US")
@@ -345,6 +366,34 @@ def test_dale_chall_readability_score_v2():
     score = textstat.dale_chall_readability_score_v2(long_test)
 
     assert score == 6.87
+
+
+def test_fernandez_huerta():
+    textstat.set_lang("es")
+    score = textstat.fernandez_huerta(long_spanish_text)
+
+    assert score == 43.1
+
+
+def test_szigriszt_pazos():
+    textstat.set_lang("es")
+    score = textstat.szigriszt_pazos(long_spanish_text)
+
+    assert score == 41.45
+
+
+def test_gutierrez_polini():
+    textstat.set_lang("es")
+    score = textstat.gutierrez_polini(easy_spanish_text)
+
+    assert score == 64.35
+
+
+def test_crawford():
+    textstat.set_lang("es")
+    score = textstat.crawford(long_spanish_text)
+
+    assert score == 6.1
 
 
 def test_default_lang_configs():

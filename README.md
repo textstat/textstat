@@ -31,6 +31,10 @@ Python package to calculate statistics from text to determine readability, compl
 >>> textstat.linsear_write_formula(test_data)
 >>> textstat.gunning_fog(test_data)
 >>> textstat.text_standard(test_data)
+>>> textstat.fernandez_huerta(test_data)
+>>> textstat.szigriszt_pazos(test_data)
+>>> textstat.gutierrez_polini(test_data)
+>>> textstat.crawford(test_data)
 ```
 
 The argument (text) for all the defined functions remains the same -
@@ -92,6 +96,19 @@ for other languages listed below.
 |-----------------------------|----|----|----|----|----|----|----|----|
 | flesch_reading_ease         | ✔  | ✔  | ✔  | ✔  | ✔  | ✔  |    | ✔  |
 | gunning_fog                 | ✔  |    |    |    |    |    | ✔  |    |
+
+#### Spanish-specific tests
+The following functions are specifically designed for spanish language.
+They can be used on non-spanish texts, even though that use case is not recommended.
+
+```python
+>>> textstat.fernandez_huerta(test_data)
+>>> textstat.szigriszt_pazos(test_data)
+>>> textstat.gutierrez_polini(test_data)
+>>> textstat.crawford(test_data)
+```
+
+Additional information on the formula they implement can be found in their respective docstrings.
 
 ## List of Functions
 
@@ -272,7 +289,54 @@ grade level required to understand the text.
 Optional `float_output` allows the score to be returned as a
 `float`. Defaults to `False`.
 
+### Spanish-specific tests 
+#### Índice de lecturabilidad Fernandez-Huerta  
+```python
+textstat.fernandez_huerta(text)
+```
 
+Reformulation of the Flesch Reading Ease Formula specifically for spanish.
+The results can be interpreted similarly
+
+> Further reading on
+[This blog post](https://legible.es/blog/lecturabilidad-fernandez-huerta/)
+
+### Índice de perspicuidad de Szigriszt-Pazos
+```python
+textstat.szigriszt_pazos(text)
+```
+Adaptation of Flesch Reading Ease formula for spanish-based texts.
+Attempts to quantify how understandable a text is.
+
+> Further reading on
+[This blog post](https://legible.es/blog/perspicuidad-szigriszt-pazos/)
+
+### Fórmula de comprensibilidad de Gutiérrez de Polini
+```python
+textstat.gutierrez_polini(text)
+```
+
+Returns the Guttiérrez de Polini understandability index.
+
+Specifically designed for the texts in spanish, not an adaptation.
+Conceived for grade-school level texts.
+Scores for more complex text are not reliable.
+
+> Further reading on
+[This blog post](https://legible.es/blog/comprensibilidad-gutierrez-de-polini/)
+
+### Fórmula de Crawford
+```python
+textstat.crawford(text)
+```
+
+Returns the Crawford score for the text
+
+Returns an estimate of the years of schooling required to understand the text.
+The text is only valid for elementary school level texts.
+
+> Further reading on
+[This blog post](https://legible.es/blog/formula-de-crawford/)
 
 ## Contributing
 
