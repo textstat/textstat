@@ -1,8 +1,18 @@
-# textstat 
-Python package to calculate statistics from text to determine readability, complexity and grade level of a particular corpus.
+# Textstat
 
-[![Downloads](https://img.shields.io/badge/dynamic/json.svg?url=https://pypistats.org/api/packages/textstat/recent?mirrors=false&label=downloads&query=$.data.last_month&suffix=/month)](https://pypistats.org/packages/textstat)
+[![PyPI](https://img.shields.io/pypi/v/textstat.svg)](https://pypi.org/project/textstat/)
 [![Build Status](https://travis-ci.com/shivam5992/textstat.svg?branch=master)](https://travis-ci.com/shivam5992/textstat)
+[![Downloads](https://img.shields.io/badge/dynamic/json.svg?url=https://pypistats.org/api/packages/textstat/recent?mirrors=false&label=downloads&query=$.data.last_month&suffix=/month)](https://pypistats.org/packages/textstat)
+
+**Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level.**
+
+<p align="center">
+  <img width="100%" src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&h=400&q=80">
+</p>
+<p align="right">
+  <sup>Photo by <a href="https://unsplash.com/@impatrickt">Patrick Tomasso</a>
+  on <a href="https://unsplash.com/images/things/book">Unsplash</a></sup>
+</p>
 
 ## Usage
 
