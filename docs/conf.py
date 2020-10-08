@@ -9,12 +9,17 @@ releases_unstable_prehistory = True
 
 html_theme = 'alabaster'
 
+templates_path = [
+    '_templates',
+]
+
 html_sidebars = {
     '**': [
         'about.html',
         'navigation.html',
         'relations.html',
         'searchbox.html',
+        'contribute.html',
     ]
 }
 
