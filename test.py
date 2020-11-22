@@ -89,6 +89,8 @@ long_spanish_text = (
 
 easy_spanish_text = "Hoy es un lindo día"
 
+difficult_word = "Irregardless"
+easy_word = "Dog"
 
 def test_char_count():
     textstat.set_lang("en_US")
@@ -254,6 +256,17 @@ def test_difficult_words_list():
     result = textstat.difficult_words_list(short_test)
 
     assert result == ["sunglasses"]
+
+
+def test_is_difficult_word():
+    textstat.set_lang("en_US")
+    result = textstat.is_difficult_word(difficult_word)
+
+    assert result
+
+    result = textstat.is_difficult_word(easy_word)
+
+    assert not result
 
 
 def test_dale_chall_readability_score():
