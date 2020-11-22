@@ -318,11 +318,9 @@ class textstatistics:
     def difficult_words_list(self, text, syllable_threshold=2):
         text_list = re.findall(r"[\w\='‘’]+", text.lower())
         diff_words_set = set()
-        easy_word_set = self.__get_lang_easy_words()
         for value in text_list:
-            if value not in easy_word_set:
-                if self.syllable_count(value) >= syllable_threshold:
-                    diff_words_set.add(value)
+            if self.is_difficult_word(value, syllable_threshold):
+                diff_words_set.add(value)
         return list(diff_words_set)
 
     @lru_cache(maxsize=128)
