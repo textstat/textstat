@@ -326,10 +326,12 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def is_difficult_word(self, word, syllable_threshold=2):
         easy_word_set = self.__get_lang_easy_words()
-        if word not in easy_word_set and self.syllable_count(word) >= syllable_threshold:
-            return True
-        else:
+        syllables = self.syllable_count(word)
+
+        if word in easy_word_set or syllables < syllable_threshold:
             return False
+
+        return True
 
     @lru_cache(maxsize=128)
     def dale_chall_readability_score(self, text):

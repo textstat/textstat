@@ -89,8 +89,9 @@ long_spanish_text = (
 
 easy_spanish_text = "Hoy es un lindo día"
 
-difficult_word = "Irregardless"
+difficult_word = "Regardless"
 easy_word = "Dog"
+
 
 def test_char_count():
     textstat.set_lang("en_US")
