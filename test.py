@@ -263,11 +263,14 @@ def test_is_difficult_word():
     textstat.set_lang("en_US")
     result = textstat.is_difficult_word(difficult_word)
 
-    assert result
+    assert result is True
 
-    result = textstat.is_difficult_word(easy_word)
 
-    assert not result
+def test_is_easy_word():
+    textstat.set_lang("en_US")
+    result = textstat.is_easy_word(easy_word)
+
+    assert result is True
 
 
 def test_dale_chall_readability_score():
