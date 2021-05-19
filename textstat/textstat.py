@@ -73,6 +73,9 @@ class textstatistics:
     __lang = "en_US"
     text_encoding = "utf-8"
 
+    def __init__(self):
+        self.set_lang(self.__lang)
+
     def _cache_clear(self):
         caching_methods = [
             method for method in dir(self)
@@ -85,6 +88,7 @@ class textstatistics:
 
     def set_lang(self, lang):
         self.__lang = lang
+        self.pyphen = Pyphen(lang=self.__lang)
         self._cache_clear()
 
     @lru_cache(maxsize=128)
@@ -146,10 +150,9 @@ class textstatistics:
         if not text:
             return 0
 
-        dic = Pyphen(lang=self.__lang)
         count = 0
         for word in text.split(' '):
-            word_hyphenated = dic.inserted(word)
+            word_hyphenated = self.pyphen.inserted(word)
             count += max(1, word_hyphenated.count("-") + 1)
         return count
 
