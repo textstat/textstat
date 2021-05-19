@@ -321,7 +321,8 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def difficult_words_list(self, text, syllable_threshold=2):
         words = set(re.findall(r"[\w\='‘’]+", text.lower()))
-        diff_words = [word for word in words if self.is_difficult_word(word, syllable_threshold)]
+        diff_words = [word for word in words
+                      if self.is_difficult_word(word, syllable_threshold)]
         return diff_words
 
     @lru_cache(maxsize=128)
