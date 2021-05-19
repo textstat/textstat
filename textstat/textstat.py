@@ -73,6 +73,7 @@ class textstatistics:
     __lang = "en_US"
     text_encoding = "utf-8"
     __easy_word_sets = {}
+    __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
 
     def __init__(self):
         self.set_lang(self.__lang)
@@ -114,9 +115,9 @@ class textstatistics:
             text = text.replace(" ", "")
         return len(self.remove_punctuation(text))
 
-    @staticmethod
-    def remove_punctuation(text):
-        return ''.join(ch for ch in text if ch not in string.punctuation)
+    @classmethod
+    def remove_punctuation(cls, text):
+        return cls.__punctuation_regex.sub('', text)
 
     @lru_cache(maxsize=128)
     def lexicon_count(self, text, removepunct=True):
@@ -153,8 +154,7 @@ class textstatistics:
 
         count = 0
         for word in text.split(' '):
-            word_hyphenated = self.pyphen.inserted(word)
-            count += max(1, word_hyphenated.count("-") + 1)
+            count += len(self.pyphen.positions(word)) + 1
         return count
 
     @lru_cache(maxsize=128)
