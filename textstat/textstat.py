@@ -72,6 +72,7 @@ def get_grade_suffix(grade):
 class textstatistics:
     __lang = "en_US"
     text_encoding = "utf-8"
+    __easy_word_sets = {}
 
     def __init__(self):
         self.set_lang(self.__lang)
@@ -613,27 +614,30 @@ class textstatistics:
         return self.__lang.split("_")[0]
 
     def __get_lang_easy_words(self):
-        try:
-            easy_word_set = {
-                ln.decode("utf-8").strip()
-                for ln in pkg_resources.resource_stream(
-                    "textstat",
-                    f"resources/{self.__get_lang_root()}/easy_words.txt",
+        lang = self.__get_lang_root()
+        if lang not in self.__easy_word_sets:
+            try:
+                easy_word_set = {
+                    ln.decode("utf-8").strip()
+                    for ln in pkg_resources.resource_stream(
+                        "textstat",
+                        f"resources/{lang}/easy_words.txt",
+                    )
+                }
+            except FileNotFoundError:
+                warnings.warn(
+                    "There is no easy words vocabulary for "
+                    f"{self.__lang}, using english.",
+                    Warning,
                 )
-            }
-        except FileNotFoundError:
-            warnings.warn(
-                "There is no easy words vocabulary for "
-                f"{self.__lang}, using english.",
-                Warning,
-            )
-            easy_word_set = {
-                ln.decode("utf-8").strip()
-                for ln in pkg_resources.resource_stream(
-                    "textstat", "resources/en/easy_words.txt"
-                )
-            }
-        return easy_word_set
+                easy_word_set = {
+                    ln.decode("utf-8").strip()
+                    for ln in pkg_resources.resource_stream(
+                        "textstat", "resources/en/easy_words.txt"
+                    )
+                }
+            self.__easy_word_sets[lang] = easy_word_set
+        return self.__easy_word_sets[lang]
 
 
 textstat = textstatistics()
