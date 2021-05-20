@@ -72,6 +72,11 @@ def get_grade_suffix(grade):
 class textstatistics:
     __lang = "en_US"
     text_encoding = "utf-8"
+    __easy_word_sets = {}
+    __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
+
+    def __init__(self):
+        self.set_lang(self.__lang)
 
     def _cache_clear(self):
         caching_methods = [
@@ -85,6 +90,7 @@ class textstatistics:
 
     def set_lang(self, lang):
         self.__lang = lang
+        self.pyphen = Pyphen(lang=self.__lang)
         self._cache_clear()
 
     @lru_cache(maxsize=128)
@@ -109,9 +115,9 @@ class textstatistics:
             text = text.replace(" ", "")
         return len(self.remove_punctuation(text))
 
-    @staticmethod
-    def remove_punctuation(text):
-        return ''.join(ch for ch in text if ch not in string.punctuation)
+    @classmethod
+    def remove_punctuation(cls, text):
+        return cls.__punctuation_regex.sub('', text)
 
     @lru_cache(maxsize=128)
     def lexicon_count(self, text, removepunct=True):
@@ -146,11 +152,9 @@ class textstatistics:
         if not text:
             return 0
 
-        dic = Pyphen(lang=self.__lang)
         count = 0
         for word in text.split(' '):
-            word_hyphenated = dic.inserted(word)
-            count += max(1, word_hyphenated.count("-") + 1)
+            count += len(self.pyphen.positions(word)) + 1
         return count
 
     @lru_cache(maxsize=128)
@@ -316,21 +320,18 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def difficult_words_list(self, text, syllable_threshold=2):
-        text_list = re.findall(r"[\w\='‘’]+", text.lower())
-        diff_words_set = set()
-        for value in text_list:
-            if self.is_difficult_word(value, syllable_threshold):
-                diff_words_set.add(value)
-        return list(diff_words_set)
+        words = set(re.findall(r"[\w\='‘’]+", text.lower()))
+        diff_words = [word for word in words
+                      if self.is_difficult_word(word, syllable_threshold)]
+        return diff_words
 
     @lru_cache(maxsize=128)
     def is_difficult_word(self, word, syllable_threshold=2):
         easy_word_set = self.__get_lang_easy_words()
-        syllables = self.syllable_count(word)
-
-        if word in easy_word_set or syllables < syllable_threshold:
+        if word in easy_word_set:
             return False
-
+        if self.syllable_count(word) < syllable_threshold:
+            return False
         return True
 
     @lru_cache(maxsize=128)
@@ -614,27 +615,30 @@ class textstatistics:
         return self.__lang.split("_")[0]
 
     def __get_lang_easy_words(self):
-        try:
-            easy_word_set = {
-                ln.decode("utf-8").strip()
-                for ln in pkg_resources.resource_stream(
-                    "textstat",
-                    f"resources/{self.__get_lang_root()}/easy_words.txt",
+        lang = self.__get_lang_root()
+        if lang not in self.__easy_word_sets:
+            try:
+                easy_word_set = {
+                    ln.decode("utf-8").strip()
+                    for ln in pkg_resources.resource_stream(
+                        "textstat",
+                        f"resources/{lang}/easy_words.txt",
+                    )
+                }
+            except FileNotFoundError:
+                warnings.warn(
+                    "There is no easy words vocabulary for "
+                    f"{self.__lang}, using english.",
+                    Warning,
                 )
-            }
-        except FileNotFoundError:
-            warnings.warn(
-                "There is no easy words vocabulary for "
-                f"{self.__lang}, using english.",
-                Warning,
-            )
-            easy_word_set = {
-                ln.decode("utf-8").strip()
-                for ln in pkg_resources.resource_stream(
-                    "textstat", "resources/en/easy_words.txt"
-                )
-            }
-        return easy_word_set
+                easy_word_set = {
+                    ln.decode("utf-8").strip()
+                    for ln in pkg_resources.resource_stream(
+                        "textstat", "resources/en/easy_words.txt"
+                    )
+                }
+            self.__easy_word_sets[lang] = easy_word_set
+        return self.__easy_word_sets[lang]
 
 
 textstat = textstatistics()
