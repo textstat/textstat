@@ -3,7 +3,7 @@ Changelog
 =========
 
 - :release:`0.7.1 <2021-05-20>`
-- :bug`138` Improved performace of ``difficult_words`` function.
+- :bug`138` Improved performance of ``difficult_words`` function.
 - :release:`0.7.0 <2020-11-22>`
 - :feature:`129` Added Fernandez-Huerta test.
 - :feature:`129` Added szigriszt-Pasos formula.
