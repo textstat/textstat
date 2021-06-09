@@ -341,7 +341,7 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def dale_chall_readability_score(self, text):
         word_count = self.lexicon_count(text)
-        count = word_count - self.difficult_words(text)
+        count = word_count - self.difficult_words(text, syllable_threshold=0)
 
         try:
             per = float(count) / float(word_count) * 100
