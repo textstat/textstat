@@ -1,7 +1,6 @@
 """Test suite for textstat
 """
 
-from typing import Mapping
 import textstat
 
 short_test = "Cool dogs wear da sunglasses."
