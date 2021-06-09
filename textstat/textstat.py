@@ -618,7 +618,7 @@ class textstatistics:
         return len([w for w in word_list if self.syllable_count(w) < 2])
 
     @lru_cache(maxsize=128)
-    def wiener_sachtextformel(self, text, variant: int = 1):
+    def wiener_sachtextformel(self, text, variant):
         '''
         Wiener Sachtextformel for readability assessment of German texts
         
