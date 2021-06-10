@@ -606,7 +606,7 @@ class textstatistics:
         return legacy_round(craw_years, 1)
 
     @lru_cache(maxsize=128)
-    def longwordcount(self, text):
+    def long_word_count(self, text):
         ''' counts words with more than 6 characters '''
         word_list = self.remove_punctuation(text).split()
         return len([w for w in word_list if len(w) > 6])
@@ -633,7 +633,7 @@ class textstatistics:
 
         ms = 100 * self.polysyllabcount(text) / n_words
         sl = n_words / self.sentence_count(text)
-        iw = 100 * self.longwordcount(text) / n_words
+        iw = 100 * self.long_word_count(text) / n_words
         es = 100 * self.monosyllabcount(text) / n_words
         
         if variant == 1:
