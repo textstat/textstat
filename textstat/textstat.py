@@ -612,6 +612,9 @@ class textstatistics:
         https://it.wikipedia.org/wiki/Indice_Gulpease
         '''
         
+        if len(text) < 1:
+            return 0.0
+
         n_words = float(self.lexicon_count(text))
         return (300 * self.sentence_count(text) / n_words) - (10 * self.char_count(text) / n_words) + 89
 
