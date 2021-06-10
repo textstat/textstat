@@ -624,8 +624,12 @@ class textstatistics:
         
         https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
         '''
+        
+        if len(text) < 1: 
+            return 0.0
 
         n_words = float(self.lexicon_count(text))
+
 
         ms = 100 * self.polysyllabcount(text) / n_words
         sl = n_words / self.sentence_count(text)
