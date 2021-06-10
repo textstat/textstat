@@ -385,7 +385,7 @@ class textstatistics:
         try:
             per_long_words = (float(long_words) * 100) / words_len
         except ZeroDivisionError:
-            per_long_words = 0.0
+            return 0.0
         asl = self.avg_sentence_length(text)
         lix = asl + per_long_words
 
