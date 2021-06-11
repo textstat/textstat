@@ -89,6 +89,11 @@ long_spanish_text = (
 
 easy_spanish_text = "Hoy es un lindo día"
 
+italian_text = (
+    "Roma è un comune italiano, capitale della Repubblica Italiana, "
+    "nonché capoluogo dell'omonima città metropolitana e della regione Lazio."
+)
+
 difficult_word = "Regardless"
 easy_word = "Dog"
 
@@ -411,6 +416,12 @@ def test_crawford():
     score = textstat.crawford(long_spanish_text)
 
     assert score == 6.1
+
+
+def test_gulpease_index():
+    score = textstat.gulpease_index(italian_text)
+
+    assert score == 40.1
 
 
 def test_default_lang_configs():
