@@ -252,13 +252,16 @@ class textstatistics:
         
         for t in tashkeel:
             for i, c in enumerate(char_list):
-                # only if a character has a sucessor and is a tashkeel ...
-                if i + 1 < len(char_list) and c == t:
-                    # increment long syllable count if a char is followed by an alef, waw or yaaA
-                    if char_list[i+1] in ['\u0627', '\u0648', '\u064a']:
-                        long_count += 1
-                    else:
-                        short_count += 1
+                if c != t:
+                    continue
+
+                # only if a character is a tashkeel, has a successor 
+                # and is followed by an alef, waw or yaaA ...
+                if i + 1 < len(char_list) and char_list[i+1] in ['\u0627', '\u0648', '\u064a']:
+                    # ... increment long syllable count
+                    long_count += 1
+                else:
+                    short_count += 1
 
         # stress syllables: tanween fatih | tanween damm | tanween kasr | shadda
         stress_pattern = re.compile(r'[\u064B\u064C\u064D\u0651]')
