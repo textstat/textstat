@@ -216,6 +216,94 @@ class textstatistics:
             return legacy_round(sentence_per_word, 2)
         except ZeroDivisionError:
             return 0.0
+    
+    @lru_cache(maxsize=128)
+    def words_per_sentence(self, text):
+        s_count = self.sentence_count(text)
+
+        if s_count < 1:
+            return self.lexicon_count(text)
+
+        return float(self.lexicon_count(text) / s_count)
+
+    @lru_cache(maxsize=128)
+    def count_complex_arabic_words(self, text):
+        ''' counts complex arabic words '''
+        count = 0 
+
+        # fatHa | tanween fatH | dhamma | tanween dhamm | kasra | tanween kasr | shaddah
+        pattern = re.compile('[\u064E\u064B\u064F\u064C\u0650\u064D\u0651]')
+
+        for w in text.split():
+            if len(pattern.findall(w)) > 5:
+                count += 1
+
+        return count
+
+    @lru_cache(maxsize=128)
+    def count_arabic_syllables(self, text):
+        ''' counts arabic syllables where long and stress syllables are counted double '''
+        short_count = 0
+        long_count = 0
+        
+        # tashkeel: fatha | damma | kasra
+        tashkeel = [r'\u064E', r'\u064F', r'\u0650']
+        char_list = [c for w in self.remove_punctuation(text).split() for c in w]
+        
+        for t in tashkeel:
+            for i, c in enumerate(char_list):
+                if c != t:
+                    continue
+
+                # only if a character is a tashkeel, has a successor 
+                # and is followed by an alef, waw or yaaA ...
+                if i + 1 < len(char_list) and char_list[i+1] in ['\u0627', '\u0648', '\u064a']:
+                    # ... increment long syllable count
+                    long_count += 1
+                else:
+                    short_count += 1
+
+        # stress syllables: tanween fatih | tanween damm | tanween kasr | shadda
+        stress_pattern = re.compile(r'[\u064B\u064C\u064D\u0651]')
+        stress_count = len(stress_pattern.findall(text))
+
+        if short_count == 0:
+            text = re.sub(r'[\u0627\u0649\?\.\!\,\s*]', '', text)
+            short_count = len(text) - 2
+
+        return short_count + 2 * (long_count + stress_count)
+
+    @lru_cache(maxsize=128)
+    def count_faseeh(self, text):
+        ''' counts faseeh in arabic texts '''
+        count = 0
+        
+        # single faseeh char's: hamza nabira | hamza satr | amza waw | Thal | DHaA
+        unipattern = re.compile(r'[\u0626\u0621\u0624\u0630\u0638]')
+        
+        # double faseeh char's: waw wa alef | waw wa noon
+        bipattern = re.compile(r'(\u0648\u0627|\u0648\u0646)')
+
+        for w in text.split():
+            faseeh_count = len(unipattern.findall(w)) + len(bipattern.findall(w))
+        
+            if self.count_arabic_syllables(w) > 5 and faseeh_count > 0:
+                count += 1
+        
+        return count
+    
+    @lru_cache(maxsize=128)
+    def count_arabic_long_words(self, text):
+        ''' counts long arabic words without short vowels (tashkeel) '''
+        tashkeel = r"\u064E|\u064B|\u064F|\u064C|\u0650|\u064D|\u0651|\u0652|\u0653|\u0657|\u0658"
+        text = self.remove_punctuation(re.sub(tashkeel, "", text))
+
+        count = 0
+        for t in text.split():
+            if len(t) > 5:
+                count += 1
+        
+        return count
 
     @lru_cache(maxsize=128)
     def flesch_reading_ease(self, text):
@@ -305,9 +393,12 @@ class textstatistics:
 
         text = ' '.join(text_list)
 
-        number = float(
-            (easy_word * 1 + difficult_word * 3)
-            / self.sentence_count(text))
+        try:
+            number = float(
+                (easy_word * 1 + difficult_word * 3) / self.sentence_count(text)
+            )
+        except ZeroDivisionError:
+            return 0.0
 
         if number <= 20:
             number -= 2
@@ -379,8 +470,10 @@ class textstatistics:
 
         words_len = len(words)
         long_words = len([wrd for wrd in words if len(wrd) > 6])
-
-        per_long_words = (float(long_words) * 100) / words_len
+        try:
+            per_long_words = (float(long_words) * 100) / words_len
+        except ZeroDivisionError:
+            return 0.0
         asl = self.avg_sentence_length(text)
         lix = asl + per_long_words
 
@@ -413,8 +506,11 @@ class textstatistics:
         """
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
-        asl = total_no_of_words / count_of_sentences
-        pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        try:
+            asl = total_no_of_words / count_of_sentences
+            pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        except ZeroDivisionError:
+            return 0.0
         spache = (0.141 * asl) + (0.086 * pdw) + 0.839
         if not float_output:
             return int(spache)
@@ -430,8 +526,11 @@ class textstatistics:
         """
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
-        asl = total_no_of_words / count_of_sentences
-        pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        try:
+            asl = total_no_of_words / count_of_sentences
+            pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        except ZeroDivisionError:
+            return 0.0
         raw_score = 0.1579 * (pdw) + 0.0496 * asl
         adjusted_score = raw_score
         if raw_score > 0.05:
@@ -558,13 +657,14 @@ class textstatistics:
         syllables = self.syllable_count(text)
         total_words = self.lexicon_count(text)
         total_sentences = self.sentence_count(text)
-
-        s_p = (
-            self.__get_lang_cfg("fre_base") -
-            62.3 * (syllables / total_words)
-            - (total_words / total_sentences)
-        )
-
+        try:
+            s_p = (
+                self.__get_lang_cfg("fre_base") -
+                62.3 * (syllables / total_words)
+                - (total_words / total_sentences)
+            )
+        except ZeroDivisionError:
+            return 0.0
         return legacy_round(s_p, 2)
 
     @lru_cache(maxsize=128)
@@ -577,11 +677,13 @@ class textstatistics:
         total_letters = self.letter_count(text)
         total_sentences = self.sentence_count(text)
 
-        gut_pol = (
-            95.2 - 9.7 * (total_letters / total_words)
-            - 0.35 * (total_words / total_sentences)
-        )
-
+        try:
+            gut_pol = (
+                95.2 - 9.7 * (total_letters / total_words)
+                - 0.35 * (total_words / total_sentences)
+            )
+        except ZeroDivisionError:
+            return 0.0
         return legacy_round(gut_pol, 2)
 
     @lru_cache(maxsize=128)
@@ -595,8 +697,11 @@ class textstatistics:
         total_syllables = self.syllable_count(text)
 
         # Calculating __ per 100 words
-        sentences_per_words = 100 * (total_sentences / total_words)
-        syllables_per_words = 100 * (total_syllables / total_words)
+        try:
+            sentences_per_words = 100 * (total_sentences / total_words)
+            syllables_per_words = 100 * (total_syllables / total_words)
+        except ZeroDivisionError:
+            return 0.0
 
         craw_years = (
             -0.205 * sentences_per_words
@@ -604,6 +709,81 @@ class textstatistics:
             )
 
         return legacy_round(craw_years, 1)
+
+    @lru_cache(maxsize=128)
+    def osman(self, text):
+        '''
+        Osman index for Arabic texts
+        https://www.aclweb.org/anthology/L16-1038.pdf
+        '''
+
+        if not len(text):
+            return 0.0
+
+        complex_word_rate = float(self.count_complex_arabic_words(text)) / self.lexicon_count(text)
+        long_word_rate = float(self.count_arabic_long_words(text)) / self.lexicon_count(text)
+        syllables_per_word = float(self.count_arabic_syllables(text)) / self.lexicon_count(text)
+        faseeh_per_word = float(self.count_faseeh(text)) / self.lexicon_count(text)
+
+        osman = 200.791 - (1.015 * self.words_per_sentence(text)) - \
+            (24.181 * (complex_word_rate + syllables_per_word + faseeh_per_word + long_word_rate))
+
+        return legacy_round(osman, 2)
+	
+    @lru_cache(maxsize=128)
+    def gulpease_index(self, text):
+        '''
+        Indice Gulpease Index for Italian texts
+        https://it.wikipedia.org/wiki/Indice_Gulpease
+        '''
+        
+        if len(text) < 1:
+            return 0.0
+
+        n_words = float(self.lexicon_count(text))
+        return (300 * self.sentence_count(text) / n_words) - (10 * self.char_count(text) / n_words) + 89
+
+    @lru_cache(maxsize=128)
+    def long_word_count(self, text):
+        ''' counts words with more than 6 characters '''
+        word_list = self.remove_punctuation(text).split()
+        return len([w for w in word_list if len(w) > 6])
+
+    @lru_cache(maxsize=128)
+    def monosyllabcount(self, text):
+        ''' counts monosyllables '''
+        word_list = self.remove_punctuation(text).split()
+        return len([w for w in word_list if self.syllable_count(w) < 2])
+
+    @lru_cache(maxsize=128)
+    def wiener_sachtextformel(self, text, variant):
+        '''
+        Wiener Sachtextformel for readability assessment of German texts
+        
+        https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
+        '''
+        
+        if len(text) < 1: 
+            return 0.0
+
+        n_words = float(self.lexicon_count(text))
+
+
+        ms = 100 * self.polysyllabcount(text) / n_words
+        sl = n_words / self.sentence_count(text)
+        iw = 100 * self.long_word_count(text) / n_words
+        es = 100 * self.monosyllabcount(text) / n_words
+        
+        if variant == 1:
+            return (0.1935 * ms) + (0.1672 * sl) + (0.1297 * iw) - (0.0327 * es) - 0.875
+        elif variant == 2:
+            return (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
+        elif variant == 3:
+            return (0.2963 * ms) + (0.1905 * sl) - 1.1144
+        elif variant == 4:
+            return (0.2744 * ms) + (0.2656 * sl) - 1.693
+        else:
+            raise ValueError("variant can only be an integer between 1 and 4")
 
     def __get_lang_cfg(self, key):
         """ Read as get lang config """

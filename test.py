@@ -1,3 +1,6 @@
+#!/usr/bin/python
+#-*- coding:utf-8 -*-
+
 """Test suite for textstat
 """
 
@@ -130,9 +133,43 @@ long_russian_text_guillemets = (
     "соревнованием. По этим причинам взрослые должны уделять "
     "больше внимания играм в своей жизни"
 )
+  
+italian_text = (
+    "Roma è un comune italiano, capitale della Repubblica Italiana, "
+    "nonché capoluogo dell'omonima città metropolitana e della regione Lazio."
+)
 
 difficult_word = "Regardless"
 easy_word = "Dog"
+
+empty_str = ""
+
+easy_arabic_text ="ذهب هند وأحمد الى المدرسة. هند تحب الرسم والمطالعة"
+hard_arabic_text = (
+    "\u062a\u062a\u0631\u0643\u0632 \u0623\u0633\u0633 \
+    \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \
+    \u0627\u0644\u0646\u0648\u0648\u064a\u0629 \u0628\u0634\u0643\u0644 \
+    \u0639\u0627\u0645 \u0639\u0644\u064a \u0627\u0644\u0630\u0631\u0629 \
+    \u0648\u0645\u0643\u0648\u0646\u0627\u062a\u0647\u0627 \
+    \u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629 \
+    \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0645\u0639 \u062a\u0644\u0643 \
+    \u0627\u0644\u0630\u0631\u0629 \u0648\u0627\u0644\u0639\u0646\u0627\u0635\u0631 \
+    \u0648\u062d\u064a\u062b \u0627\u0646 \u0647\u0630\u0627 \u0647\u0648 \
+    \u0627\u0644\u0645\u0628\u062d\u062b \u0627\u0644\u0639\u0627\u0645 \
+    \u0644\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \u0627\u0644\u0646\u0648\u0648\u064a\u0629 \
+    \u0641\u0627\u0646\u0647 \u0627\u062d\u064a\u0627\u0646\u0627 \u0645\u0627 \
+    \u064a\u0637\u0644\u0642 \u0639\u0644\u064a\u0647\u0627 \
+    \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \u0627\u0644\u0630\u0631\u064a\u0629 \
+    \u0627\u0644\u0627 \u0623\u0646 \u0645\u062c\u0627\u0644 \
+    \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \u0627\u0644\u0646\u0648\u0648\u064a\u0629 \
+    \u0623\u0639\u0645 \u0648\u0627\u0634\u0645\u0644 \u0645\u0646 \
+    \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \u0627\u0644\u0630\u0631\u064a\u0629 \
+    \u0648\u0643\u0630\u0644\u0643 \u0627\u0644\u0641\u064a\u0632\u064a\u0627\u0621 \
+    \u0627\u0644\u0630\u0631\u064a\u0629 \u062a\u0647\u062a\u0645 \u0628\u062f\u0627\u0631\u0633\u0629 \
+    \u0627\u0644\u0630\u0631\u0629 \u0641\u0649 \u062d\u0627\u0644\u0627\u062a\u0647\u0627 \
+    \u0648\u062a\u0641\u0627\u0639\u0644\u0627\u062a\u0647\u0627 \
+    \u0627\u0644\u0645\u062e\u062a\u0644\u0641\u0629"
+)
 
 
 def test_char_count():
@@ -293,6 +330,9 @@ def test_linsear_write_formula():
 
     assert result == 14.5
 
+    result = textstat.linsear_write_formula(empty_str)
+
+    assert result == -1.0
 
 def test_difficult_words():
     textstat.set_lang("en_US")
@@ -328,6 +368,9 @@ def test_dale_chall_readability_score():
 
     assert score == 6.87
 
+    score = textstat.dale_chall_readability_score(empty_str)
+
+    assert score == 0.0
 
 def test_gunning_fog():
     textstat.set_lang("en_US")
@@ -348,6 +391,9 @@ def test_lix():
 
     assert score == 45.11
 
+    result = textstat.lix(empty_str)
+
+    assert result == 0.0
 
 def test_rix():
     textstat.set_lang("en_US")
@@ -426,6 +472,9 @@ def test_spache_readability():
 
     assert spache == 2
 
+    score = textstat.spache_readability(empty_str)
+
+    assert score == 0.0
 
 def test_dale_chall_readability_score_v2():
     textstat.set_lang("en_US")
@@ -439,13 +488,20 @@ def test_fernandez_huerta():
     score = textstat.fernandez_huerta(long_spanish_text)
 
     assert score == 43.1
+    
+    score = textstat.fernandez_huerta(empty_str)
 
+    assert score == 0.0
 
 def test_szigriszt_pazos():
     textstat.set_lang("es")
     score = textstat.szigriszt_pazos(long_spanish_text)
 
     assert score == 41.45
+
+    score = textstat.szigriszt_pazos(empty_str)
+
+    assert score == 0.0
 
 
 def test_gutierrez_polini():
@@ -454,6 +510,9 @@ def test_gutierrez_polini():
 
     assert score == 64.35
 
+    score = textstat.gutierrez_polini(empty_str)
+
+    assert score == 0.0
 
 def test_crawford():
     textstat.set_lang("es")
@@ -461,6 +520,20 @@ def test_crawford():
 
     assert score == 6.1
 
+    score = textstat.crawford(empty_str)
+
+    assert score == 0.0
+
+def test_wienersachtext_formula():
+    sample_text = 'Alle meine Entchen schwimmen auf dem See, Köpfchen unters Wasser, Schwänzchen in die Höh.'
+    wstf = textstat.wiener_sachtextformel(sample_text, variant=1)
+
+    assert wstf == 3.8
+
+def test_gulpease_index():
+    score = textstat.gulpease_index(italian_text)
+
+    assert score == 40.1
 
 def test_default_lang_configs():
     # Config from default en_US should be used
@@ -468,3 +541,11 @@ def test_default_lang_configs():
     score = textstat.flesch_reading_ease(long_test)
 
     assert score == 64.75
+
+def test_osman():
+    easy_score = textstat.osman(easy_arabic_text)
+    hard_score = textstat.osman(hard_arabic_text)
+
+    assert easy_score == 97.62
+    assert hard_score == 39.29
+    
