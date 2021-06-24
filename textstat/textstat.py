@@ -429,7 +429,7 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def dale_chall_readability_score(self, text):
         word_count = self.lexicon_count(text)
-        count = word_count - self.difficult_words(text)
+        count = word_count - self.difficult_words(text, syllable_threshold=0)
 
         try:
             per = float(count) / float(word_count) * 100
@@ -713,6 +713,60 @@ class textstatistics:
 
         return legacy_round(osman, 2)
 	
+    @lru_cache(maxsize=128)
+    def gulpease_index(self, text):
+        '''
+        Indice Gulpease Index for Italian texts
+        https://it.wikipedia.org/wiki/Indice_Gulpease
+        '''
+        
+        if len(text) < 1:
+            return 0.0
+
+        n_words = float(self.lexicon_count(text))
+        return (300 * self.sentence_count(text) / n_words) - (10 * self.char_count(text) / n_words) + 89
+
+    @lru_cache(maxsize=128)
+    def long_word_count(self, text):
+        ''' counts words with more than 6 characters '''
+        word_list = self.remove_punctuation(text).split()
+        return len([w for w in word_list if len(w) > 6])
+
+    @lru_cache(maxsize=128)
+    def monosyllabcount(self, text):
+        ''' counts monosyllables '''
+        word_list = self.remove_punctuation(text).split()
+        return len([w for w in word_list if self.syllable_count(w) < 2])
+
+    @lru_cache(maxsize=128)
+    def wiener_sachtextformel(self, text, variant):
+        '''
+        Wiener Sachtextformel for readability assessment of German texts
+        
+        https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
+        '''
+        
+        if len(text) < 1: 
+            return 0.0
+
+        n_words = float(self.lexicon_count(text))
+
+
+        ms = 100 * self.polysyllabcount(text) / n_words
+        sl = n_words / self.sentence_count(text)
+        iw = 100 * self.long_word_count(text) / n_words
+        es = 100 * self.monosyllabcount(text) / n_words
+        
+        if variant == 1:
+            return (0.1935 * ms) + (0.1672 * sl) + (0.1297 * iw) - (0.0327 * es) - 0.875
+        elif variant == 2:
+            return (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
+        elif variant == 3:
+            return (0.2963 * ms) + (0.1905 * sl) - 1.1144
+        elif variant == 4:
+            return (0.2744 * ms) + (0.2656 * sl) - 1.693
+        else:
+            raise ValueError("variant can only be an integer between 1 and 4")
 
     def __get_lang_cfg(self, key):
         """ Read as get lang config """
