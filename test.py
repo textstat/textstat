@@ -412,6 +412,11 @@ def test_crawford():
 
     assert score == 6.1
 
+def test_wienersachtext_formula():
+    sample_text = 'Alle meine Entchen schwimmen auf dem See, Köpfchen unters Wasser, Schwänzchen in die Höh.'
+    wstf = textstat.wiener_sachtextformel(sample_text, variant=1)
+
+    assert wstf == 3.8
 
 def test_default_lang_configs():
     # Config from default en_US should be used
