@@ -606,6 +606,19 @@ class textstatistics:
         return legacy_round(craw_years, 1)
 
     @lru_cache(maxsize=128)
+    def gulpease_index(self, text):
+        '''
+        Indice Gulpease Index for Italian texts
+        https://it.wikipedia.org/wiki/Indice_Gulpease
+        '''
+        
+        if len(text) < 1:
+            return 0.0
+
+        n_words = float(self.lexicon_count(text))
+        return (300 * self.sentence_count(text) / n_words) - (10 * self.char_count(text) / n_words) + 89
+
+    @lru_cache(maxsize=128)
     def long_word_count(self, text):
         ''' counts words with more than 6 characters '''
         word_list = self.remove_punctuation(text).split()
