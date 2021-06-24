@@ -310,7 +310,7 @@ class textstatistics:
                 (easy_word * 1 + difficult_word * 3) / self.sentence_count(text)
             )
         except ZeroDivisionError:
-            number = 0.0
+            return 0.0
 
         if number <= 20:
             number -= 2
