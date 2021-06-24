@@ -393,9 +393,12 @@ class textstatistics:
 
         text = ' '.join(text_list)
 
-        number = float(
-            (easy_word * 1 + difficult_word * 3)
-            / self.sentence_count(text))
+        try:
+            number = float(
+                (easy_word * 1 + difficult_word * 3) / self.sentence_count(text)
+            )
+        except ZeroDivisionError:
+            return 0.0
 
         if number <= 20:
             number -= 2
@@ -467,8 +470,10 @@ class textstatistics:
 
         words_len = len(words)
         long_words = len([wrd for wrd in words if len(wrd) > 6])
-
-        per_long_words = (float(long_words) * 100) / words_len
+        try:
+            per_long_words = (float(long_words) * 100) / words_len
+        except ZeroDivisionError:
+            return 0.0
         asl = self.avg_sentence_length(text)
         lix = asl + per_long_words
 
@@ -501,8 +506,11 @@ class textstatistics:
         """
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
-        asl = total_no_of_words / count_of_sentences
-        pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        try:
+            asl = total_no_of_words / count_of_sentences
+            pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        except ZeroDivisionError:
+            return 0.0
         spache = (0.141 * asl) + (0.086 * pdw) + 0.839
         if not float_output:
             return int(spache)
@@ -518,8 +526,11 @@ class textstatistics:
         """
         total_no_of_words = self.lexicon_count(text)
         count_of_sentences = self.sentence_count(text)
-        asl = total_no_of_words / count_of_sentences
-        pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        try:
+            asl = total_no_of_words / count_of_sentences
+            pdw = (self.difficult_words(text) / total_no_of_words) * 100
+        except ZeroDivisionError:
+            return 0.0
         raw_score = 0.1579 * (pdw) + 0.0496 * asl
         adjusted_score = raw_score
         if raw_score > 0.05:
@@ -646,13 +657,14 @@ class textstatistics:
         syllables = self.syllable_count(text)
         total_words = self.lexicon_count(text)
         total_sentences = self.sentence_count(text)
-
-        s_p = (
-            self.__get_lang_cfg("fre_base") -
-            62.3 * (syllables / total_words)
-            - (total_words / total_sentences)
-        )
-
+        try:
+            s_p = (
+                self.__get_lang_cfg("fre_base") -
+                62.3 * (syllables / total_words)
+                - (total_words / total_sentences)
+            )
+        except ZeroDivisionError:
+            return 0.0
         return legacy_round(s_p, 2)
 
     @lru_cache(maxsize=128)
@@ -665,11 +677,13 @@ class textstatistics:
         total_letters = self.letter_count(text)
         total_sentences = self.sentence_count(text)
 
-        gut_pol = (
-            95.2 - 9.7 * (total_letters / total_words)
-            - 0.35 * (total_words / total_sentences)
-        )
-
+        try:
+            gut_pol = (
+                95.2 - 9.7 * (total_letters / total_words)
+                - 0.35 * (total_words / total_sentences)
+            )
+        except ZeroDivisionError:
+            return 0.0
         return legacy_round(gut_pol, 2)
 
     @lru_cache(maxsize=128)
@@ -683,8 +697,11 @@ class textstatistics:
         total_syllables = self.syllable_count(text)
 
         # Calculating __ per 100 words
-        sentences_per_words = 100 * (total_sentences / total_words)
-        syllables_per_words = 100 * (total_syllables / total_words)
+        try:
+            sentences_per_words = 100 * (total_sentences / total_words)
+            syllables_per_words = 100 * (total_syllables / total_words)
+        except ZeroDivisionError:
+            return 0.0
 
         craw_years = (
             -0.205 * sentences_per_words

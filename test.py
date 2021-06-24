@@ -100,6 +100,8 @@ italian_text = (
 difficult_word = "Regardless"
 easy_word = "Dog"
 
+empty_str = ""
+
 easy_arabic_text ="ذهب هند وأحمد الى المدرسة. هند تحب الرسم والمطالعة"
 hard_arabic_text = (
     "\u062a\u062a\u0631\u0643\u0632 \u0623\u0633\u0633 \
@@ -126,7 +128,7 @@ hard_arabic_text = (
     \u0648\u062a\u0641\u0627\u0639\u0644\u0627\u062a\u0647\u0627 \
     \u0627\u0644\u0645\u062e\u062a\u0644\u0641\u0629"
 )
-		
+
 
 def test_char_count():
     textstat.set_lang("en_US")
@@ -279,6 +281,9 @@ def test_linsear_write_formula():
 
     assert result == 14.5
 
+    result = textstat.linsear_write_formula(empty_str)
+
+    assert result == -1.0
 
 def test_difficult_words():
     textstat.set_lang("en_US")
@@ -314,6 +319,9 @@ def test_dale_chall_readability_score():
 
     assert score == 6.87
 
+    score = textstat.dale_chall_readability_score(empty_str)
+
+    assert score == 0.0
 
 def test_gunning_fog():
     textstat.set_lang("en_US")
@@ -334,6 +342,9 @@ def test_lix():
 
     assert score == 45.11
 
+    result = textstat.lix(empty_str)
+
+    assert result == 0.0
 
 def test_rix():
     textstat.set_lang("en_US")
@@ -412,6 +423,9 @@ def test_spache_readability():
 
     assert spache == 2
 
+    score = textstat.spache_readability(empty_str)
+
+    assert score == 0.0
 
 def test_dale_chall_readability_score_v2():
     textstat.set_lang("en_US")
@@ -425,13 +439,20 @@ def test_fernandez_huerta():
     score = textstat.fernandez_huerta(long_spanish_text)
 
     assert score == 43.1
+    
+    score = textstat.fernandez_huerta(empty_str)
 
+    assert score == 0.0
 
 def test_szigriszt_pazos():
     textstat.set_lang("es")
     score = textstat.szigriszt_pazos(long_spanish_text)
 
     assert score == 41.45
+
+    score = textstat.szigriszt_pazos(empty_str)
+
+    assert score == 0.0
 
 
 def test_gutierrez_polini():
@@ -440,12 +461,19 @@ def test_gutierrez_polini():
 
     assert score == 64.35
 
+    score = textstat.gutierrez_polini(empty_str)
+
+    assert score == 0.0
 
 def test_crawford():
     textstat.set_lang("es")
     score = textstat.crawford(long_spanish_text)
 
     assert score == 6.1
+
+    score = textstat.crawford(empty_str)
+
+    assert score == 0.0
 
 def test_wienersachtext_formula():
     sample_text = 'Alle meine Entchen schwimmen auf dem See, Köpfchen unters Wasser, Schwänzchen in die Höh.'
@@ -457,7 +485,6 @@ def test_gulpease_index():
     score = textstat.gulpease_index(italian_text)
 
     assert score == 40.1
-
 
 def test_default_lang_configs():
     # Config from default en_US should be used
