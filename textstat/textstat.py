@@ -216,6 +216,94 @@ class textstatistics:
             return legacy_round(sentence_per_word, 2)
         except ZeroDivisionError:
             return 0.0
+    
+    @lru_cache(maxsize=128)
+    def words_per_sentence(self, text):
+        s_count = self.sentence_count(text)
+
+        if s_count < 1:
+            return self.lexicon_count(text)
+
+        return float(self.lexicon_count(text) / s_count)
+
+    @lru_cache(maxsize=128)
+    def count_complex_arabic_words(self, text):
+        ''' counts complex arabic words '''
+        count = 0 
+
+        # fatHa | tanween fatH | dhamma | tanween dhamm | kasra | tanween kasr | shaddah
+        pattern = re.compile('[\u064E\u064B\u064F\u064C\u0650\u064D\u0651]')
+
+        for w in text.split():
+            if len(pattern.findall(w)) > 5:
+                count += 1
+
+        return count
+
+    @lru_cache(maxsize=128)
+    def count_arabic_syllables(self, text):
+        ''' counts arabic syllables where long and stress syllables are counted double '''
+        short_count = 0
+        long_count = 0
+        
+        # tashkeel: fatha | damma | kasra
+        tashkeel = [r'\u064E', r'\u064F', r'\u0650']
+        char_list = [c for w in self.remove_punctuation(text).split() for c in w]
+        
+        for t in tashkeel:
+            for i, c in enumerate(char_list):
+                if c != t:
+                    continue
+
+                # only if a character is a tashkeel, has a successor 
+                # and is followed by an alef, waw or yaaA ...
+                if i + 1 < len(char_list) and char_list[i+1] in ['\u0627', '\u0648', '\u064a']:
+                    # ... increment long syllable count
+                    long_count += 1
+                else:
+                    short_count += 1
+
+        # stress syllables: tanween fatih | tanween damm | tanween kasr | shadda
+        stress_pattern = re.compile(r'[\u064B\u064C\u064D\u0651]')
+        stress_count = len(stress_pattern.findall(text))
+
+        if short_count == 0:
+            text = re.sub(r'[\u0627\u0649\?\.\!\,\s*]', '', text)
+            short_count = len(text) - 2
+
+        return short_count + 2 * (long_count + stress_count)
+
+    @lru_cache(maxsize=128)
+    def count_faseeh(self, text):
+        ''' counts faseeh in arabic texts '''
+        count = 0
+        
+        # single faseeh char's: hamza nabira | hamza satr | amza waw | Thal | DHaA
+        unipattern = re.compile(r'[\u0626\u0621\u0624\u0630\u0638]')
+        
+        # double faseeh char's: waw wa alef | waw wa noon
+        bipattern = re.compile(r'(\u0648\u0627|\u0648\u0646)')
+
+        for w in text.split():
+            faseeh_count = len(unipattern.findall(w)) + len(bipattern.findall(w))
+        
+            if self.count_arabic_syllables(w) > 5 and faseeh_count > 0:
+                count += 1
+        
+        return count
+    
+    @lru_cache(maxsize=128)
+    def count_arabic_long_words(self, text):
+        ''' counts long arabic words without short vowels (tashkeel) '''
+        tashkeel = r"\u064E|\u064B|\u064F|\u064C|\u0650|\u064D|\u0651|\u0652|\u0653|\u0657|\u0658"
+        text = self.remove_punctuation(re.sub(tashkeel, "", text))
+
+        count = 0
+        for t in text.split():
+            if len(t) > 5:
+                count += 1
+        
+        return count
 
     @lru_cache(maxsize=128)
     def flesch_reading_ease(self, text):
@@ -622,6 +710,26 @@ class textstatistics:
 
         return legacy_round(craw_years, 1)
 
+    @lru_cache(maxsize=128)
+    def osman(self, text):
+        '''
+        Osman index for Arabic texts
+        https://www.aclweb.org/anthology/L16-1038.pdf
+        '''
+
+        if not len(text):
+            return 0.0
+
+        complex_word_rate = float(self.count_complex_arabic_words(text)) / self.lexicon_count(text)
+        long_word_rate = float(self.count_arabic_long_words(text)) / self.lexicon_count(text)
+        syllables_per_word = float(self.count_arabic_syllables(text)) / self.lexicon_count(text)
+        faseeh_per_word = float(self.count_faseeh(text)) / self.lexicon_count(text)
+
+        osman = 200.791 - (1.015 * self.words_per_sentence(text)) - \
+            (24.181 * (complex_word_rate + syllables_per_word + faseeh_per_word + long_word_rate))
+
+        return legacy_round(osman, 2)
+	
     @lru_cache(maxsize=128)
     def gulpease_index(self, text):
         '''
