@@ -282,7 +282,7 @@ Intended for text written for children up to grade four.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Spache_readability_formula)
 
-#### Read Time
+#### Reading Time
 
 ```python
 textstat.reading_time(text, ms_per_char=14.69)
@@ -389,6 +389,9 @@ Returns a grade level score for the given text.
 
 A value of 4 means very easy text, whereas 15 means very difficult text.
 
+> Further reading on
+[Wikipedia](https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel)
+
 ### Aggregates and Averages
 
 #### Syllable Count
@@ -444,7 +447,15 @@ Returns the number of characters present in the given text without punctuation.
 textstat.polysyllabcount(text)
 ```
 
-Returns the number of words with a syllable count grater than or equal to 3.
+Returns the number of words with a syllable count greater than or equal to 3.
+
+#### Monosyllable Count
+
+```python
+textstat.monosyllabcount(text)
+```
+
+Returns the number of words with a syllable count equal to one.
 
 ## Contributing
 
