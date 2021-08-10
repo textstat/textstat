@@ -32,8 +32,8 @@
 )
 
 >>> textstat.flesch_reading_ease(test_data)
->>> textstat.smog_index(test_data)
 >>> textstat.flesch_kincaid_grade(test_data)
+>>> textstat.smog_index(test_data)
 >>> textstat.coleman_liau_index(test_data)
 >>> textstat.automated_readability_index(test_data)
 >>> textstat.dale_chall_readability_score(test_data)
@@ -45,6 +45,8 @@
 >>> textstat.szigriszt_pazos(test_data)
 >>> textstat.gutierrez_polini(test_data)
 >>> textstat.crawford(test_data)
+>>> textstat.gulpease_index(test_data)
+>>> textstat.osman(test_data)
 ```
 
 The argument (text) for all the defined functions remains the same -
