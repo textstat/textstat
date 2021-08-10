@@ -282,6 +282,19 @@ Intended for text written for children up to grade four.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Spache_readability_formula)
 
+#### Read Time
+
+```python
+textstat.reading_time(text, ms_per_char=14.69)
+```
+
+Returns the reading time of the given text.
+
+Assumes 14.69ms per character.
+
+> Further reading in
+[This academic paper](https://homepages.inf.ed.ac.uk/keller/papers/cognition08a.pdf)
+
 ### Langugage Specific Formulas 
 #### Índice de lecturabilidad Fernandez-Huerta (Spanish)  
 
@@ -329,7 +342,7 @@ Scores for more complex text are not reliable.
 textstat.crawford(text)
 ```
 
-Returns the Crawford score for the text
+Returns the Crawford score for the text.
 
 Returns an estimate of the years of schooling required to understand the text.
 
@@ -361,10 +374,20 @@ textstat.gulpease_index(text)
 Returns the Gulpease index of Italian text, which transaltes to 
 level of education completed.
 
-Higher scores are easier require less education to read with ease.
+Lower scores require higher level of education to read with ease.
 
 > Further reading on
 [Wikipedia](https://it.wikipedia.org/wiki/Indice_Gulpease)
+
+#### Wiener Sachtextformel (German)
+
+```python
+textstat.wiener_sachtextformel(text, variant)
+```
+
+Returns a grade level score for the given text.
+
+A value of 4 means very easy text, whereas 15 means very difficult text.
 
 ### Aggregates and Averages
 
@@ -399,8 +422,29 @@ textstat.sentence_count(text)
 
 Returns the number of sentences present in the given text.
 
-### Identifiers and Preprocessing
+#### Character Count
 
+```python
+textstat.char_count(text, ignore_spaces=True)
+```
+
+Returns the number of characters present in the given text.
+
+#### Letter Count
+
+```python
+textstat.letter_count(text, ignore_spaces=True)
+```
+
+Returns the number of characters present in the given text without punctuation.
+
+#### Polysyllable Count
+
+```python
+textstat.polysyllabcount(text)
+```
+
+Returns the number of words with a syllable count grater than or equal to 3.
 
 ## Contributing
 
