@@ -2,6 +2,12 @@
 Changelog
 =========
 
+- :release:`0.7.2 <2021-08-11>`
+- :feature:`144` Added exception handling for ``ZeroDivisionErrors``.
+- :feature:`147` Added Arabic readability support
+- :feature:`142` Added Indice Gulpease index for Italian language support
+- :feature:`141` Added German readability support
+- :bug`143`: Update ``dale_chall_readability_score`` to use new ``syllable_threshold=`` kwarg.
 - :release:`0.7.1 <2021-05-20>`
 - :bug`138` Improved performance of ``difficult_words`` function.
 - :release:`0.7.0 <2020-11-22>`
