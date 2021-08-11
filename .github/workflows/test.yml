@@ -34,11 +34,11 @@ jobs:
 
     - name: Check code spelling
       run: |
-        pipenv run codespell -L paket --skip=./textstat/resources/*/easy_words.txt
+        pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*
 
     - name: Lint with flake8
       run: |
-        pipenv run flake8 .
+        pipenv run flake8 . --exclude=build/
 
     - name: Test with pytest
       run: |
