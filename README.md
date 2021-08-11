@@ -1,7 +1,7 @@
 # Textstat
 
 [![PyPI](https://img.shields.io/pypi/v/textstat.svg)](https://pypi.org/project/textstat/)
-[![Build Status](https://travis-ci.com/shivam5992/textstat.svg?branch=master)](https://travis-ci.com/shivam5992/textstat)
+[![Build Status](https://github.com/shivam5992/textstat/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/shivam5992/textstat/actions/workflows/test.yml)
 [![Downloads](https://img.shields.io/badge/dynamic/json.svg?url=https://pypistats.org/api/packages/textstat/recent?mirrors=false&label=downloads&query=$.data.last_month&suffix=/month)](https://pypistats.org/packages/textstat)
 
 **Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level.**
@@ -32,8 +32,8 @@
 )
 
 >>> textstat.flesch_reading_ease(test_data)
->>> textstat.smog_index(test_data)
 >>> textstat.flesch_kincaid_grade(test_data)
+>>> textstat.smog_index(test_data)
 >>> textstat.coleman_liau_index(test_data)
 >>> textstat.automated_readability_index(test_data)
 >>> textstat.dale_chall_readability_score(test_data)
@@ -45,6 +45,8 @@
 >>> textstat.szigriszt_pazos(test_data)
 >>> textstat.gutierrez_polini(test_data)
 >>> textstat.crawford(test_data)
+>>> textstat.gulpease_index(test_data)
+>>> textstat.osman(test_data)
 ```
 
 The argument (text) for all the defined functions remains the same -
@@ -54,19 +56,19 @@ i.e the text for which statistics need to be calculated.
 
 You can install textstat either via the Python Package Index (PyPI) or from source.
 
-#### Install using pip
+### Install using pip
 
 ```shell
 pip install textstat
 ```
 
-#### Install using easy_install
+### Install using easy_install
 
 ```shell
 easy_install textstat
 ```
 
-#### Install latest version from GitHub
+### Install latest version from GitHub
 
 ```shell
 git clone https://github.com/shivam5992/textstat.git
@@ -74,7 +76,7 @@ cd textstat
 pip install .
 ```
 
-#### Install from PyPI
+### Install from PyPI
 
 Download the latest version of textstat from http://pypi.python.org/pypi/textstat/
 
@@ -122,39 +124,9 @@ Additional information on the formula they implement can be found in their respe
 
 ## List of Functions
 
-### Syllable Count
+### Formulas
 
-```python
-textstat.syllable_count(text)
-```
-
-Returns the number of syllables present in the given text.
-
-Uses the Python module [Pyphen](https://github.com/Kozea/Pyphen)
-for syllable calculation.
-
-### Lexicon Count
-
-```python
-textstat.lexicon_count(text, removepunct=True)
-```
-
-Calculates the number of words present in the text.
-Optional `removepunct` specifies whether we need to take
-punctuation symbols into account while counting lexicons.
-Default value is `True`, which removes the punctuation
-before counting lexicon items.
-
-### Sentence Count
-
-```python
-textstat.sentence_count(text)
-```
-
-Returns the number of sentences present in the given text.
-
-
-### The Flesch Reading Ease formula
+#### The Flesch Reading Ease formula
 
 ```python
 textstat.flesch_reading_ease(text)
@@ -182,7 +154,7 @@ the score can be. A negative score is valid.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease)
 
-### The Flesch-Kincaid Grade Level
+#### The Flesch-Kincaid Grade Level
 
 ```python
 textstat.flesch_kincaid_grade(text)
@@ -195,7 +167,7 @@ read the document.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch%E2%80%93Kincaid_grade_level)
 
-### The Fog Scale (Gunning FOG Formula)
+#### The Fog Scale (Gunning FOG Formula)
 
 ```python
 textstat.gunning_fog(text)
@@ -207,7 +179,7 @@ a score of 9.3 means that a ninth grader would be able to read the document.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Gunning_fog_index)
 
-### The SMOG Index
+#### The SMOG Index
 
 ```python
 textstat.smog_index(text)
@@ -223,7 +195,7 @@ least 3 sentences for a result.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/SMOG)
 
-### Automated Readability Index
+#### Automated Readability Index
 
 ```python
 textstat.automated_readability_index(text)
@@ -239,7 +211,7 @@ the text is 6th to 7th grade.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Automated_readability_index)
 
-### The Coleman-Liau Index
+#### The Coleman-Liau Index
 
 ```python
 textstat.coleman_liau_index(text)
@@ -252,7 +224,7 @@ able to read the document.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index)
 
-### Linsear Write Formula
+#### Linsear Write Formula
 
 ```python
 textstat.linsear_write_formula(text)
@@ -265,7 +237,7 @@ able to read the document.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Linsear_Write)
 
-### Dale-Chall Readability Score
+#### Dale-Chall Readability Score
 
 ```python
 textstat.dale_chall_readability_score(text)
@@ -287,7 +259,7 @@ the grade level using the New Dale-Chall Formula.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Dale%E2%80%93Chall_readability_formula)
 
-### Readability Consensus based upon all the above tests
+#### Readability Consensus based upon all the above tests
 
 ```python
 textstat.text_standard(text, float_output=False)
@@ -299,8 +271,35 @@ grade level required to understand the text.
 Optional `float_output` allows the score to be returned as a
 `float`. Defaults to `False`.
 
-### Spanish-specific tests 
-#### Índice de lecturabilidad Fernandez-Huerta  
+#### Spache Readability Formula
+
+```python
+textstat.spache_readability(text)
+```
+
+Returns grade level of english text.
+
+Intended for text written for children up to grade four.
+
+> Further reading on
+[Wikipedia](https://en.wikipedia.org/wiki/Spache_readability_formula)
+
+#### Reading Time
+
+```python
+textstat.reading_time(text, ms_per_char=14.69)
+```
+
+Returns the reading time of the given text.
+
+Assumes 14.69ms per character.
+
+> Further reading in
+[This academic paper](https://homepages.inf.ed.ac.uk/keller/papers/cognition08a.pdf)
+
+### Langugage Specific Formulas 
+#### Índice de lecturabilidad Fernandez-Huerta (Spanish)  
+
 ```python
 textstat.fernandez_huerta(text)
 ```
@@ -311,17 +310,20 @@ The results can be interpreted similarly
 > Further reading on
 [This blog post](https://legible.es/blog/lecturabilidad-fernandez-huerta/)
 
-### Índice de perspicuidad de Szigriszt-Pazos
+#### Índice de perspicuidad de Szigriszt-Pazos (Spanish)  
+
 ```python
 textstat.szigriszt_pazos(text)
 ```
 Adaptation of Flesch Reading Ease formula for spanish-based texts.
+
 Attempts to quantify how understandable a text is.
 
 > Further reading on
 [This blog post](https://legible.es/blog/perspicuidad-szigriszt-pazos/)
 
-### Fórmula de comprensibilidad de Gutiérrez de Polini
+#### Fórmula de comprensibilidad de Gutiérrez de Polini (Spanish)  
+
 ```python
 textstat.gutierrez_polini(text)
 ```
@@ -330,23 +332,132 @@ Returns the Guttiérrez de Polini understandability index.
 
 Specifically designed for the texts in spanish, not an adaptation.
 Conceived for grade-school level texts.
+
 Scores for more complex text are not reliable.
 
 > Further reading on
 [This blog post](https://legible.es/blog/comprensibilidad-gutierrez-de-polini/)
 
-### Fórmula de Crawford
+#### Fórmula de Crawford (Spanish)  
+
 ```python
 textstat.crawford(text)
 ```
 
-Returns the Crawford score for the text
+Returns the Crawford score for the text.
 
 Returns an estimate of the years of schooling required to understand the text.
+
 The text is only valid for elementary school level texts.
 
 > Further reading on
 [This blog post](https://legible.es/blog/formula-de-crawford/)
+
+#### Osman (Arabic)
+
+```python
+textstat.osman(text)
+```
+
+Returns OSMAN score for text.
+
+Designed for Arabic, an adaption of Flesch and Fog Formula.
+Introduces a new factor called "Faseeh".
+
+> Further reading in
+[This academic paper](https://www.aclweb.org/anthology/L16-1038.pdf)
+
+#### Gulpease Index (Italian)
+
+```python
+textstat.gulpease_index(text)
+```
+
+Returns the Gulpease index of Italian text, which transaltes to 
+level of education completed.
+
+Lower scores require higher level of education to read with ease.
+
+> Further reading on
+[Wikipedia](https://it.wikipedia.org/wiki/Indice_Gulpease)
+
+#### Wiener Sachtextformel (German)
+
+```python
+textstat.wiener_sachtextformel(text, variant)
+```
+
+Returns a grade level score for the given text.
+
+A value of 4 means very easy text, whereas 15 means very difficult text.
+
+> Further reading on
+[Wikipedia](https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel)
+
+### Aggregates and Averages
+
+#### Syllable Count
+
+```python
+textstat.syllable_count(text)
+```
+
+Returns the number of syllables present in the given text.
+
+Uses the Python module [Pyphen](https://github.com/Kozea/Pyphen)
+for syllable calculation.
+
+#### Lexicon Count
+
+```python
+textstat.lexicon_count(text, removepunct=True)
+```
+
+Calculates the number of words present in the text.
+Optional `removepunct` specifies whether we need to take
+punctuation symbols into account while counting lexicons.
+Default value is `True`, which removes the punctuation
+before counting lexicon items.
+
+#### Sentence Count
+
+```python
+textstat.sentence_count(text)
+```
+
+Returns the number of sentences present in the given text.
+
+#### Character Count
+
+```python
+textstat.char_count(text, ignore_spaces=True)
+```
+
+Returns the number of characters present in the given text.
+
+#### Letter Count
+
+```python
+textstat.letter_count(text, ignore_spaces=True)
+```
+
+Returns the number of characters present in the given text without punctuation.
+
+#### Polysyllable Count
+
+```python
+textstat.polysyllabcount(text)
+```
+
+Returns the number of words with a syllable count greater than or equal to 3.
+
+#### Monosyllable Count
+
+```python
+textstat.monosyllabcount(text)
+```
+
+Returns the number of words with a syllable count equal to one.
 
 ## Contributing
 
