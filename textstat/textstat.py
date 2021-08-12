@@ -101,7 +101,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = text.replace(" ", "")
+            text = re.sub("\s", "", text)
         return len(text)
 
     @lru_cache(maxsize=128)
@@ -112,7 +112,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = text.replace(" ", "")
+            text = re.sub("\s", "", text)
         return len(self.remove_punctuation(text))
 
     @classmethod
@@ -153,7 +153,7 @@ class textstatistics:
             return 0
 
         count = 0
-        for word in text.split(' '):
+        for word in text.split():
             count += len(self.pyphen.positions(word)) + 1
         return count
 

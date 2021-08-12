@@ -186,7 +186,7 @@ def test_char_count():
         long_test, ignore_spaces=False
     )
 
-    assert count == 1750
+    assert count == 1748
     assert count_spaces == 2123
 
 
@@ -197,7 +197,7 @@ def test_letter_count():
         long_test, ignore_spaces=False
     )
 
-    assert count == 1688
+    assert count == 1686
     assert count_spaces == 2061
 
 
@@ -214,7 +214,7 @@ def test_syllable_count():
     textstat.set_lang("en_US")
     count = textstat.syllable_count(long_test)
 
-    assert count == 521
+    assert count == 519
 
 
 def test_sentence_count():
@@ -249,7 +249,7 @@ def test_avg_letter_per_word():
     textstat.set_lang("en_US")
     avg = textstat.avg_letter_per_word(long_test)
 
-    assert avg == 4.54
+    assert avg == 4.53
 
 
 def test_avg_sentence_per_word():
@@ -273,7 +273,7 @@ def test_flesch_reading_ease():
     textstat.set_lang("es_ES")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 84.37
+    assert score == 85.33
 
     textstat.set_lang("fr_FR")
     score = textstat.flesch_reading_ease(long_test)
@@ -283,7 +283,7 @@ def test_flesch_reading_ease():
     textstat.set_lang("it_IT")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 89.27
+    assert score == 90.11
 
     textstat.set_lang("nl_NL")
     score = textstat.flesch_reading_ease(long_test)
@@ -321,7 +321,7 @@ def test_coleman_liau_index():
     textstat.set_lang("en_US")
     index = textstat.coleman_liau_index(long_test)
 
-    assert index == 9.35
+    assert index == 9.29
 
 
 def test_automated_readability_index():
