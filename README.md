@@ -297,7 +297,7 @@ Assumes 14.69ms per character.
 > Further reading in
 [This academic paper](https://homepages.inf.ed.ac.uk/keller/papers/cognition08a.pdf)
 
-### Langugage Specific Formulas 
+### Language Specific Formulas 
 #### Índice de lecturabilidad Fernandez-Huerta (Spanish)  
 
 ```python
@@ -373,7 +373,7 @@ Introduces a new factor called "Faseeh".
 textstat.gulpease_index(text)
 ```
 
-Returns the Gulpease index of Italian text, which transaltes to 
+Returns the Gulpease index of Italian text, which translates to 
 level of education completed.
 
 Lower scores require higher level of education to read with ease.
