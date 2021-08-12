@@ -545,6 +545,13 @@ def test_wienersachtext_formula():
 
     assert wstf == 3.8
 
+    sample_text = 'Alle Parteien widmen dem Thema rein quantitativ \
+    betrachtet nennenswerte Aufmerksamkeit, die Grünen wenig überraschend \
+    am meisten.'
+    wstf = textstat.wiener_sachtextformel(sample_text, variant=1)
+
+    assert wstf == 13.9
+
 
 def test_gulpease_index():
     score = textstat.gulpease_index(italian_text)

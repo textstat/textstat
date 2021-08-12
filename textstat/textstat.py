@@ -785,20 +785,26 @@ class textstatistics:
 
         n_words = float(self.lexicon_count(text))
 
+        self.set_lang("de")
+
         ms = 100 * self.polysyllabcount(text) / n_words
         sl = n_words / self.sentence_count(text)
         iw = 100 * self.long_word_count(text) / n_words
         es = 100 * self.monosyllabcount(text) / n_words
 
         if variant == 1:
-            return (0.1935 * ms) + (0.1672 * sl) \
+            score = (0.1935 * ms) + (0.1672 * sl) \
                 + (0.1297 * iw) - (0.0327 * es) - 0.875
+            return round(score, 1)
         elif variant == 2:
-            return (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
+            score = (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
+            return round(score, 1)
         elif variant == 3:
-            return (0.2963 * ms) + (0.1905 * sl) - 1.1144
+            score = (0.2963 * ms) + (0.1905 * sl) - 1.1144
+            return round(score, 1)
         elif variant == 4:
-            return (0.2744 * ms) + (0.2656 * sl) - 1.693
+            score = (0.2744 * ms) + (0.2656 * sl) - 1.693
+            return round(score, 1)
         else:
             raise ValueError("variant can only be an integer between 1 and 4")
 
