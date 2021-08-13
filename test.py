@@ -539,14 +539,23 @@ def test_crawford():
 
 
 def test_wienersachtext_formula():
+    textstat.set_lang("de")
     sample_text = 'Alle meine Entchen schwimmen auf dem See, \
     Köpfchen unters Wasser, Schwänzchen in die Höh.'
     wstf = textstat.wiener_sachtextformel(sample_text, variant=1)
 
     assert wstf == 3.8
 
+    sample_text = 'Alle Parteien widmen dem Thema rein quantitativ \
+    betrachtet nennenswerte Aufmerksamkeit, die Grünen wenig überraschend \
+    am meisten.'
+    wstf = textstat.wiener_sachtextformel(sample_text, variant=1)
+
+    assert wstf == 13.9
+
 
 def test_gulpease_index():
+    textstat.set_lang("it")
     score = textstat.gulpease_index(italian_text)
 
     assert score == 40.1
