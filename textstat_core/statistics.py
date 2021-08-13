@@ -27,7 +27,7 @@ class Stats:
     @property
     def letters(self):
         return [*(
-            character for character in self._text
+            character for character in self.characters
             if character not in string.punctuation
         )]
 
