@@ -33,13 +33,16 @@ jobs:
         pipenv install --dev
 
     - name: Check code spelling
+      if: ${{ !cancelled() }}
       run: |
         pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*
 
     - name: Lint with flake8
+      if: ${{ !cancelled() }}
       run: |
         pipenv run flake8 . --exclude=build/
 
     - name: Test with pytest
+      if: ${{ !cancelled() }}
       run: |
         pipenv run pytest test.py
