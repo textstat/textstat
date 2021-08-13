@@ -785,8 +785,6 @@ class textstatistics:
 
         n_words = float(self.lexicon_count(text))
 
-        self.set_lang("de")
-
         ms = 100 * self.polysyllabcount(text) / n_words
         sl = n_words / self.sentence_count(text)
         iw = 100 * self.long_word_count(text) / n_words
