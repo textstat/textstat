@@ -1,0 +1,21 @@
+text = """
+Leatherhead is about twelve miles from Maybury Hill. The scent of hay was in
+the air through the lush meadows beyond Pyrford, and the hedges on either
+side were sweet and gay with multitudes of dog-roses. The heavy firing that
+had broken out while we were driving down Maybury Hill ceased as abruptly as
+it began, leaving the evening very peaceful and still. We got to Leatherhead
+without misadventure about nine o’clock, and the horse had an hour’s rest
+while I took supper with my cousins and commended my wife to their care.
+"""
+
+[meta]
+title = "The War of the Worlds"
+author = "H. G. Wells"
+source = "https://www.gutenberg.org/files/36/36-h/36-h.htm#chap10"
+
+[statistics]
+words = 0
+letters = 0
+characters = 0
+syllables = 0
+sentences = 0

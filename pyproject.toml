@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "textstat-core"
+version = "0.1.0"
+description = "Textstat Core provides the base functionality of the Textstat package"
+authors = ["Alex Ward <alxwrd@googlemail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://textstat.github.io/"
+repository = "https://github.com/textstat/textstat_core"
+documentation = "https://textstat.github.io/docs"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pyphen = "^0.11.0"
+toml = "^0.10.2"
+
+[tool.poetry.dev-dependencies]
+codespell = "^2.0.0"
+flake8 = "^3.8.4"
+pytest = "^6.1.2"
+grip = "^4.5.2"
+poethepoet = "^0.10.0"
+pytest-cov = "^2.12.1"
+
+[tool.poe.tasks]
+test = "pytest --cov=textstat_core"
+lint = "poetry run flake8 --exclude=build/"
+spell = "poetry run codespell -L paket"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
