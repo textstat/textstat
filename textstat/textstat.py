@@ -101,7 +101,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = re.sub("\s", "", text)
+            text = re.sub(r"\s", "", text)
         return len(text)
 
     @lru_cache(maxsize=128)
@@ -112,7 +112,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = re.sub("\s", "", text)
+            text = re.sub(r"\s", "", text)
         return len(self.remove_punctuation(text))
 
     @classmethod
@@ -784,8 +784,6 @@ class textstatistics:
             return 0.0
 
         n_words = float(self.lexicon_count(text))
-
-        self.set_lang("de")
 
         ms = 100 * self.polysyllabcount(text) / n_words
         sl = n_words / self.sentence_count(text)

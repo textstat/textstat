@@ -539,6 +539,7 @@ def test_crawford():
 
 
 def test_wienersachtext_formula():
+    textstat.set_lang("de")
     sample_text = 'Alle meine Entchen schwimmen auf dem See, \
     Köpfchen unters Wasser, Schwänzchen in die Höh.'
     wstf = textstat.wiener_sachtextformel(sample_text, variant=1)
@@ -554,6 +555,7 @@ def test_wienersachtext_formula():
 
 
 def test_gulpease_index():
+    textstat.set_lang("it")
     score = textstat.gulpease_index(italian_text)
 
     assert score == 40.1
