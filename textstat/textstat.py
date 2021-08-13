@@ -101,7 +101,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = re.sub("\s", "", text)
+            text = re.sub(r"\s", "", text)
         return len(text)
 
     @lru_cache(maxsize=128)
@@ -112,7 +112,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = re.sub("\s", "", text)
+            text = re.sub(r"\s", "", text)
         return len(self.remove_punctuation(text))
 
     @classmethod
