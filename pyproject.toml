@@ -23,7 +23,7 @@ poethepoet = "^0.10.0"
 pytest-cov = "^2.12.1"
 
 [tool.poe.tasks]
-test = "pytest --cov=textstat_core"
+test = "pytest -v --cov=textstat_core --cov-report html:tests/coverage_report"
 lint = "poetry run flake8 --exclude=build/"
 spell = "poetry run codespell -L paket"
 
