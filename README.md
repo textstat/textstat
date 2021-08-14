@@ -4,7 +4,8 @@ _Textstat Core provides the base functionality of the
 [Textstat](https://github.com/textstat/textstat) package. It is not intended
 for general consumption, but you are free to do so._
 
-[![Build Status](https://github.com/textstat/textstat-core/actions/workflows/textstat_core.yml/badge.svg?branch=main)](https://github.com/textstat/textstat-core/actions/workflows/textstat_core.yml)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/textstat/textstat-core/Textstat/main)
+![GitHub](https://img.shields.io/github/license/textstat/textstat-core)
 
 <p align="center">
   <img width="100%" src="https://images.unsplash.com/photo-1567177173026-402dd75a5ab7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&h=400&q=80">
