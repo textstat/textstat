@@ -1,47 +1,32 @@
-import string
+
 import collections
 
 
 class Stats:
-    properties = [
-        "characters",
-        "letters",
-        "words",
-        "syllables",
-        "difficult_words"
-    ]
+    properties = []
+
+    def __new__(cls, *_):
+        if cls is Stats:
+            raise TypeError(
+                "The `Stats` class provides no functionality, "
+                "so must be subclassed."
+            )
+        return object.__new__(cls)
 
     def __init__(self, text):
-        self._text = text
-        self._add_unique_properties()
-        self._add_count_properties()
+        self.__text = text
+        self.__add_unique_properties()
+        self.__add_count_properties()
 
     @property
     def text(self):
-        return self._text
+        return self.__text
 
-    @property
-    def characters(self):
-        return [*self._text.replace(" ", "")]
-
-    @property
-    def letters(self):
-        return [*(
-            character for character in self.characters
-            if character not in string.punctuation
-        )]
-
-    @property
-    def words(self):
-        return [*("".join(self.letters).lower().split())]
-
-    @property
-    def syllables(self):
-        return []
-
-    @property
-    def difficult_words(self):
-        return []
+    def avg(self, attribute, per=None):
+        try:
+            return len(getattr(self, attribute)) / len(getattr(self, per))
+        except ZeroDivisionError:
+            return 0.0
 
     def raw_stats(self):
         return {
@@ -59,13 +44,7 @@ class Stats:
             ]
         }
 
-    def avg(self, attribute, per=None):
-        try:
-            return len(getattr(self, attribute)) / len(getattr(self, per))
-        except ZeroDivisionError:
-            return 0.0
-
-    def _add_unique_properties(self):
+    def __add_unique_properties(self):
         def make_getter(value):
             return lambda self: set(getattr(self, value))
 
@@ -76,7 +55,7 @@ class Stats:
                 property(make_getter(prop))
             )
 
-    def _add_count_properties(self):
+    def __add_count_properties(self):
         def make_getter(value):
             return lambda self: collections.Counter(getattr(self, value))
 
