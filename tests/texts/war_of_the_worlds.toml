@@ -14,8 +14,7 @@ author = "H. G. Wells"
 source = "https://www.gutenberg.org/files/36/36-h/36-h.htm#chap10"
 
 [statistics]
-words = 0
-letters = 0
-characters = 0
-syllables = 0
-sentences = 0
+words = 93
+letters = 434
+characters = 442
+sentences = 4

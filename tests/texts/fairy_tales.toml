@@ -26,8 +26,7 @@ author = "Jacob Grimm and Wilhelm Grimm"
 source = "https://www.gutenberg.org/files/2591/2591-h/2591-h.htm#link2H_4_0017"
 
 [statistics]
-words = 0
-letters = 0
-characters = 0
-syllables = 0
-sentences = 0
+words = 266
+letters = 1086
+characters = 1125
+sentences = 11
