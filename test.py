@@ -502,7 +502,7 @@ def test_fernandez_huerta():
 
     score = textstat.fernandez_huerta(empty_str)
 
-    assert score == 0.0
+    assert score == 206.84
 
 
 def test_szigriszt_pazos():
