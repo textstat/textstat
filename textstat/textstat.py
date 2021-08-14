@@ -655,9 +655,9 @@ class textstatistics:
         syllables_per_word = self.avg_syllables_per_word(text)
 
         f_huerta = (
-            206.85 - float(60 * syllables_per_word) -
+            206.84 - float(60 * syllables_per_word) -
             float(1.02 * sentence_length))
-        return legacy_round(f_huerta, 1)
+        return legacy_round(f_huerta, 2)
 
     @lru_cache(maxsize=128)
     def szigriszt_pazos(self, text):
