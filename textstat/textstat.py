@@ -109,7 +109,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = re.sub("\s", "", text)
+            text = re.sub(r"\s", "", text)
         return len(text)
 
     @lru_cache(maxsize=128)
@@ -120,7 +120,7 @@ class textstatistics:
         to ignore whitespaces
         """
         if ignore_spaces:
-            text = re.sub("\s", "", text)
+            text = re.sub(r"\s", "", text)
         return len(self.remove_punctuation(text))
 
     @classmethod
@@ -663,9 +663,9 @@ class textstatistics:
         syllables_per_word = self.avg_syllables_per_word(text)
 
         f_huerta = (
-            206.85 - float(60 * syllables_per_word) -
+            206.84 - float(60 * syllables_per_word) -
             float(1.02 * sentence_length))
-        return self._legacy_round(f_huerta, 1)
+        return self._legacy_round(f_huerta, 2)
 
     @lru_cache(maxsize=128)
     def szigriszt_pazos(self, text):
@@ -799,14 +799,18 @@ class textstatistics:
         es = 100 * self.monosyllabcount(text) / n_words
 
         if variant == 1:
-            return (0.1935 * ms) + (0.1672 * sl) \
+            score = (0.1935 * ms) + (0.1672 * sl) \
                 + (0.1297 * iw) - (0.0327 * es) - 0.875
+            return round(score, 1)
         elif variant == 2:
-            return (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
+            score = (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
+            return round(score, 1)
         elif variant == 3:
-            return (0.2963 * ms) + (0.1905 * sl) - 1.1144
+            score = (0.2963 * ms) + (0.1905 * sl) - 1.1144
+            return round(score, 1)
         elif variant == 4:
-            return (0.2744 * ms) + (0.2656 * sl) - 1.693
+            score = (0.2744 * ms) + (0.2656 * sl) - 1.693
+            return round(score, 1)
         else:
             raise ValueError("variant can only be an integer between 1 and 4")
 
