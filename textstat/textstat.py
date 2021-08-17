@@ -55,11 +55,6 @@ langs = {
 }
 
 
-def legacy_round(number, points=0):
-    p = 10 ** points
-    return float(math.floor((number * p) + math.copysign(0.5, number))) / p
-
-
 def get_grade_suffix(grade):
     """
     Select correct ordinal suffix
@@ -72,6 +67,7 @@ def get_grade_suffix(grade):
 class textstatistics:
     __lang = "en_US"
     text_encoding = "utf-8"
+    round_outputs = True
     __easy_word_sets = {}
     __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
 
@@ -87,6 +83,18 @@ class textstatistics:
 
         for method in caching_methods:
             getattr(self, method).cache_clear()
+
+   def _legacy_round(self, number, points=0):
+        """
+        Function to round floating point outputs for backwards compatibility.
+        Rounding can be turned off by creating an instance of the class
+        textstatistics and setting the attribute round_outputs to False
+        """
+        if self.round_outputs:
+            p = 10 ** points
+            return float(math.floor((number * p) + math.copysign(0.5, number))) / p
+        else:
+            return number
 
     def set_lang(self, lang):
         self.__lang = lang
@@ -173,7 +181,7 @@ class textstatistics:
     def avg_sentence_length(self, text):
         try:
             asl = float(self.lexicon_count(text) / self.sentence_count(text))
-            return legacy_round(asl, 1)
+            return self._legacy_round(asl, 1)
         except ZeroDivisionError:
             return 0.0
 
@@ -186,7 +194,7 @@ class textstatistics:
                 syllables_per_word = float(syllable) * interval / float(words)
             else:
                 syllables_per_word = float(syllable) / float(words)
-            return legacy_round(syllables_per_word, 1)
+            return self._legacy_round(syllables_per_word, 1)
         except ZeroDivisionError:
             return 0.0
 
@@ -195,7 +203,7 @@ class textstatistics:
         try:
             letters_per_word = float(
                 self.char_count(text) / self.lexicon_count(text))
-            return legacy_round(letters_per_word, 2)
+            return self._legacy_round(letters_per_word, 2)
         except ZeroDivisionError:
             return 0.0
 
@@ -204,7 +212,7 @@ class textstatistics:
         try:
             letters_per_word = float(
                 self.letter_count(text) / self.lexicon_count(text))
-            return legacy_round(letters_per_word, 2)
+            return self._legacy_round(letters_per_word, 2)
         except ZeroDivisionError:
             return 0.0
 
@@ -213,7 +221,7 @@ class textstatistics:
         try:
             sentence_per_word = float(
                 self.sentence_count(text) / self.lexicon_count(text))
-            return legacy_round(sentence_per_word, 2)
+            return self._legacy_round(sentence_per_word, 2)
         except ZeroDivisionError:
             return 0.0
 
@@ -329,7 +337,7 @@ class textstatistics:
                 self.__get_lang_cfg("fre_syll_per_word") * syllables_per_word
             )
         )
-        return legacy_round(flesch, 2)
+        return self._legacy_round(flesch, 2)
 
     @lru_cache(maxsize=128)
     def flesch_kincaid_grade(self, text):
@@ -339,7 +347,7 @@ class textstatistics:
                 float(0.39 * sentence_lenth)
                 + float(11.8 * syllables_per_word)
                 - 15.59)
-        return legacy_round(flesch, 1)
+        return self._legacy_round(flesch, 1)
 
     @lru_cache(maxsize=128)
     def polysyllabcount(self, text):
@@ -360,7 +368,7 @@ class textstatistics:
                 smog = (
                         (1.043 * (30 * (poly_syllab / sentences)) ** .5)
                         + 3.1291)
-                return legacy_round(smog, 1)
+                return self._legacy_round(smog, 1)
             except ZeroDivisionError:
                 return 0.0
         else:
@@ -368,10 +376,10 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def coleman_liau_index(self, text):
-        letters = legacy_round(self.avg_letter_per_word(text) * 100, 2)
-        sentences = legacy_round(self.avg_sentence_per_word(text) * 100, 2)
+        letters = self._legacy_round(self.avg_letter_per_word(text) * 100, 2)
+        sentences = self._legacy_round(self.avg_sentence_per_word(text) * 100, 2)
         coleman = float((0.058 * letters) - (0.296 * sentences) - 15.8)
-        return legacy_round(coleman, 2)
+        return self._legacy_round(coleman, 2)
 
     @lru_cache(maxsize=128)
     def automated_readability_index(self, text):
@@ -382,10 +390,10 @@ class textstatistics:
             a = float(chrs) / float(words)
             b = float(words) / float(sentences)
             readability = (
-                    (4.71 * legacy_round(a, 2))
-                    + (0.5 * legacy_round(b, 2))
+                    (4.71 * self._legacy_round(a, 2))
+                    + (0.5 * self._legacy_round(b, 2))
                     - 21.43)
-            return legacy_round(readability, 1)
+            return self._legacy_round(readability, 1)
         except ZeroDivisionError:
             return 0.0
 
@@ -458,7 +466,7 @@ class textstatistics:
 
         if difficult_words > 5:
             score += 3.6365
-        return legacy_round(score, 2)
+        return self._legacy_round(score, 2)
 
     @lru_cache(maxsize=128)
     def gunning_fog(self, text):
@@ -471,7 +479,7 @@ class textstatistics:
                 / self.lexicon_count(text) * 100)
 
             grade = 0.4 * (self.avg_sentence_length(text) + per_diff_words)
-            return legacy_round(grade, 2)
+            return self._legacy_round(grade, 2)
         except ZeroDivisionError:
             return 0.0
 
@@ -488,7 +496,7 @@ class textstatistics:
         asl = self.avg_sentence_length(text)
         lix = asl + per_long_words
 
-        return legacy_round(lix, 2)
+        return self._legacy_round(lix, 2)
 
     @lru_cache(maxsize=128)
     def rix(self, text):
@@ -506,7 +514,7 @@ class textstatistics:
         except ZeroDivisionError:
             rix = 0.00
 
-        return legacy_round(rix, 2)
+        return self._legacy_round(rix, 2)
 
     @lru_cache(maxsize=128)
     def spache_readability(self, text, float_output=True):
@@ -546,7 +554,7 @@ class textstatistics:
         adjusted_score = raw_score
         if raw_score > 0.05:
             adjusted_score = raw_score + 3.6365
-        return legacy_round(adjusted_score, 2)
+        return self._legacy_round(adjusted_score, 2)
 
     @lru_cache(maxsize=128)
     def text_standard(self, text, float_output=None):
@@ -554,7 +562,7 @@ class textstatistics:
         grade = []
 
         # Appending Flesch Kincaid Grade
-        lower = legacy_round(self.flesch_kincaid_grade(text))
+        lower = self._legacy_round(self.flesch_kincaid_grade(text))
         upper = math.ceil(self.flesch_kincaid_grade(text))
         grade.append(int(lower))
         grade.append(int(upper))
@@ -580,37 +588,37 @@ class textstatistics:
             grade.append(13)
 
         # Appending SMOG Index
-        lower = legacy_round(self.smog_index(text))
+        lower = self._legacy_round(self.smog_index(text))
         upper = math.ceil(self.smog_index(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Coleman_Liau_Index
-        lower = legacy_round(self.coleman_liau_index(text))
+        lower = self._legacy_round(self.coleman_liau_index(text))
         upper = math.ceil(self.coleman_liau_index(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Automated_Readability_Index
-        lower = legacy_round(self.automated_readability_index(text))
+        lower = self._legacy_round(self.automated_readability_index(text))
         upper = math.ceil(self.automated_readability_index(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Dale_Chall_Readability_Score
-        lower = legacy_round(self.dale_chall_readability_score(text))
+        lower = self._legacy_round(self.dale_chall_readability_score(text))
         upper = math.ceil(self.dale_chall_readability_score(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Linsear_Write_Formula
-        lower = legacy_round(self.linsear_write_formula(text))
+        lower = self._legacy_round(self.linsear_write_formula(text))
         upper = math.ceil(self.linsear_write_formula(text))
         grade.append(int(lower))
         grade.append(int(upper))
 
         # Appending Gunning Fog Index
-        lower = legacy_round(self.gunning_fog(text))
+        lower = self._legacy_round(self.gunning_fog(text))
         upper = math.ceil(self.gunning_fog(text))
         grade.append(int(lower))
         grade.append(int(upper))
@@ -642,7 +650,7 @@ class textstatistics:
         rt_per_word = map(lambda nchar: nchar * ms_per_char, nchars)
         reading_time = sum(list(rt_per_word))
 
-        return legacy_round(reading_time/1000, 2)
+        return self._legacy_round(reading_time/1000, 2)
 
     # Spanish readability tests
     @lru_cache(maxsize=128)
@@ -657,7 +665,7 @@ class textstatistics:
         f_huerta = (
             206.85 - float(60 * syllables_per_word) -
             float(1.02 * sentence_length))
-        return legacy_round(f_huerta, 1)
+        return self._legacy_round(f_huerta, 1)
 
     @lru_cache(maxsize=128)
     def szigriszt_pazos(self, text):
@@ -676,7 +684,7 @@ class textstatistics:
             )
         except ZeroDivisionError:
             return 0.0
-        return legacy_round(s_p, 2)
+        return self._legacy_round(s_p, 2)
 
     @lru_cache(maxsize=128)
     def gutierrez_polini(self, text):
@@ -695,7 +703,7 @@ class textstatistics:
             )
         except ZeroDivisionError:
             return 0.0
-        return legacy_round(gut_pol, 2)
+        return self._legacy_round(gut_pol, 2)
 
     @lru_cache(maxsize=128)
     def crawford(self, text):
@@ -719,7 +727,7 @@ class textstatistics:
             + 0.049 * syllables_per_words - 3.407
             )
 
-        return legacy_round(craw_years, 1)
+        return self._legacy_round(craw_years, 1)
 
     @lru_cache(maxsize=128)
     def osman(self, text):
@@ -744,7 +752,7 @@ class textstatistics:
             (24.181 * (complex_word_rate + syllables_per_word
                        + faseeh_per_word + long_word_rate))
 
-        return legacy_round(osman, 2)
+        return self._legacy_round(osman, 2)
 
     @lru_cache(maxsize=128)
     def gulpease_index(self, text):
