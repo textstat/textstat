@@ -765,8 +765,8 @@ class textstatistics:
             return 0.0
 
         n_words = float(self.lexicon_count(text))
-        return (300 * self.sentence_count(text)
-                / n_words) - (10 * self.char_count(text) / n_words) + 89
+        return self._legacy_round((300 * self.sentence_count(text)
+                / n_words) - (10 * self.char_count(text) / n_words) + 89, 1)
 
     @lru_cache(maxsize=128)
     def long_word_count(self, text):
