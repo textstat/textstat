@@ -578,22 +578,39 @@ def test_osman():
 
 
 def test_disabling_rounding():
-    textstat.set_lang("en_GB")
+    textstat.set_lang("en_US")
     textstat.set_rounding(False)
 
     index = textstat.spache_readability(long_test)
 
     textstat.set_rounding(True)
 
-    assert index == 5.15757258064516
+    assert index == 5.2500456989247315
 
 
 def test_changing_rounding_points():
-    textstat.set_lang("en_GB")
-    textstat.set_rounding(True, points=4)
+    textstat.set_lang("en_US")
+    textstat.set_rounding(True, points=5)
 
     index = textstat.spache_readability(long_test)
 
-    textstat.set_rounding(False)
+    textstat.set_rounding(True)
 
-    assert index == 5.1576
+    assert index == 5.25005
+
+
+def test_instanced_textstat_rounding():
+    textstat.set_lang("en_US")
+
+    from textstat.textstat import textstatistics
+
+    my_textstat = textstatistics()
+    my_textstat.set_rounding(False)
+
+    my_not_rounded_index = my_textstat.spache_readability(long_test)
+
+    assert my_not_rounded_index == 5.2500456989247315
+
+    default_rounded_index = textstat.spache_readability(long_test)
+
+    assert default_rounded_index == 5.25
