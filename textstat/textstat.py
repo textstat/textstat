@@ -84,7 +84,7 @@ class textstatistics:
         for method in caching_methods:
             getattr(self, method).cache_clear()
 
-   def _legacy_round(self, number, points=0):
+    def _legacy_round(self, number, points=0):
         """
         Function to round floating point outputs for backwards compatibility.
         Rounding can be turned off by creating an instance of the class
