@@ -575,3 +575,27 @@ def test_osman():
 
     assert easy_score == 97.62
     assert hard_score == 39.29
+
+
+def test_disabling_rounding():
+    textstat.set_lang("en_GB")
+    textstat.textstat.round_outputs = False
+
+    index = textstat.spache_readability(long_test)
+
+    textstat.textstat.round_outputs = True
+
+    assert index == 5.15757258064516
+
+
+def test_changing_rounding_points():
+    textstat.set_lang("en_GB")
+    textstat.textstat.round_outputs = True
+    textstat.textstat.round_points = 4
+
+    index = textstat.spache_readability(long_test)
+
+    textstat.textstat.round_outputs = False
+    textstat.textstat.round_points = None
+
+    assert index == 5.1576

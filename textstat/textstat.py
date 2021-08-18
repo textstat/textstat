@@ -557,7 +557,7 @@ class textstatistics:
         if not float_output:
             return int(spache)
         else:
-            return spache
+            return self._legacy_round(spache, 2)
 
     @lru_cache(maxsize=128)
     def dale_chall_readability_score_v2(self, text):
