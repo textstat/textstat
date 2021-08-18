@@ -65,7 +65,7 @@ def get_grade_suffix(grade):
 
 
 class textstatistics:
-    """Main textstat class with methods to calculate redability indeces.
+    """Main textstat class with methods to calculate redability indices.
 
     Attributes
     ----------
@@ -75,11 +75,11 @@ class textstatistics:
         Whether to round floating point outputs. Default: True
     round_points : int or None
         The number of decimals to use when rounding outputs. round_points will
-        override any argument passed to the _legacy_round method. If 
-        round_points is set to None, the number of decimals will be determined 
+        override any argument passed to the _legacy_round method. If
+        round_points is set to None, the number of decimals will be determined
         by the argument passed to the method. Default: None
     """
-    
+
     __lang = "en_US"
     __easy_word_sets = {}
     __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
@@ -109,10 +109,12 @@ class textstatistics:
         setting the attribute round_points. If the attribute round_points is
         not None, the parameter points will be overridden.
         """
-        points = self.round_points if (self.round_points is not None) else points
+        points = self.round_points if (
+            self.round_points is not None) else points
         if self.round_outputs:
             p = 10 ** points
-            return float(math.floor((number * p) + math.copysign(0.5, number))) / p
+            return float(
+                math.floor((number * p) + math.copysign(0.5, number))) / p
         else:
             return number
 
@@ -397,7 +399,8 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def coleman_liau_index(self, text):
         letters = self._legacy_round(self.avg_letter_per_word(text) * 100, 2)
-        sentences = self._legacy_round(self.avg_sentence_per_word(text) * 100, 2)
+        sentences = self._legacy_round(
+            self.avg_sentence_per_word(text) * 100, 2)
         coleman = float((0.058 * letters) - (0.296 * sentences) - 15.8)
         return self._legacy_round(coleman, 2)
 
@@ -785,8 +788,9 @@ class textstatistics:
             return 0.0
 
         n_words = float(self.lexicon_count(text))
-        return self._legacy_round((300 * self.sentence_count(text)
-                / n_words) - (10 * self.char_count(text) / n_words) + 89, 1)
+        return self._legacy_round(
+            (300 * self.sentence_count(text) / n_words) -
+            (10 * self.char_count(text) / n_words) + 89, 1)
 
     @lru_cache(maxsize=128)
     def long_word_count(self, text):
