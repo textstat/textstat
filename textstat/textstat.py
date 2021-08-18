@@ -65,11 +65,27 @@ def get_grade_suffix(grade):
 
 
 class textstatistics:
+    """Main textstat class with methods to calculate redability indeces.
+
+    Attributes
+    ----------
+    text_encoding : str
+        Default: "utf-8"
+    round_outputs : bool
+        Whether to round floating point outputs. Default: True
+    round_points : int or None
+        The number of decimals to use when rounding outputs. round_points will
+        override any argument passed to the _legacy_round method. If 
+        round_points is set to None, the number of decimals will be determined 
+        by the argument passed to the method. Default: None
+    """
+    
     __lang = "en_US"
-    text_encoding = "utf-8"
-    round_outputs = True
     __easy_word_sets = {}
     __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
+    text_encoding = "utf-8"
+    round_outputs = True
+    round_points = None
 
     def __init__(self):
         self.set_lang(self.__lang)
@@ -88,8 +104,12 @@ class textstatistics:
         """
         Function to round floating point outputs for backwards compatibility.
         Rounding can be turned off by creating an instance of the class
-        textstatistics and setting the attribute round_outputs to False
+        textstatistics and setting the attribute round_outputs to False.
+        The number of points can be controlled for all methods by
+        setting the attribute round_points. If the attribute round_points is
+        not None, the parameter points will be overridden.
         """
+        points = self.round_points if (self.round_points is not None) else points
         if self.round_outputs:
             p = 10 ** points
             return float(math.floor((number * p) + math.copysign(0.5, number))) / p
