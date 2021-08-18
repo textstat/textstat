@@ -83,9 +83,9 @@ class textstatistics:
     __lang = "en_US"
     __easy_word_sets = {}
     __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
+    __round_outputs = True
+    __round_points = None
     text_encoding = "utf-8"
-    round_outputs = True
-    round_points = None
 
     def __init__(self):
         self.set_lang(self.__lang)
@@ -109,14 +109,18 @@ class textstatistics:
         setting the attribute round_points. If the attribute round_points is
         not None, the parameter points will be overridden.
         """
-        points = self.round_points if (
-            self.round_points is not None) else points
-        if self.round_outputs:
+        points = self.__round_points if (
+            self.__round_points is not None) else points
+        if self.__round_outputs:
             p = 10 ** points
             return float(
                 math.floor((number * p) + math.copysign(0.5, number))) / p
         else:
             return number
+
+    def set_rounding(self, rounding, points=None):
+        self.__round_outputs = rounding
+        self.__round_points = points
 
     def set_lang(self, lang):
         self.__lang = lang
