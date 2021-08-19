@@ -91,7 +91,10 @@ class textstatistics:
     def __init__(self, lang="en_US"):
         self.set_lang(lang)
         if lang.startswith('en'):
-            nltk.download('averaged_perceptron_tagger')
+            try:
+                nltk.data.find('taggers/averaged_perceptron_tagger')
+            except LookupError:
+                nltk.download('averaged_perceptron_tagger')
 
     def _cache_clear(self):
         caching_methods = [
