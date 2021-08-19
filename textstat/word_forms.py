@@ -47,7 +47,9 @@ class RegularInflections:
                 words.add(plural)
 
         if 'posessive' in incl_word_forms:
-            posessives = [word+"'s" for word in nouns]
+            # only add the 's form for singular proper nouns (NNP)
+            posessives = [word+"'s" for word in nouns
+                          if pos_tag([word])[0][1] == 'NNP']
             for posessive in posessives:
                 words.add(posessive)
 
