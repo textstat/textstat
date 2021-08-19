@@ -26,8 +26,6 @@ class RegularInflections:
         words : set.
 
         """
-        print(dir(words))
-        print(words.__class__)
         nouns = [
             word for word, tag in pos_tag(words)
             if tag.startswith('N')]
