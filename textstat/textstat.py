@@ -2,6 +2,7 @@ import warnings
 import string
 import re
 import math
+import nltk
 from collections import Counter
 import pkg_resources
 from functools import lru_cache
@@ -87,8 +88,10 @@ class textstatistics:
     __round_points = None
     text_encoding = "utf-8"
 
-    def __init__(self):
-        self.set_lang(self.__lang)
+    def __init__(self, lang="en_US"):
+        self.set_lang(lang)
+        if lang.startswith('en'):
+            nltk.download('averaged_perceptron_tagger')
 
     def _cache_clear(self):
         caching_methods = [
@@ -851,7 +854,8 @@ class textstatistics:
     def __get_lang_root(self):
         return self.__lang.split("_")[0]
 
-    def __get_lang_easy_words(self):
+    def __get_lang_easy_words(self, en_incl_word_forms=[
+            'plural', 'posessive', 'comparative', 'superlative']):
         lang = self.__get_lang_root()
         if lang not in self.__easy_word_sets:
             try:
@@ -875,6 +879,39 @@ class textstatistics:
                     )
                 }
             self.__easy_word_sets[lang] = easy_word_set
+
+            if lang == 'en':
+                nouns = [
+                    word for word, tag in nltk.pos_tag(easy_word_set)
+                    if tag.startswith('N')]
+                adjs_and_advs = [
+                    word for word, tag in nltk.pos_tag(easy_word_set)
+                    if (tag.startswith('JJ') or tag.startswith('RB'))
+                    ]
+                if 'plural' in en_incl_word_forms:
+                    plurals = [word+'s' for word in nouns
+                               if (nltk.pos_tag([word+'s'])[0][1] == 'NNS')]
+                    for plural in plurals:
+                        easy_word_set.add(plural)
+                if 'posessive' in en_incl_word_forms:
+                    posessives = [word+"'s" for word in nouns]
+                    for posessive in posessives:
+                        easy_word_set.add(posessive)
+                if 'superlative' in en_incl_word_forms:
+                    superlatives = [
+                        word+'est' for word in adjs_and_advs
+                        if (nltk.pos_tag([word+'est'])[0][1] == 'JJS')
+                        or (nltk.pos_tag([word+'est'])[0][1] == 'RBS')]
+                    for superlative in superlatives:
+                        easy_word_set.add(superlative)
+                if 'comparative' in en_incl_word_forms:
+                    comparatives = [
+                        word+'er' for word in adjs_and_advs
+                        if (nltk.pos_tag([word+'er'])[0][1] == 'JJR')
+                        or (nltk.pos_tag([word+'er'])[0][1] == 'RBR')]
+                    for comparative in comparatives:
+                        easy_word_set.add(comparative)
+
         return self.__easy_word_sets[lang]
 
 
