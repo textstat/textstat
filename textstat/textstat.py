@@ -1,5 +1,4 @@
 import warnings
-import string
 import re
 import math
 from collections import Counter
@@ -82,7 +81,6 @@ class textstatistics:
 
     __lang = "en_US"
     __easy_word_sets = {}
-    __punctuation_regex = re.compile(f'[{re.escape(string.punctuation)}]')
     __round_outputs = True
     __round_points = None
     text_encoding = "utf-8"
@@ -149,9 +147,21 @@ class textstatistics:
             text = re.sub(r"\s", "", text)
         return len(self.remove_punctuation(text))
 
-    @classmethod
-    def remove_punctuation(cls, text):
-        return cls.__punctuation_regex.sub('', text)
+    @lru_cache(maxsize=128)
+    def remove_punctuation(self, text):
+
+        if self.__lang.startswith('en'):
+            # replace single quotation marks with double quotation marks but
+            # keep apostrophes
+            text = re.sub(r'\'(?!t|s|ve)', '"', text)
+
+        # replace hyphens with a space
+        text = re.sub(r"-", ' ', text)
+
+        # remove all punctuation except apostrophes
+        text = re.sub(r"[^\w\s\-\']", '', text)
+
+        return text
 
     @lru_cache(maxsize=128)
     def lexicon_count(self, text, removepunct=True):
