@@ -8,6 +8,24 @@ import textstat
 
 short_test = "Cool dogs wear da sunglasses."
 
+punctuation_text = (
+    "\"I said: 'This is a test sentence to test the "
+    "remove_punctuation function. It's short and not the "
+    "work of a singer-songwriter. But it'll suffice.'"
+    "Your answer was: \"I don't know. If I were you I'd "
+    "write a test; just to make sure, you're really just "
+    "removing the characters you want to remove!\""
+)
+
+punctuation_text_result = (
+    "I said This is a test sentence to test the "
+    "remove_punctuation function It's short and not the "
+    "work of a singersongwriter But it'll suffice"
+    "Your answer was I don't know If I were you I'd "
+    "write a test just to make sure you're really just "
+    "removing the characters you want to remove"
+)
+
 long_test = (
     "Playing ... games has always been thought to be "
     "important to the development of well-balanced and "
@@ -199,6 +217,14 @@ def test_letter_count():
 
     assert count == 1686
     assert count_spaces == 2061
+
+
+def test_remove_punctuation():
+    textstat.set_lang('en_US')
+    textstat.set_rm_apostrophe(True)
+    text = textstat.remove_punctuation(punctuation_text)
+
+    assert text == punctuation_text_result
 
 
 def test_lexicon_count():
