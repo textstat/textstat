@@ -400,7 +400,7 @@ def test_dale_chall_readability_score():
     textstat.set_lang("en_US")
     score = textstat.dale_chall_readability_score(long_test)
 
-    assert score == 6.87
+    assert score == 7.85
 
     score = textstat.dale_chall_readability_score(empty_str)
 
