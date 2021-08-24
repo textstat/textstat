@@ -254,7 +254,7 @@ def test_sentence_count_russian():
     textstat.set_lang('ru_RU')
     count = textstat.sentence_count(long_russian_text_guillemets)
 
-    assert count == 16
+    assert count == 15
 
 
 def test_avg_sentence_length():
