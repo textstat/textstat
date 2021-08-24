@@ -247,21 +247,21 @@ def test_sentence_count():
     textstat.set_lang("en_US")
     count = textstat.sentence_count(long_test)
 
-    assert count == 16
+    assert count == 17
 
 
 def test_sentence_count_russian():
     textstat.set_lang('ru_RU')
     count = textstat.sentence_count(long_russian_text_guillemets)
 
-    assert count == 15
+    assert count == 16
 
 
 def test_avg_sentence_length():
     textstat.set_lang("en_US")
     avg = textstat.avg_sentence_length(long_test)
 
-    assert avg == 23.3
+    assert avg == 21.9
 
 
 def test_avg_syllables_per_word():
@@ -282,51 +282,51 @@ def test_avg_sentence_per_word():
     textstat.set_lang("en_US")
     avg = textstat.avg_sentence_per_word(long_test)
 
-    assert avg == 0.04
+    assert avg == 0.05
 
 
 def test_flesch_reading_ease():
     textstat.set_lang("en_US")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 64.75
+    assert score == 66.17
 
     textstat.set_lang("de_DE")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 63.1
+    assert score == 64.5
 
     textstat.set_lang("es_ES")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 85.33
+    assert score == 86.76
 
     textstat.set_lang("fr_FR")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 80.31
+    assert score == 81.73
 
     textstat.set_lang("it_IT")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 90.11
+    assert score == 91.93
 
     textstat.set_lang("nl_NL")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 61.97
+    assert score == 63.27
 
     textstat.set_lang("ru_RU")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 116.45
+    assert score == 118.27
 
 
 def test_flesch_kincaid_grade():
     textstat.set_lang("en_US")
     score = textstat.flesch_kincaid_grade(long_test)
 
-    assert score == 10.0
+    assert score == 9.5
 
 
 def test_polysyllabcount():
@@ -340,21 +340,21 @@ def test_smog_index():
     textstat.set_lang("en_US")
     index = textstat.smog_index(long_test)
 
-    assert index == 11.2
+    assert index == 11.0
 
 
 def test_coleman_liau_index():
     textstat.set_lang("en_US")
     index = textstat.coleman_liau_index(long_test)
 
-    assert index == 9.29
+    assert index == 8.99
 
 
 def test_automated_readability_index():
     textstat.set_lang("en_US")
     index = textstat.automated_readability_index(long_test)
 
-    assert index == 12.3
+    assert index == 11.6
 
 
 def test_linsear_write_formula():
@@ -400,7 +400,7 @@ def test_dale_chall_readability_score():
     textstat.set_lang("en_US")
     score = textstat.dale_chall_readability_score(long_test)
 
-    assert score == 7.85
+    assert score == 7.78
 
     score = textstat.dale_chall_readability_score(empty_str)
 
@@ -411,20 +411,20 @@ def test_gunning_fog():
     textstat.set_lang("en_US")
     score = textstat.gunning_fog(long_test)
 
-    assert score == 11.26
+    assert score == 10.7
 
     # FOG-PL
     textstat.set_lang("pl_PL")
     score_pl = textstat.gunning_fog(long_test)
 
-    assert score_pl == 10.40
+    assert score_pl == 9.84
 
 
 def test_lix():
     textstat.set_lang("en_US")
     score = textstat.lix(long_test)
 
-    assert score == 45.11
+    assert score == 43.71
 
     result = textstat.lix(empty_str)
 
@@ -435,14 +435,14 @@ def test_rix():
     textstat.set_lang("en_US")
     score = textstat.rix(long_test)
 
-    assert score == 5.13
+    assert score == 4.82
 
 
 def test_text_standard():
     textstat.set_lang("en_US")
     standard = textstat.text_standard(long_test)
 
-    assert standard == "9th and 10th grade"
+    assert standard == "10th and 11th grade"
 
     standard = textstat.text_standard(short_test)
 
@@ -517,7 +517,7 @@ def test_dale_chall_readability_score_v2():
     textstat.set_lang("en_US")
     score = textstat.dale_chall_readability_score_v2(long_test)
 
-    assert score == 6.87
+    assert score == 6.8
 
 
 def test_fernandez_huerta():
@@ -592,14 +592,14 @@ def test_default_lang_configs():
     textstat.set_lang("en_GB")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 64.75
+    assert score == 66.17
 
 
 def test_osman():
     easy_score = textstat.osman(easy_arabic_text)
     hard_score = textstat.osman(hard_arabic_text)
 
-    assert easy_score == 97.62
+    assert easy_score == 102.19
     assert hard_score == 39.29
 
 
@@ -611,7 +611,7 @@ def test_disabling_rounding():
 
     textstat.set_rounding(True)
 
-    assert index == 5.2500456989247315
+    assert index == 5.057207463630613
 
 
 def test_changing_rounding_points():
@@ -622,7 +622,7 @@ def test_changing_rounding_points():
 
     textstat.set_rounding(True)
 
-    assert index == 5.25005
+    assert index == 5.05721
 
 
 def test_instanced_textstat_rounding():
@@ -635,8 +635,8 @@ def test_instanced_textstat_rounding():
 
     my_not_rounded_index = my_textstat.spache_readability(long_test)
 
-    assert my_not_rounded_index == 5.2500456989247315
+    assert my_not_rounded_index == 5.057207463630613
 
     default_rounded_index = textstat.spache_readability(long_test)
 
-    assert default_rounded_index == 5.25
+    assert default_rounded_index == 5.06
