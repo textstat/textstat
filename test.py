@@ -524,7 +524,7 @@ def test_fernandez_huerta():
     textstat.set_lang("es")
     score = textstat.fernandez_huerta(long_spanish_text)
 
-    assert score == 43.1
+    assert score == 65.3
 
     score = textstat.fernandez_huerta(empty_str)
 
@@ -535,7 +535,7 @@ def test_szigriszt_pazos():
     textstat.set_lang("es")
     score = textstat.szigriszt_pazos(long_spanish_text)
 
-    assert score == 41.45
+    assert score == 62.16
 
     score = textstat.szigriszt_pazos(empty_str)
 
@@ -557,7 +557,7 @@ def test_crawford():
     textstat.set_lang("es")
     score = textstat.crawford(long_spanish_text)
 
-    assert score == 6.1
+    assert score == 5.1
 
     score = textstat.crawford(empty_str)
 
