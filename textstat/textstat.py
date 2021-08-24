@@ -153,10 +153,7 @@ class textstatistics:
         if self.__lang.startswith('en'):
             # replace single quotation marks with double quotation marks but
             # keep apostrophes in contractions
-            text = re.sub(r"\'(?!t|s|ve|ll|re|d)", '"', text)
-
-        # replace hyphens with a space
-        text = re.sub(r"-", ' ', text)
+            text = re.sub(r"\'(?!t\W|s\W|ve\W|ll\W|re\W|d\W)", '"', text)
 
         # remove all punctuation except apostrophes
         text = re.sub(r"[^\w\s\-\']", '', text)
