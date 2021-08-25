@@ -234,8 +234,9 @@ def test_remove_punctuation_excl_apostrophe():
     text = textstat.remove_punctuation(punct_text)
 
     assert text == punct_text_result_w_apostr
-    
+
     textstat.set_rm_apostrophe(True)
+
 
 def test_lexicon_count():
     textstat.set_lang("en_US")
