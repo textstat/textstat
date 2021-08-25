@@ -8,17 +8,24 @@ import textstat
 
 short_test = "Cool dogs wear da sunglasses."
 
-punctuation_text = """
-"I said: 'This is a test sentence to test the remove_punctuation function. 
+punct_text = """
+I said: 'This is a test sentence to test the remove_punctuation function. 
 It's short and not the work of a singer-songwriter. But it'll suffice.'
 Your answer was: "I don't know. If I were you I'd write a test; just to make sure, you're
 really just removing the characters you want to remove!"
 """
 
-punctuation_text_result = """
+punct_text_result_w_apostr = """
 I said This is a test sentence to test the remove_punctuation function 
 It's short and not the work of a singersongwriter But it'll suffice
 Your answer was I don't know If I were you I'd write a test just to make sure you're
+really just removing the characters you want to remove
+"""
+
+punct_text_result_wo_apostr = """
+I said This is a test sentence to test the remove_punctuation function 
+Its short and not the work of a singersongwriter But itll suffice
+Your answer was I dont know If I were you Id write a test just to make sure youre
 really just removing the characters you want to remove
 """
 
@@ -214,12 +221,21 @@ def test_letter_count():
     assert count == 1686
     assert count_spaces == 2061
 
-def test_remove_punctuation():
+def test_remove_punctuation_incl_apostrophe():
     textstat.set_lang('en_US')
     textstat.set_rm_apostrophe(True)
-    text = textstat.remove_punctuation(punctuation_text)
+    text = textstat.remove_punctuation(punct_text)
 
-    assert text == punctuation_text_result
+    assert text == punct_text_result_wo_apostr
+
+def test_remove_punctuation_excl_apostrophe():
+    textstat.set_lang('en_US')
+    textstat.set_rm_apostrophe(False)
+    text = textstat.remove_punctuation(punct_text)
+
+    assert text == punct_text_result_w_apostr
+    
+    textstat.set_rm_apostrophe(True)
 
 def test_lexicon_count():
     textstat.set_lang("en_US")
