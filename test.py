@@ -227,6 +227,9 @@ def test_remove_punctuation_incl_apostrophe():
     textstat.set_rm_apostrophe(True)
     text = textstat.remove_punctuation(punct_text)
 
+    # set the __rm_apostrophe attribute back to the default
+    textstat.set_rm_apostrophe(False)
+
     assert text == punct_text_result_wo_apostr
 
 
@@ -236,8 +239,6 @@ def test_remove_punctuation_excl_apostrophe():
     text = textstat.remove_punctuation(punct_text)
 
     assert text == punct_text_result_w_apostr
-
-    textstat.set_rm_apostrophe(True)
 
 
 def test_lexicon_count():
