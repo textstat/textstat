@@ -164,7 +164,6 @@ class textstatistics:
             # remove all punctuation except apostrophes
             punctuation_regex = r"[^\w\s\']"
 
-
         text = re.sub(punctuation_regex, '', text)
         return text
 
