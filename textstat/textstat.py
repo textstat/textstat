@@ -83,7 +83,7 @@ class textstatistics:
     __easy_word_sets = {}
     __round_outputs = True
     __round_points = None
-    __rm_apostrophe = True
+    __rm_apostrophe = False
     text_encoding = "utf-8"
 
     def __init__(self):
