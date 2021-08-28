@@ -640,3 +640,19 @@ def test_instanced_textstat_rounding():
     default_rounded_index = textstat.spache_readability(long_test)
 
     assert default_rounded_index == 5.06
+
+
+def test_mcalpine_eflaw():
+    textstat.set_lang("en_US")
+    score = textstat.mcalpine_eflaw(long_test)
+
+    assert score == 30.8
+
+
+def test_miniword_count():
+    textstat.set_lang("en_US")
+    count = textstat.miniword_count(long_test)
+    count_punc = textstat.miniword_count(long_test, removepunct=False)
+
+    assert count == 151
+    assert count_punc == 149

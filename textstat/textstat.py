@@ -177,6 +177,17 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
+    def miniword_count(self, text, removepunct=True):
+        """
+        Function to return total miniword (Common words with three letters
+        or less) counts in a text
+        """
+        if removepunct:
+            text = self.remove_punctuation(text)
+        count = len([word for word in text.split() if len(word) < 4])
+        return count
+
+    @lru_cache(maxsize=128)
     def syllable_count(self, text, lang=None):
         """
         Function to calculate syllable words in a text.
@@ -854,6 +865,26 @@ class textstatistics:
             return round(score, 1)
         else:
             raise ValueError("variant can only be an integer between 1 and 4")
+
+    @lru_cache(maxsize=128)
+    def mcalpine_eflaw(self, text):
+        '''
+        McAlpine EFLAW score that asseses the readability of English texts
+        for English foreign learners
+
+        https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/
+        '''
+
+        if len(text) < 1:
+            return 0.0
+
+        n_words = self.lexicon_count(text)
+        n_sentences = self.sentence_count(text)
+        n_miniwords = self.miniword_count(text)
+        print("words: " + str(n_words))
+        print("sentences: " + str(n_sentences))
+        print("miniwords: " + str(n_miniwords))
+        return self._legacy_round((n_words + n_miniwords) / n_sentences, 1)
 
     def __get_lang_cfg(self, key):
         """ Read as get lang config """

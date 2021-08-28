@@ -284,6 +284,20 @@ Intended for text written for children up to grade four.
 > Further reading on
 [Wikipedia](https://en.wikipedia.org/wiki/Spache_readability_formula)
 
+#### McAlpine EFLAW Readability Score
+
+```python
+textstat.mcalpine_eflaw(text)
+```
+
+Returns a score for the readability of an english text for a foreign learner or
+English, focusing on the number of miniwords and length of sentences.
+
+It is recommended to aim for a score equal to or lower than 25. 
+
+> Further reading on
+[This blog post](https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/)
+
 #### Reading Time
 
 ```python
