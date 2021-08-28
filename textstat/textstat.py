@@ -83,7 +83,7 @@ class textstatistics:
     __easy_word_sets = {}
     __round_outputs = True
     __round_points = None
-    __rm_apostrophe = False
+    __rm_apostrophe = True
     text_encoding = "utf-8"
 
     def __init__(self):
@@ -154,16 +154,17 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def remove_punctuation(self, text):
 
-        if self.__lang.startswith('en') and self.__rm_apostrophe:
+        if self.__rm_apostrophe:
+            # remove all punctuation
+            punctuation_regex = r"[^\w\s]"
+        else:
             # replace single quotation marks with double quotation marks but
             # keep apostrophes in contractions
             text = re.sub(r"\'(?!t\W|s\W|ve\W|ll\W|re\W|d\W)", '"', text)
+            # remove all punctuation except apostrophes
             punctuation_regex = r"[^\w\s\']"
-        else:
-            punctuation_regex = r"[^\w\s]"
-        # remove all punctuation except apostrophes
-        text = re.sub(punctuation_regex, '', text)
 
+        text = re.sub(punctuation_regex, '', text)
         return text
 
     @lru_cache(maxsize=128)
