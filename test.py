@@ -666,7 +666,5 @@ def test_mcalpine_eflaw():
 def test_miniword_count():
     textstat.set_lang("en_US")
     count = textstat.miniword_count(long_test)
-    count_punc = textstat.miniword_count(long_test, removepunct=False)
 
     assert count == 151
-    assert count_punc == 149

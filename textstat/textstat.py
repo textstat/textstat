@@ -178,14 +178,14 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def miniword_count(self, text, removepunct=True):
+    def miniword_count(self, text, max_size=3):
         """
         Function to return total miniword (Common words with three letters
-        or less) counts in a text
+        or less) counts in a text. Optionally increase or decrease maximum
+        word size.
         """
-        if removepunct:
-            text = self.remove_punctuation(text)
-        count = len([word for word in text.split() if len(word) < 4])
+        count = len([word for word in self.remove_punctuation(text).split() if
+                     len(word) <= max_size])
         return count
 
     @lru_cache(maxsize=128)
@@ -882,9 +882,6 @@ class textstatistics:
         n_words = self.lexicon_count(text)
         n_sentences = self.sentence_count(text)
         n_miniwords = self.miniword_count(text)
-        print("words: " + str(n_words))
-        print("sentences: " + str(n_sentences))
-        print("miniwords: " + str(n_miniwords))
         return self._legacy_round((n_words + n_miniwords) / n_sentences, 1)
 
     def __get_lang_cfg(self, key):
