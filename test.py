@@ -12,21 +12,21 @@ punct_text = """
 I said: 'This is a test sentence to test the remove_punctuation function.
 It's short and not the work of a singer-songwriter. But it'll suffice.'
 Your answer was: "I don't know. If I were you I'd write a test; just to make
-sure, you're really just removing the characters you want to remove!"
+sure, you're really just removing the characters you want to remove!" Didn't
 """
 
 punct_text_result_w_apostr = """
 I said This is a test sentence to test the remove_punctuation function
 It's short and not the work of a singersongwriter But it'll suffice
 Your answer was I don't know If I were you I'd write a test just to make
-sure you're really just removing the characters you want to remove
+sure you're really just removing the characters you want to remove Didn't
 """
 
 punct_text_result_wo_apostr = """
 I said This is a test sentence to test the remove_punctuation function
 Its short and not the work of a singersongwriter But itll suffice
 Your answer was I dont know If I were you Id write a test just to make
-sure youre really just removing the characters you want to remove
+sure youre really just removing the characters you want to remove Didnt
 """
 
 long_test = (
