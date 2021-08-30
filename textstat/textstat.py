@@ -160,7 +160,7 @@ class textstatistics:
         else:
             # replace single quotation marks with double quotation marks but
             # keep apostrophes in contractions
-            text = re.sub(r"\'(?!t\W|s\W|ve\W|ll\W|re\W|d\W)", '"', text)
+            text = re.sub(r"\'(?![tsd]\b|ve\b|ll\b|re\b)", '"', text)
             # remove all punctuation except apostrophes
             punctuation_regex = r"[^\w\s\']"
 
