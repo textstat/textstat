@@ -510,7 +510,9 @@ class textstatistics:
         -----
         The Flesh-Kincaid Grade is calculated as:
 
-        .. math:: (0.39*average\ sentence\ length)+(11.8*average\ syllables\ per\ word)-15.59
+        .. math::
+
+            (.39*avg\ sentence\ length)+(11.8*avg\ syllables\ per\ word)-15.59
 
         """
         sentence_length = self.avg_sentence_length(text)
@@ -548,7 +550,9 @@ class textstatistics:
         -----
         The SMOG index is calculated as:
 
-        .. math:: (1.043*(30*(n\ polysyllabic\ words/n\ sentences))^{.5})+3.1291
+        .. math::
+
+            (1.043*(30*(n\ polysyllabic\ words/n\ sentences))^{.5})+3.1291
 
         Polysyllabic words are defined as words with more than 3 syllables.
         """
@@ -592,7 +596,9 @@ class textstatistics:
         -----
         The ARI is calculated as:
 
-        .. math:: (4.71*n\ characters/n\ words)+(0.5*n\ words/n\ sentences)-21.43
+        .. math::
+
+            (4.71*n\ characters/n\ words)+(0.5*n\ words/n\ sentences)-21.43
 
         """
         chrs = self.char_count(text)
@@ -629,7 +635,9 @@ class textstatistics:
         -----
         The Lw is calculated using the first 100 words:
 
-        .. math:: n\ easy\ words+(n\ difficult\ words*3))/n\ sentences
+        .. math::
+
+            n\ easy\ words+(n\ difficult\ words*3))/n\ sentences
 
         easy words are defined as words with 2 syllables or less.
         difficult words are defined as words with 3 syllables or more.
