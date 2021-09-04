@@ -146,7 +146,6 @@ class textstatistics:
     @lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
         """Count the number of characters in a text.
-        
 
         Parameters
         ----------
@@ -272,10 +271,21 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def syllable_count(self, text, lang=None):
-        """
-        Function to calculate syllable words in a text.
-        I/P - a text
-        O/P - number of syllable words
+        """Calculate syllable words in a text using pyphen.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        lang : str or None
+            The language of the text.
+
+            .. deprecated:: 0.5.7
+
+        Returns
+        -------
+        int
+            Number of syllables in `text`.
         """
         if lang:
             warnings.warn(
@@ -300,8 +310,18 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def sentence_count(self, text):
-        """
-        Sentence count of a text
+        """Count the sentences of the text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of sentences in `text`.
+
         """
         ignore_count = 0
         sentences = re.findall(r'\b[^.!?]+[.!?]*', text, re.UNICODE)
@@ -474,10 +494,29 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def flesch_kincaid_grade(self, text):
-        sentence_lenth = self.avg_sentence_length(text)
+        r"""Calculate the Flesh-Kincaid Grade for `text`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Flesh-Kincaid Grade for `text`.
+
+        Notes
+        -----
+        The Flesh-Kincaid Grade is calculated as:
+
+        .. math:: (0.39*average\ sentence\ length)+(11.8*average\ syllables\ per\ word)-15.59
+
+        """
+        sentence_length = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
         flesch = (
-                float(0.39 * sentence_lenth)
+                float(0.39 * sentence_length)
                 + float(11.8 * syllables_per_word)
                 - 15.59)
         return self._legacy_round(flesch, 1)
@@ -493,6 +532,26 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def smog_index(self, text):
+        r"""Calculate the SMOG index.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The SMOG index for `text`.
+
+        Notes
+        -----
+        The SMOG index is calculated as:
+
+        .. math:: (1.043*(30*(n\ polysyllabic\ words/n\ sentences))^{.5})+3.1291
+
+        Polysyllabic words are defined as words with more than 3 syllables.
+        """
         sentences = self.sentence_count(text)
 
         if sentences >= 3:
@@ -517,6 +576,25 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def automated_readability_index(self, text):
+        r"""Calculate the Automated Readability Index (ARI).
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The ARI for `text`.
+
+        Notes
+        -----
+        The ARI is calculated as:
+
+        .. math:: (4.71*n\ characters/n\ words)+(0.5*n\ words/n\ sentences)-21.43
+
+        """
         chrs = self.char_count(text)
         words = self.lexicon_count(text)
         sentences = self.sentence_count(text)
@@ -533,6 +611,29 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def linsear_write_formula(self, text):
+        r"""Calculate the Linsear-Write (Lw) metric.
+
+        The Lw only uses the first 100 words of text!
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Lw for `text`.
+
+        Notes
+        -----
+        The Lw is calculated using the first 100 words:
+
+        .. math:: n\ easy\ words+(n\ difficult\ words*3))/n\ sentences
+
+        easy words are defined as words with 2 syllables or less.
+        difficult words are defined as words with 3 syllables or more.
+        r"""
         easy_word = 0
         difficult_word = 0
         text_list = text.split()[:100]
