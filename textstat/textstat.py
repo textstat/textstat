@@ -70,13 +70,16 @@ class textstatistics:
     ----------
     text_encoding : str
         Default: "utf-8"
-    round_outputs : bool
+    __lang : str
+        Default : "en_US"
+    __round_outputs : bool
         Whether to round floating point outputs. Default: True
-    round_points : int or None
+    __round_points : int or None
         The number of decimals to use when rounding outputs. round_points will
         override any argument passed to the _legacy_round method. If
         round_points is set to None, the number of decimals will be determined
         by the argument passed to the method. Default: None
+    __rm_apostrophe : bool
     """
 
     __lang = "en_US"
@@ -100,13 +103,24 @@ class textstatistics:
             getattr(self, method).cache_clear()
 
     def _legacy_round(self, number, points=0):
-        """
-        Function to round floating point outputs for backwards compatibility.
-        Rounding can be turned off by creating an instance of the class
-        textstatistics and setting the attribute round_outputs to False.
-        The number of points can be controlled for all methods by
-        setting the attribute round_points. If the attribute round_points is
-        not None, the parameter points will be overridden.
+        """Round `number`, unless the instance attribute `__round_outputs`.
+
+        Round floating point outputs for backwards compatibility.
+        Rounding can be turned off by setting the instance attribute
+        `__round_outputs` to False.
+
+        Parameters
+        ----------
+        number : int or float
+        points : int, optional
+            The number of decimal digits to return. If the instance attribute
+            `__round_points` is not None, the value of `__round_point` will
+            override the value passed for `points`. The default is 0.
+
+        Returns
+        -------
+        int or float
+
         """
         points = self.__round_points if (
             self.__round_points is not None) else points
@@ -131,10 +145,21 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def char_count(self, text, ignore_spaces=True):
-        """
-        Function to return total character counts in a text,
-        pass the following parameter `ignore_spaces = False`
-        to ignore whitespaces
+        """Count the number of characters in a text.
+        
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        ignore_spaces : bool, optional
+            Ignore whitespaces if True. The default is True.
+
+        Returns
+        -------
+        int
+            Number of characters.
+
         """
         if ignore_spaces:
             text = re.sub(r"\s", "", text)
@@ -142,10 +167,20 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def letter_count(self, text, ignore_spaces=True):
-        """
-        Function to return total letter amount in a text,
-        pass the following parameter `ignore_spaces = False`
-        to ignore whitespaces
+        """Count letters in a text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        ignore_spaces : bool, optional
+            Ignore whitespaces. The default is True.
+
+        Returns
+        -------
+        int
+            The number of letters in text.
+
         """
         if ignore_spaces:
             text = re.sub(r"\s", "", text)
@@ -153,7 +188,26 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def remove_punctuation(self, text):
+        """Remove punctuation.
 
+        If the instance attribute `__rm_apostrophe` is set to True, all
+        punctuation is removed, including apostrophes.
+        If the instance attribute `__rm_apostrophe` is set to False,
+        punctuation is removed with the exception of apostrophes in common
+        English contractions.
+        Hyphens are always removed.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        text : TYPE
+            DESCRIPTION.
+
+        """
         if self.__rm_apostrophe:
             # remove all punctuation
             punctuation_regex = r"[^\w\s]"
@@ -169,8 +223,26 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def lexicon_count(self, text, removepunct=True):
-        """
-        Function to return total lexicon (words in lay terms) counts in a text
+        """Count types (words) in a text.
+
+        If `removepunct` is set to True and
+        the instance attribute `__rm_apostrophe` is set to False,
+        English contractions (e.g. "aren't") are counted as one word.
+        Hyphenated words are counted as a single word
+        (e.g. "singer-songwriter").
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        removepunct : bool, optional
+            DESCRIPTION. The default is True.
+
+        Returns
+        -------
+        count : int
+            DESCRIPTION.
+
         """
         if removepunct:
             text = self.remove_punctuation(text)
@@ -179,10 +251,20 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def miniword_count(self, text, max_size=3):
-        """
-        Function to return total miniword (Common words with three letters
-        or less) counts in a text. Optionally increase or decrease maximum
-        word size.
+        """Count common words with `max_size` letters or less in a text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        max_size : int, optional
+            Maximum number of letters in a word for it to be counted. The
+            default is 3.
+
+        Returns
+        -------
+        count : int
+
         """
         count = len([word for word in self.remove_punctuation(text).split() if
                      len(word) <= max_size])
