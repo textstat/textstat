@@ -150,7 +150,23 @@ class textstatistics:
         self.__round_outputs = rounding
         self.__round_points = points
 
-    def set_rm_apostrophe(self, rm_apostrophe):
+    def set_rm_apostrophe(self, rm_apostrophe: bool):
+        """Set the attribute `__round_point`.
+
+        Parameters
+        ----------
+        rm_apostrophe : bool
+            If True, all textstat methods that use the remove_punctuataion
+            function for the word count, syllable count or character count,
+            remove the apostrophe in contractions along with other punctuation.
+            If False, punctuation is removed with the exception of apostrophes
+            in common English contractions.
+
+        Returns
+        -------
+        None.
+
+        """
         self.__rm_apostrophe = rm_apostrophe
 
     def set_lang(self, lang):
