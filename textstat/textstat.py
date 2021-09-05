@@ -131,7 +131,22 @@ class textstatistics:
         else:
             return number
 
-    def set_rounding(self, rounding, points=None):
+    def set_rounding(self, rounding: bool, points=None):
+        """Set the attributes `__round_point` and `__round_outputs`.
+
+        Parameters
+        ----------
+        rounding : bool
+            Whether to round the outputs of all textstat methods.
+        points : int or None, optional
+            The number of decimal digits for the outputs of all textstat
+            methods. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         self.__round_outputs = rounding
         self.__round_points = points
 
