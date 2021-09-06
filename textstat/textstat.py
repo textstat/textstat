@@ -710,7 +710,7 @@ class textstatistics:
         return diff_words
 
     @lru_cache(maxsize=128)
-    def is_difficult_word(self, word: str, syllable_threshold: int=2):
+    def is_difficult_word(self, word: str, syllable_threshold: int = 2):
         """Return True if `word` is a difficult word.
 
         The function checks if if the word is in the Dale-Chall list of
