@@ -102,7 +102,7 @@ class textstatistics:
         for method in caching_methods:
             getattr(self, method).cache_clear()
 
-    def _legacy_round(self, number:float, points: int = 0) -> float:
+    def _legacy_round(self, number: float, points: int = 0) -> float:
         """Round `number`, unless the instance attribute `__round_outputs`.
 
         Round floating point outputs for backwards compatibility.
