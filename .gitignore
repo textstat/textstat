@@ -624,3 +624,6 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/vim,emacs,linux,macos,python,windows,pycharm,visualstudio,visualstudiocode
+
+# pylint
+.pylint.d/
