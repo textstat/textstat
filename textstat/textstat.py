@@ -602,7 +602,28 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def coleman_liau_index(self, text):
+    def coleman_liau_index(self, text: str) -> float:
+        r"""Calculate the Coleman-Liaux index.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Coleman-Liaux index for `text`.
+
+        Notes
+        -----
+        The Coleman-Liaux index is calculated as:
+
+        .. math::
+
+            (0.058*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
+
+        """
         letters = self._legacy_round(self.avg_letter_per_word(text) * 100, 2)
         sentences = self._legacy_round(
             self.avg_sentence_per_word(text) * 100, 2)
