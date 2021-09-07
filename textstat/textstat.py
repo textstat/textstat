@@ -102,7 +102,7 @@ class textstatistics:
         for method in caching_methods:
             getattr(self, method).cache_clear()
 
-    def _legacy_round(self, number, points=0):
+    def _legacy_round(self, number:float, points: int = 0) -> float:
         """Round `number`, unless the instance attribute `__round_outputs`.
 
         Round floating point outputs for backwards compatibility.
@@ -111,7 +111,7 @@ class textstatistics:
 
         Parameters
         ----------
-        number : int or float
+        number : float
         points : int, optional
             The number of decimal digits to return. If the instance attribute
             `__round_points` is not None, the value of `__round_point` will
@@ -119,7 +119,7 @@ class textstatistics:
 
         Returns
         -------
-        int or float
+        float
 
         """
         points = self.__round_points if (
@@ -744,22 +744,53 @@ class textstatistics:
         return not self.is_difficult_word(word, syllable_threshold)
 
     @lru_cache(maxsize=128)
-    def dale_chall_readability_score(self, text):
+    def dale_chall_readability_score(self, text: str):
+        r"""Estimate the Dale-Chall readability score.
+
+        Deviations from the original Dale-Chall readability score:
+        - For now, regular inflections of words in the Dale-Chall list of easy
+          words are counted as difficult words
+          (see documentation for `is_difficult_word`). This may change in the
+          future.
+        - Poper names are also counted as difficult words. This is unlikely to
+          change.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            An approximation of the Dale-Chall readability score.
+
+        Notes
+        -----
+        The estimate of the Dale-Chall readability score is calculated as:
+
+        .. math::
+
+            (0.1579*%\ difficult\ words)+(0.0496*avg\ words\ per\ sentence)
+
+        If the percentage of difficult words is > 5, 3.6365 is added to the
+        score.
+        """
         word_count = self.lexicon_count(text)
         count = word_count - self.difficult_words(text, syllable_threshold=0)
 
         try:
-            per = float(count) / float(word_count) * 100
+            per_easy_words = float(count) / float(word_count) * 100
         except ZeroDivisionError:
             return 0.0
 
-        difficult_words = 100 - per
+        per_difficult_words = 100 - per_easy_words
 
         score = (
-                (0.1579 * difficult_words)
+                (0.1579 * per_difficult_words)
                 + (0.0496 * self.avg_sentence_length(text)))
 
-        if difficult_words > 5:
+        if per_difficult_words > 5:
             score += 3.6365
         return self._legacy_round(score, 2)
 
