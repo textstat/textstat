@@ -362,7 +362,23 @@ class textstatistics:
         return max(1, len(sentences) - ignore_count)
 
     @lru_cache(maxsize=128)
-    def avg_sentence_length(self, text):
+    def avg_sentence_length(self, text: str) -> float:
+        """Caluclate the average sentence length.
+
+        This function is a combination of the functions `lexicon_count` and
+        `sentence_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average sentence length.
+
+        """
         try:
             asl = float(self.lexicon_count(text) / self.sentence_count(text))
             return self._legacy_round(asl, 1)
