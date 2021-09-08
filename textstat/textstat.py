@@ -399,7 +399,23 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_character_per_word(self, text):
+    def avg_character_per_word(self, text: str) -> float:
+        """Caluclate the average sentence word length in characters.
+
+        This function is a combination of the functions `char_count` and
+        `lexicon_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average number of characters per word.
+
+        """
         try:
             letters_per_word = float(
                 self.char_count(text) / self.lexicon_count(text))
@@ -408,7 +424,23 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_letter_per_word(self, text):
+    def avg_letter_per_word(self, text: str) -> float:
+        """Caluclate the average sentence word length in letters.
+
+        This function is a combination of the functions `letter_count` and
+        `lexicon_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average number of letters per word.
+
+        """
         try:
             letters_per_word = float(
                 self.letter_count(text) / self.lexicon_count(text))
@@ -426,7 +458,23 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def words_per_sentence(self, text):
+    def words_per_sentence(self, text: str) -> float:
+        """Caluclate the average number of words per sentence.
+
+        This function is a combination of the functions `lexicon_count` and
+        `sentence_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average number of words per sentence.
+
+        """
         s_count = self.sentence_count(text)
 
         if s_count < 1:
