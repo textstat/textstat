@@ -363,7 +363,7 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_sentence_length(self, text: str) -> float:
-        """Caluclate the average sentence length.
+        """Calculate the average sentence length.
 
         This function is a combination of the functions `lexicon_count` and
         `sentence_count`.
@@ -400,7 +400,7 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_character_per_word(self, text: str) -> float:
-        """Caluclate the average sentence word length in characters.
+        """Calculate the average sentence word length in characters.
 
         This function is a combination of the functions `char_count` and
         `lexicon_count`.
@@ -425,7 +425,7 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_letter_per_word(self, text: str) -> float:
-        """Caluclate the average sentence word length in letters.
+        """Calculate the average sentence word length in letters.
 
         This function is a combination of the functions `letter_count` and
         `lexicon_count`.
@@ -459,7 +459,7 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def words_per_sentence(self, text: str) -> float:
-        """Caluclate the average number of words per sentence.
+        """Calculate the average number of words per sentence.
 
         This function is a combination of the functions `lexicon_count` and
         `sentence_count`.
