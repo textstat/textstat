@@ -169,7 +169,19 @@ class textstatistics:
         """
         self.__rm_apostrophe = rm_apostrophe
 
-    def set_lang(self, lang):
+    def set_lang(self, lang : str):
+        """Set the language of your text strings. By default the locale ID is 'en_US'.
+
+        Parameters
+        ----------
+        lang : str
+            A locale ID.
+
+        Returns
+        -------
+        None.
+
+        """
         self.__lang = lang
         self.pyphen = Pyphen(lang=self.__lang)
         self._cache_clear()
