@@ -2,10 +2,11 @@ import warnings
 import re
 import math
 from collections import Counter
+from typing import Optional
+
 import pkg_resources
 from functools import lru_cache
 from pyphen import Pyphen
-
 
 langs = {
     "en": {  # Default config
@@ -398,7 +399,23 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_syllables_per_word(self, text, interval=None):
+    def avg_syllables_per_word(self, text: str,
+                               interval: Optional[int] = None) -> float:
+        """Get the average number of syllables per word.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        interval : int or None, optional
+            The default is None.
+
+        Returns
+        -------
+        float
+            The average number of syllables per word.
+
+        """
         syllable = self.syllable_count(text)
         words = self.lexicon_count(text)
         try:
