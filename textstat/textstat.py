@@ -846,7 +846,23 @@ class textstatistics:
         return number / 2
 
     @lru_cache(maxsize=128)
-    def difficult_words(self, text, syllable_threshold=2):
+    def difficult_words(self, text: str, syllable_threshold: int = 2) -> int:
+        """Count the number of difficult words.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        syllable_threshold : int, optional
+            The cut-off for the number of difficult words passed to
+            `difficult_words_list`. The default is 2.
+
+        Returns
+        -------
+        int
+            Number of difficult words.
+
+        """
         return len(self.difficult_words_list(text, syllable_threshold))
 
     @lru_cache(maxsize=128)
