@@ -663,7 +663,25 @@ class textstatistics:
         return self._legacy_round(flesch, 1)
 
     @lru_cache(maxsize=128)
-    def polysyllabcount(self, text):
+    def polysyllabcount(self, text: str) -> int:
+        """Count the words with three or more syllables.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of words with three or more syllables.
+
+        Notes
+        -----
+        The function uses text.split() to generate a list of words.
+        Contractions and hyphenations are therefore counted as one word.
+
+        """
         count = 0
         for word in text.split():
             wrds = self.syllable_count(word)
