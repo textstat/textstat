@@ -478,7 +478,22 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_sentence_per_word(self, text):
+    def avg_sentence_per_word(self, text: str) -> float:
+        """Get the number of sentences per word.
+
+        A combination of the functions sentence_count and lecicon_count.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            Number of sentences per word.
+
+        """
         try:
             sentence_per_word = float(
                 self.sentence_count(text) / self.lexicon_count(text))
