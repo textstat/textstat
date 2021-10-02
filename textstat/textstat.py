@@ -2,7 +2,7 @@ import warnings
 import re
 import math
 from collections import Counter
-from typing import Optional
+from typing import Optional, List
 
 import pkg_resources
 from functools import lru_cache
@@ -854,8 +854,8 @@ class textstatistics:
         text : str
             A text string.
         syllable_threshold : int, optional
-            The cut-off for the number of difficult words passed to
-            `difficult_words_list`. The default is 2.
+            The cut-off for the number of syllables difficult words are
+            required to have. The default is 2.
 
         Returns
         -------
@@ -866,7 +866,24 @@ class textstatistics:
         return len(self.difficult_words_list(text, syllable_threshold))
 
     @lru_cache(maxsize=128)
-    def difficult_words_list(self, text, syllable_threshold=2):
+    def difficult_words_list(
+            self, text: str, syllable_threshold: int = 2) -> List[str]:
+        """Get a list of difficult words
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        syllable_threshold : int, optional
+            The cut-off for the number of syllables difficult words are
+            required to have. The default is 2.
+
+        Returns
+        -------
+        List[str]
+            DESCRIPTION.
+
+        """
         words = set(re.findall(r"[\w\='‘’]+", text.lower()))
         diff_words = [word for word in words
                       if self.is_difficult_word(word, syllable_threshold)]
