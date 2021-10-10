@@ -5,7 +5,7 @@ from collections import Counter
 import pkg_resources
 from functools import lru_cache
 from pyphen import Pyphen
-
+from typing import Union
 
 langs = {
     "en": {  # Default config
@@ -54,7 +54,7 @@ langs = {
 }
 
 
-def get_grade_suffix(grade):
+def get_grade_suffix(grade: int) -> str:
     """
     Select correct ordinal suffix
     """
@@ -89,7 +89,7 @@ class textstatistics:
     def __init__(self):
         self.set_lang(self.__lang)
 
-    def _cache_clear(self):
+    def _cache_clear(self) -> None:
         caching_methods = [
             method for method in dir(self)
             if callable(getattr(self, method))
@@ -99,7 +99,7 @@ class textstatistics:
         for method in caching_methods:
             getattr(self, method).cache_clear()
 
-    def _legacy_round(self, number, points=0):
+    def _legacy_round(self, number: float, points: int=0) -> float:
         """
         Function to round floating point outputs for backwards compatibility.
         Rounding can be turned off by creating an instance of the class
@@ -117,20 +117,20 @@ class textstatistics:
         else:
             return number
 
-    def set_rounding(self, rounding, points=None):
+    def set_rounding(self, rounding: bool, points: Union[int, None]=None) -> None:
         self.__round_outputs = rounding
         self.__round_points = points
 
-    def set_rm_apostrophe(self, rm_apostrophe):
+    def set_rm_apostrophe(self, rm_apostrophe: bool) -> None:
         self.__rm_apostrophe = rm_apostrophe
 
-    def set_lang(self, lang):
+    def set_lang(self, lang: str) -> None:
         self.__lang = lang
         self.pyphen = Pyphen(lang=self.__lang)
         self._cache_clear()
 
     @lru_cache(maxsize=128)
-    def char_count(self, text, ignore_spaces=True):
+    def char_count(self, text: str, ignore_spaces: bool=True) -> int:
         """
         Function to return total character counts in a text,
         pass the following parameter `ignore_spaces = False`
@@ -141,7 +141,7 @@ class textstatistics:
         return len(text)
 
     @lru_cache(maxsize=128)
-    def letter_count(self, text, ignore_spaces=True):
+    def letter_count(self, text: str, ignore_spaces: bool=True) -> int:
         """
         Function to return total letter amount in a text,
         pass the following parameter `ignore_spaces = False`
@@ -152,7 +152,7 @@ class textstatistics:
         return len(self.remove_punctuation(text))
 
     @lru_cache(maxsize=128)
-    def remove_punctuation(self, text):
+    def remove_punctuation(self, text: str) -> str:
 
         if self.__rm_apostrophe:
             # remove all punctuation
@@ -168,7 +168,7 @@ class textstatistics:
         return text
 
     @lru_cache(maxsize=128)
-    def lexicon_count(self, text, removepunct=True):
+    def lexicon_count(self, text: str, removepunct: bool=True) -> int:
         """
         Function to return total lexicon (words in lay terms) counts in a text
         """
@@ -178,7 +178,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def miniword_count(self, text, max_size=3):
+    def miniword_count(self, text: str, max_size: int=3) -> int:
         """
         Function to return total miniword (Common words with three letters
         or less) counts in a text. Optionally increase or decrease maximum
@@ -189,7 +189,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def syllable_count(self, text, lang=None):
+    def syllable_count(self, text: str, lang: Union[str, None]=None) -> int:
         """
         Function to calculate syllable words in a text.
         I/P - a text
@@ -217,7 +217,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def sentence_count(self, text):
+    def sentence_count(self, text: str) -> int:
         """
         Sentence count of a text
         """
@@ -229,7 +229,7 @@ class textstatistics:
         return max(1, len(sentences) - ignore_count)
 
     @lru_cache(maxsize=128)
-    def avg_sentence_length(self, text):
+    def avg_sentence_length(self, text: str) -> float:
         try:
             asl = float(self.lexicon_count(text) / self.sentence_count(text))
             return self._legacy_round(asl, 1)
@@ -237,7 +237,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_syllables_per_word(self, text, interval=None):
+    def avg_syllables_per_word(self, text: str, interval: Union[int, None]=None) -> float:
         syllable = self.syllable_count(text)
         words = self.lexicon_count(text)
         try:
@@ -250,7 +250,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_character_per_word(self, text):
+    def avg_character_per_word(self, text: str) -> float:
         try:
             letters_per_word = float(
                 self.char_count(text) / self.lexicon_count(text))
@@ -259,7 +259,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_letter_per_word(self, text):
+    def avg_letter_per_word(self, text: str) -> float:
         try:
             letters_per_word = float(
                 self.letter_count(text) / self.lexicon_count(text))
@@ -268,7 +268,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_sentence_per_word(self, text):
+    def avg_sentence_per_word(self, text: str) -> float:
         try:
             sentence_per_word = float(
                 self.sentence_count(text) / self.lexicon_count(text))
@@ -277,7 +277,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def words_per_sentence(self, text):
+    def words_per_sentence(self, text: str) -> float:
         s_count = self.sentence_count(text)
 
         if s_count < 1:
@@ -286,7 +286,7 @@ class textstatistics:
         return float(self.lexicon_count(text) / s_count)
 
     @lru_cache(maxsize=128)
-    def count_complex_arabic_words(self, text):
+    def count_complex_arabic_words(self, text: str) -> int:
         ''' counts complex arabic words '''
         count = 0
 
@@ -301,7 +301,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def count_arabic_syllables(self, text):
+    def count_arabic_syllables(self, text: str) -> int:
         '''
         counts arabic syllables where long and stress syllables are
         counted double
@@ -340,7 +340,7 @@ class textstatistics:
         return short_count + 2 * (long_count + stress_count)
 
     @lru_cache(maxsize=128)
-    def count_faseeh(self, text):
+    def count_faseeh(self, text: str) -> int:
         ''' counts faseeh in arabic texts '''
         count = 0
 
@@ -361,7 +361,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def count_arabic_long_words(self, text):
+    def count_arabic_long_words(self, text: str) -> int:
         ''' counts long arabic words without short vowels (tashkeel) '''
         tashkeel = r"\u064E|\u064B|\u064F|\u064C|\u0650|\u064D|\u0651|" \
                    + r"\u0652|\u0653|\u0657|\u0658"
@@ -375,7 +375,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def flesch_reading_ease(self, text):
+    def flesch_reading_ease(self, text: str) -> float:
         sentence_length = self.avg_sentence_length(text)
         s_interval = 100 if self.__get_lang_root() in ['es', 'it'] else None
         syllables_per_word = self.avg_syllables_per_word(text, s_interval)
@@ -391,7 +391,7 @@ class textstatistics:
         return self._legacy_round(flesch, 2)
 
     @lru_cache(maxsize=128)
-    def flesch_kincaid_grade(self, text):
+    def flesch_kincaid_grade(self, text: str) -> float:
         sentence_lenth = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
         flesch = (
@@ -401,7 +401,7 @@ class textstatistics:
         return self._legacy_round(flesch, 1)
 
     @lru_cache(maxsize=128)
-    def polysyllabcount(self, text):
+    def polysyllabcount(self, text: str) -> int:
         count = 0
         for word in text.split():
             wrds = self.syllable_count(word)
@@ -410,7 +410,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def smog_index(self, text):
+    def smog_index(self, text: str) -> float:
         sentences = self.sentence_count(text)
 
         if sentences >= 3:
@@ -426,7 +426,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def coleman_liau_index(self, text):
+    def coleman_liau_index(self, text: str) -> float:
         letters = self._legacy_round(self.avg_letter_per_word(text) * 100, 2)
         sentences = self._legacy_round(
             self.avg_sentence_per_word(text) * 100, 2)
@@ -434,7 +434,7 @@ class textstatistics:
         return self._legacy_round(coleman, 2)
 
     @lru_cache(maxsize=128)
-    def automated_readability_index(self, text):
+    def automated_readability_index(self, text: str) -> float:
         chrs = self.char_count(text)
         words = self.lexicon_count(text)
         sentences = self.sentence_count(text)
@@ -450,7 +450,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def linsear_write_formula(self, text):
+    def linsear_write_formula(self, text: str) -> float:
         easy_word = 0
         difficult_word = 0
         text_list = text.split()[:100]
@@ -477,18 +477,18 @@ class textstatistics:
         return number / 2
 
     @lru_cache(maxsize=128)
-    def difficult_words(self, text, syllable_threshold=2):
+    def difficult_words(self, text: str, syllable_threshold: int=2) -> int:
         return len(self.difficult_words_list(text, syllable_threshold))
 
     @lru_cache(maxsize=128)
-    def difficult_words_list(self, text, syllable_threshold=2):
+    def difficult_words_list(self, text: str, syllable_threshold: int=2) -> list[str]:
         words = set(re.findall(r"[\w\='‘’]+", text.lower()))
         diff_words = [word for word in words
                       if self.is_difficult_word(word, syllable_threshold)]
         return diff_words
 
     @lru_cache(maxsize=128)
-    def is_difficult_word(self, word, syllable_threshold=2):
+    def is_difficult_word(self, word: str, syllable_threshold: int=2) -> bool:
         easy_word_set = self.__get_lang_easy_words()
         if word in easy_word_set:
             return False
@@ -497,11 +497,11 @@ class textstatistics:
         return True
 
     @lru_cache(maxsize=128)
-    def is_easy_word(self, word, syllable_threshold=2):
+    def is_easy_word(self, word: str, syllable_threshold: int=2) -> bool:
         return not self.is_difficult_word(word, syllable_threshold)
 
     @lru_cache(maxsize=128)
-    def dale_chall_readability_score(self, text):
+    def dale_chall_readability_score(self, text: str) -> float:
         word_count = self.lexicon_count(text)
         count = word_count - self.difficult_words(text, syllable_threshold=0)
 
@@ -521,7 +521,7 @@ class textstatistics:
         return self._legacy_round(score, 2)
 
     @lru_cache(maxsize=128)
-    def gunning_fog(self, text):
+    def gunning_fog(self, text: str) -> float:
         try:
             syllable_threshold = self.__get_lang_cfg("syllable_threshold")
             per_diff_words = (
@@ -536,7 +536,7 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def lix(self, text):
+    def lix(self, text: str) -> float:
         words = text.split()
 
         words_len = len(words)
@@ -551,7 +551,7 @@ class textstatistics:
         return self._legacy_round(lix, 2)
 
     @lru_cache(maxsize=128)
-    def rix(self, text):
+    def rix(self, text: str) -> float:
         """
         A Rix ratio is simply the number of long words divided by
         the number of assessed sentences.
@@ -569,7 +569,7 @@ class textstatistics:
         return self._legacy_round(rix, 2)
 
     @lru_cache(maxsize=128)
-    def spache_readability(self, text, float_output=True):
+    def spache_readability(self, text: str, float_output: bool=True) -> Union[float, int]:
         """
         Function to calculate SPACHE readability formula for young readers.
         I/P - a text
@@ -589,7 +589,7 @@ class textstatistics:
             return self._legacy_round(spache, 2)
 
     @lru_cache(maxsize=128)
-    def dale_chall_readability_score_v2(self, text):
+    def dale_chall_readability_score_v2(self, text: str) -> float:
         """
         Function to calculate New Dale Chall Readability formula.
         I/P - a text
@@ -609,7 +609,7 @@ class textstatistics:
         return self._legacy_round(adjusted_score, 2)
 
     @lru_cache(maxsize=128)
-    def text_standard(self, text, float_output=None):
+    def text_standard(self, text: str, float_output: bool=None) -> Union[float, str]:
 
         grade = []
 
@@ -691,7 +691,7 @@ class textstatistics:
             )
 
     @lru_cache(maxsize=128)
-    def reading_time(self, text, ms_per_char=14.69):
+    def reading_time(self, text: str, ms_per_char: float=14.69) -> float:
         """
         Function to calculate reading time (Demberg & Keller, 2008)
         I/P - a text
@@ -706,7 +706,7 @@ class textstatistics:
 
     # Spanish readability tests
     @lru_cache(maxsize=128)
-    def fernandez_huerta(self, text):
+    def fernandez_huerta(self, text: str) -> float:
         '''
         Fernandez Huerta readability score
         https://legible.es/blog/lecturabilidad-fernandez-huerta/
@@ -720,7 +720,7 @@ class textstatistics:
         return self._legacy_round(f_huerta, 2)
 
     @lru_cache(maxsize=128)
-    def szigriszt_pazos(self, text):
+    def szigriszt_pazos(self, text: str) -> float:
         '''
         Szigriszt Pazos readability score (1992)
         https://legible.es/blog/perspicuidad-szigriszt-pazos/
@@ -739,7 +739,7 @@ class textstatistics:
         return self._legacy_round(s_p, 2)
 
     @lru_cache(maxsize=128)
-    def gutierrez_polini(self, text):
+    def gutierrez_polini(self, text: str) -> float:
         '''
         Guttierrez de Polini index
         https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
@@ -758,7 +758,7 @@ class textstatistics:
         return self._legacy_round(gut_pol, 2)
 
     @lru_cache(maxsize=128)
-    def crawford(self, text):
+    def crawford(self, text: str) -> float:
         '''
         Crawford index
         https://legible.es/blog/formula-de-crawford/
@@ -782,7 +782,7 @@ class textstatistics:
         return self._legacy_round(craw_years, 1)
 
     @lru_cache(maxsize=128)
-    def osman(self, text):
+    def osman(self, text: str) -> float:
         '''
         Osman index for Arabic texts
         https://www.aclweb.org/anthology/L16-1038.pdf
@@ -807,7 +807,7 @@ class textstatistics:
         return self._legacy_round(osman, 2)
 
     @lru_cache(maxsize=128)
-    def gulpease_index(self, text):
+    def gulpease_index(self, text: str) -> float:
         '''
         Indice Gulpease Index for Italian texts
         https://it.wikipedia.org/wiki/Indice_Gulpease
@@ -822,19 +822,19 @@ class textstatistics:
             (10 * self.char_count(text) / n_words) + 89, 1)
 
     @lru_cache(maxsize=128)
-    def long_word_count(self, text):
+    def long_word_count(self, text: str) -> int:
         ''' counts words with more than 6 characters '''
         word_list = self.remove_punctuation(text).split()
         return len([w for w in word_list if len(w) > 6])
 
     @lru_cache(maxsize=128)
-    def monosyllabcount(self, text):
+    def monosyllabcount(self, text: str) -> int:
         ''' counts monosyllables '''
         word_list = self.remove_punctuation(text).split()
         return len([w for w in word_list if self.syllable_count(w) < 2])
 
     @lru_cache(maxsize=128)
-    def wiener_sachtextformel(self, text, variant):
+    def wiener_sachtextformel(self, text: str, variant: int) -> float:
         '''
         Wiener Sachtextformel for readability assessment of German texts
 
@@ -868,7 +868,7 @@ class textstatistics:
             raise ValueError("variant can only be an integer between 1 and 4")
 
     @lru_cache(maxsize=128)
-    def mcalpine_eflaw(self, text):
+    def mcalpine_eflaw(self, text: str) -> float:
         '''
         McAlpine EFLAW score that asseses the readability of English texts
         for English foreign learners
@@ -884,16 +884,16 @@ class textstatistics:
         n_miniwords = self.miniword_count(text)
         return self._legacy_round((n_words + n_miniwords) / n_sentences, 1)
 
-    def __get_lang_cfg(self, key):
+    def __get_lang_cfg(self, key: str) -> float:
         """ Read as get lang config """
         default = langs.get("en")
         config = langs.get(self.__get_lang_root(), default)
         return config.get(key, default.get(key))
 
-    def __get_lang_root(self):
+    def __get_lang_root(self) -> str:
         return self.__lang.split("_")[0]
 
-    def __get_lang_easy_words(self):
+    def __get_lang_easy_words(self) -> set[str]:
         lang = self.__get_lang_root()
         if lang not in self.__easy_word_sets:
             try:
