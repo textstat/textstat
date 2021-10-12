@@ -5,7 +5,7 @@ from collections import Counter
 import pkg_resources
 from functools import lru_cache
 from pyphen import Pyphen
-from typing import Union
+from typing import Union, List, Set
 
 langs = {
     "en": {  # Default config
@@ -99,7 +99,7 @@ class textstatistics:
         for method in caching_methods:
             getattr(self, method).cache_clear()
 
-    def _legacy_round(self, number: float, points: int=0) -> float:
+    def _legacy_round(self, number: float, points: int = 0) -> float:
         """
         Function to round floating point outputs for backwards compatibility.
         Rounding can be turned off by creating an instance of the class
@@ -117,7 +117,9 @@ class textstatistics:
         else:
             return number
 
-    def set_rounding(self, rounding: bool, points: Union[int, None]=None) -> None:
+    def set_rounding(
+        self, rounding: bool, points: Union[int, None] = None
+    ) -> None:
         self.__round_outputs = rounding
         self.__round_points = points
 
@@ -130,7 +132,7 @@ class textstatistics:
         self._cache_clear()
 
     @lru_cache(maxsize=128)
-    def char_count(self, text: str, ignore_spaces: bool=True) -> int:
+    def char_count(self, text: str, ignore_spaces: bool = True) -> int:
         """
         Function to return total character counts in a text,
         pass the following parameter `ignore_spaces = False`
@@ -141,7 +143,7 @@ class textstatistics:
         return len(text)
 
     @lru_cache(maxsize=128)
-    def letter_count(self, text: str, ignore_spaces: bool=True) -> int:
+    def letter_count(self, text: str, ignore_spaces: bool = True) -> int:
         """
         Function to return total letter amount in a text,
         pass the following parameter `ignore_spaces = False`
@@ -168,7 +170,7 @@ class textstatistics:
         return text
 
     @lru_cache(maxsize=128)
-    def lexicon_count(self, text: str, removepunct: bool=True) -> int:
+    def lexicon_count(self, text: str, removepunct: bool = True) -> int:
         """
         Function to return total lexicon (words in lay terms) counts in a text
         """
@@ -178,7 +180,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def miniword_count(self, text: str, max_size: int=3) -> int:
+    def miniword_count(self, text: str, max_size: int = 3) -> int:
         """
         Function to return total miniword (Common words with three letters
         or less) counts in a text. Optionally increase or decrease maximum
@@ -189,7 +191,7 @@ class textstatistics:
         return count
 
     @lru_cache(maxsize=128)
-    def syllable_count(self, text: str, lang: Union[str, None]=None) -> int:
+    def syllable_count(self, text: str, lang: Union[str, None] = None) -> int:
         """
         Function to calculate syllable words in a text.
         I/P - a text
@@ -237,7 +239,9 @@ class textstatistics:
             return 0.0
 
     @lru_cache(maxsize=128)
-    def avg_syllables_per_word(self, text: str, interval: Union[int, None]=None) -> float:
+    def avg_syllables_per_word(
+        self, text: str, interval: Union[int, None] = None
+    ) -> float:
         syllable = self.syllable_count(text)
         words = self.lexicon_count(text)
         try:
@@ -477,18 +481,22 @@ class textstatistics:
         return number / 2
 
     @lru_cache(maxsize=128)
-    def difficult_words(self, text: str, syllable_threshold: int=2) -> int:
+    def difficult_words(self, text: str, syllable_threshold: int = 2) -> int:
         return len(self.difficult_words_list(text, syllable_threshold))
 
     @lru_cache(maxsize=128)
-    def difficult_words_list(self, text: str, syllable_threshold: int=2) -> list[str]:
+    def difficult_words_list(
+        self, text: str, syllable_threshold: int = 2
+    ) -> List[str]:
         words = set(re.findall(r"[\w\='‘’]+", text.lower()))
         diff_words = [word for word in words
                       if self.is_difficult_word(word, syllable_threshold)]
         return diff_words
 
     @lru_cache(maxsize=128)
-    def is_difficult_word(self, word: str, syllable_threshold: int=2) -> bool:
+    def is_difficult_word(
+        self, word: str, syllable_threshold: int = 2
+    ) -> bool:
         easy_word_set = self.__get_lang_easy_words()
         if word in easy_word_set:
             return False
@@ -497,7 +505,7 @@ class textstatistics:
         return True
 
     @lru_cache(maxsize=128)
-    def is_easy_word(self, word: str, syllable_threshold: int=2) -> bool:
+    def is_easy_word(self, word: str, syllable_threshold: int = 2) -> bool:
         return not self.is_difficult_word(word, syllable_threshold)
 
     @lru_cache(maxsize=128)
@@ -569,7 +577,9 @@ class textstatistics:
         return self._legacy_round(rix, 2)
 
     @lru_cache(maxsize=128)
-    def spache_readability(self, text: str, float_output: bool=True) -> Union[float, int]:
+    def spache_readability(
+        self, text: str, float_output: bool = True
+    ) -> Union[float, int]:
         """
         Function to calculate SPACHE readability formula for young readers.
         I/P - a text
@@ -609,7 +619,9 @@ class textstatistics:
         return self._legacy_round(adjusted_score, 2)
 
     @lru_cache(maxsize=128)
-    def text_standard(self, text: str, float_output: bool=None) -> Union[float, str]:
+    def text_standard(
+        self, text: str, float_output: bool = None
+    ) -> Union[float, str]:
 
         grade = []
 
@@ -691,7 +703,7 @@ class textstatistics:
             )
 
     @lru_cache(maxsize=128)
-    def reading_time(self, text: str, ms_per_char: float=14.69) -> float:
+    def reading_time(self, text: str, ms_per_char: float = 14.69) -> float:
         """
         Function to calculate reading time (Demberg & Keller, 2008)
         I/P - a text
@@ -893,7 +905,7 @@ class textstatistics:
     def __get_lang_root(self) -> str:
         return self.__lang.split("_")[0]
 
-    def __get_lang_easy_words(self) -> set[str]:
+    def __get_lang_easy_words(self) -> Set[str]:
         lang = self.__get_lang_root()
         if lang not in self.__easy_word_sets:
             try:
