@@ -2,10 +2,11 @@ import warnings
 import re
 import math
 from collections import Counter
+from typing import Union, List, Set
+
 import pkg_resources
 from functools import lru_cache
 from pyphen import Pyphen
-from typing import Union, List, Set
 
 langs = {
     "en": {  # Default config
@@ -70,13 +71,16 @@ class textstatistics:
     ----------
     text_encoding : str
         Default: "utf-8"
-    round_outputs : bool
+    __lang : str
+        Default : "en_US"
+    __round_outputs : bool
         Whether to round floating point outputs. Default: True
-    round_points : int or None
+    __round_points : int or None
         The number of decimals to use when rounding outputs. round_points will
         override any argument passed to the _legacy_round method. If
         round_points is set to None, the number of decimals will be determined
         by the argument passed to the method. Default: None
+    __rm_apostrophe : bool
     """
 
     __lang = "en_US"
@@ -100,13 +104,24 @@ class textstatistics:
             getattr(self, method).cache_clear()
 
     def _legacy_round(self, number: float, points: int = 0) -> float:
-        """
-        Function to round floating point outputs for backwards compatibility.
-        Rounding can be turned off by creating an instance of the class
-        textstatistics and setting the attribute round_outputs to False.
-        The number of points can be controlled for all methods by
-        setting the attribute round_points. If the attribute round_points is
-        not None, the parameter points will be overridden.
+        """Round `number`, unless the attribute `__round_outputs` is `False`.
+
+        Round floating point outputs for backwards compatibility.
+        Rounding can be turned off by setting the instance attribute
+        `__round_outputs` to False.
+
+        Parameters
+        ----------
+        number : float
+        points : int, optional
+            The number of decimal digits to return. If the instance attribute
+            `__round_points` is not None, the value of `__round_point` will
+            override the value passed for `points`. The default is 0.
+
+        Returns
+        -------
+        float
+
         """
         points = self.__round_points if (
             self.__round_points is not None) else points
@@ -120,23 +135,78 @@ class textstatistics:
     def set_rounding(
         self, rounding: bool, points: Union[int, None] = None
     ) -> None:
+        """Set the attributes `__round_point` and `__round_outputs`.
+
+        Parameters
+        ----------
+        rounding : bool
+            Whether to round the outputs of all textstat methods.
+        points : int or None, optional
+            The number of decimal digits for the outputs of all textstat
+            methods. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         self.__round_outputs = rounding
         self.__round_points = points
 
     def set_rm_apostrophe(self, rm_apostrophe: bool) -> None:
+        """Set the attribute `__round_point`.
+
+        Parameters
+        ----------
+        rm_apostrophe : bool
+            If True, all textstat methods that use the remove_punctuataion
+            function for the word count, syllable count or character count,
+            remove the apostrophe in contractions along with other punctuation.
+            If False, punctuation is removed with the exception of apostrophes
+            in common English contractions.
+
+        Returns
+        -------
+        None.
+
+        """
         self.__rm_apostrophe = rm_apostrophe
 
     def set_lang(self, lang: str) -> None:
+        """Set the language of your text strings.
+
+        The default locale ID is 'en_US'.
+
+        Parameters
+        ----------
+        lang : str
+            A locale ID.
+
+        Returns
+        -------
+        None.
+
+        """
         self.__lang = lang
         self.pyphen = Pyphen(lang=self.__lang)
         self._cache_clear()
 
     @lru_cache(maxsize=128)
     def char_count(self, text: str, ignore_spaces: bool = True) -> int:
-        """
-        Function to return total character counts in a text,
-        pass the following parameter `ignore_spaces = False`
-        to ignore whitespaces
+        """Count the number of characters in a text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        ignore_spaces : bool, optional
+            Ignore whitespaces if True. The default is True.
+
+        Returns
+        -------
+        int
+            Number of characters.
+
         """
         if ignore_spaces:
             text = re.sub(r"\s", "", text)
@@ -144,10 +214,20 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def letter_count(self, text: str, ignore_spaces: bool = True) -> int:
-        """
-        Function to return total letter amount in a text,
-        pass the following parameter `ignore_spaces = False`
-        to ignore whitespaces
+        """Count letters in a text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        ignore_spaces : bool, optional
+            Ignore whitespaces. The default is True.
+
+        Returns
+        -------
+        int
+            The number of letters in text.
+
         """
         if ignore_spaces:
             text = re.sub(r"\s", "", text)
@@ -155,7 +235,26 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def remove_punctuation(self, text: str) -> str:
+        """Remove punctuation.
 
+        If the instance attribute `__rm_apostrophe` is set to True, all
+        punctuation is removed, including apostrophes.
+        If the instance attribute `__rm_apostrophe` is set to False,
+        punctuation is removed with the exception of apostrophes in common
+        English contractions.
+        Hyphens are always removed.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        text : TYPE
+            DESCRIPTION.
+
+        """
         if self.__rm_apostrophe:
             # remove all punctuation
             punctuation_regex = r"[^\w\s]"
@@ -171,8 +270,26 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def lexicon_count(self, text: str, removepunct: bool = True) -> int:
-        """
-        Function to return total lexicon (words in lay terms) counts in a text
+        """Count types (words) in a text.
+
+        If `removepunct` is set to True and
+        the instance attribute `__rm_apostrophe` is set to False,
+        English contractions (e.g. "aren't") are counted as one word.
+        Hyphenated words are counted as a single word
+        (e.g. "singer-songwriter").
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        removepunct : bool, optional
+            DESCRIPTION. The default is True.
+
+        Returns
+        -------
+        count : int
+            DESCRIPTION.
+
         """
         if removepunct:
             text = self.remove_punctuation(text)
@@ -181,10 +298,20 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def miniword_count(self, text: str, max_size: int = 3) -> int:
-        """
-        Function to return total miniword (Common words with three letters
-        or less) counts in a text. Optionally increase or decrease maximum
-        word size.
+        """Count common words with `max_size` letters or less in a text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        max_size : int, optional
+            Maximum number of letters in a word for it to be counted. The
+            default is 3.
+
+        Returns
+        -------
+        count : int
+
         """
         count = len([word for word in self.remove_punctuation(text).split() if
                      len(word) <= max_size])
@@ -192,10 +319,21 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def syllable_count(self, text: str, lang: Union[str, None] = None) -> int:
-        """
-        Function to calculate syllable words in a text.
-        I/P - a text
-        O/P - number of syllable words
+        """Calculate syllable words in a text using pyphen.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        lang : str or None
+            The language of the text.
+
+            .. deprecated:: 0.5.7
+
+        Returns
+        -------
+        int
+            Number of syllables in `text`.
         """
         if lang:
             warnings.warn(
@@ -220,8 +358,18 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def sentence_count(self, text: str) -> int:
-        """
-        Sentence count of a text
+        """Count the sentences of the text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of sentences in `text`.
+
         """
         ignore_count = 0
         sentences = re.findall(r'\b[^.!?]+[.!?]*', text, re.UNICODE)
@@ -232,6 +380,22 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_sentence_length(self, text: str) -> float:
+        """Calculate the average sentence length.
+
+        This function is a combination of the functions `lexicon_count` and
+        `sentence_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average sentence length.
+
+        """
         try:
             asl = float(self.lexicon_count(text) / self.sentence_count(text))
             return self._legacy_round(asl, 1)
@@ -242,6 +406,21 @@ class textstatistics:
     def avg_syllables_per_word(
         self, text: str, interval: Union[int, None] = None
     ) -> float:
+        """Get the average number of syllables per word.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        interval : int or None, optional
+            The default is None.
+
+        Returns
+        -------
+        float
+            The average number of syllables per word.
+
+        """
         syllable = self.syllable_count(text)
         words = self.lexicon_count(text)
         try:
@@ -255,6 +434,22 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_character_per_word(self, text: str) -> float:
+        """Calculate the average sentence word length in characters.
+
+        This function is a combination of the functions `char_count` and
+        `lexicon_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average number of characters per word.
+
+        """
         try:
             letters_per_word = float(
                 self.char_count(text) / self.lexicon_count(text))
@@ -264,6 +459,22 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_letter_per_word(self, text: str) -> float:
+        """Calculate the average sentence word length in letters.
+
+        This function is a combination of the functions `letter_count` and
+        `lexicon_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average number of letters per word.
+
+        """
         try:
             letters_per_word = float(
                 self.letter_count(text) / self.lexicon_count(text))
@@ -273,6 +484,21 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def avg_sentence_per_word(self, text: str) -> float:
+        """Get the number of sentences per word.
+
+        A combination of the functions sentence_count and lecicon_count.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            Number of sentences per word.
+
+        """
         try:
             sentence_per_word = float(
                 self.sentence_count(text) / self.lexicon_count(text))
@@ -282,6 +508,22 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def words_per_sentence(self, text: str) -> float:
+        """Calculate the average number of words per sentence.
+
+        This function is a combination of the functions `lexicon_count` and
+        `sentence_count`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The average number of words per sentence.
+
+        """
         s_count = self.sentence_count(text)
 
         if s_count < 1:
@@ -291,7 +533,20 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def count_complex_arabic_words(self, text: str) -> int:
-        ''' counts complex arabic words '''
+        """
+        Count complex arabic words.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of arabic complex words.
+
+        """
         count = 0
 
         # fatHa | tanween fatH | dhamma | tanween dhamm
@@ -306,10 +561,21 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def count_arabic_syllables(self, text: str) -> int:
-        '''
-        counts arabic syllables where long and stress syllables are
-        counted double
-        '''
+        """Count arabic syllables.
+
+        Long and stressed syllables are counted double.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of arabic syllables.
+
+        """
         short_count = 0
         long_count = 0
 
@@ -345,7 +611,19 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def count_faseeh(self, text: str) -> int:
-        ''' counts faseeh in arabic texts '''
+        """Counts faseeh in arabic texts.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of faseeh.
+
+        """
         count = 0
 
         # single faseeh char's: hamza nabira | hamza satr | amza waw | Thal
@@ -366,7 +644,20 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def count_arabic_long_words(self, text: str) -> int:
-        ''' counts long arabic words without short vowels (tashkeel) '''
+        """Counts long arabic words without short vowels (tashkeel).
+
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of long arabic words without short vowels (tashkeel).
+
+        """
         tashkeel = r"\u064E|\u064B|\u064F|\u064C|\u0650|\u064D|\u0651|" \
                    + r"\u0652|\u0653|\u0657|\u0658"
         text = self.remove_punctuation(re.sub(tashkeel, "", text))
@@ -396,16 +687,55 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def flesch_kincaid_grade(self, text: str) -> float:
-        sentence_lenth = self.avg_sentence_length(text)
+        r"""Calculate the Flesh-Kincaid Grade for `text`.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Flesh-Kincaid Grade for `text`.
+
+        Notes
+        -----
+        The Flesh-Kincaid Grade is calculated as:
+
+        .. math::
+
+            (.39*avg\ sentence\ length)+(11.8*avg\ syllables\ per\ word)-15.59
+
+        """
+        sentence_length = self.avg_sentence_length(text)
         syllables_per_word = self.avg_syllables_per_word(text)
         flesch = (
-                float(0.39 * sentence_lenth)
+                float(0.39 * sentence_length)
                 + float(11.8 * syllables_per_word)
                 - 15.59)
         return self._legacy_round(flesch, 1)
 
     @lru_cache(maxsize=128)
     def polysyllabcount(self, text: str) -> int:
+        """Count the words with three or more syllables.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of words with three or more syllables.
+
+        Notes
+        -----
+        The function uses text.split() to generate a list of words.
+        Contractions and hyphenations are therefore counted as one word.
+
+        """
         count = 0
         for word in text.split():
             wrds = self.syllable_count(word)
@@ -415,6 +745,28 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def smog_index(self, text: str) -> float:
+        r"""Calculate the SMOG index.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The SMOG index for `text`.
+
+        Notes
+        -----
+        The SMOG index is calculated as:
+
+        .. math::
+
+            (1.043*(30*(n\ polysyllabic\ words/n\ sentences))^{.5})+3.1291
+
+        Polysyllabic words are defined as words with more than 3 syllables.
+        """
         sentences = self.sentence_count(text)
 
         if sentences >= 3:
@@ -431,6 +783,27 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def coleman_liau_index(self, text: str) -> float:
+        r"""Calculate the Coleman-Liaux index.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Coleman-Liaux index for `text`.
+
+        Notes
+        -----
+        The Coleman-Liaux index is calculated as:
+
+        .. math::
+
+            (0.058*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
+
+        """
         letters = self._legacy_round(self.avg_letter_per_word(text) * 100, 2)
         sentences = self._legacy_round(
             self.avg_sentence_per_word(text) * 100, 2)
@@ -439,6 +812,27 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def automated_readability_index(self, text: str) -> float:
+        r"""Calculate the Automated Readability Index (ARI).
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The ARI for `text`.
+
+        Notes
+        -----
+        The ARI is calculated as:
+
+        .. math::
+
+            (4.71*n\ characters/n\ words)+(0.5*n\ words/n\ sentences)-21.43
+
+        """
         chrs = self.char_count(text)
         words = self.lexicon_count(text)
         sentences = self.sentence_count(text)
@@ -455,6 +849,31 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def linsear_write_formula(self, text: str) -> float:
+        r"""Calculate the Linsear-Write (Lw) metric.
+
+        The Lw only uses the first 100 words of text!
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Lw for `text`.
+
+        Notes
+        -----
+        The Lw is calculated using the first 100 words:
+
+        .. math::
+
+            n\ easy\ words+(n\ difficult\ words*3))/n\ sentences
+
+        easy words are defined as words with 2 syllables or less.
+        difficult words are defined as words with 3 syllables or more.
+        r"""
         easy_word = 0
         difficult_word = 0
         text_list = text.split()[:100]
@@ -482,12 +901,44 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def difficult_words(self, text: str, syllable_threshold: int = 2) -> int:
+        """Count the number of difficult words.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        syllable_threshold : int, optional
+            The cut-off for the number of syllables difficult words are
+            required to have. The default is 2.
+
+        Returns
+        -------
+        int
+            Number of difficult words.
+
+        """
         return len(self.difficult_words_list(text, syllable_threshold))
 
     @lru_cache(maxsize=128)
     def difficult_words_list(
-        self, text: str, syllable_threshold: int = 2
-    ) -> List[str]:
+                self, text: str, syllable_threshold: int = 2
+            ) -> List[str]:
+        """Get a list of difficult words
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        syllable_threshold : int, optional
+            The cut-off for the number of syllables difficult words are
+            required to have. The default is 2.
+
+        Returns
+        -------
+        List[str]
+            DESCRIPTION.
+
+        """
         words = set(re.findall(r"[\w\='‘’]+", text.lower()))
         diff_words = [word for word in words
                       if self.is_difficult_word(word, syllable_threshold)]
@@ -497,6 +948,27 @@ class textstatistics:
     def is_difficult_word(
         self, word: str, syllable_threshold: int = 2
     ) -> bool:
+        """Return True if `word` is a difficult word.
+
+        The function checks if if the word is in the Dale-Chall list of
+        easy words. However, it currently doesn't check if the word is a
+        regular inflection of a word in the Dale-Chall list!
+
+        Parameters
+        ----------
+        word : str
+            A word.
+        syllable_threshold : int, optional
+            Minimum number of syllables a difficult word must have. The
+            default is 2.
+
+        Returns
+        -------
+        bool
+            True if the word is not in the easy words list and is longer than
+            `syllable_threshold`; else False.
+
+        """
         easy_word_set = self.__get_lang_easy_words()
         if word in easy_word_set:
             return False
@@ -510,21 +982,52 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def dale_chall_readability_score(self, text: str) -> float:
+        r"""Estimate the Dale-Chall readability score.
+
+        Deviations from the original Dale-Chall readability score:
+        - For now, regular inflections of words in the Dale-Chall list of easy
+          words are counted as difficult words
+          (see documentation for `is_difficult_word`). This may change in the
+          future.
+        - Poper names are also counted as difficult words. This is unlikely to
+          change.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            An approximation of the Dale-Chall readability score.
+
+        Notes
+        -----
+        The estimate of the Dale-Chall readability score is calculated as:
+
+        .. math::
+
+            (0.1579*%\ difficult\ words)+(0.0496*avg\ words\ per\ sentence)
+
+        If the percentage of difficult words is > 5, 3.6365 is added to the
+        score.
+        """
         word_count = self.lexicon_count(text)
         count = word_count - self.difficult_words(text, syllable_threshold=0)
 
         try:
-            per = float(count) / float(word_count) * 100
+            per_easy_words = float(count) / float(word_count) * 100
         except ZeroDivisionError:
             return 0.0
 
-        difficult_words = 100 - per
+        per_difficult_words = 100 - per_easy_words
 
         score = (
-                (0.1579 * difficult_words)
+                (0.1579 * per_difficult_words)
                 + (0.0496 * self.avg_sentence_length(text)))
 
-        if difficult_words > 5:
+        if per_difficult_words > 5:
             score += 3.6365
         return self._legacy_round(score, 2)
 
@@ -545,6 +1048,38 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def lix(self, text: str) -> float:
+        r"""Calculate the LIX for `text`
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        Notes
+        -----
+        The estimate of the LIX score is calculated as:
+
+        .. math::
+
+            LIX = A/B + A*100/C
+
+        A= Number of words
+        B= Number of sentences
+        C= Number of long words (More than 6 letters)
+
+        `A` is obtained with `len(text.split())`, which counts
+        contractions as one word. `A/B` is
+        calculated using the method `textstat.avg_sentence_length()`, which
+        counts contractions as two words, unless `__rm_apostrophe` is set to
+        False. Therefore, the definition of a word is only consistent if you
+        call `textstat.set_rm_apostrophe(False)` before calculating the LIX.
+
+        """
         words = text.split()
 
         words_len = len(words)
@@ -560,12 +1095,39 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def rix(self, text: str) -> float:
-        """
-        A Rix ratio is simply the number of long words divided by
+        r"""Calculate the RIX for `text`
+
+        A Rix ratio is the number of long words divided by
         the number of assessed sentences.
-        rix = LW/S
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The RIX for `text`.
+
+        Notes
+        -----
+        The estimate of the RIX score is calculated as:
+
+        .. math::
+
+            rix = LW/S
+
+        LW= Number of long words (i.e. words of 7 or more characters)
+        S= Number of sentences
+
+        Anderson (1983) specifies that punctuation should be removed and that
+        hyphenated sequences and abbreviations count as single words.
+        Therefore, make sure to call `textstat.set_rm_apostrophe(False)` before
+        calculating the RIX.
+
         """
-        words = text.split()
+        words = self.remove_punctuation(text).split()
         long_words_count = len([wrd for wrd in words if len(wrd) > 6])
         sentences_count = self.sentence_count(text)
 
