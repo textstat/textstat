@@ -449,7 +449,7 @@ def test_rix():
     textstat.set_lang("en_US")
     score = textstat.rix(long_test)
 
-    assert score == 4.82
+    assert score == 4.59
 
 
 def test_text_standard():
