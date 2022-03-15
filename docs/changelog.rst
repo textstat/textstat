@@ -2,6 +2,14 @@
 Changelog
 =========
 
+- :release:`0.7.3 <2022-03-15>`
+- :feature:`181` Add type hints.
+- :feature:`174` Add McAlpine EFLAW readability score.
+- :bug:`172` Fix issue with `remove_punctuation()`.
+- :feature:`166` Make rounding optional with `textstat.set_rounding(False)`.
+- :bug:`165` Fix broken `fernandez_huerta()`.
+- :bug:`163` Fix broken `wiener_sachtextformel()`.
+- :bug:`161` Update `syllable_count` to use `.split()` and not `.split(' ')` so to split on all whitespace.
 - :release:`0.7.2 <2021-08-11>`
 - :feature:`144` Added exception handling for ``ZeroDivisionErrors``.
 - :feature:`147` Added Arabic readability support
