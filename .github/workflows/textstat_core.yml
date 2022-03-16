@@ -35,4 +35,4 @@ jobs:
     - name: Check and test code
       if: ${{ !cancelled() }}
       run: |
-        poetry run check
+        poetry run poe check
