@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9, 3.10]
 
     steps:
     - uses: actions/checkout@v2
@@ -32,17 +32,7 @@ jobs:
         python -m pip install poetry
         poetry install
 
-    - name: Check code spelling
+    - name: Check and test code
       if: ${{ !cancelled() }}
       run: |
-        poetry run poe spell
-
-    - name: Lint with flake8
-      if: ${{ !cancelled() }}
-      run: |
-        poetry run poe lint
-
-    - name: Test with pytest
-      if: ${{ !cancelled() }}
-      run: |
-        poetry run poe test
+        poetry run check

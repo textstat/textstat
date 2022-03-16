@@ -1,4 +1,3 @@
-
 import re
 import string
 
@@ -13,7 +12,7 @@ class WordCollection(Stats):
         "words",
     ]
 
-    __word_regex = re.compile(r'\b[\w\’\'\-]+\b', re.UNICODE)
+    __word_regex = re.compile(r"\b[\w\’\'\-]+\b", re.UNICODE)
 
     @property
     def characters(self):
@@ -21,14 +20,14 @@ class WordCollection(Stats):
 
     @property
     def letters(self):
-        return [*(
-            character for character in self.characters
-            if character not in string.punctuation
-        )]
+        return [
+            *(
+                character
+                for character in self.characters
+                if character not in string.punctuation
+            )
+        ]
 
     @property
     def words(self):
-        return [
-            Word(word) for word in
-            self.__word_regex.findall(self.text)
-        ]
+        return [Word(word) for word in self.__word_regex.findall(self.text)]

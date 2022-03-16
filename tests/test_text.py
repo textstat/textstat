@@ -1,5 +1,4 @@
-
-from textstat_core.text import Text
+from textstat import Text
 
 
 def test_word_count(test_text):

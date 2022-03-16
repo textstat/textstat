@@ -1,4 +1,3 @@
-
 import collections
 
 
@@ -8,8 +7,7 @@ class Stats:
     def __new__(cls, *_):
         if cls is Stats:
             raise TypeError(
-                "The `Stats` class provides no functionality, "
-                "so must be subclassed."
+                "The `Stats` class provides no functionality, so must be subclassed."
             )
         return object.__new__(cls)
 
@@ -29,10 +27,7 @@ class Stats:
             return 0.0
 
     def raw_stats(self):
-        return {
-            prop: len(getattr(self, prop))
-            for prop in self.__class__.properties
-        }
+        return {prop: len(getattr(self, prop)) for prop in self.__class__.properties}
 
     def raw_stats_full(self):
         return {
@@ -49,19 +44,11 @@ class Stats:
             return lambda self: set(getattr(self, value))
 
         for prop in self.__class__.properties:
-            setattr(
-                self.__class__,
-                "unique_" + prop,
-                property(make_getter(prop))
-            )
+            setattr(self.__class__, "unique_" + prop, property(make_getter(prop)))
 
     def __add_count_properties(self):
         def make_getter(value):
             return lambda self: collections.Counter(getattr(self, value))
 
         for prop in self.__class__.properties:
-            setattr(
-                self.__class__,
-                prop[:-1] + "_count",
-                property(make_getter(prop))
-            )
+            setattr(self.__class__, prop[:-1] + "_count", property(make_getter(prop)))

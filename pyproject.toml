@@ -1,31 +1,48 @@
 [tool.poetry]
-name = "textstat-core"
-version = "0.1.0"
-description = "Textstat Core provides the base functionality of the Textstat package"
+name = "textstat"
+version = "1.0.0-alpha.0"
+description = "Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level."
 authors = ["Alex Ward <alxwrd@googlemail.com>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://textstat.github.io/"
-repository = "https://github.com/textstat/textstat_core"
+repository = "https://github.com/textstat/textstat"
 documentation = "https://textstat.github.io/docs"
 
+[tool.poetry.scripts]
+textstat = 'textstat.cli:run'
+
+
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 pyphen = "^0.11.0"
-toml = "^0.10.2"
+textstat-en = {version = "1.0.0-alpha.0"}
 
 [tool.poetry.dev-dependencies]
-codespell = "^2.0.0"
-flake8 = "^3.8.4"
-pytest = "^6.1.2"
-grip = "^4.5.2"
-poethepoet = "^0.10.0"
-pytest-cov = "^2.12.1"
+codespell = "^2.1.0"
+textstat-en = {path = "textstat-en", develop = true}
+flake8 = "^4.0.1"
+pytest = "^7.1.0"
+grip = "^4.6.0"
+poethepoet = "^0.13.1"
+toml = "^0.10.2"
+pytest-cov = "^3.0.0"
+mypy = "^0.941"
+black = "^22.1.0"
+
+[tool.poetry.extras]
+en = ["textstat-en"]
 
 [tool.poe.tasks]
-test = "pytest --cov=textstat_core --cov-report html:tests/coverage_report"
-lint = "poetry run flake8 --exclude=build/"
-spell = "poetry run codespell -L paket --skip=./tests/coverage_report"
+test = "pytest --cov=textstat --cov-report html:tests/coverage_report"
+lint = "flake8 --exclude=build/,.venv/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
+spell = "codespell -L paket --skip=./tests/coverage_report,./.venv,./.mypy_cache"
+stubs = "stubgen -o textstat/stubs textstat-*"
+check.sequence = ["lint", "spell", "test"]
+check.ignore_fail = "return_non_zero"
+build = "poetry build"
+_publish = "poetry publish"
+release = ["build", "_publish"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

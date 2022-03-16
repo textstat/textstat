@@ -1,4 +1,3 @@
-
 import re
 
 from .sentence import Sentence
@@ -10,11 +9,10 @@ class Text(WordCollection):
         "sentences",
     ]
 
-    __sentence_regex = re.compile(r'\b[^.!?]+[.!?]+', re.UNICODE)
+    __sentence_regex = re.compile(r"\b[^.!?]+[.!?]+", re.UNICODE)
 
     @property
     def sentences(self):
         return [
-            Sentence(sentence) for sentence in
-            self.__sentence_regex.findall(self.text)
+            Sentence(sentence) for sentence in self.__sentence_regex.findall(self.text)
         ]

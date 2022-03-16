@@ -1,23 +1,27 @@
-# Textstat Core
+# Textstat
 
-_Textstat Core provides the base functionality of the
-[Textstat](https://github.com/textstat/textstat) package. It is not intended
-for general consumption, but you are free to do so._
+_Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level._
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/textstat/textstat-core/Textstat/main)
-![GitHub](https://img.shields.io/github/license/textstat/textstat-core)
+![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/textstat/textstat/Textstat/main)
+[![License](https://img.shields.io/github/license/textstat/textstat)](https://github.com/textstat/textstat/blob/main/LICENSE)
+[![PyPI version](https://img.shields.io/pypi/v/textstat.svg)](https://pypi.org/project/textstat/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/textstat)](https://pypistats.org/packages/textstat)
 
-<p align="center">
-  <img width="100%" src="https://images.unsplash.com/photo-1567177173026-402dd75a5ab7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&h=400&q=80">
+<p>
+  <p align="center">
+    <img width="100%" src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&h=400&q=80">
+  </p>
+  <p align="right">
+    <sup>Photo by <a href="https://unsplash.com/@impatrickt">Patrick Tomasso</a>
+    on <a href="https://unsplash.com/images/things/book">Unsplash</a></sup>
+  </p>
 </p>
-<p align="right">
-  <sup>Photo by <a href="https://unsplash.com/@jonathanborba">Jonathan Borba</a>
-  on <a href="https://unsplash.com/photos/Hnws8oSFcgU">Unsplash</a></sup>
-</p>
+
 
 
 ## Usage
 
-You are free to use this module if you need to provide structure to text,
-however the scope for this module is limited. You will get more mileage with
-[Textstat](https://github.com/textstat/textstat).
+```python
+import textstat
+
+```
