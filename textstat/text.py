@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Protocol
+from typing_extensions import Protocol
 
 from .sentence import Sentence
 from .word_collection import WordCollection
