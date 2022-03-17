@@ -1,7 +1,7 @@
-import textstat
+import textstat.text
 
 
-class Text(textstat.Text):
+class Text(textstat.text.Text):
     def flesch_reading_ease(self) -> float:
         ...
 
