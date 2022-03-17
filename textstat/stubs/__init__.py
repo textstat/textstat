@@ -1,1 +1,1 @@
-import textstat_en as en
+from . import textstat_en as en

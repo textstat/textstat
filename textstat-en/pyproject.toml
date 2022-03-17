@@ -6,8 +6,10 @@ authors = ["Alex Ward <alxwrd@googlemail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+textstat = {version = "1.0.0-alpha.0"}
 
 [tool.poetry.dev-dependencies]
+textstat = {path = "../", develop = true}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
