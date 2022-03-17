@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from .stats import Stats
 
 
 class Word(Stats):
-    properties = [
+    properties: list[str] = Stats.properties + [
         "letters",
         "length",
     ]
@@ -11,9 +13,5 @@ class Word(Stats):
         return f"Word('{self.text}')"
 
     @property
-    def letters(self):
-        return list(self.text)
-
-    @property
-    def length(self):
+    def length(self) -> int:
         return len(self.letters)

@@ -1,8 +1,11 @@
+from __future__ import annotations
+
+import string
 import collections
 
 
 class Stats:
-    properties = []
+    properties: list[str] = ["letters", "characters"]
 
     def __new__(cls, *_):
         if cls is Stats:
@@ -17,19 +20,33 @@ class Stats:
         self.__add_count_properties()
 
     @property
-    def text(self):
+    def text(self) -> str:
         return self.__text
 
-    def avg(self, attribute, per=None):
+    @property
+    def letters(self) -> list[str]:
+        return [
+            *(
+                character
+                for character in self.characters
+                if character not in string.punctuation
+            )
+        ]
+
+    @property
+    def characters(self) -> list[str]:
+        return [*self.text.replace(" ", "")]
+
+    def avg(self, attribute, per=None) -> float:
         try:
             return len(getattr(self, attribute)) / len(getattr(self, per))
         except ZeroDivisionError:
             return 0.0
 
-    def raw_stats(self):
+    def raw_stats(self) -> dict[str, int]:
         return {prop: len(getattr(self, prop)) for prop in self.__class__.properties}
 
-    def raw_stats_full(self):
+    def raw_stats_full(self) -> dict[str, int]:
         return {
             prop: len(getattr(self, prop))
             for prop in [
