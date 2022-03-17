@@ -1,3 +1,4 @@
+from pathlib import Path
 from textstat import Text
 
 
@@ -49,3 +50,16 @@ def test_blank_text_produces_zero_averages():
     text = Text("")
 
     assert text.avg("characters", per="words") == 0
+
+
+def test_load_text_from_file_path(test_text_file: Path):
+    text = Text.load(str(test_text_file))
+
+    assert text.text == test_text_file.read_text()
+
+
+def test_load_text_from_file(test_text_file: Path):
+    with open(str(test_text_file), "r") as f:
+        text = Text.load(f)
+
+    assert text.text == test_text_file.read_text()
