@@ -63,3 +63,10 @@ def test_load_text_from_file(test_text_file: Path):
         text = Text.load(f)
 
     assert text.text == test_text_file.read_text()
+
+
+def test_text_equal_to_string(test_text):
+    text = Text(test_text["text"])
+
+    assert text == test_text["text"]
+    assert test_text["text"] == text

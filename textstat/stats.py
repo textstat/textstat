@@ -69,3 +69,8 @@ class Stats:
 
         for prop in self.__class__.properties:
             setattr(self.__class__, prop[:-1] + "_count", property(make_getter(prop)))
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, str) or isinstance(other, self.__class__):
+            return self.text == other
+        return super().__eq__(other)
