@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .stats import Stats
+from ._filterable import filterable
 
 
 class Word(Stats):
@@ -12,6 +13,7 @@ class Word(Stats):
     def __repr__(self):
         return f"Word('{self.text}')"
 
+    @filterable
     @property
     def length(self) -> int:
         return len(self.letters)
