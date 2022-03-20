@@ -1,9 +1,14 @@
 from __future__ import annotations
 
 import re
+from typing import TYPE_CHECKING
 
+from ._filtering import Comparison
 from .stats import Stats
 from .word import Word
+
+if TYPE_CHECKING:
+    from .sentence import Sentence
 
 
 class WordCollection(Stats):
@@ -17,11 +22,5 @@ class WordCollection(Stats):
     def words(self) -> list[Word]:
         return [Word(word) for word in self.__word_regex.findall(self.text)]
 
-    def filter(self, comparison) -> list[Word]:
-        return [
-            item
-            for item in getattr(self, comparison[0].__name__.lower() + "s")
-            if getattr(getattr(item, comparison[1]), f"__{comparison[2]}__")(
-                comparison[3]
-            )
-        ]
+    def filter(self, comp: Comparison) -> list[Word | Sentence]:
+        return [item for item in getattr(self, comp.type_name) if comp.compare(item)]

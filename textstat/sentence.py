@@ -1,6 +1,7 @@
 from .word_collection import WordCollection
+from __future__ import annotations
 
-from ._filterable import filterable
+from ._filtering import filterable
 
 
 class Sentence(WordCollection):
