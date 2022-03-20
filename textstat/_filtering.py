@@ -45,6 +45,15 @@ class filterable:
                 def __ge__(self, other):
                     return Comparison(objtype, self.prop_name, operator.ge, other)
 
+                def contains(self, other):
+                    return Comparison(objtype, self.prop_name, operator.contains, other)
+
+                def startswith(self, other):
+                    return Comparison(objtype, self.prop_name, str.startswith, other)
+
+                def endswith(self, other):
+                    return Comparison(objtype, self.prop_name, str.endswith, other)
+
             return Comparable(self.prop)
 
         return self.prop.fget(obj)

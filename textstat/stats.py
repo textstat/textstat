@@ -3,6 +3,8 @@ from __future__ import annotations
 import collections
 import string
 
+from ._filtering import filterable
+
 
 class Stats:
     properties: list[str] = ["letters", "characters"]
@@ -19,6 +21,7 @@ class Stats:
         self.__add_unique_properties()
         self.__add_count_properties()
 
+    @filterable
     @property
     def text(self) -> str:
         return self.__text
