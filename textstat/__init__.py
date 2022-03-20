@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from textstat import stubs
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from textstat.sentence import Sentence
     from textstat.stats import Stats
     from textstat.text import Text

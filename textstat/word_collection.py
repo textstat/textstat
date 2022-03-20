@@ -7,7 +7,7 @@ from ._filtering import Comparison
 from .stats import Stats
 from .word import Word
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .sentence import Sentence
 
 
