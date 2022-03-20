@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import string
 import collections
+import string
 
 
 class Stats:

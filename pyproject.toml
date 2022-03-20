@@ -30,6 +30,7 @@ toml = "^0.10.2"
 pytest-cov = "^3.0.0"
 mypy = "^0.941"
 black = "^22.1.0"
+isort = "^5.10.1"
 
 [tool.poetry.extras]
 en = ["textstat-en"]

@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 
 from textstat import stubs
 
-
 if TYPE_CHECKING:
     from textstat.sentence import Sentence
     from textstat.stats import Stats

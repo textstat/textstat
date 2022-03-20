@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+
 from typing_extensions import Protocol
 
 from .sentence import Sentence

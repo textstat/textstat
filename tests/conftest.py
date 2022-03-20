@@ -4,7 +4,6 @@ from pathlib import Path
 import pytest
 import toml
 
-
 tests_location = os.path.dirname(os.path.realpath(__file__))
 
 
