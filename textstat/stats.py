@@ -88,4 +88,5 @@ class Stats:
         return hash(self.text)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}('{self.text[:20] + '...' if len(self.text) > 20 else self.text}')"
+        shown_text = self.text[:20] + "..." if len(self.text) > 20 else self.text
+        return f"{self.__class__.__name__}('{shown_text}')"

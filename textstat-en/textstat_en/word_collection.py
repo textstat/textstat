@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from math import factorial
-
 from textstat.word_collection import WordCollection
 
 
@@ -20,9 +18,9 @@ class WordCollection(WordCollection):
 
         if hasattr(self, "sentences"):
             for sentence in self.sentences:
-                total += sum(i * sentence_position_ms for i in range(sentence.length))
+                total += sentence_position_ms * sum(range(sentence.length))
         else:
-            total += sum(i * sentence_position_ms for i in range(self.length))
+            total += sentence_position_ms * sum(range(self.length))
 
         total += len(self.words) * word_base_ms
         total += len(self.letters) * character_ms

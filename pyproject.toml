@@ -20,7 +20,6 @@ textstat-en = {version = "1.0.0-alpha.0"}
 typing-extensions = "^4.1.1"
 
 [tool.poetry.dev-dependencies]
-codespell = "^2.1.0"
 textstat-en = {path = "textstat-en", develop = true}
 flake8 = "^4.0.1"
 pytest = "^7.1.0"
@@ -38,9 +37,8 @@ en = ["textstat-en"]
 [tool.poe.tasks]
 test = "pytest --cov=. --cov-report html:tests/coverage_report"
 lint = "flake8 --exclude=build/,.venv/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
-spell = "codespell -L paket --skip=./tests/coverage_report,./.venv,./.mypy_cache"
 stubs = "stubgen -o textstat/stubs textstat-*"
-check.sequence = ["lint", "spell", "test"]
+check.sequence = ["lint", "test"]
 check.ignore_fail = "return_non_zero"
 black = "black ."
 isort = "isort . --extend-skip=textstat/stubs"
