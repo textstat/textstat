@@ -42,6 +42,9 @@ spell = "codespell -L paket --skip=./tests/coverage_report,./.venv,./.mypy_cache
 stubs = "stubgen -o textstat/stubs textstat-*"
 check.sequence = ["lint", "spell", "test"]
 check.ignore_fail = "return_non_zero"
+black = "black ."
+isort = "isort . --extend-skip=textstat/stubs"
+format = ["black", "isort"]
 build = "poetry build"
 _publish = "poetry publish"
 release = ["build", "_publish"]
