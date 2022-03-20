@@ -9,6 +9,12 @@ def test_word_count(test_text):
     assert len(text.words) == test_text["statistics"]["words"]
 
 
+def test_word_count_prop(test_text):
+    text = Text(test_text["text"])
+
+    assert sum(text.word_count.values()) == test_text["statistics"]["words"]
+
+
 def test_character_count(test_text):
     text = Text(test_text["text"])
 
@@ -25,6 +31,12 @@ def test_sentence_count(test_text):
     text = Text(test_text["text"])
 
     assert len(text.sentences) == test_text["statistics"]["sentences"]
+
+
+def test_sentence_count_prop(test_text):
+    text = Text(test_text["text"])
+
+    assert sum(text.sentence_count.values()) == test_text["statistics"]["sentences"]
 
 
 def test_average_letter_per_word(test_text):

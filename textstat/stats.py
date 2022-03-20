@@ -77,3 +77,9 @@ class Stats:
         if isinstance(other, str) or isinstance(other, self.__class__):
             return self.text == other
         return super().__eq__(other)
+
+    def __hash__(self) -> int:
+        return hash(self.text)
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.text[:20] + '...' if len(self.text) > 20 else self.text}')"
