@@ -1,6 +1,7 @@
-import textstat.text
+from .word_collection import WordCollection as WordCollection
+from textstat.text import Text as BaseText
 
-class Text(textstat.text.Text):
+class Text(BaseText, WordCollection):
     def flesch_reading_ease(self) -> float: ...
     def flesch_kincaid_grade(self) -> float: ...
     def smog_index(self) -> float: ...

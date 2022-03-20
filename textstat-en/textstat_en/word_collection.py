@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from textstat.word_collection import WordCollection
+from textstat.word_collection import WordCollection as BaseCollection
 
 
-class WordCollection(WordCollection):
+class WordCollection(BaseCollection):
     @property
     def reading_time(self) -> float:
         """Calculates the reading time, based on:

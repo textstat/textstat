@@ -1,9 +1,9 @@
-from textstat.text import Text
+from textstat.text import Text as BaseText
 
 from .word_collection import WordCollection
 
 
-class Text(Text, WordCollection):
+class Text(BaseText, WordCollection):
     def flesch_reading_ease(self) -> float:
         ...
 
