@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import collections
 import string
+import sys
+from unicodedata import category
 
 from ._filtering import filterable
+
+punctuation_chars = [
+    chr(i) for i in range(sys.maxunicode) if category(chr(i)).startswith("P")
+] + list(string.punctuation)
 
 
 class Stats:
@@ -32,13 +38,13 @@ class Stats:
             *(
                 character
                 for character in self.characters
-                if character not in string.punctuation
+                if character not in punctuation_chars
             )
         ]
 
     @property
     def characters(self) -> list[str]:
-        return [*self.text.replace(" ", "")]
+        return [*"".join(self.text.split())]
 
     def avg(self, attribute, per=None) -> float:
         try:
