@@ -71,3 +71,18 @@ def test_text_equal_to_string(test_text):
 
     assert text == test_text["text"]
     assert test_text["text"] == text
+
+
+def test_text_baddly_formed():
+    text = Text(
+        "The cat stretched.\n\n\n"
+        "Jacob stood\n\non his tiptoes.\n\n"
+        "The car turned the corner.\n\n\n\n"
+        "Kelly twirled in circles.\n"
+        "She opened the door.\n"
+        "Aaron made\n\na picture."
+        "I'm sorry."
+        "I danced."
+    )
+
+    assert len(text.sentences) == 8
