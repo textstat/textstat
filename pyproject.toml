@@ -36,7 +36,7 @@ isort = "^5.10.1"
 en = ["textstat-en"]
 
 [tool.poe.tasks]
-test = "pytest --cov=textstat --cov-report html:tests/coverage_report"
+test = "pytest --cov=. --cov-report html:tests/coverage_report"
 lint = "flake8 --exclude=build/,.venv/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
 spell = "codespell -L paket --skip=./tests/coverage_report,./.venv,./.mypy_cache"
 stubs = "stubgen -o textstat/stubs textstat-*"
@@ -52,3 +52,9 @@ release = ["build", "_publish"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
+    ".venv/*",
+]
