@@ -8,7 +8,7 @@ from textstat.word import Word as BaseWord
 class Word(BaseWord):
     __pronunciation_dictionary = cmudict.dict()
 
-    @filterable[int]
+    @filterable
     @property
     def syllables(self) -> int:
         pronunciation_syllables = [

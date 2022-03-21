@@ -39,7 +39,7 @@ class WordCollection(BaseCollection):
 
         return total
 
-    @filterable[int]
+    @filterable
     @property
     def syllables(self):
         return sum(word.syllables for word in self.words)

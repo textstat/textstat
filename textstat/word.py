@@ -10,7 +10,7 @@ class Word(Stats):
         "length",
     ]
 
-    @filterable[int]
+    @filterable
     @property
     def length(self) -> int:
         return len(self.letters)

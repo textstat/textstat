@@ -27,7 +27,7 @@ class Stats:
         self.__add_unique_properties()
         self.__add_count_properties()
 
-    @filterable[str]
+    @filterable
     @property
     def text(self) -> str:
         return self.__text
