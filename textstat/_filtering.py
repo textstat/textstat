@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import operator
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Generic, TypeVar
 
 
 @dataclass
@@ -20,11 +20,14 @@ class Comparison:
         return self.operation(getattr(item, self.property_name), self.other)
 
 
-class filterable:
+T = TypeVar("T")
+
+
+class filterable(Generic[T]):
     def __init__(self, prop: property):
         self.prop: property = prop
 
-    def __get__(self, obj, objtype=None):
+    def __get__(self, obj, objtype=None) -> T:
         if obj is None:
 
             class Comparable:

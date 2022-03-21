@@ -13,7 +13,7 @@ class Word(Stats):
     def __repr__(self):
         return f"Word('{self.text}')"
 
-    @filterable
+    @filterable[int]
     @property
     def length(self) -> int:
         return len(self.letters)
