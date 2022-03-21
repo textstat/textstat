@@ -6,6 +6,8 @@ authors = ["Alex Ward <alxwrd@googlemail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+cmudict = "^1.0.2"
+syllables = "^1.0.3"
 textstat = {version = "1.0.0-alpha.0"}
 
 [tool.poetry.dev-dependencies]

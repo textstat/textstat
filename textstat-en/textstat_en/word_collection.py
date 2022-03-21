@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from textstat._filtering import filterable
 from textstat.word_collection import WordCollection as BaseCollection
 
 
@@ -33,3 +34,8 @@ class WordCollection(BaseCollection):
         )
 
         return total
+
+    @filterable[int]
+    @property
+    def syllables(self):
+        return sum(word.syllables for word in self.words)
