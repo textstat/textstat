@@ -17,8 +17,10 @@ class WordCollection(BaseCollection):
         sentence_position_ms = -0.23  # SENTENCEPOSITION
 
         if hasattr(self, "sentences"):
-            for sentence in self.sentences:
-                total += sentence_position_ms * sum(range(sentence.length))
+            total += sum(
+                sentence_position_ms * sum(range(sentence.length))
+                for sentence in self.sentences
+            )
         else:
             total += sentence_position_ms * sum(range(self.length))
 
