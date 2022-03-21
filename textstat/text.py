@@ -8,7 +8,7 @@ from .sentence import Sentence
 from .word_collection import WordCollection
 
 
-class __Readable(Protocol):
+class __Readable(Protocol):  # pragma: no cover
     def read(self) -> str:
         ...
 

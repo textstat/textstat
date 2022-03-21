@@ -10,9 +10,6 @@ class Word(Stats):
         "length",
     ]
 
-    def __repr__(self):
-        return f"Word('{self.text}')"
-
     @filterable[int]
     @property
     def length(self) -> int:
