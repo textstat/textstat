@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+from textstat_en.word import Word
+
 from textstat._filtering import filterable
 from textstat.word_collection import WordCollection as BaseCollection
 
 
 class WordCollection(BaseCollection):
+    word_class = Word
+
     @property
     def reading_time(self) -> float:
         """Calculates the reading time, based on:

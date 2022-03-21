@@ -1,4 +1,4 @@
-from textstat import Word
+from textstat.word import Word
 
 
 def test_word_letters():

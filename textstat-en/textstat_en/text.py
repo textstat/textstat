@@ -1,9 +1,12 @@
 from textstat.text import Text as BaseText
 
+from .sentence import Sentence
 from .word_collection import WordCollection
 
 
 class Text(BaseText, WordCollection):
+    sentence_class = Sentence
+
     def flesch_reading_ease(self) -> float:
         ...
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from textstat import Text
+from textstat.text import Text
 
 
 def test_word_count(test_text):

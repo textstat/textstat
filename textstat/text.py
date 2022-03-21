@@ -14,6 +14,7 @@ class __Readable(Protocol):
 
 
 class Text(WordCollection):
+    sentence_class = Sentence
     properties: list[str] = WordCollection.properties + [
         "sentences",
     ]
@@ -39,7 +40,7 @@ class Text(WordCollection):
     @property
     def sentences(self) -> list[Sentence]:
         return [
-            Sentence(sentence)
+            self.sentence_class(sentence)
             for sentence in self.__sentence_regex.findall(
                 self.__remove_acronyms(self.text)
             )

@@ -12,6 +12,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 class WordCollection(Stats):
+    word_class = Word
     properties: list[str] = Stats.properties + [
         "words",
     ]
@@ -20,7 +21,7 @@ class WordCollection(Stats):
 
     @property
     def words(self) -> list[Word]:
-        return [Word(word) for word in self.__word_regex.findall(self.text)]
+        return [self.word_class(word) for word in self.__word_regex.findall(self.text)]
 
     def filter(self, comp: Comparison) -> list[Word | Sentence]:
         return [item for item in getattr(self, comp.type_name) if comp.compare(item)]

@@ -1,4 +1,4 @@
-from textstat import Sentence
+from textstat.sentence import Sentence
 
 
 def test_sentence_length():

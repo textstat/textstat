@@ -1,6 +1,4 @@
-from textstat.sentence import Sentence
-from textstat.stats import Stats
-from textstat.word import Word
-from textstat.word_collection import WordCollection
-
+from .sentence import Sentence
 from .text import Text
+from .word import Word
+from .word_collection import WordCollection
