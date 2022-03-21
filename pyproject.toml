@@ -40,7 +40,7 @@ stubs = "stubgen -o textstat/stubs textstat-*"
 check.sequence = ["lint", "test"]
 check.ignore_fail = "return_non_zero"
 black = "black ."
-isort = "isort . --extend-skip=textstat/stubs"
+isort = "isort --profile black . --extend-skip=textstat/stubs"
 format = ["black", "isort"]
 build = "poetry build"
 _publish = "poetry publish"

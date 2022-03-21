@@ -14,9 +14,6 @@
     "python.formatting.blackPath": ".venv/bin/black",
     "[python]": {
         "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        }
     },
     "python.testing.pytestArgs": [
         "tests"
