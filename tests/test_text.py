@@ -92,7 +92,7 @@ def test_text_baddly_formed():
         "The car turned the corner.\n\n\n\n"
         "Kelly twirled in circles.\n"
         "She opened the door.\n"
-        "Aaron made\n\na picture."
+        "The T.V. turned on."
         "I'm sorry."
         "I danced."
     )

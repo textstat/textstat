@@ -19,6 +19,7 @@ class Text(WordCollection):
     ]
 
     __sentence_regex = re.compile(r"\b[^.!?]+[.!?]+", re.UNICODE)
+    __acronym_regex = re.compile(r"\b(?:[^\W\d_][\.]){2,}", re.UNICODE)
 
     @classmethod
     def load(cls, file_or_path: str | __Readable) -> Text:
@@ -30,8 +31,16 @@ class Text(WordCollection):
 
         return cls(text)
 
+    def __remove_acronyms(self, text: str) -> str:
+        for result in self.__acronym_regex.findall(text):
+            text = text.replace(result, result.replace(".", ""))
+        return text
+
     @property
     def sentences(self) -> list[Sentence]:
         return [
-            Sentence(sentence) for sentence in self.__sentence_regex.findall(self.text)
+            Sentence(sentence)
+            for sentence in self.__sentence_regex.findall(
+                self.__remove_acronyms(self.text)
+            )
         ]
