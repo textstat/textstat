@@ -46,9 +46,13 @@ class Stats:
     def characters(self) -> list[str]:
         return [*"".join(self.text.split())]
 
-    def avg(self, attribute, per=None) -> float:
+    def avg(self, attribute: str, per: str = None) -> float:
         try:
-            return len(getattr(self, attribute)) / len(getattr(self, per))
+            attribute = getattr(self, attribute)
+            per = getattr(self, per)
+            return (attribute if isinstance(attribute, int) else len(attribute)) / (
+                per if isinstance(per, int) else len(per)
+            )
         except ZeroDivisionError:
             return 0.0
 
