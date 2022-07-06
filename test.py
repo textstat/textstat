@@ -672,43 +672,47 @@ def test_miniword_count():
     assert count == 151
 
 
-
-############################################
-############ HUNGARIAN TESTS ###############
-############################################
+# Hungarian tests
 
 easy_hungarian_text = "A ló zabot eszik és én a csillagos ég alatt alszom ma."
-easy_hungarian_text2 = "Mondok neked egy nyelvtani fejtöröt. Melyik több? Hat tucat tucat vagy fél tucat tucat?"
+
+easy_hungarian_text2 = """
+    Mondok neked egy nyelvtani fejtöröt.Melyik több?
+    Hat tucat tucat vagy fél tucat tucat?
+    """
 
 hard_hungarian_text = (
     """
-    A mai fagylalt elődjének számító hideg édességet több ezer éve készítettek először.
-    Egyes feljegyzések szerint az ó kori kínaiak a mézzel édesített gyümölcsleveket
-    hóval, jéggel hűtötték, és ezen hideg édességeket szolgálták fel a kiváltságosoknak. 
-    Annyi bizonyos, hogy a római csá szárok kedvelt csemegéi voltak a
-    he gyekből hozatott hóval kevert gyümölcs levek, melyek sűrűn folyó, hideg,
-    fagylaltszerű italkülönlegességet eredményeztek.
+    A mai fagylalt elődjének számító hideg édességet több ezer éve
+    készítettek először. Egyes feljegyzések szerint az ó kori kínaiak a
+    mézzel édesített gyümölcsleveket hóval, jéggel hűtötték, és ezen hideg
+    édességeket szolgálták fel a kiváltságosoknak. Annyi bizonyos, hogy a
+    római császárok kedvelt csemegéi voltak a hegyekből hozatott hóval
+    kevert gyümölcs levek, melyek sűrűn folyó, hideg, fagylaltszerű
+    italkülönlegességet eredményeztek.
     """
     )
 
 hard_academic_hungarian_text = (
     """
     Az Amerikai Egyesült Államokban már a múlt század közepétől
-    alkalmazzák az angol nyelv matematikai elemzésére szolgáló olvashatósági formulákat.
-    Ezek közül hármat a neveléstudomány is használ a tengerentúli oktatásban,
-    a különböző rendeltetési célú szövegek elemzésére.
-    A vizsgálatok célja az, hogy meghatározzák a tanítási
-    folyamatban használt könyvek és tankönyvek érthető megfogalmazásának
-    korcsoport vagy iskolai osztályok alapján besorolható szintjét.
-    Figyelembe véve az elméleti hátteret, magyar szövegeken is teszteltük a formulákat,
-    hogy megállapítsuk, érvényesek-e az angol nyelvű szövegek következtetései.
-    Az olvashatósági tesztek eredeti célja meghatározni azt a fogalmazási szintet,
-    amely a legtöbb embernek érthető, és elkerüli az olvasásértelmezést
-    zavaró szakkifejezéseket, illetve bonyolult szavak alkalmazását.
-    Az 1920-as évektől kezdődően Edward Thorndike a tankönyvek olvasásának
-    nehézségi fokát vizsgálta, és különböző szószedeteket javasolt iskolai használatra,
-    az életkornak és az iskolai évfolyamoknak megfelelően."""
+    alkalmazzák az angol nyelv matematikai elemzésére szolgáló olvashatósági
+    formulákat. Ezek közül hármat a neveléstudomány is használ a tengerentúli
+    oktatásban,a különböző rendeltetési célú szövegek elemzésére. A
+    vizsgálatok célja az, hogy meghatározzák a tanítási folyamatban használt
+    könyvek és tankönyvek érthető megfogalmazásának korcsoport vagy iskolai
+    osztályok alapján besorolható szintjét. Figyelembe véve az elméleti
+    hátteret, magyar szövegeken is teszteltük a formulákat, hogy
+    megállapítsuk, érvényesek-e az angol nyelvű szövegek következtetései.
+    Az olvashatósági tesztek eredeti célja meghatározni azt a fogalmazási
+    szintet, amely a legtöbb embernek érthető, és elkerüli az
+    olvasásértelmezést zavaró szakkifejezéseket, illetve bonyolult szavak
+    alkalmazását. Az 1920-as évektől kezdődően Edward Thorndike a tankönyvek
+    olvasásának nehézségi fokát vizsgálta, és különböző szószedeteket
+    javasolt iskolai használatra, az életkornak és az iskolai évfolyamoknak
+    megfelelően."""
 )
+
 
 def test_char_count_hungarian():
     # Arrange
@@ -726,6 +730,7 @@ def test_char_count_hungarian():
     assert actual_count == expected_easy_count
     assert actual_count_spaces == expected_easy_count_spaces
 
+
 def test_letter_count_hungarian():
     # Arrange
     textstat.set_lang("hu_HU")
@@ -741,6 +746,7 @@ def test_letter_count_hungarian():
     assert actual_count == expected_easy_count
     assert actual_count_spaces == expected_easy_count_spaces
 
+
 def test_sentence_count_hungarian():
     # Arrange
     textstat.set_lang('hu_HU')
@@ -755,28 +761,32 @@ def test_sentence_count_hungarian():
     assert actual_hard == expected_hard
     assert actual_academic == expected_hard_academic
 
+
 def test_flesch_reading_ease_hungarian():
     # Arrange
     textstat.set_lang("hu_HU")
-    expected_easy = 94.43
-    expected_hard = 52.29
-    expected_hard_academic = 21.92
+    expected_easy = 89.09
+    expected_hard = 53.0
+    expected_hard_academic = 22.02
 
     # Act
     actual_easy = textstat.flesch_reading_ease(easy_hungarian_text2)
     actual_hard = textstat.flesch_reading_ease(hard_hungarian_text)
-    actual_academic = textstat.flesch_reading_ease(hard_academic_hungarian_text)
+    actual_academic = textstat.flesch_reading_ease(
+        hard_academic_hungarian_text
+    )
 
     # Assert
     assert actual_easy == expected_easy
     assert actual_hard == expected_hard
     assert actual_academic == expected_hard_academic
 
+
 def test_smog_index_hungarian():
     # Arrange
     textstat.set_lang("hu_HU")
     expected_easy = 0
-    expected_hard = 17.1
+    expected_hard = 17.9
     expected_hard_academic = 21.9
 
     # Act
@@ -789,12 +799,13 @@ def test_smog_index_hungarian():
     assert actual_hard == expected_hard
     assert actual_academic == expected_hard_academic
 
+
 def test_gunning_fog_hungarian():
     # Arrange
     textstat.set_lang("hu_HU")
-    expected_easy = 2.8
-    expected_hard = 9.91
-    expected_hard_academic = 14.4
+    expected_easy = 2.6
+    expected_hard = 9.71
+    expected_hard_academic = 14.41
 
     # Act
     actual_easy = textstat.gunning_fog(easy_hungarian_text2)
@@ -805,5 +816,3 @@ def test_gunning_fog_hungarian():
     assert actual_easy == expected_easy
     assert actual_hard == expected_hard
     assert actual_academic == expected_hard_academic
-
-
