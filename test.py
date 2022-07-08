@@ -668,3 +668,149 @@ def test_miniword_count():
     count = textstat.miniword_count(long_test)
 
     assert count == 151
+
+
+# Hungarian tests
+
+easy_hungarian_text = "A ló zabot eszik és én a csillagos ég alatt alszom ma."
+
+easy_hungarian_text2 = """
+    Mondok neked egy nyelvtani fejtöröt.Melyik több?
+    Hat tucat tucat vagy fél tucat tucat?
+    """
+
+hard_hungarian_text = (
+    """
+    A mai fagylalt elődjének számító hideg édességet több ezer éve
+    készítettek először. Egyes feljegyzések szerint az ó kori kínaiak a
+    mézzel édesített gyümölcsleveket hóval, jéggel hűtötték, és ezen hideg
+    édességeket szolgálták fel a kiváltságosoknak. Annyi bizonyos, hogy a
+    római császárok kedvelt csemegéi voltak a hegyekből hozatott hóval
+    kevert gyümölcs levek, melyek sűrűn folyó, hideg, fagylaltszerű
+    italkülönlegességet eredményeztek.
+    """
+    )
+
+hard_academic_hungarian_text = (
+    """
+    Az Amerikai Egyesült Államokban már a múlt század közepétől
+    alkalmazzák az angol nyelv matematikai elemzésére szolgáló olvashatósági
+    formulákat. Ezek közül hármat a neveléstudomány is használ a tengerentúli
+    oktatásban,a különböző rendeltetési célú szövegek elemzésére. A
+    vizsgálatok célja az, hogy meghatározzák a tanítási folyamatban használt
+    könyvek és tankönyvek érthető megfogalmazásának korcsoport vagy iskolai
+    osztályok alapján besorolható szintjét. Figyelembe véve az elméleti
+    hátteret, magyar szövegeken is teszteltük a formulákat, hogy
+    megállapítsuk, érvényesek-e az angol nyelvű szövegek következtetései.
+    Az olvashatósági tesztek eredeti célja meghatározni azt a fogalmazási
+    szintet, amely a legtöbb embernek érthető, és elkerüli az
+    olvasásértelmezést zavaró szakkifejezéseket, illetve bonyolult szavak
+    alkalmazását. Az 1920-as évektől kezdődően Edward Thorndike a tankönyvek
+    olvasásának nehézségi fokát vizsgálta, és különböző szószedeteket
+    javasolt iskolai használatra, az életkornak és az iskolai évfolyamoknak
+    megfelelően."""
+)
+
+
+def test_char_count_hungarian():
+    # Arrange
+    textstat.set_lang("hu_HU")
+    expected_easy_count = 43
+    expected_easy_count_spaces = 54
+
+    # Act
+    actual_count = textstat.char_count(easy_hungarian_text)
+    actual_count_spaces = textstat.char_count(
+        easy_hungarian_text, ignore_spaces=False
+    )
+
+    # Assert
+    assert actual_count == expected_easy_count
+    assert actual_count_spaces == expected_easy_count_spaces
+
+
+def test_letter_count_hungarian():
+    # Arrange
+    textstat.set_lang("hu_HU")
+    expected_easy_count = 42
+    expected_easy_count_spaces = 53
+
+    actual_count = textstat.letter_count(easy_hungarian_text)
+    actual_count_spaces = textstat.letter_count(
+        easy_hungarian_text, ignore_spaces=False
+    )
+
+    # Assert
+    assert actual_count == expected_easy_count
+    assert actual_count_spaces == expected_easy_count_spaces
+
+
+def test_sentence_count_hungarian():
+    # Arrange
+    textstat.set_lang('hu_HU')
+    expected_hard = 3
+    expected_hard_academic = 6
+
+    # Act
+    actual_hard = textstat.sentence_count(hard_hungarian_text)
+    actual_academic = textstat.sentence_count(hard_academic_hungarian_text)
+
+    # Assert
+    assert actual_hard == expected_hard
+    assert actual_academic == expected_hard_academic
+
+
+def test_flesch_reading_ease_hungarian():
+    # Arrange
+    textstat.set_lang("hu_HU")
+    expected_easy = 89.09
+    expected_hard = 53.0
+    expected_hard_academic = 22.02
+
+    # Act
+    actual_easy = textstat.flesch_reading_ease(easy_hungarian_text2)
+    actual_hard = textstat.flesch_reading_ease(hard_hungarian_text)
+    actual_academic = textstat.flesch_reading_ease(
+        hard_academic_hungarian_text
+    )
+
+    # Assert
+    assert actual_easy == expected_easy
+    assert actual_hard == expected_hard
+    assert actual_academic == expected_hard_academic
+
+
+def test_smog_index_hungarian():
+    # Arrange
+    textstat.set_lang("hu_HU")
+    expected_easy = 0
+    expected_hard = 17.9
+    expected_hard_academic = 21.9
+
+    # Act
+    actual_easy = textstat.smog_index(easy_hungarian_text)
+    actual_hard = textstat.smog_index(hard_hungarian_text)
+    actual_academic = textstat.smog_index(hard_academic_hungarian_text)
+
+    # Assert
+    assert actual_easy == expected_easy
+    assert actual_hard == expected_hard
+    assert actual_academic == expected_hard_academic
+
+
+def test_gunning_fog_hungarian():
+    # Arrange
+    textstat.set_lang("hu_HU")
+    expected_easy = 2.6
+    expected_hard = 9.71
+    expected_hard_academic = 14.41
+
+    # Act
+    actual_easy = textstat.gunning_fog(easy_hungarian_text2)
+    actual_hard = textstat.gunning_fog(hard_hungarian_text)
+    actual_academic = textstat.gunning_fog(hard_academic_hungarian_text)
+
+    # Assert
+    assert actual_easy == expected_easy
+    assert actual_hard == expected_hard
+    assert actual_academic == expected_hard_academic
