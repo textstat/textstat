@@ -677,16 +677,17 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def flesch_reading_ease(self, text: str) -> float:
-        average_sentence_length = self.avg_sentence_length(text)
-        s_interval = 100 if self.__get_lang_root() in ['es', 'it'] else None
-        average_syllables_per_word = self.avg_syllables_per_word(text, s_interval)
+        s_interval = 100 if self.__get_lang_root() in ["es", "it"] else None
+
         flesch = (
             self.__get_lang_cfg("fre_base")
             - float(
-                self.__get_lang_cfg("fre_sentence_length") * average_sentence_length
+                self.__get_lang_cfg("fre_sentence_length")
+                * self.avg_sentence_length(text)
             )
             - float(
-                self.__get_lang_cfg("fre_syll_per_word") * average_syllables_per_word
+                self.__get_lang_cfg("fre_syll_per_word")
+                * self.avg_syllables_per_word(text, s_interval)
             )
         )
         return self._legacy_round(flesch, 2)

@@ -200,8 +200,6 @@ hard_arabic_text = (
 )
 
 
-
-
 def test_char_count():
     textstat.set_lang("en_US")
     count = textstat.char_count(long_test)
