@@ -70,7 +70,7 @@ def get_grade_suffix(grade: int) -> str:
     return teens_map.get(grade % 100, ordinal_map.get(grade % 10, 'th'))
 
 
-class textstatistics:
+class TextStatistics:
     """Main textstat class with methods to calculate redability indices.
 
     Attributes
@@ -1501,4 +1501,6 @@ class textstatistics:
         return self.__easy_word_sets[lang]
 
 
-textstat = textstatistics()
+
+# Create an alias with a name that differs from the module.
+analyzer_instance = textstat = TextStatistics()
