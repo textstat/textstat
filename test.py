@@ -425,7 +425,7 @@ def test_dale_chall_readability_score():
     textstat.set_lang("en_US")
     score = textstat.dale_chall_readability_score(long_test)
 
-    assert score == 7.78
+    assert score == 8.59
 
     score = textstat.dale_chall_readability_score(empty_str)
 
@@ -436,13 +436,13 @@ def test_gunning_fog():
     textstat.set_lang("en_US")
     score = textstat.gunning_fog(long_test)
 
-    assert score == 10.7
+    assert score == 10.91
 
     # FOG-PL
     textstat.set_lang("pl_PL")
     score_pl = textstat.gunning_fog(long_test)
 
-    assert score_pl == 9.84
+    assert score_pl == 9.94
 
 
 def test_lix():
@@ -467,7 +467,7 @@ def test_text_standard():
     textstat.set_lang("en_US")
     standard = textstat.text_standard(long_test)
 
-    assert standard == "10th and 11th grade"
+    assert standard == "8th and 9th grade"
 
     standard = textstat.text_standard(short_test)
 
@@ -531,7 +531,7 @@ def test_spache_readability():
     textstat.set_lang("en_US")
     spache = textstat.spache_readability(easy_text, False)
 
-    assert spache == 2
+    assert spache == 3
 
     score = textstat.spache_readability(empty_str)
 
@@ -542,7 +542,7 @@ def test_dale_chall_readability_score_v2():
     textstat.set_lang("en_US")
     score = textstat.dale_chall_readability_score_v2(long_test)
 
-    assert score == 6.8
+    assert score == 7.06
 
 
 def test_fernandez_huerta():
@@ -636,7 +636,7 @@ def test_disabling_rounding():
 
     textstat.set_rounding(True)
 
-    assert index == 5.057207463630613
+    assert index == 5.195917141049968
 
 
 def test_changing_rounding_points():
@@ -647,7 +647,7 @@ def test_changing_rounding_points():
 
     textstat.set_rounding(True)
 
-    assert index == 5.05721
+    assert index == 5.19592
 
 
 def test_instanced_textstat_rounding():
@@ -656,11 +656,11 @@ def test_instanced_textstat_rounding():
 
     my_not_rounded_index = textstat.spache_readability(long_test)
 
-    assert my_not_rounded_index == 5.057207463630613
+    assert my_not_rounded_index == 5.195917141049968
 
     default_rounded_index = textstat.spache_readability(long_test)
 
-    assert default_rounded_index == approx(5.06, abs=TOLERANCE)
+    assert default_rounded_index == approx(5.19, abs=TOLERANCE)
 
 
 def test_mcalpine_eflaw():
@@ -810,7 +810,7 @@ def test_gunning_fog_hungarian():
     textstat.set_lang("hu_HU")
     expected_easy = 2.6
     expected_hard = 9.71
-    expected_hard_academic = 14.41
+    expected_hard_academic = 14.71
 
     # Act
     actual_easy = textstat.gunning_fog(easy_hungarian_text2)
