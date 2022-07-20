@@ -389,7 +389,15 @@ def test_difficult_words():
     textstat.set_lang("en_US")
     result = textstat.difficult_words(long_test)
 
-    assert result == 49
+    assert result == 55
+
+
+def test_difficult_words_counts_duplicates():
+    textstat.set_lang("en_US")
+    twice_as_long = " ".join([long_test, long_test])
+    result = textstat.difficult_words(twice_as_long)
+
+    assert result == 2 * 55
 
 
 def test_difficult_words_list():
