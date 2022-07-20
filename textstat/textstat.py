@@ -1181,9 +1181,9 @@ class TextStatistics:
             pdw = (self.difficult_words(text) / total_no_of_words) * 100
         except ZeroDivisionError:
             return 0.0
-        raw_score = 0.1579 * (pdw) + 0.0496 * asl
+        raw_score = 0.1579 * pdw + 0.0496 * asl
         adjusted_score = raw_score
-        if raw_score > 0.05:
+        if pdw > 5:
             adjusted_score = raw_score + 3.6365
         return self._legacy_round(adjusted_score, 2)
 
