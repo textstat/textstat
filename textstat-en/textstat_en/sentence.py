@@ -1,7 +1,7 @@
-from textstat.sentence import Sentence as BaseSentence
+from textstat_en.word_collection import WordCollection
 
-from .word_collection import WordCollection
+from textstat import core
 
 
-class Sentence(BaseSentence, WordCollection):
+class Sentence(core.Sentence, WordCollection):
     ...

@@ -4,8 +4,9 @@ import re
 
 from typing_extensions import Protocol
 
-from .sentence import Sentence
-from .word_collection import WordCollection
+from textstat.core.sentence import Sentence
+from textstat.core.stats import Stats
+from textstat.core.word_collection import WordCollection
 
 
 class __Readable(Protocol):  # pragma: no cover
@@ -13,7 +14,7 @@ class __Readable(Protocol):  # pragma: no cover
         ...
 
 
-class Text(WordCollection):
+class Text(WordCollection, Stats):
     sentence_class = Sentence
     properties: list[str] = WordCollection.properties + [
         "sentences",

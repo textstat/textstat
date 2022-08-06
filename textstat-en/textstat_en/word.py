@@ -1,11 +1,11 @@
 import cmudict
 import syllables
 
-from textstat._filtering import filterable
-from textstat.word import Word as BaseWord
+from textstat import core
+from textstat.filtering import filterable
 
 
-class Word(BaseWord):
+class Word(core.Word):
     __pronunciation_dictionary = cmudict.dict()
 
     @filterable

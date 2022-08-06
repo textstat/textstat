@@ -2,15 +2,15 @@ from __future__ import annotations
 
 import operator
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Callable, Type
 
 
 @dataclass
 class Comparison:
-    objtype: Any
+    objtype: Type
     property_name: str
-    operation: Callable[[Any, Any], bool]
-    other: Any
+    operation: Callable[[object, object], bool]
+    other: object
 
     @property
     def type_name(self):

@@ -3,15 +3,15 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
-from ._filtering import Comparison
-from .stats import Stats
-from .word import Word
+from textstat.core.stats import Stats
+from textstat.core.word import Word
+from textstat.filtering import Comparison
 
 if TYPE_CHECKING:  # pragma: no cover
     from .sentence import Sentence
 
 
-class WordCollection(Stats):
+class WordCollection:
     word_class = Word
     properties: list[str] = Stats.properties + [
         "words",
@@ -25,3 +25,6 @@ class WordCollection(Stats):
 
     def filter(self, comp: Comparison) -> list[Word | Sentence]:
         return [item for item in getattr(self, comp.type_name) if comp.compare(item)]
+
+    def __iter__(self):
+        return iter(self.words)

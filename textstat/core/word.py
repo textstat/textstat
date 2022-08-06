@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from ._filtering import filterable
-from .stats import Stats
+from textstat.core.stats import Stats
+from textstat.filtering import filterable
 
 
 class Word(Stats):

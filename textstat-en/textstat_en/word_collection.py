@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from textstat_en.word import Word
 
-from textstat._filtering import filterable
-from textstat.word_collection import WordCollection as BaseCollection
+from textstat import core
+from textstat.filtering import filterable
 
 
-class WordCollection(BaseCollection):
+class WordCollection(core.WordCollection):
     word_class = Word
 
     @property

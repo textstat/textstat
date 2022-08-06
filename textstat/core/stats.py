@@ -5,7 +5,7 @@ import string
 import sys
 from unicodedata import category
 
-from ._filtering import filterable
+from textstat.filtering import filterable
 
 punctuation_chars = [
     chr(i) for i in range(sys.maxunicode) if category(chr(i)).startswith("P")

@@ -1,14 +1,14 @@
 import warnings
 from math import sqrt
 
-from textstat.text import Text as BaseText
+from textstat_en.sentence import Sentence
+from textstat_en.word import Word
+from textstat_en.word_collection import WordCollection
 
-from .sentence import Sentence
-from .word import Word
-from .word_collection import WordCollection
+from textstat import core
 
 
-class Text(BaseText, WordCollection):
+class Text(core.Text, WordCollection):
     sentence_class = Sentence
 
     def flesch_reading_ease(self) -> float:
@@ -27,7 +27,6 @@ class Text(BaseText, WordCollection):
         Kincaid, J. Peter, et al.
         "Derivation of new readability formulas (automated readability index,
         fog count and flesch reading ease formula) for navy enlisted personnel."
-        Naval Technical Training Command Millington TN Research Branch, 1975.
         """
         return (
             (0.39 * self.avg("words", per="sentences"))
