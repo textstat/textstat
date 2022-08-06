@@ -29,19 +29,21 @@ pytest-cov = "^3.0.0"
 mypy = "^0.941"
 black = "^22.1.0"
 isort = "^5.10.1"
+cookiecutter = "^2.1.1"
 
 [tool.poetry.extras]
 en = ["textstat-en"]
 
 [tool.poe.tasks]
 test = "pytest --cov=. --cov-report html:tests/coverage_report"
-lint = "flake8 --exclude=build/,.venv/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
+lint = "flake8 --exclude=build/,.venv/,.textstat-template/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
 stubs = "stubgen -o textstat/stubs textstat-*"
 check.sequence = ["lint", "test"]
 check.ignore_fail = "return_non_zero"
-black = "black ."
+black = "black . --extend-exclude .textstat-template/"
 isort = "isort --profile black . --extend-skip=textstat/stubs"
 format = ["black", "isort"]
+precommit = ["format", "stubs", "check"]
 build = "poetry build"
 _publish = "poetry publish"
 release = ["build", "_publish"]
