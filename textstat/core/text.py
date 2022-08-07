@@ -28,7 +28,7 @@ class Text(WordCollection, Stats):
         if hasattr(file_or_path, "read"):
             text: str = file_or_path.read()
         else:
-            with open(file_or_path, "r") as f:
+            with open(file_or_path, "r", encoding="utf-8-sig") as f:
                 text: str = f.read()
 
         return cls(text)
