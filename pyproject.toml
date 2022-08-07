@@ -40,11 +40,11 @@ en = ["textstat.en"]
 
 [tool.poe.tasks]
 test = "pytest --cov=. --cov-report html:tests/coverage_report"
-lint = "flake8 --exclude=build/,.venv/,.textstat-template/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
+lint = "flake8 --exclude=build/,.venv/,.lang-template/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
 stubs = "stubgen -o textstat/stubs textstat-*"
 check.sequence = ["lint", "test"]
 check.ignore_fail = "return_non_zero"
-black = "black . --extend-exclude .textstat-template/"
+black = "black . --extend-exclude .lang-template/"
 isort = "isort --profile black . --extend-skip=textstat/stubs"
 format = ["black", "isort"]
 precommit = ["format", "stubs", "check"]
