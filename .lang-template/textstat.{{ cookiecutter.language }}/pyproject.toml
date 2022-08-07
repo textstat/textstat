@@ -1,8 +1,11 @@
 [tool.poetry]
-name = "textstat-{{ cookiecutter.language }}"
+name = "textstat.{{ cookiecutter.language }}"
 version = "{{ cookiecutter.textstat_version }}"
 description = ""
 authors = ["Alex Ward <alxwrd@googlemail.com>"]
+packages = [
+    { include = "textstat" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
