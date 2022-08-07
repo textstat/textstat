@@ -1,11 +1,10 @@
 import warnings
 from math import sqrt
 
-from textstat_en.sentence import Sentence
-from textstat_en.word import Word
-from textstat_en.word_collection import WordCollection
-
 from textstat import core
+from textstat.en.sentence import Sentence
+from textstat.en.word import Word
+from textstat.en.word_collection import WordCollection
 
 
 class Text(core.Text, WordCollection):

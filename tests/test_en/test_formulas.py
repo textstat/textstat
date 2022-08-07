@@ -1,4 +1,4 @@
-from textstat_en import Text
+from textstat.en import Text
 
 
 def test_reading_time(test_text):

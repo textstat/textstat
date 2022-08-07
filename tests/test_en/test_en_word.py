@@ -1,5 +1,6 @@
 import pytest
-from textstat_en.word import Word
+
+from textstat.en.word import Word
 
 
 @pytest.mark.parametrize(

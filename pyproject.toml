@@ -8,6 +8,9 @@ readme = "README.md"
 homepage = "https://textstat.github.io/"
 repository = "https://github.com/textstat/textstat"
 documentation = "https://textstat.github.io/docs"
+packages = [
+    { include = "textstat" },
+]
 
 [tool.poetry.scripts]
 textstat = 'textstat.cli:run'
@@ -15,11 +18,12 @@ textstat = 'textstat.cli:run'
 
 [tool.poetry.dependencies]
 python = "^3.7"
-textstat-en = {version = "1.0.0-alpha.0"}
+"textstat.en" = {version = "1.0.0-alpha.0"}
 typing-extensions = "^4.1.1"
 
+
 [tool.poetry.dev-dependencies]
-textstat-en = {path = "textstat-en", develop = true}
+"textstat.en" = {path = "textstat.en", develop = true}
 flake8 = "^4.0.1"
 pytest = "^7.1.0"
 grip = "^4.6.0"
@@ -32,7 +36,7 @@ isort = "^5.10.1"
 cookiecutter = "^2.1.1"
 
 [tool.poetry.extras]
-en = ["textstat-en"]
+en = ["textstat.en"]
 
 [tool.poe.tasks]
 test = "pytest --cov=. --cov-report html:tests/coverage_report"

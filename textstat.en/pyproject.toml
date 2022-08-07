@@ -1,8 +1,11 @@
 [tool.poetry]
-name = "textstat-en"
+name = "textstat.en"
 version = "1.0.0-alpha.0"
 description = ""
 authors = ["Alex Ward <alxwrd@googlemail.com>"]
+packages = [
+    { include = "textstat" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"

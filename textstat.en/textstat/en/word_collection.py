@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from textstat_en.word import Word
-
 from textstat import core
+from textstat.en.word import Word
 from textstat.filtering import filterable
 
 
