@@ -7,10 +7,6 @@ from unicodedata import category
 
 from textstat.filtering import filterable
 
-punctuation_chars = [
-    chr(i) for i in range(sys.maxunicode) if category(chr(i)).startswith("P")
-] + list(string.punctuation)
-
 
 class Stats:
     properties: list[str] = ["letters", "characters"]
@@ -38,7 +34,7 @@ class Stats:
             *(
                 character
                 for character in self.characters
-                if character not in punctuation_chars
+                if category(character).startswith("L")
             )
         ]
 
