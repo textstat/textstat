@@ -1,4 +1,4 @@
-from textstat_{{cookiecutter.language}}.word import Word
+from textstat.{{cookiecutter.language}}.word import Word
 
 from textstat import core
 from textstat.filtering import filterable

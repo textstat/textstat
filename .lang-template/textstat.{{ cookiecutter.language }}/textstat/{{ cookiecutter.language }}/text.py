@@ -1,5 +1,5 @@
-from textstat_{{cookiecutter.language}}.sentence import Sentence
-from textstat_{{cookiecutter.language}}.word_collection import WordCollection
+from textstat.{{cookiecutter.language}}.sentence import Sentence
+from textstat.{{cookiecutter.language}}.word_collection import WordCollection
 
 from textstat import core
 
