@@ -4,17 +4,17 @@
         ".coverage": true,
         "**/__pytest__": true,
         "**/__pycache__": true,
-        "**/*.pyc": {"when": "$(basename).py"}, 
-        "**/.mypy_cache": true,
+        "**/*.pyc": {
+            "when": "$(basename).py"
+        },
+        "**/.mypy_cache": true
     },
-    "python.analysis.extraPaths": [
-        "./textstat-en"
-    ],
     "python.formatting.provider": "black",
     "python.formatting.blackPath": ".venv/bin/black",
     "[python]": {
         "editor.formatOnSave": true,
     },
+    "python.testing.pytestPath": ".venv/bin/pytest",
     "python.testing.pytestArgs": [
         "tests"
     ],

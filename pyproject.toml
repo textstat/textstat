@@ -17,14 +17,13 @@ textstat = 'textstat.cli:run'
 
 
 [tool.poetry.dependencies]
-python = "^3.7"
-"textstat.en" = {version = "1.0.0-alpha.0"}
+python = ">=3.8.1,<4.0.0"
 typing-extensions = "^4.1.1"
+cmudict = "^1.0.13"
+syllables = "^1.0.7"
 
 
-[tool.poetry.dev-dependencies]
-"textstat.en" = {path = "textstat.en", develop = true}
-flake8 = "^4.0.1"
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.1.0"
 grip = "^4.6.0"
 poethepoet = "^0.13.1"
@@ -34,20 +33,18 @@ mypy = "^0.941"
 black = "^22.1.0"
 isort = "^5.10.1"
 cookiecutter = "^2.1.1"
+flake8 = "^6.0.0"
 
-[tool.poetry.extras]
-en = ["textstat.en"]
 
 [tool.poe.tasks]
+lint = "flake8 --exclude=build/,.venv/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
 test = "pytest --cov=. --cov-report html:tests/coverage_report"
-lint = "flake8 --exclude=build/,.venv/,.lang-template/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
-stubs = "stubgen -o textstat/stubs textstat-*"
 check.sequence = ["lint", "test"]
 check.ignore_fail = "return_non_zero"
-black = "black . --extend-exclude .lang-template/"
-isort = "isort --profile black . --extend-skip=textstat/stubs"
+black = "black ."
+isort = "isort --profile black ."
 format = ["black", "isort"]
-precommit = ["format", "stubs", "check"]
+precommit = ["format", "check"]
 build = "poetry build"
 _publish = "poetry publish"
 release = ["build", "_publish"]

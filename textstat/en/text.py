@@ -2,9 +2,10 @@ import warnings
 from math import sqrt
 
 from textstat import core
+
+from textstat.en.word_collection import WordCollection
 from textstat.en.sentence import Sentence
 from textstat.en.word import Word
-from textstat.en.word_collection import WordCollection
 
 
 class Text(core.Text, WordCollection):
@@ -68,7 +69,6 @@ class Text(core.Text, WordCollection):
         "A computer readability formula designed for machine scoring."
         Journal of Applied Psychology 60.2 (1975): 283.
         """
-        ...
         return (
             (0.0588 * (self.avg("letters", per="words") * 100))
             - (0.296 * (self.avg("sentences", per="words") * 100))

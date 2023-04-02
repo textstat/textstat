@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from textstat import core
-from textstat.en.word import Word
 from textstat.filtering import filterable
+
+from textstat.en.word import Word
 
 
 class WordCollection(core.WordCollection):
@@ -13,7 +14,7 @@ class WordCollection(core.WordCollection):
         """Calculates the reading time, based on:
         https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.685.9115&rep=rep1&type=pdf
         """
-        total = 0
+        total: float = 0.0
 
         word_base_ms = 275  # INTERCEPT
         character_ms = 14.69  # WORDLENGTH

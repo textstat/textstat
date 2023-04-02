@@ -31,6 +31,8 @@ from textstat.en.word import Word
         ("celebration", 4),
         ("cemetery", 4),
         ("sensitivity", 5),
+        ("faeries", 2),
+        ("relived", 2),
     ],
 )
 def test_syllable_count(word, syllables):

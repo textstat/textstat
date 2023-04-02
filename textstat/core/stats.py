@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import collections
-import string
-import sys
 from unicodedata import category
 
 from textstat.filtering import filterable
@@ -80,7 +78,7 @@ class Stats:
             setattr(self.__class__, prop[:-1] + "_count", property(make_getter(prop)))
 
     def __eq__(self, other: object) -> bool:
-        if isinstance(other, str) or isinstance(other, self.__class__):
+        if isinstance(other, (str, self.__class__)):
             return self.text == other
         return super().__eq__(other)
 
