@@ -71,7 +71,7 @@ def get_grade_suffix(grade: int) -> str:
 
 
 class textstatistics:
-    """Main textstat class with methods to calculate redability indices.
+    """Main textstat class with methods to calculate readability indices.
 
     Attributes
     ----------

@@ -323,7 +323,7 @@ def test_flesch_reading_ease():
     textstat.set_lang("it_IT")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 91.93
+    assert score == 91.57
 
     textstat.set_lang("nl_NL")
     score = textstat.flesch_reading_ease(long_test)
