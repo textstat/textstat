@@ -1,0 +1,28 @@
+text = """
+For some time past, though at intervals only, the unaccompanied, secluded
+White Whale had haunted those uncivilized seas mostly frequented by the
+Sperm Whale fishermen. But not all of them knew of his existence; only a few
+of them, comparatively, had knowingly seen him; while the number who as yet
+had actually and knowingly given battle to him, was small indeed. For, owing
+to the large number of whale-cruisers; the disorderly way they were
+sprinkled over the entire watery circumference, many of them adventurously
+pushing their quest along solitary latitudes, so as seldom or never for a
+whole twelvemonth or more on a stretch, to encounter a single news-telling
+sail of any sort; the inordinate length of each separate voyage; the
+irregularity of the times of sailing from home; all these, with other
+circumstances, direct and indirect, long obstructed the spread through the
+whole world-wide whaling-fleet of the special individualizing tidings
+concerning Moby Dick.
+"""
+
+[meta]
+title = "Moby Dick"
+author = "Herman Melville"
+source = "https://www.gutenberg.org/files/2701/2701-h/2701-h.htm#link2HCH0041"
+
+[statistics]
+words = 154
+letters = 794
+characters = 820
+sentences = 3
+reading_time = 52122.9

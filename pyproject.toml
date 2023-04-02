@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "textstat"
+version = "1.0.0-alpha.0"
+description = "Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level."
+authors = ["Alex Ward <alxwrd@googlemail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://textstat.github.io/"
+repository = "https://github.com/textstat/textstat"
+documentation = "https://textstat.github.io/docs"
+packages = [
+    { include = "textstat" },
+]
+
+[tool.poetry.scripts]
+textstat = 'textstat.cli:run'
+
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0.0"
+typing-extensions = "^4.1.1"
+cmudict = "^1.0.13"
+syllables = "^1.0.7"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.1.0"
+grip = "^4.6.0"
+poethepoet = "^0.13.1"
+toml = "^0.10.2"
+pytest-cov = "^3.0.0"
+mypy = "^0.941"
+black = "^22.1.0"
+isort = "^5.10.1"
+cookiecutter = "^2.1.1"
+flake8 = "^6.0.0"
+
+
+[tool.poe.tasks]
+lint = "flake8 --exclude=build/,.venv/ --max-line-length=88 --per-file-ignores='__init__.py:F401'"
+test = "pytest --cov=. --cov-report html:tests/coverage_report"
+check.sequence = ["lint", "test"]
+check.ignore_fail = "return_non_zero"
+black = "black ."
+isort = "isort --profile black ."
+format = ["black", "isort"]
+precommit = ["format", "check"]
+build = "poetry build"
+_publish = "poetry publish"
+release = ["build", "_publish"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
+    ".venv/*",
+]

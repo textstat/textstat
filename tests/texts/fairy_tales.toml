@@ -1,0 +1,33 @@
+text = """
+There were once a man and a woman who had long in vain wished for a child.
+At length the woman hoped that God was about to grant her desire. These
+people had a little window at the back of their house from which a splendid
+garden could be seen, which was full of the most beautiful flowers and
+herbs. It was, however, surrounded by a high wall, and no one dared to go
+into it because it belonged to an enchantress, who had great power and was
+dreaded by all the world. One day the woman was standing by this window and
+looking down into the garden, when she saw a bed which was planted with the
+most beautiful rampion (rapunzel), and it looked so fresh and green that she
+longed for it, she quite pined away, and began to look pale and miserable.
+Then her husband was alarmed, and asked: ‘What ails you, dear wife?’ ‘Ah,’
+she replied, ‘if I can’t eat some of the rampion, which is in the garden
+behind our house, I shall die.’ The man, who loved her, thought: ‘Sooner
+than let your wife die, bring her some of the rampion yourself, let it cost
+what it will.’ At twilight, he clambered down over the wall into the garden
+of the enchantress, hastily clutched a handful of rampion, and took it to
+his wife. She at once made herself a salad of it, and ate it greedily. It
+tasted so good to her—so very good, that the next day she longed for it
+three times as much as before.
+"""
+
+[meta]
+title = "Grimms’ Fairy Tales"
+author = "Jacob Grimm and Wilhelm Grimm"
+source = "https://www.gutenberg.org/files/2591/2591-h/2591-h.htm#link2H_4_0017"
+
+[statistics]
+words = 266
+letters = 1057
+characters = 1106
+sentences = 11
+reading_time = 85916.48999999999
