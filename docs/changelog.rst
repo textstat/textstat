@@ -2,6 +2,8 @@
 Changelog
 =========
 
+- :release:`0.7.4 <2024-01-09>`
+- :feature:`189` Add Hungarian support.
 - :release:`0.7.3 <2022-03-15>`
 - :feature:`181` Add type hints.
 - :feature:`174` Add McAlpine EFLAW readability score.
