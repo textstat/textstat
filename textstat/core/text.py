@@ -24,7 +24,7 @@ class Text(WordCollection, Stats):
     __acronym_regex = re.compile(r"\b(?:[^\W\d_][\.]){2,}", re.UNICODE)
 
     @classmethod
-    def load(cls, file_or_path: str | __Readable) -> Text:
+    def load(cls, file_or_path: __Readable | str) -> Text:
         if hasattr(file_or_path, "read"):
             text: str = file_or_path.read()
         else:
