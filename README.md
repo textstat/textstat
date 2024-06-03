@@ -71,7 +71,7 @@ easy_install textstat
 ### Install latest version from GitHub
 
 ```shell
-git clone https://github.com/shivam5992/textstat.git
+git clone https://github.com/textstat/textstat.git
 cd textstat
 pip install .
 ```
