@@ -5,6 +5,7 @@
 """
 
 import textstat
+import pytest
 
 short_test = "Cool dogs wear da sunglasses."
 
@@ -250,11 +251,44 @@ def test_lexicon_count():
     assert count_punc == 376
 
 
-def test_syllable_count():
-    textstat.set_lang("en_US")
-    count = textstat.syllable_count(long_test)
+@pytest.mark.parametrize(
+    "lang,text,n_syllables,margin",
+    [
+        ("en_US", short_test, 7, 0),
+        ("en_US", punct_text, 74, 2),
+        ("en_US", "faeries", 2, 1),
+        ("en_US", "relived", 2, 0),
+        ("en_US", "couple", 2, 0),
+        ("en_US", "enriched", 2, 0),
+        ("en_US", "us", 1, 0),
+        ("en_US", "too", 1, 0),
+        ("en_US", "monopoly", 4, 0),
+        ("en_US", "him", 1, 0),
+        ("en_US", "he", 1, 0),
+        ("en_US", "without", 2, 0),
+        ("en_US", "creative", 3, 0),
+        ("en_US", "every", 3, 0),
+        ("en_US", "stimulating", 4, 0),
+        ("en_US", "life", 1, 0),
+        ("en_US", "cupboards", 2, 0),
+        ("en_US", "day's", 1, 0),
+        ("en_US", "forgotten", 3, 0),
+        ("en_US", "through", 1, 0),
+        ("en_US", "marriage", 2, 0),
+        ("en_US", "hello", 2, 0),
+        ("en_US", "the", 1, 0),
+        ("en_US", "sentences", 3, 0),
+        ("en_US", "songwriter", 3, 0),
+        ("en_US", "removing", 3, 0),
+        ("en_US", "interpersonal", 5, 0),
+    ]
+)
+def test_syllable_count(lang: str, text: str, n_syllables: int, margin: int):
+    textstat.set_lang(lang)
+    count = textstat.syllable_count(text)
+    diff = abs(count - n_syllables)
 
-    assert count == 519
+    assert diff <= margin
 
 
 def test_sentence_count():
@@ -282,7 +316,7 @@ def test_avg_syllables_per_word():
     textstat.set_lang("en_US")
     avg = textstat.avg_syllables_per_word(long_test)
 
-    assert avg == 1.4
+    assert avg == 1.5
 
 
 def test_avg_letter_per_word():
@@ -303,7 +337,7 @@ def test_flesch_reading_ease():
     textstat.set_lang("en_US")
     score = textstat.flesch_reading_ease(long_test)
 
-    assert score == 66.17
+    assert score == 57.71
 
     textstat.set_lang("de_DE")
     score = textstat.flesch_reading_ease(long_test)
@@ -340,21 +374,21 @@ def test_flesch_kincaid_grade():
     textstat.set_lang("en_US")
     score = textstat.flesch_kincaid_grade(long_test)
 
-    assert score == 9.5
+    assert score == 10.7
 
 
 def test_polysyllabcount():
     textstat.set_lang("en_US")
     count = textstat.polysyllabcount(long_test)
 
-    assert count == 32
+    assert count == 38
 
 
 def test_smog_index():
     textstat.set_lang("en_US")
     index = textstat.smog_index(long_test)
 
-    assert index == 11.0
+    assert index == 11.7
 
 
 def test_coleman_liau_index():
@@ -375,7 +409,7 @@ def test_linsear_write_formula():
     textstat.set_lang("en_US")
     result = textstat.linsear_write_formula(long_test)
 
-    assert result == 14.5
+    assert result == 15.25
 
     result = textstat.linsear_write_formula(empty_str)
 
@@ -386,7 +420,7 @@ def test_difficult_words():
     textstat.set_lang("en_US")
     result = textstat.difficult_words(long_test)
 
-    assert result == 49
+    assert result == 54
 
 
 def test_difficult_words_list():
@@ -425,7 +459,7 @@ def test_gunning_fog():
     textstat.set_lang("en_US")
     score = textstat.gunning_fog(long_test)
 
-    assert score == 10.7
+    assert score == 11.13
 
     # FOG-PL
     textstat.set_lang("pl_PL")
@@ -456,7 +490,7 @@ def test_text_standard():
     textstat.set_lang("en_US")
     standard = textstat.text_standard(long_test)
 
-    assert standard == "10th and 11th grade"
+    assert standard == "11th and 12th grade"
 
     standard = textstat.text_standard(short_test)
 
@@ -531,7 +565,7 @@ def test_dale_chall_readability_score_v2():
     textstat.set_lang("en_US")
     score = textstat.dale_chall_readability_score_v2(long_test)
 
-    assert score == 6.8
+    assert score == 7.01
 
 
 def test_fernandez_huerta():
@@ -625,7 +659,7 @@ def test_disabling_rounding():
 
     textstat.set_rounding(True)
 
-    assert index == 5.057207463630613
+    assert index == 5.172798861480075
 
 
 def test_changing_rounding_points():
@@ -636,7 +670,7 @@ def test_changing_rounding_points():
 
     textstat.set_rounding(True)
 
-    assert index == 5.05721
+    assert index == 5.1728
 
 
 def test_instanced_textstat_rounding():
@@ -649,11 +683,11 @@ def test_instanced_textstat_rounding():
 
     my_not_rounded_index = my_textstat.spache_readability(long_test)
 
-    assert my_not_rounded_index == 5.057207463630613
+    assert my_not_rounded_index == 5.172798861480075
 
     default_rounded_index = textstat.spache_readability(long_test)
 
-    assert default_rounded_index == 5.06
+    assert default_rounded_index == 5.17
 
 
 def test_mcalpine_eflaw():

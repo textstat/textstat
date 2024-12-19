@@ -7,6 +7,7 @@ from typing import Union, List, Set
 import pkg_resources
 from functools import lru_cache
 from pyphen import Pyphen
+import cmudict
 
 langs = {
     "en": {  # Default config
@@ -195,6 +196,10 @@ class textstatistics:
         """
         self.__lang = lang
         self.pyphen = Pyphen(lang=self.__lang)
+        if lang == "en_US":
+            self.cmu_dict = cmudict.dict()
+        else:
+            self.cmu_dict = None
         self._cache_clear()
 
     @lru_cache(maxsize=128)
@@ -325,7 +330,7 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def syllable_count(self, text: str, lang: Union[str, None] = None) -> int:
-        """Calculate syllable words in a text using pyphen.
+        """Calculate syllable words in a text using cmudict with pyphen as a fallback.
 
         Parameters
         ----------
@@ -359,7 +364,11 @@ class textstatistics:
 
         count = 0
         for word in text.split():
-            count += len(self.pyphen.positions(word)) + 1
+            try:
+                count += len([None for p in self.cmu_dict[word][0] if p[-1].isdigit()])
+            except (TypeError, IndexError):
+                count += len(self.pyphen.positions(word)) + 1
+
         return count
 
     @lru_cache(maxsize=128)
