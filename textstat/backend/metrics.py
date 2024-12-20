@@ -122,7 +122,7 @@ def avg_letter_per_word(text: str) -> float:
 
     """
     try:
-        return counts.letter_count(text, True) / counts.lexicon_count(text)
+        return counts.letter_count(text) / counts.lexicon_count(text)
     except ZeroDivisionError:
         return 0.0
 
@@ -657,7 +657,7 @@ def gutierrez_polini(text: str) -> float:
     https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
     """
     total_words = counts.lexicon_count(text)
-    total_letters = counts.letter_count(text, True)
+    total_letters = counts.letter_count(text)
     total_sentences = counts.sentence_count(text)
 
     try:

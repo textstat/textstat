@@ -30,15 +30,13 @@ def char_count(text: str, ignore_spaces: bool) -> int:
 
 
 @utils.typed_cache
-def letter_count(text: str, ignore_spaces: bool) -> int:
-    """Count letters in a text.
+def letter_count(text: str) -> int:
+    """Count letters in a text. Spaces are ignored.
 
     Parameters
     ----------
     text : str
         A text string.
-    ignore_spaces : bool, optional
-        Ignore whitespaces. The default is True.
 
     Returns
     -------
@@ -46,8 +44,8 @@ def letter_count(text: str, ignore_spaces: bool) -> int:
         The number of letters in text.
 
     """
-    if ignore_spaces:
-        text = re.sub(r"\s", "", text)
+    # Ignore spaces
+    text = re.sub(r"\s", "", text)
     return len(transformations.remove_punctuation(text, rm_apostrophe=True))
 
 

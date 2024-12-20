@@ -70,6 +70,7 @@ def test_get_lang_root(lang: str, root: str) -> None:
     ],
 )
 def test_get_lang_easy_words(lang: str, n_words: int) -> None:
+    # TODO: catch and assert warning
     assert len(utils.get_lang_easy_words(lang)) == n_words
 
 
