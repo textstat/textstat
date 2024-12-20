@@ -81,8 +81,7 @@ def miniword_count(text: str, max_size: int) -> int:
     text : str
         A text string.
     max_size : int, optional
-        Maximum number of letters in a word for it to be counted. The
-        default is 3.
+        Maximum number of letters in a word for it to be counted.
 
     Returns
     -------

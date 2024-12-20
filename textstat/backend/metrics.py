@@ -217,6 +217,7 @@ def smog_index(text: str, lang: str) -> float:
     """
     sentences = counts.sentence_count(text)
 
+    # TODO: why this?
     if sentences < 3:
         return 0.0
 
@@ -466,7 +467,7 @@ def lix(text: str) -> float:
     words_len = len(words)
     long_words = len([wrd for wrd in words if len(wrd) > 6])
     try:
-        per_long_words = (float(long_words) * 100) / words_len
+        per_long_words = (long_words * 100) / words_len
     except ZeroDivisionError:
         return 0.0
     asl = avg_sentence_length(text)
@@ -760,17 +761,13 @@ def wiener_sachtextformel(text: str, variant: int, lang: str) -> float:
     es = 100 * counts.monosyllabcount(text, lang) / n_words
 
     if variant == 1:
-        score = (0.1935 * ms) + (0.1672 * sl) + (0.1297 * iw) - (0.0327 * es) - 0.875
-        return round(score, 1)
+        return (0.1935 * ms) + (0.1672 * sl) + (0.1297 * iw) - (0.0327 * es) - 0.875
     elif variant == 2:
-        score = (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
-        return round(score, 1)
+        return (0.2007 * ms) + (0.1682 * sl) + (0.1373 * iw) - 2.779
     elif variant == 3:
-        score = (0.2963 * ms) + (0.1905 * sl) - 1.1144
-        return round(score, 1)
+        return (0.2963 * ms) + (0.1905 * sl) - 1.1144
     elif variant == 4:
-        score = (0.2744 * ms) + (0.2656 * sl) - 1.693
-        return round(score, 1)
+        return (0.2744 * ms) + (0.2656 * sl) - 1.693
     else:
         raise ValueError("variant can only be an integer between 1 and 4")
 

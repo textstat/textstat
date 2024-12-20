@@ -1,5 +1,7 @@
 import pytest
-import textstat.backend.counts as counts
+from textstat.backend import counts
+
+from . import resources
 
 
 @pytest.mark.parametrize(
@@ -54,3 +56,147 @@ def test_letter_count(text: str, expected: int) -> None:
 )
 def test_lexicon_count(text: str, n_words: int) -> None:
     assert counts.lexicon_count(text) == n_words
+
+
+@pytest.mark.parametrize(
+    "text,max_size,expected",
+    [
+        ("", 1, 0),
+        ("a", 1, 1),
+        ("a ", 1, 1),
+        ("a b", 1, 2),
+        ("They're here, and they're there.", 1, 0),
+        ("They're here, and they're there.", 2, 0),
+        ("They're here, and they're there.", 3, 1),
+        ("They're here, and they're there.", 4, 2),
+        ("who is me man, I, ye rogue", 1, 1),
+        ("who is me man, I, ye rogue", 2, 4),
+        ("who is me man, I, ye rogue", 3, 6),
+    ],
+)
+def test_miniword_count(text: str, max_size: int, expected: int) -> None:
+    assert counts.miniword_count(text, max_size) == expected
+
+
+@pytest.mark.parametrize(
+    "text,lang,expected",
+    [
+        ("", "en_US", 0),
+        ("a", "en_US", 1),
+        ("a ", "en_US", 1),
+        ("a b", "en_US", 2),
+        ("Where the dog at?", "en_US", 4),
+        ("This marriage is an agreement of convenience", "en_US", 11),
+    ],
+)
+def test_syllable_count(text: str, lang: str, expected: int) -> None:
+    assert counts.syllable_count(text, lang) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        (resources.EASY_TEXT, 11),
+        (resources.SHORT_TEXT, 1),
+        (resources.PUNCT_TEXT, 5),
+        (resources.LONG_TEXT, 17),
+    ],
+)
+def test_sentence_count(text: str, expected: int) -> None:
+    assert counts.sentence_count(text) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        # TODO
+    ],
+)
+def test_count_complex_arabic_words(text: str, expected: int) -> None:
+    assert counts.count_complex_arabic_words(text) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        # TODO
+    ],
+)
+def test_count_arabic_syllables(text: str, expected: int) -> None:
+    assert counts.count_arabic_syllables(text) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        # TODO
+    ],
+)
+def test_count_faseeh(text: str, expected: int) -> None:
+    assert counts.count_faseeh(text) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        # TODO
+    ],
+)
+def test_count_arabic_long_words(text: str, expected: int) -> None:
+    assert counts.count_arabic_long_words(text) == expected
+
+
+@pytest.mark.parametrize(
+    "test,lang,expected",
+    [
+        (resources.EASY_TEXT, "en_US", 6),
+        (resources.SHORT_TEXT, "en_US", 1),
+        (resources.PUNCT_TEXT, "en_US", 5),
+        (resources.LONG_TEXT, "en_US", 33),
+    ],
+)
+def test_polysyllabcount(test: str, lang: str, expected: int) -> None:
+    assert counts.polysyllabcount(test, lang) == expected
+
+
+@pytest.mark.parametrize(
+    "text,lang,syllable_threshold,expected",
+    [
+        (resources.EASY_TEXT, "en_US", 1, 11),
+        (resources.EASY_TEXT, "en_US", 2, 5),
+        (resources.EASY_TEXT, "en_US", 3, 0),
+        (resources.SHORT_TEXT, "en_US", 2, 1),
+        (resources.PUNCT_TEXT, "en_US", 2, 6),
+        (resources.LONG_TEXT, "en_US", 2, 49),
+    ],
+)
+def test_difficult_words(
+    text: str, lang: str, syllable_threshold: int, expected: int
+) -> None:
+    assert counts.difficult_words(text, lang, syllable_threshold) == expected
+
+
+@pytest.mark.parametrize(
+    "test,expected",
+    [
+        (resources.EASY_TEXT, 13),
+        (resources.SHORT_TEXT, 1),
+        (resources.PUNCT_TEXT, 7),
+        (resources.LONG_TEXT, 77),
+    ],
+)
+def test_long_word_count(test: str, expected: int) -> None:
+    assert counts.long_word_count(test) == expected
+
+
+@pytest.mark.parametrize(
+    "test,lang,expected",
+    [
+        (resources.EASY_TEXT, "en_US", 68),
+        (resources.SHORT_TEXT, "en_US", 4),
+        (resources.PUNCT_TEXT, "en_US", 42),
+        (resources.LONG_TEXT, "en_US", 270),
+    ],
+)
+def test_monosyllabcount(test: str, lang: str, expected: int) -> None:
+    assert counts.monosyllabcount(test, lang) == expected
