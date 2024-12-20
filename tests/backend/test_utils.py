@@ -99,19 +99,3 @@ def test_get_pyphen(lang: str) -> None:
 )
 def test_syllables_in_word(word: str, lang: str, expected: int) -> None:
     assert utils.syllables_in_word(word, lang) == expected
-
-
-@pytest.mark.parametrize(
-    "number, points, expected",
-    [
-        (1.2343, 0, 1),
-        (433.432, 1, 433.4),
-        (43.434, 2, 43.43),
-        (4.324, 3, 4.324),
-        (5.287, 4, 5.287),
-        (7.47283478237, 5, 7.47283),
-        (3847.472834972, 6, 3847.472835),
-    ],
-)
-def test_legacy_round(number: float, points: int, expected: float) -> None:
-    assert utils.legacy_round(number, points) == expected

@@ -131,26 +131,3 @@ def get_pyphen(lang: str) -> Pyphen:
 def syllables_in_word(word: str, lang: str) -> int:
     """Count the number of syllables in a word"""
     return len(get_pyphen(lang).positions(word)) + 1  # type: ignore
-
-
-def legacy_round(number: float, points: int) -> float:
-    """Round `number`, unless the attribute `__round_outputs` is `False`.
-
-    Round floating point outputs for backwards compatibility.
-    Rounding can be turned off by setting the instance attribute
-    `__round_outputs` to False.
-
-    Parameters
-    ----------
-    number : float
-    points : int, optional
-        The number of decimal digits to return. If the instance attribute
-        `__round_points` is not None, the value of `__round_point` will
-        override the value passed for `points`. The default is 0.
-
-    Returns
-    -------
-    float
-
-    """
-    return round(number, points)

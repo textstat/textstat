@@ -45,7 +45,7 @@ jobs:
     - name: Test with pytest
       if: ${{ !cancelled() }}
       run: |
-        pipenv run pytest test.py
+        pipenv run pytest .
 
     - name: Test installing
       if: ${{ !cancelled() }}
