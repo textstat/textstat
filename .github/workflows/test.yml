@@ -35,7 +35,7 @@ jobs:
     - name: Check code spelling
       if: ${{ !cancelled() }}
       run: |
-        pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*,./.git/* --exclude-file=.codespellignorelines
+        pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*,./.git/*,./tests/* --exclude-file=.codespellignorelines
 
     - name: Lint with flake8
       if: ${{ !cancelled() }}
