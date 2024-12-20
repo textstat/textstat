@@ -330,7 +330,7 @@ class textstatistics:
 
     @lru_cache(maxsize=128)
     def syllable_count(self, text: str, lang: Union[str, None] = None) -> int:
-        """Calculate syllable words in a text using cmudict with pyphen as a fallback.
+        """Calculate syllable words in a text using cmudict and pyphen.
 
         Parameters
         ----------
@@ -365,7 +365,8 @@ class textstatistics:
         count = 0
         for word in text.split():
             try:
-                count += len([None for p in self.cmu_dict[word][0] if p[-1].isdigit()])
+                cmu_phones = self.cmu_dict[word][0]
+                count += len([None for p in cmu_phones if p[-1].isdigit()])
             except (TypeError, IndexError):
                 count += len(self.pyphen.positions(word)) + 1
 
