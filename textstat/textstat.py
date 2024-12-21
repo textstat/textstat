@@ -31,17 +31,6 @@ class textstatistics:
     def __init__(self):
         self.set_lang(self.__lang)
 
-    def _cache_clear(self) -> None:
-        caching_methods = [
-            method
-            for method in dir(self)
-            if callable(getattr(self, method))
-            and hasattr(getattr(self, method), "cache_info")
-        ]
-
-        for method in caching_methods:
-            getattr(self, method).cache_clear()
-
     def _legacy_round(self, number: float, points: int = 0) -> float:
         """Round `number`, unless the attribute `__round_outputs` is `False`.
 
@@ -122,7 +111,6 @@ class textstatistics:
 
         """
         self.__lang = lang
-        self._cache_clear()
 
     def char_count(self, text: str, ignore_spaces: bool = True) -> int:
         """Count the number of characters in a text.
@@ -228,7 +216,7 @@ class textstatistics:
         return counts.miniword_count(text, max_size)
 
     def syllable_count(self, text: str, lang: str | None = None) -> int:
-        """Calculate syllable words in a text using pyphen.
+        """Estimate the number of syllables in a text using Pyphen.
 
         Parameters
         ----------

@@ -50,7 +50,7 @@ def letter_count(text: str) -> int:
 
 
 @utils.typed_cache
-def lexicon_count(text: str) -> int:
+def lexicon_count(text: str, removepunct: bool = True) -> int:
     """Count types (words) in a text.
 
     English contractions (e.g. "aren't") are counted as one word.
@@ -68,6 +68,9 @@ def lexicon_count(text: str) -> int:
         DESCRIPTION.
 
     """
+    # This is useful in the case of "blah [punct] blah"
+    if removepunct:
+        text = transformations.remove_punctuation(text, rm_apostrophe=True)
     count = len(text.split())
     return count
 

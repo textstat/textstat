@@ -1,6 +1,8 @@
 import pytest
 import textstat.backend.transformations as transformations
 
+from . import resources
+
 
 @pytest.mark.parametrize(
     "in_text,out_text,rm_apostrophe",
@@ -14,6 +16,8 @@ import textstat.backend.transformations as transformations
             "Whos thereI have no time for this nonsensemy guy a whoswho veritably",
             True,
         ),
+        (resources.PUNCT_TEXT, resources.PUNCT_TEXT_RESULT_W_APOSTR, False),
+        (resources.PUNCT_TEXT, resources.PUNCT_TEXT_RESULT_WO_APOSTR, True),
     ],
 )
 def test_remove_punctuation(in_text: str, out_text: str, rm_apostrophe: bool) -> None:

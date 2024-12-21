@@ -1,5 +1,8 @@
+from typing import Callable
 import pytest
-from textstat.backend import utils
+from textstat.backend import utils, counts, metrics
+
+from . import resources
 
 
 @pytest.mark.parametrize(
@@ -99,3 +102,35 @@ def test_get_pyphen(lang: str) -> None:
 )
 def test_syllables_in_word(word: str, lang: str, expected: int) -> None:
     assert utils.syllables_in_word(word, lang) == expected
+
+
+@pytest.mark.parametrize(
+    "inner_func, outer_funcs",
+    [
+        (
+            counts.lexicon_count,
+            [metrics.avg_sentence_length, metrics.words_per_sentence],
+        ),
+    ],
+)
+def test_typed_chache(
+    inner_func: Callable[[str], utils.T],
+    outer_funcs: list[Callable[[str], utils.T]],
+) -> None:
+    # clear caches from other tests before running this one
+    inner_func.cache_clear()  # type: ignore
+    for outer_func in outer_funcs:
+        outer_func.cache_clear()  # type: ignore
+
+    # For simplicity just gonna test on some lang-less ones
+    for outer_func in outer_funcs:
+        outer_func(resources.SHORT_TEXT)
+        outer_func.cache_clear()  # type: ignore
+
+    assert inner_func.cache_info().misses == 1  # type: ignore
+    assert inner_func.cache_info().hits == len(outer_funcs) - 1  # type: ignore
+
+    inner_func(resources.SHORT_TEXT)
+
+    assert inner_func.cache_info().misses == 1  # type: ignore
+    assert inner_func.cache_info().hits == len(outer_funcs)  # type: ignore

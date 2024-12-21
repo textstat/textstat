@@ -11,7 +11,7 @@ from textstat.backend import metrics
         (resources.EASY_TEXT, 9.0),
         (resources.SHORT_TEXT, 5.0),
         (resources.PUNCT_TEXT, 10.6),
-        (resources.LONG_TEXT, 22.118),
+        (resources.LONG_TEXT, 21.882),
     ],
 )
 def test_avg_sentence_length(text: str, expected: float) -> None:
@@ -25,7 +25,7 @@ def test_avg_sentence_length(text: str, expected: float) -> None:
         (resources.EASY_TEXT, 9.0),
         (resources.SHORT_TEXT, 5.0),
         (resources.PUNCT_TEXT, 10.6),
-        (resources.LONG_TEXT, 22.118),
+        (resources.LONG_TEXT, 21.882),
     ],
 )
 def test_words_per_sentence(text: str, expected: float) -> None:
@@ -40,7 +40,7 @@ def test_words_per_sentence(text: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 1.374),
         (resources.SHORT_TEXT, "en_US", 1.4),
         (resources.PUNCT_TEXT, "en_US", 1.358),
-        (resources.LONG_TEXT, "en_US", 1.38),
+        (resources.LONG_TEXT, "en_US", 1.395),
     ],
 )
 def test_avg_syllables_per_word(text: str, lang: str, expected: float) -> None:
@@ -54,7 +54,7 @@ def test_avg_syllables_per_word(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, 4.354),
         (resources.SHORT_TEXT, 5.0),
         (resources.PUNCT_TEXT, 4.66),
-        (resources.LONG_TEXT, 4.649),
+        (resources.LONG_TEXT, 4.699),
     ],
 )
 def test_avg_character_per_word(text: str, expected: float) -> None:
@@ -68,7 +68,7 @@ def test_avg_character_per_word(text: str, expected: float) -> None:
         (resources.EASY_TEXT, 4.222),
         (resources.SHORT_TEXT, 4.8),
         (resources.PUNCT_TEXT, 4.283),
-        (resources.LONG_TEXT, 4.484),
+        (resources.LONG_TEXT, 4.532),
     ],
 )
 def test_avg_letter_per_word(text: str, expected: float) -> None:
@@ -82,7 +82,7 @@ def test_avg_letter_per_word(text: str, expected: float) -> None:
         (resources.EASY_TEXT, 0.111),
         (resources.SHORT_TEXT, 0.2),
         (resources.PUNCT_TEXT, 0.094),
-        (resources.LONG_TEXT, 0.045),
+        (resources.LONG_TEXT, 0.046),
     ],
 )
 def test_avg_sentence_per_word(text: str, expected: float) -> None:
@@ -96,7 +96,20 @@ def test_avg_sentence_per_word(text: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 81.482),
         (resources.SHORT_TEXT, "en_US", 83.32),
         (resources.PUNCT_TEXT, "en_US", 81.148),
-        (resources.LONG_TEXT, "en_US", 67.611),
+        (resources.LONG_TEXT, "en_US", 66.594),
+        (resources.LONG_TEXT, "de_DE", 66.593),
+        (resources.LONG_TEXT, "es_ES", 86.778),
+        (resources.LONG_TEXT, "fr_FR", 82.501),
+        (resources.LONG_TEXT, "it_IT", 91.617),
+        (resources.LONG_TEXT, "nl_NL", 66.017),
+        (resources.LONG_TEXT, "ru_RU", 118.288),
+        (
+            resources.EASY_HUNGARIAN_TEXT,
+            "hu_HU",
+            116.655,
+        ),
+        (resources.HARD_HUNGARIAN_TEXT, "hu_HU", 51.05),
+        (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 20.266),
     ],
 )
 def test_flesch_reading_ease(text: str, lang: str, expected: float) -> None:
@@ -110,7 +123,7 @@ def test_flesch_reading_ease(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 4.13),
         (resources.SHORT_TEXT, "en_US", 2.88),
         (resources.PUNCT_TEXT, "en_US", 4.574),
-        (resources.LONG_TEXT, "en_US", 9.324),
+        (resources.LONG_TEXT, "en_US", 9.407),
     ],
 )
 def test_flesch_kincaid_grade(text: str, lang: str, expected: float) -> None:
@@ -124,7 +137,10 @@ def test_flesch_kincaid_grade(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 7.348),
         (resources.SHORT_TEXT, "en_US", 0.0),
         (resources.PUNCT_TEXT, "en_US", 8.842),
-        (resources.LONG_TEXT, "en_US", 11.088),
+        (resources.LONG_TEXT, "en_US", 10.967),
+        (resources.EASY_HUNGARIAN_TEXT, "hu_HU", 0),
+        (resources.HARD_HUNGARIAN_TEXT, "hu_HU", 17.879),
+        (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 21.932),
     ],
 )
 def test_smog_index(text: str, lang: str, expected: float) -> None:
@@ -138,7 +154,7 @@ def test_smog_index(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, 5.4),
         (resources.SHORT_TEXT, 6.12),
         (resources.PUNCT_TEXT, 6.249),
-        (resources.LONG_TEXT, 8.869),
+        (resources.LONG_TEXT, 9.134),
     ],
 )
 def test_coleman_liau_index(text: str, expected: float) -> None:
@@ -152,7 +168,7 @@ def test_coleman_liau_index(text: str, expected: float) -> None:
         (resources.EASY_TEXT, 3.575),
         (resources.SHORT_TEXT, 4.62),
         (resources.PUNCT_TEXT, 5.82),
-        (resources.LONG_TEXT, 11.525),
+        (resources.LONG_TEXT, 11.643),
     ],
 )
 def test_automated_readability_index(text: str, expected: float) -> None:
@@ -180,7 +196,7 @@ def test_linsear_write_formula(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 5.837),
         (resources.SHORT_TEXT, "en_US", 13.358),
         (resources.PUNCT_TEXT, "en_US", 6.844),
-        (resources.LONG_TEXT, "en_US", 7.757),
+        (resources.LONG_TEXT, "en_US", 7.778),
     ],
 )
 def test_dale_chall_readability_score(text: str, lang: str, expected: float) -> None:
@@ -194,7 +210,7 @@ def test_dale_chall_readability_score(text: str, lang: str, expected: float) -> 
         (resources.EASY_TEXT, "en_US", 4.88),
         (resources.SHORT_TEXT, "en_US", 7.043),
         (resources.PUNCT_TEXT, "en_US", 5.95),
-        (resources.LONG_TEXT, "en_US", 6.791),
+        (resources.LONG_TEXT, "en_US", 6.802),
     ],
 )
 def test_dale_chall_readability_score_v2(text: str, lang: str, expected: float) -> None:
@@ -208,7 +224,14 @@ def test_dale_chall_readability_score_v2(text: str, lang: str, expected: float) 
         (resources.EASY_TEXT, "en_US", 3.6),
         (resources.SHORT_TEXT, "en_US", 10.0),
         (resources.PUNCT_TEXT, "en_US", 7.259),
-        (resources.LONG_TEXT, "en_US", 10.762),
+        (resources.LONG_TEXT, "en_US", 10.688),
+        (
+            resources.EASY_HUNGARIAN_TEXT,
+            "hu_HU",
+            4.8,
+        ),  # TODO: why this one change so much (from 2.5)
+        (resources.HARD_HUNGARIAN_TEXT, "hu_HU", 9.705),
+        (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 14.396),
     ],
 )
 def test_gunning_fog(text: str, lang: str, expected: float) -> None:
@@ -222,7 +245,7 @@ def test_gunning_fog(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, 26.172),
         (resources.SHORT_TEXT, 25.0),
         (resources.PUNCT_TEXT, 25.694),
-        (resources.LONG_TEXT, 43.926),
+        (resources.LONG_TEXT, 43.691),
     ],
 )
 def test_lix(text: str, expected: float) -> None:
@@ -250,7 +273,7 @@ def test_rix(text: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 2.542),
         (resources.SHORT_TEXT, "en_US", 3.264),
         (resources.PUNCT_TEXT, "en_US", 3.307),
-        (resources.LONG_TEXT, "en_US", 5.078),
+        (resources.LONG_TEXT, "en_US", 5.057),
     ],
 )
 def test_spache_readability(text: str, lang: str, expected: float) -> None:
@@ -264,7 +287,7 @@ def test_spache_readability(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 4.0),
         (resources.SHORT_TEXT, "en_US", 2.0),
         (resources.PUNCT_TEXT, "en_US", 6.0),
-        (resources.LONG_TEXT, "en_US", 9.0),
+        (resources.LONG_TEXT, "en_US", 10.0),
     ],
 )
 def test_text_standard(text: str, lang: str, expected: float) -> None:
@@ -297,7 +320,9 @@ def test_reading_time(text: str, ms_per_char: float, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 115.236),
         (resources.SHORT_TEXT, "en_US", 117.74),
         (resources.PUNCT_TEXT, "en_US", 114.519),
-        (resources.LONG_TEXT, "en_US", 101.461),
+        (resources.LONG_TEXT, "en_US", 100.81),
+        (resources.EMPTY_STR, "es_ES", 206.84),
+        (resources.LONG_SPANISH_TEXT, "es_ES", 65.967),
     ],
 )
 def test_fernandez_huerta(text: str, lang: str, expected: float) -> None:
@@ -311,7 +336,8 @@ def test_fernandez_huerta(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 112.251),
         (resources.SHORT_TEXT, "en_US", 114.615),
         (resources.PUNCT_TEXT, "en_US", 111.601),
-        (resources.LONG_TEXT, "en_US", 98.723),
+        (resources.LONG_TEXT, "en_US", 98.034),
+        (resources.LONG_SPANISH_TEXT, "es_ES", 62.162),
     ],
 )
 def test_szigriszt_pazos(text: str, lang: str, expected: float) -> None:
@@ -325,7 +351,8 @@ def test_szigriszt_pazos(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, 51.094),
         (resources.SHORT_TEXT, 46.89),
         (resources.PUNCT_TEXT, 49.945),
-        (resources.LONG_TEXT, 43.964),
+        (resources.LONG_TEXT, 43.578),
+        (resources.EASY_SPANISH_TEXT, 64.35),
     ],
 )
 def test_gutierrez_polini(text: str, expected: float) -> None:
@@ -339,7 +366,8 @@ def test_gutierrez_polini(text: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 1.047),
         (resources.SHORT_TEXT, "en_US", -0.647),
         (resources.PUNCT_TEXT, "en_US", 1.316),
-        (resources.LONG_TEXT, "en_US", 2.43),
+        (resources.LONG_TEXT, "en_US", 2.492),
+        (resources.LONG_SPANISH_TEXT, "es_ES", 5.089),
     ],
 )
 def test_crawford(text: str, lang: str, expected: float) -> None:
@@ -353,7 +381,9 @@ def test_crawford(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, 83.208),
         (resources.SHORT_TEXT, 84.483),
         (resources.PUNCT_TEXT, 76.427),
-        (resources.LONG_TEXT, 62.067),
+        (resources.LONG_TEXT, 61.056),
+        (resources.HARD_ARABIC_TEXT, 39.292),
+        (resources.EASY_ARABIC_TEXT, 102.186),
     ],
 )
 def test_osman(text: str, expected: float) -> None:
@@ -367,7 +397,8 @@ def test_osman(text: str, expected: float) -> None:
         (resources.EASY_TEXT, 78.798),
         (resources.SHORT_TEXT, 99.0),
         (resources.PUNCT_TEXT, 70.698),
-        (resources.LONG_TEXT, 56.074),
+        (resources.LONG_TEXT, 55.72),
+        (resources.ITALIAN_TEXT, 40.111),
     ],
 )
 def test_gulpease_index(text: str, expected: float) -> None:
@@ -386,7 +417,9 @@ def test_gulpease_index(text: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 4, 2.36),
         (resources.SHORT_TEXT, "en_US", 1, 3.809),
         (resources.PUNCT_TEXT, "en_US", 1, 1.844),
-        (resources.LONG_TEXT, "en_US", 1, 4.829),
+        (resources.LONG_TEXT, "en_US", 1, 4.76),
+        (resources.GERMAN_SAMPLE_A, "de_DE", 1, 3.77),
+        (resources.GERMAN_SAMPLE_B, "de_DE", 1, 13.913),
     ],
 )
 def test_wiener_sachtextformel(

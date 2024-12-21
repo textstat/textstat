@@ -16,6 +16,10 @@ from . import resources
         ("a b", False, 3),
         ("a $!&#@*b", True, 8),
         ("a $!&#@*b", False, 9),
+        (resources.LONG_TEXT, True, 1748),
+        (resources.LONG_TEXT, False, 2123),
+        (resources.EASY_HUNGARIAN_TEXT, True, 43),
+        (resources.EASY_HUNGARIAN_TEXT, False, 54),
     ],
 )
 def test_char_count(text: str, ignore_spaces: bool, expected: int) -> None:
@@ -34,6 +38,8 @@ def test_char_count(text: str, ignore_spaces: bool, expected: int) -> None:
             "Who's there?I have no time for this... nonsense...my guy! a who's-who, veritably.",
             57,
         ),
+        (resources.LONG_TEXT, 1686),
+        (resources.EASY_HUNGARIAN_TEXT, 42),
     ],
 )
 def test_letter_count(text: str, expected: int) -> None:
@@ -41,21 +47,29 @@ def test_letter_count(text: str, expected: int) -> None:
 
 
 @pytest.mark.parametrize(
-    "text,n_words",
+    "text,removepunct,n_words",
     [
-        ("", 0),
-        ("a", 1),
-        ("a ", 1),
-        ("a b", 2),
-        ("They're here, and they're there.", 5),
+        ("", True, 0),
+        ("a", True, 1),
+        ("a ", True, 1),
+        ("a b", True, 2),
+        ("They're here, and they're there.", True, 5),
         (
-            "Who's there?I have no time for this... nonsense...my guy! a who's-who, veritably.",
+            "Who's there?I have ... no time for this... nonsense...my guy! a who's-who, veritably.",
+            True,
             12,
         ),
+        (
+            "Who's there?I have ... no time for this... nonsense...my guy! a who's-who, veritably.",
+            False,
+            13,
+        ),
+        (resources.LONG_TEXT, True, 372),
+        (resources.LONG_TEXT, False, 376),
     ],
 )
-def test_lexicon_count(text: str, n_words: int) -> None:
-    assert counts.lexicon_count(text) == n_words
+def test_lexicon_count(text: str, removepunct: bool, n_words: int) -> None:
+    assert counts.lexicon_count(text, removepunct) == n_words
 
 
 @pytest.mark.parametrize(
@@ -87,6 +101,7 @@ def test_miniword_count(text: str, max_size: int, expected: int) -> None:
         ("a b", "en_US", 2),
         ("Where the dog at?", "en_US", 4),
         ("This marriage is an agreement of convenience", "en_US", 11),
+        (resources.LONG_TEXT, "en_US", 519),
     ],
 )
 def test_syllable_count(text: str, lang: str, expected: int) -> None:
@@ -100,6 +115,9 @@ def test_syllable_count(text: str, lang: str, expected: int) -> None:
         (resources.SHORT_TEXT, 1),
         (resources.PUNCT_TEXT, 5),
         (resources.LONG_TEXT, 17),
+        (resources.LONG_RUSSIAN_TEXT_GUILLEMETS, 16),
+        (resources.HARD_HUNGARIAN_TEXT, 3),
+        (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, 6),
     ],
 )
 def test_sentence_count(text: str, expected: int) -> None:
@@ -152,7 +170,7 @@ def test_count_arabic_long_words(text: str, expected: int) -> None:
         (resources.EASY_TEXT, "en_US", 6),
         (resources.SHORT_TEXT, "en_US", 1),
         (resources.PUNCT_TEXT, "en_US", 5),
-        (resources.LONG_TEXT, "en_US", 33),
+        (resources.LONG_TEXT, "en_US", 32),
     ],
 )
 def test_polysyllabcount(test: str, lang: str, expected: int) -> None:

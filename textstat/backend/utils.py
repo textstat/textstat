@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from functools import lru_cache
-import math
 from typing import Callable, ParamSpec, TypeVar
 import pkg_resources
 import warnings
 from pyphen import Pyphen  # type: ignore
+
+from . import transformations
 
 LANG_CONFIGS: dict[str, dict[str, float]] = {
     "en": {  # Default config
@@ -130,4 +131,11 @@ def get_pyphen(lang: str) -> Pyphen:
 
 def syllables_in_word(word: str, lang: str) -> int:
     """Count the number of syllables in a word"""
-    return len(get_pyphen(lang).positions(word)) + 1  # type: ignore
+    processed_word = transformations.remove_punctuation(
+        word, rm_apostrophe=False
+    ).lower()
+
+    if len(processed_word) == 0:
+        return 0
+
+    return len(get_pyphen(lang).positions(processed_word)) + 1  # type: ignore

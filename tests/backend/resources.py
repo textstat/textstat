@@ -224,4 +224,15 @@ HARD_ACADEMIC_HUNGARIAN_TEXT = """
     alkalmazását. Az 1920-as évektől kezdődően Edward Thorndike a tankönyvek
     olvasásának nehézségi fokát vizsgálta, és különböző szószedeteket
     javasolt iskolai használatra, az életkornak és az iskolai évfolyamoknak
-    megfelelően."""
+    megfelelően.
+    """
+
+GERMAN_SAMPLE_A = """
+    Alle meine Entchen schwimmen auf dem See, Köpfchen unters Wasser, 
+    Schwänzchen in die Höh.
+    """
+
+GERMAN_SAMPLE_B = """
+    Alle Parteien widmen dem Thema rein quantitativ betrachtet nennenswerte
+    Aufmerksamkeit, die Grünen wenig überraschend am meisten.
+    """
