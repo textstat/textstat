@@ -1,10 +1,16 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Callable, ParamSpec, TypeVar
 import pkg_resources
 import warnings
 from pyphen import Pyphen  # type: ignore
+
+import sys
+
+if sys.version_info < (3, 10):
+    from typing_extensions import ParamSpec, TypeVar, Callable
+else:
+    from typing import ParamSpec, TypeVar, Callable
 
 from . import transformations
 
