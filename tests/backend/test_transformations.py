@@ -12,7 +12,8 @@ from . import resources
         ("They're here, and they're there.", "Theyre here and theyre there", True),
         ("They're here, and they're there.", "They're here and they're there", False),
         (
-            "Who's there?I have no time for this... nonsense...my guy! a who's-who, veritably.",
+            """Who's there?I have ... no time for this...
+            nonsense...my guy! a who's-who, veritably.""",
             "Whos thereI have no time for this nonsensemy guy a whoswho veritably",
             True,
         ),

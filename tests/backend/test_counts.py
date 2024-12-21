@@ -35,7 +35,8 @@ def test_char_count(text: str, ignore_spaces: bool, expected: int) -> None:
         ("a b", 2),
         ("They're here, and they're there.", 24),
         (
-            "Who's there?I have no time for this... nonsense...my guy! a who's-who, veritably.",
+            """Who's there?I have no time for this...
+            nonsense...my guy! a who's-who, veritably.""",
             57,
         ),
         (resources.LONG_TEXT, 1686),
@@ -55,12 +56,14 @@ def test_letter_count(text: str, expected: int) -> None:
         ("a b", True, 2),
         ("They're here, and they're there.", True, 5),
         (
-            "Who's there?I have ... no time for this... nonsense...my guy! a who's-who, veritably.",
+            """Who's there?I have ... no time for this...
+            nonsense...my guy! a who's-who, veritably.""",
             True,
             12,
         ),
         (
-            "Who's there?I have ... no time for this... nonsense...my guy! a who's-who, veritably.",
+            """Who's there?I have ... no time for this...
+            nonsense...my guy! a who's-who, veritably.""",
             False,
             13,
         ),

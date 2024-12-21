@@ -228,7 +228,7 @@ HARD_ACADEMIC_HUNGARIAN_TEXT = """
     """
 
 GERMAN_SAMPLE_A = """
-    Alle meine Entchen schwimmen auf dem See, Köpfchen unters Wasser, 
+    Alle meine Entchen schwimmen auf dem See, Köpfchen unters Wasser,
     Schwänzchen in die Höh.
     """
 

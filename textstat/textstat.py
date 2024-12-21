@@ -1,6 +1,6 @@
 import warnings
 
-from .backend import transformations, validations, selections, counts, metrics, utils
+from .backend import transformations, validations, selections, counts, metrics
 
 
 class textstatistics:
@@ -146,7 +146,7 @@ class textstatistics:
             The number of letters in text.
 
         """
-        # TODO: deprecation warning on ignore_spaces because it never did anything anyway
+        # TODO: deprecation warning on ignore_spaces
         return counts.letter_count(text)
 
     def remove_punctuation(self, text: str) -> str:
