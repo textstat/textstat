@@ -66,7 +66,7 @@ P = ParamSpec("P")
 T = TypeVar("T")
 
 
-def typed_cache[**P, T](func: Callable[P, T]) -> Callable[P, T]:
+def typed_cache(func: Callable[P, T]) -> Callable[P, T]:
     """Decorator to cache function results without losing type info"""
     return lru_cache(maxsize=CACHE_SIZE)(func)  # type: ignore
 
