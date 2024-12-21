@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Callable
 import pytest
 from textstat.backend import utils, counts, metrics
