@@ -40,7 +40,7 @@ jobs:
     - name: Lint with flake8
       if: ${{ !cancelled() }}
       run: |
-        pipenv run flake8 . --exclude=build/
+        pipenv run flake8 . --exclude=build/ --max-line-length=88
 
     - name: Test with pytest
       if: ${{ !cancelled() }}

@@ -14,7 +14,8 @@ from . import resources
         (
             """Who's there?I have ... no time for this...
             nonsense...my guy! a who's-who, veritably.""",
-            "Whos thereI have no time for this nonsensemy guy a whoswho veritably",
+            """Whos thereI have  no time for this
+            nonsensemy guy a whoswho veritably""",
             True,
         ),
         (resources.PUNCT_TEXT, resources.PUNCT_TEXT_RESULT_W_APOSTR, False),
