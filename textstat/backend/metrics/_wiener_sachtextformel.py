@@ -3,7 +3,7 @@ from ..counts._count_words import count_words
 from ..counts._count_polysyllable_words import count_polysyllable_words
 from ..counts._count_long_words import count_long_words
 from ..counts._count_monosyllable_words import count_monosyllable_words
-from ._sentences_per_word import sentences_per_word
+from ._words_per_sentence import words_per_sentence
 
 
 @typed_cache
@@ -20,7 +20,7 @@ def wiener_sachtextformel(text: str, variant: int, lang: str) -> float:
     n_words = float(count_words(text))
 
     ms = 100 * count_polysyllable_words(text, lang) / n_words
-    sl = sentences_per_word(text)
+    sl = words_per_sentence(text)
     iw = 100 * count_long_words(text) / n_words
     es = 100 * count_monosyllable_words(text, lang) / n_words
 
