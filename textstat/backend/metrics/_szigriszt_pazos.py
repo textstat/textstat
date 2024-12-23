@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..utils._typed_cache import typed_cache
 from ..utils._get_lang_cfg import get_lang_cfg
 from ..counts._count_syllables import count_syllables

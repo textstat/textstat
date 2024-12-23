@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..utils._typed_cache import typed_cache
 from ._words_per_sentence import words_per_sentence
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..utils._typed_cache import typed_cache
 from ..transformations._remove_punctuation import remove_punctuation
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .constants import LANG_CONFIGS
 from ._get_lang_root import get_lang_root
 

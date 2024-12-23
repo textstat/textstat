@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..utils._typed_cache import typed_cache
 from ..counts._count_letters import count_letters
 from ..counts._count_words import count_words

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pyphen import Pyphen  # type: ignore
 
 from ._typed_cache import typed_cache

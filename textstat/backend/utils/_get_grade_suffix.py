@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def get_grade_suffix(grade: int) -> str:
     """
     Select correct ordinal suffix
