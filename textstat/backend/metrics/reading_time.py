@@ -1,5 +1,6 @@
 
 from ..utils import typed_cache
+from ..counts import count_chars
 
 @typed_cache
 def reading_time(text: str, ms_per_char: float) -> float:
@@ -8,7 +9,4 @@ def reading_time(text: str, ms_per_char: float) -> float:
     I/P - a text
     O/P - reading time in second
     """
-    words = text.split()
-    nchars = map(len, words)
-    rt_per_word = map(lambda nchar: nchar * ms_per_char, nchars)
-    return sum(list(rt_per_word)) / 1000
+    return ms_per_char * count_chars(text, ignore_spaces=True) / 1000

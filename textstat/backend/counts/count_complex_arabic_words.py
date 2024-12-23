@@ -6,7 +6,15 @@ from ..utils import typed_cache
 @typed_cache
 def count_complex_arabic_words(text: str) -> int:
     """
-    Count complex arabic words.
+    Count complex arabic words. Complex arabic words are word with 
+    more than 5 instances between the following:
+    - fatHa
+    - tanween fatH
+    - dhamma
+    - tanween Dhamm
+    - kasra
+    - tanween kasr
+    - shaddah
 
     Parameters
     ----------

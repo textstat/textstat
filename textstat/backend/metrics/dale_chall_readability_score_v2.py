@@ -1,6 +1,7 @@
 
 from ..utils import typed_cache
-from ..counts import count_words, count_sentences, count_difficult_words
+from ..counts import count_words, count_difficult_words
+from . import words_per_sentence
 
 @typed_cache
 def dale_chall_readability_score_v2(text: str, lang: str) -> float:
@@ -10,9 +11,8 @@ def dale_chall_readability_score_v2(text: str, lang: str) -> float:
     O/P - an int Dale Chall Readability Index/Grade Level
     """
     total_no_of_words = count_words(text)
-    count_of_sentences = count_sentences(text)
     try:
-        asl = total_no_of_words / count_of_sentences
+        asl = words_per_sentence(text)
         pdw = (count_difficult_words(text, lang) / total_no_of_words) * 100
     except ZeroDivisionError:
         return 0.0

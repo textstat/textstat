@@ -1,8 +1,6 @@
 
-from ..utils import typed_cache
-from ..counts import count_words, count_sentences
+from . import words_per_sentence
 
-@typed_cache
 def avg_sentence_length(text: str) -> float:
     """Calculate the average sentence length.
 
@@ -20,7 +18,5 @@ def avg_sentence_length(text: str) -> float:
         The average sentence length.
 
     """
-    try:
-        return count_words(text) / count_sentences(text)
-    except ZeroDivisionError:
-        return 0.0
+    # TODO: deprecation warning
+    return words_per_sentence(text)

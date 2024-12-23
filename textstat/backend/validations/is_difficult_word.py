@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from ..utils import typed_cache, get_lang_easy_words
-from ..counts import syllables_per_word
+from ..counts import count_syllables
 
 
 @typed_cache
@@ -27,9 +27,18 @@ def is_difficult_word(word: str, syllable_threshold: int, lang: str) -> bool:
         `syllable_threshold`; else False.
 
     """
+    # Not a word
+    if len(word.split()) != 1:
+        return False
+    
     easy_word_set = get_lang_easy_words(lang)
+
+    # Not hard
     if word in easy_word_set:
         return False
-    if syllables_per_word(word, lang) < syllable_threshold:
+    
+    # Too short
+    if count_syllables(word, lang) < syllable_threshold:
         return False
+    
     return True

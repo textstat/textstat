@@ -37,14 +37,12 @@ def dale_chall_readability_score(text: str, lang: str) -> float:
     score.
     """
     word_count = count_words(text)
-    count = word_count - count_difficult_words(text, lang, syllable_threshold=0)
+    hard_count = count_difficult_words(text, lang, syllable_threshold=0)
 
     try:
-        per_easy_words = float(count) / float(word_count) * 100
+        per_difficult_words = 100 * hard_count / word_count
     except ZeroDivisionError:
         return 0.0
-
-    per_difficult_words = 100 - per_easy_words
 
     score = (0.1579 * per_difficult_words) + (0.0496 * avg_sentence_length(text))
 

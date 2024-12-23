@@ -9,7 +9,7 @@ def gulpease_index(text: str) -> float:
     https://it.wikipedia.org/wiki/Indice_Gulpease
     """
 
-    if len(text) < 1:
+    if len(text) == 0:
         return 0.0
 
     return (

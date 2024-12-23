@@ -21,6 +21,7 @@ def count_sentences(text: str) -> int:
 
     """
     ignore_count = 0
+    # TODO: double check this regex and the testing for this function (test corner cases)
     sentences = re.findall(r"\b[^.!?]+[.!?]*", text, re.UNICODE)
     for sentence in sentences:
         if count_words(sentence) <= 2:

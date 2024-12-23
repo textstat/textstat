@@ -22,4 +22,4 @@ def sentences_per_word(text: str) -> float:
     try:
         return count_sentences(text) / count_words(text)
     except ZeroDivisionError:
-        return 0.0
+        return count_sentences(text)

@@ -196,7 +196,10 @@ class textstatistics:
             DESCRIPTION.
 
         """
-        # TODO: deprecation warning on removepunct because it never did anything anyway
+        # This is because pure-punctuation surrounded by whitespace is 
+        # counted as a word when removepunct is False
+        if removepunct:
+            text = transformations.remove_punctuation(text, rm_apostrophe=True)
         return counts.count_words(text)
 
     def miniword_count(self, text: str, max_size: int = 3) -> int:

@@ -24,6 +24,7 @@ def list_difficult_words(text: str, syllable_threshold: int, lang: str) -> list[
         A list of the words deemed difficult.
 
     """
+    # TODO: Why does this get de-duplicated? probably shouldn't right?
     words = set(re.findall(r"[\w\='‘’]+", text.lower()))
     diff_words = [
         word

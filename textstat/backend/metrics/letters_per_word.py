@@ -23,4 +23,4 @@ def letters_per_word(text: str) -> float:
     try:
         return count_letters(text) / count_words(text)
     except ZeroDivisionError:
-        return 0.0
+        return count_letters(text)

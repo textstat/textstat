@@ -1,4 +1,5 @@
 from ..utils import typed_cache
+from ..counts import count_long_words, count_words
 from . import avg_sentence_length
 
 @typed_cache
@@ -35,10 +36,8 @@ def lix(text: str) -> float:
     call `textstat.set_rm_apostrophe(False)` before calculating the LIX.
 
     """
-    words = text.split()
-
-    words_len = len(words)
-    long_words = len([wrd for wrd in words if len(wrd) > 6])
+    words_len = count_words(text)
+    long_words = count_long_words(text)
     try:
         per_long_words = (long_words * 100) / words_len
     except ZeroDivisionError:

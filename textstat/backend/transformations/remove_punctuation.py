@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import re
 
+from ..utils import typed_cache
 
+@typed_cache
 def remove_punctuation(
     text: str,
     rm_apostrophe: bool,

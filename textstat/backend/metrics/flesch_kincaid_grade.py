@@ -1,6 +1,6 @@
 
 from ..utils import typed_cache
-from . import avg_sentence_length, syllables_per_word
+from . import words_per_sentence, syllables_per_word
 
 @typed_cache
 def flesch_kincaid_grade(text: str, lang: str) -> float:
@@ -25,6 +25,6 @@ def flesch_kincaid_grade(text: str, lang: str) -> float:
         (.39*avg\ sentence\ length)+(11.8*avg\ syllables\ per\ word)-15.59
 
     """
-    sentence_length = avg_sentence_length(text)
+    sentence_length = words_per_sentence(text)
     syllables = syllables_per_word(text, lang)
     return (0.39 * sentence_length) + (11.8 * syllables) - 15.59
