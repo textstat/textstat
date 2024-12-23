@@ -25,7 +25,7 @@ from . import resources
     ],
 )
 def test_char_count(text: str, ignore_spaces: bool, expected: int) -> None:
-    assert counts.char_count(text, ignore_spaces) == expected
+    assert counts.count_chars(text, ignore_spaces) == expected
 
 
 @pytest.mark.parametrize(
@@ -46,7 +46,7 @@ def test_char_count(text: str, ignore_spaces: bool, expected: int) -> None:
     ],
 )
 def test_letter_count(text: str, expected: int) -> None:
-    assert counts.letter_count(text) == expected
+    assert counts.count_letters(text) == expected
 
 
 @pytest.mark.parametrize(
@@ -74,7 +74,7 @@ def test_letter_count(text: str, expected: int) -> None:
     ],
 )
 def test_lexicon_count(text: str, removepunct: bool, n_words: int) -> None:
-    assert counts.lexicon_count(text, removepunct) == n_words
+    assert counts.count_words(text, removepunct) == n_words
 
 
 @pytest.mark.parametrize(
@@ -94,7 +94,7 @@ def test_lexicon_count(text: str, removepunct: bool, n_words: int) -> None:
     ],
 )
 def test_miniword_count(text: str, max_size: int, expected: int) -> None:
-    assert counts.miniword_count(text, max_size) == expected
+    assert counts.count_miniwords(text, max_size) == expected
 
 
 @pytest.mark.parametrize(
@@ -110,7 +110,7 @@ def test_miniword_count(text: str, max_size: int, expected: int) -> None:
     ],
 )
 def test_syllable_count(text: str, lang: str, expected: int) -> None:
-    assert counts.syllable_count(text, lang) == expected
+    assert counts.count_syllables(text, lang) == expected
 
 
 @pytest.mark.parametrize(
@@ -126,7 +126,7 @@ def test_syllable_count(text: str, lang: str, expected: int) -> None:
     ],
 )
 def test_sentence_count(text: str, expected: int) -> None:
-    assert counts.sentence_count(text) == expected
+    assert counts.count_sentences(text) == expected
 
 
 @pytest.mark.parametrize(
@@ -179,7 +179,7 @@ def test_count_arabic_long_words(text: str, expected: int) -> None:
     ],
 )
 def test_polysyllabcount(test: str, lang: str, expected: int) -> None:
-    assert counts.polysyllabcount(test, lang) == expected
+    assert counts.count_polysyllable_words(test, lang) == expected
 
 
 @pytest.mark.parametrize(
@@ -196,7 +196,7 @@ def test_polysyllabcount(test: str, lang: str, expected: int) -> None:
 def test_difficult_words(
     text: str, lang: str, syllable_threshold: int, expected: int
 ) -> None:
-    assert counts.difficult_words(text, lang, syllable_threshold) == expected
+    assert counts.count_difficult_words(text, lang, syllable_threshold) == expected
 
 
 @pytest.mark.parametrize(
@@ -209,7 +209,7 @@ def test_difficult_words(
     ],
 )
 def test_long_word_count(test: str, expected: int) -> None:
-    assert counts.long_word_count(test) == expected
+    assert counts.count_long_words(test) == expected
 
 
 @pytest.mark.parametrize(
@@ -222,4 +222,4 @@ def test_long_word_count(test: str, expected: int) -> None:
     ],
 )
 def test_monosyllabcount(test: str, lang: str, expected: int) -> None:
-    assert counts.monosyllabcount(test, lang) == expected
+    assert counts.count_monosyllable_words(test, lang) == expected

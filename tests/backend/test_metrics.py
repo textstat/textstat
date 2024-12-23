@@ -46,7 +46,7 @@ def test_words_per_sentence(text: str, expected: float) -> None:
     ],
 )
 def test_avg_syllables_per_word(text: str, lang: str, expected: float) -> None:
-    assert round(metrics.avg_syllables_per_word(text, lang), 3) == expected
+    assert round(metrics.syllables_per_word(text, lang), 3) == expected
 
 
 @pytest.mark.parametrize(
@@ -60,7 +60,7 @@ def test_avg_syllables_per_word(text: str, lang: str, expected: float) -> None:
     ],
 )
 def test_avg_character_per_word(text: str, expected: float) -> None:
-    assert round(metrics.avg_character_per_word(text), 3) == expected
+    assert round(metrics.chars_per_word(text), 3) == expected
 
 
 @pytest.mark.parametrize(
@@ -74,7 +74,7 @@ def test_avg_character_per_word(text: str, expected: float) -> None:
     ],
 )
 def test_avg_letter_per_word(text: str, expected: float) -> None:
-    assert round(metrics.avg_letter_per_word(text), 3) == expected
+    assert round(metrics.letters_per_word(text), 3) == expected
 
 
 @pytest.mark.parametrize(
@@ -88,7 +88,7 @@ def test_avg_letter_per_word(text: str, expected: float) -> None:
     ],
 )
 def test_avg_sentence_per_word(text: str, expected: float) -> None:
-    assert round(metrics.avg_sentence_per_word(text), 3) == expected
+    assert round(metrics.sentences_per_word(text), 3) == expected
 
 
 @pytest.mark.parametrize(

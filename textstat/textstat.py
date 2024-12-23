@@ -130,7 +130,7 @@ class textstatistics:
             Number of characters.
 
         """
-        return counts.char_count(text, ignore_spaces)
+        return counts.count_chars(text, ignore_spaces)
 
     def letter_count(self, text: str, ignore_spaces: bool = True) -> int:
         """Count letters in a text.
@@ -149,7 +149,7 @@ class textstatistics:
 
         """
         # TODO: deprecation warning on ignore_spaces
-        return counts.letter_count(text)
+        return counts.count_letters(text)
 
     def remove_punctuation(self, text: str) -> str:
         """Remove punctuation.
@@ -197,7 +197,7 @@ class textstatistics:
 
         """
         # TODO: deprecation warning on removepunct because it never did anything anyway
-        return counts.lexicon_count(text)
+        return counts.count_words(text)
 
     def miniword_count(self, text: str, max_size: int = 3) -> int:
         """Count common words with `max_size` letters or less in a text.
@@ -215,7 +215,7 @@ class textstatistics:
         count : int
 
         """
-        return counts.miniword_count(text, max_size)
+        return counts.count_miniwords(text, max_size)
 
     def syllable_count(self, text: str, lang: str | None = None) -> int:
         """Estimate the number of syllables in a text using Pyphen.
@@ -242,7 +242,7 @@ class textstatistics:
                 DeprecationWarning,
             )
 
-        return counts.syllable_count(text, self.__lang)
+        return counts.count_syllables(text, self.__lang)
 
     def sentence_count(self, text: str) -> int:
         """Count the sentences of the text.
@@ -258,7 +258,7 @@ class textstatistics:
             Number of sentences in `text`.
 
         """
-        return counts.sentence_count(text)
+        return counts.count_sentences(text)
 
     def avg_sentence_length(self, text: str) -> float:
         """Calculate the average sentence length.
@@ -296,7 +296,7 @@ class textstatistics:
             The average number of syllables per word.
 
         """
-        aspw = metrics.avg_syllables_per_word(text, self.__lang)
+        aspw = metrics.syllables_per_word(text, self.__lang)
         if interval:
             aspw *= interval
         return self._legacy_round(aspw, 1)
@@ -318,7 +318,7 @@ class textstatistics:
             The average number of characters per word.
 
         """
-        return self._legacy_round(metrics.avg_character_per_word(text), 2)
+        return self._legacy_round(metrics.chars_per_word(text), 2)
 
     def avg_letter_per_word(self, text: str) -> float:
         """Calculate the average sentence word length in letters.
@@ -337,7 +337,7 @@ class textstatistics:
             The average number of letters per word.
 
         """
-        return self._legacy_round(metrics.avg_letter_per_word(text), 2)
+        return self._legacy_round(metrics.letters_per_word(text), 2)
 
     def avg_sentence_per_word(self, text: str) -> float:
         """Get the number of sentences per word.
@@ -355,7 +355,7 @@ class textstatistics:
             Number of sentences per word.
 
         """
-        return self._legacy_round(metrics.avg_sentence_per_word(text), 2)
+        return self._legacy_round(metrics.sentences_per_word(text), 2)
 
     def words_per_sentence(self, text: str) -> float:
         """Calculate the average number of words per sentence.
@@ -375,7 +375,7 @@ class textstatistics:
 
         """
         # TODO: why no round here?
-        return metrics.avg_sentence_per_word(text)
+        return metrics.sentences_per_word(text)
 
     def count_complex_arabic_words(self, text: str) -> int:
         """
@@ -492,7 +492,7 @@ class textstatistics:
         Contractions and hyphenations are therefore counted as one word.
 
         """
-        return counts.polysyllabcount(text, self.__lang)
+        return counts.count_polysyllable_words(text, self.__lang)
 
     def smog_index(self, text: str) -> float:
         r"""Calculate the SMOG index.
@@ -612,7 +612,7 @@ class textstatistics:
             Number of difficult words.
 
         """
-        return counts.difficult_words(text, self.__lang, syllable_threshold)
+        return counts.count_difficult_words(text, self.__lang, syllable_threshold)
 
     def difficult_words_list(self, text: str, syllable_threshold: int = 2) -> list[str]:
         """Get a list of difficult words
@@ -632,7 +632,7 @@ class textstatistics:
 
         """
         # TODO: need to make the positioning of lang args more consistent (see above)
-        return selections.difficult_words_list(text, syllable_threshold, self.__lang)
+        return selections.list_difficult_words(text, syllable_threshold, self.__lang)
 
     def is_difficult_word(self, word: str, syllable_threshold: int = 2) -> bool:
         """Return True if `word` is a difficult word.
@@ -854,11 +854,11 @@ class textstatistics:
 
     def long_word_count(self, text: str) -> int:
         """counts words with more than 6 characters"""
-        return counts.long_word_count(text)
+        return counts.count_long_words(text)
 
     def monosyllabcount(self, text: str) -> int:
         """counts monosyllables"""
-        return counts.monosyllabcount(text, self.__lang)
+        return counts.count_monosyllable_words(text, self.__lang)
 
     def wiener_sachtextformel(self, text: str, variant: int) -> float:
         """

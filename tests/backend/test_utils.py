@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pyphen import Pyphen # type: ignore
 from typing import Callable
 import pytest
 from textstat.backend import utils, counts, metrics
@@ -41,9 +42,9 @@ def test_get_grade_suffix(grade: int, expected: str) -> None:
 @pytest.mark.parametrize(
     "lang, key, value",
     [
-        (lang, key, utils.LANG_CONFIGS[lang][key])
-        for lang in utils.LANG_CONFIGS
-        for key in utils.LANG_CONFIGS[lang]
+        (lang, key, utils.constants.LANG_CONFIGS[lang][key])
+        for lang in utils.constants.LANG_CONFIGS
+        for key in utils.constants.LANG_CONFIGS[lang]
     ],
 )
 def test_get_lang_cfg(lang: str, key: str, value: float) -> None:
@@ -92,32 +93,21 @@ def test_get_lang_easy_words(lang: str, n_words: int) -> None:
     ],
 )
 def test_get_pyphen(lang: str) -> None:
-    assert isinstance(utils.get_pyphen(lang), utils.Pyphen)
-
-
-@pytest.mark.parametrize(
-    "word, lang, expected",
-    [
-        ("hello", "en_US", 2),
-        ("hola", "es_ES", 2),
-    ],
-)
-def test_syllables_in_word(word: str, lang: str, expected: int) -> None:
-    assert utils.syllables_in_word(word, lang) == expected
+    assert isinstance(utils.get_pyphen(lang), Pyphen)
 
 
 @pytest.mark.parametrize(
     "inner_func, outer_funcs",
     [
         (
-            counts.lexicon_count,
+            counts.count_words,
             [metrics.avg_sentence_length, metrics.words_per_sentence],
         ),
     ],
 )
 def test_typed_chache(
-    inner_func: Callable[[str], utils.T],
-    outer_funcs: list[Callable[[str], utils.T]],
+    inner_func: Callable[[str], utils.constants.T],
+    outer_funcs: list[Callable[[str], utils.constants.T]],
 ) -> None:
     # clear caches from other tests before running this one
     inner_func.cache_clear()  # type: ignore

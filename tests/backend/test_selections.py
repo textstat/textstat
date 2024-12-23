@@ -54,4 +54,4 @@ from textstat.backend import selections
 def test_difficult_words_list(
     text: str, syllable_threshold: int, lang: str, expected: list[str]
 ) -> None:
-    assert selections.difficult_words_list(text, syllable_threshold, lang) == expected
+    assert selections.list_difficult_words(text, syllable_threshold, lang) == expected

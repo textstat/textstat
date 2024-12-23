@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import re
 
-from . import validations
-from . import utils
+from ..validations import is_difficult_word
+from ..utils import typed_cache
 
 
-@utils.typed_cache
-def difficult_words_list(text: str, syllable_threshold: int, lang: str) -> list[str]:
+@typed_cache
+def list_difficult_words(text: str, syllable_threshold: int, lang: str) -> list[str]:
     """Get a list of difficult words
 
     Parameters
@@ -28,6 +28,6 @@ def difficult_words_list(text: str, syllable_threshold: int, lang: str) -> list[
     diff_words = [
         word
         for word in words
-        if validations.is_difficult_word(word, syllable_threshold, lang)
+        if is_difficult_word(word, syllable_threshold, lang)
     ]
     return diff_words
