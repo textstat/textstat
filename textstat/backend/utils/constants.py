@@ -6,7 +6,7 @@ if sys.version_info < (3, 10):
     from typing_extensions import ParamSpec, TypeVar
 else:
     from typing import ParamSpec, TypeVar
-    
+
 P = ParamSpec("P")
 T = TypeVar("T")
 

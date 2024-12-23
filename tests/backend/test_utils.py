@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pyphen import Pyphen # type: ignore
+from pyphen import Pyphen  # type: ignore
 from typing import Callable
 import pytest
 from textstat.backend import utils, counts, metrics
@@ -101,7 +101,7 @@ def test_get_pyphen(lang: str) -> None:
     [
         (
             counts.count_words,
-            [metrics.avg_sentence_length, metrics.words_per_sentence],
+            [metrics.chars_per_word, metrics.words_per_sentence],
         ),
     ],
 )
@@ -117,7 +117,6 @@ def test_typed_chache(
     # For simplicity just gonna test on some lang-less ones
     for outer_func in outer_funcs:
         outer_func(resources.SHORT_TEXT)
-        outer_func.cache_clear()  # type: ignore
 
     assert inner_func.cache_info().misses == 1  # type: ignore
     assert inner_func.cache_info().hits == len(outer_funcs) - 1  # type: ignore

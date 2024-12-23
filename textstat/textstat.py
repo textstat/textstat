@@ -196,7 +196,7 @@ class textstatistics:
             DESCRIPTION.
 
         """
-        # This is because pure-punctuation surrounded by whitespace is 
+        # This is because pure-punctuation surrounded by whitespace is
         # counted as a word when removepunct is False
         if removepunct:
             text = transformations.remove_punctuation(text, rm_apostrophe=True)

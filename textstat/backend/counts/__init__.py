@@ -1,17 +1,17 @@
-from .count_chars import count_chars
-from .count_arabic_long_words import count_arabic_long_words
-from .count_arabic_syllables import count_arabic_syllables
-from .count_complex_arabic_words import count_complex_arabic_words
-from .count_faseeh import count_faseeh
-from .count_difficult_words import count_difficult_words
-from .count_letters import count_letters
-from .count_words import count_words
-from .count_long_words import count_long_words
-from .count_miniwords import count_miniwords
-from .count_monosyllable_words import count_monosyllable_words
-from .count_polysyllable_words import count_polysyllable_words
-from .count_sentences import count_sentences
-from .count_syllables import count_syllables
+from ._count_chars import count_chars
+from ._count_arabic_long_words import count_arabic_long_words
+from ._count_arabic_syllables import count_arabic_syllables
+from ._count_complex_arabic_words import count_complex_arabic_words
+from ._count_faseeh import count_faseeh
+from ._count_difficult_words import count_difficult_words
+from ._count_letters import count_letters
+from ._count_words import count_words
+from ._count_long_words import count_long_words
+from ._count_miniwords import count_miniwords
+from ._count_monosyllable_words import count_monosyllable_words
+from ._count_polysyllable_words import count_polysyllable_words
+from ._count_sentences import count_sentences
+from ._count_syllables import count_syllables
 
 __all__ = [
     "count_chars",
