@@ -25,7 +25,6 @@ class textstatistics:
     """
 
     __lang = "en_US"
-    __round_outputs = False
     __round_points = None
     __rm_apostrophe = True
     text_encoding = "utf-8"
@@ -53,13 +52,33 @@ class textstatistics:
         float
 
         """
-        if self.__round_outputs:
-            return round(number, self.__round_points)
-        else:
+        if self.__round_points is None:
             return number
+        return round(number, self.__round_points)
+
+    def set_rounding_points(self, points: int | None) -> None:
+        """Set the number of decimal digits for rounding textstat outputs.
+        Setting `points` to None will disable rounding.
+
+        Parameters
+        ----------
+        points : int or None
+            The number of decimal digits for the outputs of all textstat
+            methods. The default is None (no ronding).
+
+        Returns
+        -------
+        None
+
+        """
+        self.__round_points = points
 
     def set_rounding(self, rounding: bool, points: int | None = None) -> None:
-        """Set the attributes `__round_point` and `__round_outputs`.
+        """*Deprecated, use set_rounding_points instead*
+        Set the rounding behavior. Setting `rounding` to True will round all
+        textstat outputs to the number of decimal digits specified by `points`.
+        Setting `rounding` to False will disable rounding as will setting `points`
+        to None.
 
         Parameters
         ----------
@@ -74,8 +93,14 @@ class textstatistics:
         None.
 
         """
-        self.__round_outputs = rounding
-        self.__round_points = points
+        warnings.warn(
+            "set_rounding is deprecated, use set_rounding_points instead",
+            DeprecationWarning,
+        )
+        if rounding:
+            self.__round_points = points
+        else:
+            self.__round_points = None
 
     def set_rm_apostrophe(self, rm_apostrophe: bool) -> None:
         """Set the attribute `__round_point`.
