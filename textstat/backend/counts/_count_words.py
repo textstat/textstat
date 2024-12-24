@@ -5,7 +5,7 @@ from ..selections._list_words import list_words
 
 
 @typed_cache
-def count_words(text: str, removepunct: bool = True) -> int:
+def count_words(text: str, rm_punctuation: bool = True) -> int:
     """Count types (words) in a text.
 
     English contractions (e.g. "aren't") are counted as one word.
@@ -23,4 +23,4 @@ def count_words(text: str, removepunct: bool = True) -> int:
         DESCRIPTION.
 
     """
-    return len(list_words(text, rm_punctuation=removepunct))
+    return len(list_words(text, rm_punctuation=rm_punctuation))
