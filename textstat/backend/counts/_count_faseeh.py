@@ -4,6 +4,7 @@ import re
 
 from ..utils._typed_cache import typed_cache
 from ._count_arabic_syllables import count_arabic_syllables
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -30,7 +31,7 @@ def count_faseeh(text: str) -> int:
     # double faseeh char's: waw wa alef | waw wa noon
     bipattern = re.compile(r"(\u0648\u0627|\u0648\u0646)")
 
-    for w in text.split():
+    for w in list_words(text, rm_apostrophe=True):
         faseeh_count = len(unipattern.findall(w)) + len(bipattern.findall(w))
 
         if count_arabic_syllables(w) > 5 and faseeh_count > 0:

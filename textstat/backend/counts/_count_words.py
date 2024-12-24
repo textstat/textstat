@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from ..utils._typed_cache import typed_cache
-from ..transformations._remove_punctuation import remove_punctuation
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -23,8 +23,4 @@ def count_words(text: str, removepunct: bool = True) -> int:
         DESCRIPTION.
 
     """
-    # This is useful in the case of "blah [punct] blah"
-    if removepunct:
-        text = remove_punctuation(text, rm_apostrophe=True)
-    count = len(text.split())
-    return count
+    return len(list_words(text, rm_punctuation=removepunct))

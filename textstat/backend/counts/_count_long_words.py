@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from ..utils._typed_cache import typed_cache
-from ..transformations._remove_punctuation import remove_punctuation
+from ..selections._list_words import list_words
 
 
 @typed_cache
 def count_long_words(text: str) -> int:
     """counts words with more than 6 letters"""
-    word_list = remove_punctuation(text, rm_apostrophe=True).split()
-    return len([w for w in word_list if len(w) > 6])
+    return len([w for w in list_words(text, rm_apostrophe=True) if len(w) > 6])

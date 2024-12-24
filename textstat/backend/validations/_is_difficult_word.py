@@ -34,6 +34,9 @@ def is_difficult_word(word: str, syllable_threshold: int, lang: str) -> bool:
 
     easy_word_set = get_lang_easy_words(lang)
 
+    # easy set is all lowercase
+    word = word.lower()
+
     # Not hard
     if word in easy_word_set:
         return False

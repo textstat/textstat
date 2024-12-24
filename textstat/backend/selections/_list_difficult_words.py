@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 
-from ..transformations._remove_punctuation import remove_punctuation
 from ..validations._is_difficult_word import is_difficult_word
 from ..utils._typed_cache import typed_cache
+from ._list_words import list_words
 
 
 @typed_cache
@@ -24,7 +24,7 @@ def list_difficult_words(text: str, syllable_threshold: int, lang: str) -> list[
         A list of the words deemed difficult.
 
     """
-    words = remove_punctuation(text.lower(), rm_apostrophe=False).split()
+    words = list_words(text)
     diff_words = [
         word for word in words if is_difficult_word(word, syllable_threshold, lang)
     ]

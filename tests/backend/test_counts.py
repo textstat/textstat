@@ -193,7 +193,7 @@ def test_polysyllabcount(test: str, lang: str, expected: int) -> None:
         (resources.EASY_TEXT, "en_US", 3, True, 0),
         (resources.SHORT_TEXT, "en_US", 2, True, 1),
         (resources.PUNCT_TEXT, "en_US", 2, True, 6),
-        (resources.LONG_TEXT, "en_US", 2, True, 50),
+        (resources.LONG_TEXT, "en_US", 2, True, 51),
     ],
 )
 def test_difficult_words(

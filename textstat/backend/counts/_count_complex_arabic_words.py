@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 
 from ..utils._typed_cache import typed_cache
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -35,7 +36,7 @@ def count_complex_arabic_words(text: str) -> int:
     # | kasra | tanween kasr | shaddah
     pattern = re.compile("[\u064e\u064b\u064f\u064c\u0650\u064d\u0651]")
 
-    for w in text.split():
+    for w in list_words(text, rm_apostrophe=True):
         if len(pattern.findall(w)) > 5:
             count += 1
 

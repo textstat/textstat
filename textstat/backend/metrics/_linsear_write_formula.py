@@ -3,6 +3,7 @@ from __future__ import annotations
 from ..utils._typed_cache import typed_cache
 from ..counts._count_syllables import count_syllables
 from ..counts._count_sentences import count_sentences
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -32,9 +33,15 @@ def linsear_write_formula(text: str, lang: str) -> float:
     easy words are defined as words with 2 syllables or less.
     difficult words are defined as words with 3 syllables or more.
     r"""
+    # TODO: this implementation is slightly off, but only for weird text
+    # Specifically, the "first 100 words" as implemented will count " . "
+    # as its own word. I don't know how to fix this yet but it should be
+    # done at some point. Also, args for enforcing the upper and lower bounds
+    # on the 100 word count should be added so that users aren't locked into
+    # a loose lower bound but tight upper bound.
     easy_word = 0
     difficult_word = 0
-    text_list = text.split()[:100]
+    text_list = list_words(text, rm_punctuation=False)[:100]
 
     for word in text_list:
         n_syll = count_syllables(word, lang)

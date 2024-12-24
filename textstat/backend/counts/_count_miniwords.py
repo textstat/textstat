@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from ..utils._typed_cache import typed_cache
-from ..transformations._remove_punctuation import remove_punctuation
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -21,10 +21,6 @@ def count_miniwords(text: str, max_size: int = 3) -> int:
 
     """
     count = len(
-        [
-            word
-            for word in remove_punctuation(text, rm_apostrophe=True).split()
-            if len(word) <= max_size
-        ]
+        [word for word in list_words(text, rm_apostrophe=True) if len(word) <= max_size]
     )
     return count

@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import re
 
+
 from ..utils._typed_cache import typed_cache
-from ..transformations._remove_punctuation import remove_punctuation
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -29,11 +30,8 @@ def count_arabic_long_words(text: str) -> int:
     # remove tashkeel
     text = re.sub(tashkeel, "", text)
 
-    # remove punctuation
-    text = remove_punctuation(text, rm_apostrophe=True)
-
     count = 0
-    for t in text.split():
+    for t in list_words(text, rm_apostrophe=True):
         if len(t) > 5:
             count += 1
 

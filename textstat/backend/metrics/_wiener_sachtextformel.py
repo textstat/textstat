@@ -19,7 +19,7 @@ def wiener_sachtextformel(text: str, variant: int, lang: str) -> float:
     if len(text) < 1:
         return 0.0
 
-    n_words = float(count_words(text))
+    n_words = count_words(text)
 
     ms = 100 * count_polysyllable_words(text, lang) / n_words
     sl = words_per_sentence(text)

@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 
 from ..utils._typed_cache import typed_cache
-from ..transformations._remove_punctuation import remove_punctuation
+from ..selections._list_words import list_words
 
 
 @typed_cache
@@ -28,9 +28,7 @@ def count_arabic_syllables(text: str) -> int:
 
     # tashkeel: fatha | damma | kasra
     tashkeel = [r"\u064E", r"\u064F", r"\u0650"]
-    char_list = [
-        c for w in remove_punctuation(text, rm_apostrophe=True).split() for c in w
-    ]
+    char_list = [c for w in list_words(text, rm_apostrophe=True) for c in w]
 
     for t in tashkeel:
         for i, c in enumerate(char_list):
