@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pytest
-from tests.backend import resources
+from .. import resources
 from textstat.backend import selections
 
 
@@ -87,7 +87,7 @@ from textstat.backend import selections
         ),
     ],
 )
-def test_difficult_words_list(
+def test_list_difficult_words(
     text: str, syllable_threshold: int, lang: str, expected: list[str]
 ) -> None:
     assert selections.list_difficult_words(text, syllable_threshold, lang) == expected

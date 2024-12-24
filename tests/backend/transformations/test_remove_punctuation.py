@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import pytest
-import textstat.backend.transformations as transformations
-
-from . import resources
+from textstat.backend import transformations
+from .. import resources
 
 
 @pytest.mark.parametrize(
