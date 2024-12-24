@@ -8,7 +8,7 @@ from ..transformations._remove_punctuation import remove_punctuation
 
 @typed_cache
 def count_arabic_long_words(text: str) -> int:
-    """Counts long arabic words without short vowels (tashkeel).
+    """Counts long arabic words (>5 letters) without short vowels (tashkeel).
 
 
     Parameters
@@ -26,7 +26,11 @@ def count_arabic_long_words(text: str) -> int:
         r"\u064E|\u064B|\u064F|\u064C|\u0650|\u064D|\u0651|"
         + r"\u0652|\u0653|\u0657|\u0658"
     )
-    text = remove_punctuation(re.sub(tashkeel, "", text), rm_apostrophe=True)
+    # remove tashkeel
+    text = re.sub(tashkeel, "", text)
+
+    # remove punctuation
+    text = remove_punctuation(text, rm_apostrophe=True)
 
     count = 0
     for t in text.split():

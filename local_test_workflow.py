@@ -16,5 +16,5 @@ subprocess.run(lint_command.split())
 
 print("\n\nRunning Tests:\n")
 
-test_command = "pipenv run pytest ."
+test_command = "pipenv run pytest . -vv"
 subprocess.run(test_command.split())

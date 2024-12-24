@@ -1,5 +1,4 @@
 from ._automated_readability_index import automated_readability_index
-from ._avg_sentence_length import avg_sentence_length
 from ._chars_per_word import chars_per_word
 from ._coleman_liau_index import coleman_liau_index
 from ._crawford import crawford
@@ -30,7 +29,6 @@ from ._words_per_sentence import words_per_sentence
 
 __all__ = [
     "automated_readability_index",
-    "avg_sentence_length",
     "chars_per_word",
     "coleman_liau_index",
     "crawford",

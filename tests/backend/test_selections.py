@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from tests.backend import resources
 from textstat.backend import selections
 
 
@@ -48,6 +49,41 @@ from textstat.backend import selections
             4,
             "en_US",
             [],
+        ),
+        (
+            resources.EASY_TEXT,
+            2,
+            "en_US",
+            [
+                "anna",
+                "doing",
+                "puzzles",
+                "anna",
+                "puzzles",
+                "anna",
+                "medium",
+                "puzzles",
+                "anna's",
+                "puzzles",
+                "puzzles",
+                "anna",
+                "puzzles",
+                "puzzles",
+                "puzzles",
+            ],
+        ),
+        (
+            resources.PUNCT_TEXT,
+            2,
+            "en_US",
+            [
+                "remove_punctuation",
+                "function",
+                "singersongwriter",
+                "suffice",
+                "removing",
+                "characters",
+            ],
         ),
     ],
 )

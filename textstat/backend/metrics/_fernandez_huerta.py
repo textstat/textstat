@@ -14,4 +14,7 @@ def fernandez_huerta(text: str, lang: str) -> float:
     sentence_length = words_per_sentence(text)
     syllables = syllables_per_word(text, lang)
 
-    return 206.84 - float(60 * syllables) - float(1.02 * sentence_length)
+    if sentence_length == 0 or syllables == 0:
+        return 0.0
+
+    return 206.84 - (60 * syllables) - (1.02 * sentence_length)

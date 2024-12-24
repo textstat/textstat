@@ -11,8 +11,10 @@ def gulpease_index(text: str) -> float:
     Indice Gulpease Index for Italian texts
     https://it.wikipedia.org/wiki/Indice_Gulpease
     """
+    spw = sentences_per_word(text)
+    cpw = chars_per_word(text)
 
-    if len(text) == 0:
+    if spw == 0 or cpw == 0:
         return 0.0
 
-    return (300 * sentences_per_word(text)) - (10 * chars_per_word(text)) + 89
+    return (300 * spw) - (10 * cpw) + 89

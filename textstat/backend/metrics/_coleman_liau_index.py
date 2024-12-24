@@ -30,4 +30,8 @@ def coleman_liau_index(text: str) -> float:
     """
     letters = letters_per_word(text) * 100
     sentences = sentences_per_word(text) * 100
+
+    if letters == 0 or sentences == 0:
+        return 0.0
+
     return (0.058 * letters) - (0.296 * sentences) - 15.8

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import warnings
 
-from .backend import transformations, validations, selections, counts, metrics
+from .backend import transformations, validations, selections, counts, metrics, utils
 
 
 class textstatistics:
@@ -132,7 +132,7 @@ class textstatistics:
         """
         return counts.count_chars(text, ignore_spaces)
 
-    def letter_count(self, text: str, ignore_spaces: bool = True) -> int:
+    def letter_count(self, text: str, ignore_spaces: bool | None = None) -> int:
         """Count letters in a text.
 
         Parameters
@@ -148,7 +148,12 @@ class textstatistics:
             The number of letters in text.
 
         """
-        # TODO: deprecation warning on ignore_spaces
+        if ignore_spaces is not None:
+            warnings.warn(
+                "The 'ignore_spaces' argument has been deprecated due "
+                "to having no effect. This argument will be removed in the future.",
+                DeprecationWarning,
+            )
         return counts.count_letters(text)
 
     def remove_punctuation(self, text: str) -> str:
@@ -280,8 +285,7 @@ class textstatistics:
             The average sentence length.
 
         """
-        # TODO: do we really want to round things?
-        return self._legacy_round(metrics.avg_sentence_length(text), 1)
+        return self._legacy_round(metrics.words_per_sentence(text), 1)
 
     def avg_syllables_per_word(self, text: str, interval: int | None = None) -> float:
         """Get the average number of syllables per word.
@@ -377,8 +381,7 @@ class textstatistics:
             The average number of words per sentence.
 
         """
-        # TODO: why no round here?
-        return metrics.sentences_per_word(text)
+        return metrics.words_per_sentence(text)
 
     def count_complex_arabic_words(self, text: str) -> int:
         """
@@ -598,16 +601,23 @@ class textstatistics:
         r"""
         return metrics.linsear_write_formula(text, self.__lang)
 
-    def difficult_words(self, text: str, syllable_threshold: int = 2) -> int:
-        """Count the number of difficult words.
+    def difficult_words(
+        self, text: str, syllable_threshold: int = 2, unique: bool = True
+    ) -> int:
+        """Count the number of difficult words. By default, counts all words,
+        but can be set to count all only unique words by using `unique=True`.
 
         Parameters
         ----------
         text : str
             A text string.
+        lang : str
+            The language of the text.
         syllable_threshold : int, optional
             The cut-off for the number of syllables difficult words are
             required to have. The default is 2.
+        unique : bool, optional
+            Count only unique words. The default is False.
 
         Returns
         -------
@@ -615,7 +625,9 @@ class textstatistics:
             Number of difficult words.
 
         """
-        return counts.count_difficult_words(text, self.__lang, syllable_threshold)
+        return counts.count_difficult_words(
+            text, self.__lang, syllable_threshold, unique
+        )
 
     def difficult_words_list(self, text: str, syllable_threshold: int = 2) -> list[str]:
         """Get a list of difficult words
@@ -634,7 +646,6 @@ class textstatistics:
             DESCRIPTION.
 
         """
-        # TODO: need to make the positioning of lang args more consistent (see above)
         return selections.list_difficult_words(text, syllable_threshold, self.__lang)
 
     def is_difficult_word(self, word: str, syllable_threshold: int = 2) -> bool:
@@ -778,12 +789,12 @@ class textstatistics:
         I/P - a text
         O/P - an int Spache Readability Index/Grade Level
         """
+        # TODO: is int return really necessary or would a 0-point-rounded float work?
         readability_score = metrics.spache_readability(text, self.__lang)
         if float_output:
             return self._legacy_round(readability_score, 2)
         else:
-            # TODO
-            raise NotImplementedError
+            return int(readability_score)
 
     def dale_chall_readability_score_v2(self, text: str) -> float:
         """
@@ -801,8 +812,14 @@ class textstatistics:
         if float_output:
             return self._legacy_round(standard_value, 2)
         else:
-            # TODO
-            raise NotImplementedError
+            lower_score = int(standard_value) - 1
+            upper_score = lower_score + 1
+            return "{}{} and {}{} grade".format(
+                lower_score,
+                utils.get_grade_suffix(lower_score),
+                upper_score,
+                utils.get_grade_suffix(upper_score),
+            )
 
     def reading_time(self, text: str, ms_per_char: float = 14.69) -> float:
         """

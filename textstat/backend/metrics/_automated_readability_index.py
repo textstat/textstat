@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from ._words_per_sentence import words_per_sentence
+from ._chars_per_word import chars_per_word
+
 from ..utils._typed_cache import typed_cache
-from ..counts._count_chars import count_chars
-from ..counts._count_words import count_words
-from ..counts._count_sentences import count_sentences
 
 
 @typed_cache
@@ -29,12 +29,10 @@ def automated_readability_index(text: str) -> float:
         (4.71*n\ characters/n\ words)+(0.5*n\ words/n\ sentences)-21.43
 
     """
-    chrs = count_chars(text, True)
-    words = count_words(text)
-    sentences = count_sentences(text)
-    try:
-        a = chrs / words
-        b = words / sentences
-        return (4.71 * a) + (0.5 * b) - 21.43
-    except ZeroDivisionError:
+    a = chars_per_word(text)
+    b = words_per_sentence(text)
+
+    if a == 0 or b == 0:
         return 0.0
+
+    return (4.71 * a) + (0.5 * b) - 21.43

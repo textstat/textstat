@@ -24,9 +24,4 @@ def count_polysyllable_words(text: str, lang: str) -> int:
     Contractions and hyphenations are therefore counted as one word.
 
     """
-    count = 0
-    for word in text.split():
-        wrds = count_syllables(word, lang)
-        if wrds >= 3:
-            count += 1
-    return count
+    return len([w for w in text.split() if count_syllables(w, lang) >= 3])

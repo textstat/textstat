@@ -16,22 +16,7 @@ from textstat.backend import metrics
         (resources.LONG_TEXT, 21.882),
     ],
 )
-def test_avg_sentence_length(text: str, expected: float) -> None:
-    assert round(metrics.avg_sentence_length(text), 3) == expected
-
-
-@pytest.mark.parametrize(
-    "text, expected",
-    [
-        (resources.EMPTY_STR, 0.0),
-        (resources.EASY_TEXT, 9.0),
-        (resources.SHORT_TEXT, 5.0),
-        (resources.PUNCT_TEXT, 10.6),
-        (resources.LONG_TEXT, 21.882),
-    ],
-)
 def test_words_per_sentence(text: str, expected: float) -> None:
-    # TODO: this is honestly the same as the other func, that should be looked into
     assert round(metrics.words_per_sentence(text), 3) == expected
 
 
@@ -94,7 +79,7 @@ def test_avg_sentence_per_word(text: str, expected: float) -> None:
 @pytest.mark.parametrize(
     "text, lang, expected",
     [
-        (resources.EMPTY_STR, "en_US", 206.835),
+        (resources.EMPTY_STR, "en_US", 0.0),
         (resources.EASY_TEXT, "en_US", 81.482),
         (resources.SHORT_TEXT, "en_US", 83.32),
         (resources.PUNCT_TEXT, "en_US", 81.148),
@@ -121,7 +106,7 @@ def test_flesch_reading_ease(text: str, lang: str, expected: float) -> None:
 @pytest.mark.parametrize(
     "text, lang, expected",
     [
-        (resources.EMPTY_STR, "en_US", -15.59),
+        (resources.EMPTY_STR, "en_US", 0.0),
         (resources.EASY_TEXT, "en_US", 4.13),
         (resources.SHORT_TEXT, "en_US", 2.88),
         (resources.PUNCT_TEXT, "en_US", 4.574),
@@ -137,10 +122,10 @@ def test_flesch_kincaid_grade(text: str, lang: str, expected: float) -> None:
     [
         (resources.EMPTY_STR, "en_US", 0.0),
         (resources.EASY_TEXT, "en_US", 7.348),
-        (resources.SHORT_TEXT, "en_US", 0.0),
+        (resources.SHORT_TEXT, "en_US", 8.842),
         (resources.PUNCT_TEXT, "en_US", 8.842),
         (resources.LONG_TEXT, "en_US", 10.967),
-        (resources.EASY_HUNGARIAN_TEXT, "hu_HU", 0),
+        (resources.EASY_HUNGARIAN_TEXT, "hu_HU", 8.842),
         (resources.HARD_HUNGARIAN_TEXT, "hu_HU", 17.879),
         (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 21.932),
     ],
@@ -152,7 +137,7 @@ def test_smog_index(text: str, lang: str, expected: float) -> None:
 @pytest.mark.parametrize(
     "text, expected",
     [
-        (resources.EMPTY_STR, -15.8),
+        (resources.EMPTY_STR, 0.0),
         (resources.EASY_TEXT, 5.4),
         (resources.SHORT_TEXT, 6.12),
         (resources.PUNCT_TEXT, 6.249),
@@ -180,11 +165,11 @@ def test_automated_readability_index(text: str, expected: float) -> None:
 @pytest.mark.parametrize(
     "text, lang, expected",
     [
-        (resources.EMPTY_STR, "en_US", -1.0),
+        (resources.EMPTY_STR, "en_US", 0.0),
         (resources.EASY_TEXT, "en_US", 4.045),
         (resources.SHORT_TEXT, "en_US", 2.5),
         (resources.PUNCT_TEXT, "en_US", 5.3),
-        (resources.LONG_TEXT, "en_US", 14.5),
+        (resources.LONG_TEXT, "en_US", 14.375),
     ],
 )
 def test_linsear_write_formula(text: str, lang: str, expected: float) -> None:
@@ -195,10 +180,10 @@ def test_linsear_write_formula(text: str, lang: str, expected: float) -> None:
     "text, lang, expected",
     [
         (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 5.837),
+        (resources.EASY_TEXT, "en_US", 7.592),
         (resources.SHORT_TEXT, "en_US", 13.358),
-        (resources.PUNCT_TEXT, "en_US", 6.844),
-        (resources.LONG_TEXT, "en_US", 7.778),
+        (resources.PUNCT_TEXT, "en_US", 6.248),
+        (resources.LONG_TEXT, "en_US", 8.5),
     ],
 )
 def test_dale_chall_readability_score(text: str, lang: str, expected: float) -> None:
@@ -209,10 +194,10 @@ def test_dale_chall_readability_score(text: str, lang: str, expected: float) -> 
     "text, lang, expected",
     [
         (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 4.88),
+        (resources.EASY_TEXT, "en_US", 6.475),
         (resources.SHORT_TEXT, "en_US", 7.043),
         (resources.PUNCT_TEXT, "en_US", 5.95),
-        (resources.LONG_TEXT, "en_US", 6.802),
+        (resources.LONG_TEXT, "en_US", 7.099),
     ],
 )
 def test_dale_chall_readability_score_v2(text: str, lang: str, expected: float) -> None:
@@ -226,14 +211,14 @@ def test_dale_chall_readability_score_v2(text: str, lang: str, expected: float) 
         (resources.EASY_TEXT, "en_US", 3.6),
         (resources.SHORT_TEXT, "en_US", 10.0),
         (resources.PUNCT_TEXT, "en_US", 7.259),
-        (resources.LONG_TEXT, "en_US", 10.688),
+        (resources.LONG_TEXT, "en_US", 11.011),
         (
             resources.EASY_HUNGARIAN_TEXT,
             "hu_HU",
             4.8,
         ),  # TODO: why this one change so much (from 2.5)
         (resources.HARD_HUNGARIAN_TEXT, "hu_HU", 9.705),
-        (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 14.396),
+        (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 15.363),
     ],
 )
 def test_gunning_fog(text: str, lang: str, expected: float) -> None:
@@ -272,10 +257,10 @@ def test_rix(text: str, expected: float) -> None:
     "text, lang, expected",
     [
         (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 2.542),
+        (resources.EASY_TEXT, "en_US", 3.411),
         (resources.SHORT_TEXT, "en_US", 3.264),
         (resources.PUNCT_TEXT, "en_US", 3.307),
-        (resources.LONG_TEXT, "en_US", 5.057),
+        (resources.LONG_TEXT, "en_US", 5.219),
     ],
 )
 def test_spache_readability(text: str, lang: str, expected: float) -> None:
@@ -289,7 +274,7 @@ def test_spache_readability(text: str, lang: str, expected: float) -> None:
         (resources.EASY_TEXT, "en_US", 4.0),
         (resources.SHORT_TEXT, "en_US", 2.0),
         (resources.PUNCT_TEXT, "en_US", 6.0),
-        (resources.LONG_TEXT, "en_US", 10.0),
+        (resources.LONG_TEXT, "en_US", 9.0),
     ],
 )
 def test_text_standard(text: str, lang: str, expected: float) -> None:
@@ -318,12 +303,12 @@ def test_reading_time(text: str, ms_per_char: float, expected: float) -> None:
 @pytest.mark.parametrize(
     "text, lang, expected",
     [
-        (resources.EMPTY_STR, "en_US", 206.84),
+        (resources.EMPTY_STR, "en_US", 0.0),
         (resources.EASY_TEXT, "en_US", 115.236),
         (resources.SHORT_TEXT, "en_US", 117.74),
         (resources.PUNCT_TEXT, "en_US", 114.519),
         (resources.LONG_TEXT, "en_US", 100.81),
-        (resources.EMPTY_STR, "es_ES", 206.84),
+        (resources.EMPTY_STR, "es_ES", 0.0),
         (resources.LONG_SPANISH_TEXT, "es_ES", 65.967),
     ],
 )

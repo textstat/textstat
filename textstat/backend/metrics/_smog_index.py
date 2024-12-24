@@ -31,10 +31,6 @@ def smog_index(text: str, lang: str) -> float:
     """
     sentences = count_sentences(text)
 
-    # TODO: why this?
-    if sentences < 3:
-        return 0.0
-
     poly_syllab = count_polysyllable_words(text, lang)
     try:
         return (1.043 * (30 * (poly_syllab / sentences)) ** 0.5) + 3.1291

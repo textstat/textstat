@@ -37,10 +37,11 @@ def linsear_write_formula(text: str, lang: str) -> float:
     text_list = text.split()[:100]
 
     for word in text_list:
-        if count_syllables(word, lang) < 3:
-            easy_word += 1
-        else:
+        n_syll = count_syllables(word, lang)
+        if n_syll >= 3:
             difficult_word += 1
+        elif n_syll > 0:
+            easy_word += 1
 
     text = " ".join(text_list)
 

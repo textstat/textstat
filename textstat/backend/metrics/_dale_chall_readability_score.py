@@ -3,7 +3,7 @@ from __future__ import annotations
 from ..utils._typed_cache import typed_cache
 from ..counts._count_words import count_words
 from ..counts._count_difficult_words import count_difficult_words
-from ._avg_sentence_length import avg_sentence_length
+from ._words_per_sentence import words_per_sentence
 
 
 @typed_cache
@@ -47,7 +47,7 @@ def dale_chall_readability_score(text: str, lang: str) -> float:
     except ZeroDivisionError:
         return 0.0
 
-    score = (0.1579 * per_difficult_words) + (0.0496 * avg_sentence_length(text))
+    score = (0.1579 * per_difficult_words) + (0.0496 * words_per_sentence(text))
 
     if per_difficult_words > 5:
         score += 3.6365

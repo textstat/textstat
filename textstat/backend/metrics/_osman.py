@@ -15,14 +15,13 @@ def osman(text: str) -> float:
     Osman index for Arabic texts
     https://www.aclweb.org/anthology/L16-1038.pdf
     """
-
-    if not len(text):
+    try:
+        complex_word_rate = count_complex_arabic_words(text) / count_words(text)
+        long_word_rate = count_arabic_long_words(text) / count_words(text)
+        syllables_per_word = count_arabic_syllables(text) / count_words(text)
+        faseeh_per_word = count_faseeh(text) / count_words(text)
+    except ZeroDivisionError:
         return 0.0
-
-    complex_word_rate = float(count_complex_arabic_words(text)) / count_words(text)
-    long_word_rate = float(count_arabic_long_words(text)) / count_words(text)
-    syllables_per_word = float(count_arabic_syllables(text)) / count_words(text)
-    faseeh_per_word = float(count_faseeh(text)) / count_words(text)
 
     return (
         200.791

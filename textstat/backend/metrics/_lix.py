@@ -3,7 +3,7 @@ from __future__ import annotations
 from ..utils._typed_cache import typed_cache
 from ..counts._count_long_words import count_long_words
 from ..counts._count_words import count_words
-from ._avg_sentence_length import avg_sentence_length
+from ._words_per_sentence import words_per_sentence
 
 
 @typed_cache
@@ -34,7 +34,7 @@ def lix(text: str) -> float:
 
     `A` is obtained with `len(text.split())`, which counts
     contractions as one word. `A/B` is
-    calculated using the method `textstat.avg_sentence_length()`, which
+    calculated using the method `textstat.words_per_sentence()`, which
     counts contractions as two words, unless `__rm_apostrophe` is set to
     False. Therefore, the definition of a word is only consistent if you
     call `textstat.set_rm_apostrophe(False)` before calculating the LIX.
@@ -46,5 +46,5 @@ def lix(text: str) -> float:
         per_long_words = (long_words * 100) / words_len
     except ZeroDivisionError:
         return 0.0
-    asl = avg_sentence_length(text)
+    asl = words_per_sentence(text)
     return asl + per_long_words

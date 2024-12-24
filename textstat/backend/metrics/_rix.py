@@ -45,4 +45,4 @@ def rix(text: str) -> float:
     try:
         return long_words_count / sentences_count
     except ZeroDivisionError:
-        return long_words_count
+        return 0.0

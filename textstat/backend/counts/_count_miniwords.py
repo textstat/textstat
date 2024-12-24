@@ -5,7 +5,7 @@ from ..transformations._remove_punctuation import remove_punctuation
 
 
 @typed_cache
-def count_miniwords(text: str, max_size: int) -> int:
+def count_miniwords(text: str, max_size: int = 3) -> int:
     """Count common words with `max_size` letters or less in a text.
 
     Parameters

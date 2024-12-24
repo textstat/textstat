@@ -18,11 +18,13 @@ def count_sentences(text: str) -> int:
     Returns
     -------
     int
-        Number of sentences in `text`. Will always be at least 1.
+        Number of sentences in `text`. Will be 0 for empty string, otherwise >= 1.
 
     """
+    if len(text) == 0:
+        return 0
+
     ignore_count = 0
-    # TODO: double check this regex and the testing for this function
     sentences = re.findall(r"\b[^.!?]+[.!?]*", text, re.UNICODE)
     for sentence in sentences:
         if count_words(sentence) <= 2:

@@ -116,6 +116,7 @@ def test_syllable_count(text: str, lang: str, expected: int) -> None:
 @pytest.mark.parametrize(
     "text,expected",
     [
+        (resources.EMPTY_STR, 0),
         (resources.EASY_TEXT, 11),
         (resources.SHORT_TEXT, 1),
         (resources.PUNCT_TEXT, 5),
@@ -183,20 +184,24 @@ def test_polysyllabcount(test: str, lang: str, expected: int) -> None:
 
 
 @pytest.mark.parametrize(
-    "text,lang,syllable_threshold,expected",
+    "text,lang,syllable_threshold,unique,expected",
     [
-        (resources.EASY_TEXT, "en_US", 1, 11),
-        (resources.EASY_TEXT, "en_US", 2, 5),
-        (resources.EASY_TEXT, "en_US", 3, 0),
-        (resources.SHORT_TEXT, "en_US", 2, 1),
-        (resources.PUNCT_TEXT, "en_US", 2, 6),
-        (resources.LONG_TEXT, "en_US", 2, 49),
+        (resources.EASY_TEXT, "en_US", 1, True, 11),
+        (resources.EASY_TEXT, "en_US", 1, False, 22),
+        (resources.EASY_TEXT, "en_US", 2, True, 5),
+        (resources.EASY_TEXT, "en_US", 2, False, 15),
+        (resources.EASY_TEXT, "en_US", 3, True, 0),
+        (resources.SHORT_TEXT, "en_US", 2, True, 1),
+        (resources.PUNCT_TEXT, "en_US", 2, True, 6),
+        (resources.LONG_TEXT, "en_US", 2, True, 50),
     ],
 )
 def test_difficult_words(
-    text: str, lang: str, syllable_threshold: int, expected: int
+    text: str, lang: str, syllable_threshold: int, unique: bool, expected: int
 ) -> None:
-    assert counts.count_difficult_words(text, lang, syllable_threshold) == expected
+    assert (
+        counts.count_difficult_words(text, lang, syllable_threshold, unique) == expected
+    )
 
 
 @pytest.mark.parametrize(

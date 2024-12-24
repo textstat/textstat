@@ -34,9 +34,8 @@ def remove_punctuation(
         # remove all punctuation
         punctuation_regex = r"[^\w\s]"
     else:
-        # replace single quotation marks with double quotation marks but
-        # keep apostrophes in contractions
-        text = re.sub(r"\'(?![tsd]\b|ve\b|ll\b|re\b)", '"', text)
+        # remove non-apostrophe single quotation marks
+        text = re.sub(r"\'(?![tsd]\b|ve\b|ll\b|re\b)", "", text)
         # remove all punctuation except apostrophes
         punctuation_regex = r"[^\w\s\']"
 

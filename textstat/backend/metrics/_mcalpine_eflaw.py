@@ -14,11 +14,13 @@ def mcalpine_eflaw(text: str) -> float:
 
     https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/
     """
-
-    if len(text) < 1:
+    if len(text) == 0:
         return 0.0
 
     n_words = count_words(text)
     n_sentences = count_sentences(text)
     n_miniwords = count_miniwords(text, max_size=3)
-    return (n_words + n_miniwords) / n_sentences
+    try:
+        return (n_words + n_miniwords) / n_sentences
+    except ZeroDivisionError:
+        return 0.0

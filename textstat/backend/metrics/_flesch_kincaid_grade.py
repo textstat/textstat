@@ -30,4 +30,8 @@ def flesch_kincaid_grade(text: str, lang: str) -> float:
     """
     sentence_length = words_per_sentence(text)
     syllables = syllables_per_word(text, lang)
+
+    if sentence_length == 0 or syllables == 0:
+        return 0.0
+
     return (0.39 * sentence_length) + (11.8 * syllables) - 15.59
