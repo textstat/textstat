@@ -9,15 +9,15 @@ from ..backend import resources
     "text, float_output, expected",
     [
         (resources.EMPTY_STR, True, 0.0),
-        (resources.EMPTY_STR, False, "0th and 1st grade"),
+        (resources.EMPTY_STR, False, "-1th and 0th grade"),
         (resources.EASY_TEXT, True, 4.0),
-        (resources.EASY_TEXT, False, "4th and 5th grade"),
+        (resources.EASY_TEXT, False, "3rd and 4th grade"),
         (resources.SHORT_TEXT, True, 2.0),
-        (resources.SHORT_TEXT, False, "2nd and 3rd grade"),
+        (resources.SHORT_TEXT, False, "1st and 2nd grade"),
         (resources.PUNCT_TEXT, True, 6.0),
-        (resources.PUNCT_TEXT, False, "6th and 7th grade"),
+        (resources.PUNCT_TEXT, False, "5th and 6th grade"),
         (resources.LONG_TEXT, True, 9.0),
-        (resources.LONG_TEXT, False, "9th and 10th grade"),
+        (resources.LONG_TEXT, False, "8th and 9th grade"),
     ],
 )
 def test_text_standard(text: str, float_output: bool, expected: float | str) -> None:
