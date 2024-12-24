@@ -69,8 +69,12 @@ def text_standard(text: str, lang: str) -> float:
     grade.append(int(upper))
 
     # Appending Linsear_Write_Formula
-    lower = math.floor(linsear_write_formula(text, lang))
-    upper = math.ceil(linsear_write_formula(text, lang))
+    lower = math.floor(
+        linsear_write_formula(text, lang, strict_lower=False, strict_upper=True)
+    )
+    upper = math.ceil(
+        linsear_write_formula(text, lang, strict_lower=False, strict_upper=True)
+    )
     grade.append(int(lower))
     grade.append(int(upper))
 

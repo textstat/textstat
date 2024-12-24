@@ -452,7 +452,6 @@ class textstatistics:
         return counts.count_arabic_long_words(text)
 
     def flesch_reading_ease(self, text: str) -> float:
-        # TODO: method docstring
         return metrics.flesch_reading_ease(text, self.__lang)
 
     def flesch_kincaid_grade(self, text: str) -> float:
@@ -599,7 +598,9 @@ class textstatistics:
         easy words are defined as words with 2 syllables or less.
         difficult words are defined as words with 3 syllables or more.
         r"""
-        return metrics.linsear_write_formula(text, self.__lang)
+        return metrics.linsear_write_formula(
+            text, self.__lang, strict_lower=False, strict_upper=True
+        )
 
     def difficult_words(
         self, text: str, syllable_threshold: int = 2, unique: bool = True
@@ -710,7 +711,6 @@ class textstatistics:
         return metrics.dale_chall_readability_score(text, self.__lang)
 
     def gunning_fog(self, text: str) -> float:
-        # TODO: docstring
         return metrics.gunning_fog(text, self.__lang)
 
     def lix(self, text: str) -> float:
@@ -783,13 +783,12 @@ class textstatistics:
         """
         return self._legacy_round(metrics.rix(text), 2)
 
-    def spache_readability(self, text: str, float_output: bool = True) -> float | int:
+    def spache_readability(self, text: str, float_output: bool = True) -> float:
         """
         Function to calculate SPACHE readability formula for young readers.
         I/P - a text
         O/P - an int Spache Readability Index/Grade Level
         """
-        # TODO: is int return really necessary or would a 0-point-rounded float work?
         readability_score = metrics.spache_readability(text, self.__lang)
         if float_output:
             return self._legacy_round(readability_score, 2)
@@ -807,7 +806,6 @@ class textstatistics:
         )
 
     def text_standard(self, text: str, float_output: bool = False) -> float | str:
-        # TODO: docstring
         standard_value = metrics.text_standard(text, self.__lang)
         if float_output:
             return self._legacy_round(standard_value, 2)
