@@ -25,7 +25,7 @@ class textstatistics:
     """
 
     __lang = "en_US"
-    __round_outputs = True
+    __round_outputs = False
     __round_points = None
     __rm_apostrophe = True
     text_encoding = "utf-8"
@@ -33,7 +33,7 @@ class textstatistics:
     def __init__(self):
         self.set_lang(self.__lang)
 
-    def _legacy_round(self, number: float, points: int = 0) -> float:
+    def _legacy_round(self, number: float) -> float:
         """Round `number`, unless the attribute `__round_outputs` is `False`.
 
         Round floating point outputs for backwards compatibility.
@@ -53,9 +53,8 @@ class textstatistics:
         float
 
         """
-        points = self.__round_points if (self.__round_points is not None) else points
         if self.__round_outputs:
-            return round(number, points)
+            return round(number, self.__round_points)
         else:
             return number
 
@@ -201,11 +200,7 @@ class textstatistics:
             DESCRIPTION.
 
         """
-        # This is because pure-punctuation surrounded by whitespace is
-        # counted as a word when removepunct is False
-        if removepunct:
-            text = transformations.remove_punctuation(text, rm_apostrophe=True)
-        return counts.count_words(text)
+        return counts.count_words(text, rm_punctuation=removepunct)
 
     def miniword_count(self, text: str, max_size: int = 3) -> int:
         """Count common words with `max_size` letters or less in a text.
@@ -285,7 +280,7 @@ class textstatistics:
             The average sentence length.
 
         """
-        return self._legacy_round(metrics.words_per_sentence(text), 1)
+        return self._legacy_round(metrics.words_per_sentence(text))
 
     def avg_syllables_per_word(self, text: str, interval: int | None = None) -> float:
         """Get the average number of syllables per word.
@@ -306,7 +301,7 @@ class textstatistics:
         aspw = metrics.syllables_per_word(text, self.__lang)
         if interval:
             aspw *= interval
-        return self._legacy_round(aspw, 1)
+        return self._legacy_round(aspw)
 
     def avg_character_per_word(self, text: str) -> float:
         """Calculate the average sentence word length in characters.
@@ -325,7 +320,7 @@ class textstatistics:
             The average number of characters per word.
 
         """
-        return self._legacy_round(metrics.chars_per_word(text), 2)
+        return self._legacy_round(metrics.chars_per_word(text))
 
     def avg_letter_per_word(self, text: str) -> float:
         """Calculate the average sentence word length in letters.
@@ -344,7 +339,7 @@ class textstatistics:
             The average number of letters per word.
 
         """
-        return self._legacy_round(metrics.letters_per_word(text), 2)
+        return self._legacy_round(metrics.letters_per_word(text))
 
     def avg_sentence_per_word(self, text: str) -> float:
         """Get the number of sentences per word.
@@ -362,7 +357,7 @@ class textstatistics:
             Number of sentences per word.
 
         """
-        return self._legacy_round(metrics.sentences_per_word(text), 2)
+        return self._legacy_round(metrics.sentences_per_word(text))
 
     def words_per_sentence(self, text: str) -> float:
         """Calculate the average number of words per sentence.
@@ -381,7 +376,7 @@ class textstatistics:
             The average number of words per sentence.
 
         """
-        return metrics.words_per_sentence(text)
+        return self._legacy_round(metrics.words_per_sentence(text))
 
     def count_complex_arabic_words(self, text: str) -> int:
         """
@@ -452,7 +447,7 @@ class textstatistics:
         return counts.count_arabic_long_words(text)
 
     def flesch_reading_ease(self, text: str) -> float:
-        return metrics.flesch_reading_ease(text, self.__lang)
+        return self._legacy_round(metrics.flesch_reading_ease(text, self.__lang))
 
     def flesch_kincaid_grade(self, text: str) -> float:
         r"""Calculate the Flesh-Kincaid Grade for `text`.
@@ -476,7 +471,7 @@ class textstatistics:
             (.39*avg\ sentence\ length)+(11.8*avg\ syllables\ per\ word)-15.59
 
         """
-        return metrics.flesch_kincaid_grade(text, self.__lang)
+        return self._legacy_round(metrics.flesch_kincaid_grade(text, self.__lang))
 
     def polysyllabcount(self, text: str) -> int:
         """Count the words with three or more syllables.
@@ -522,7 +517,7 @@ class textstatistics:
 
         Polysyllabic words are defined as words with more than 3 syllables.
         """
-        return metrics.smog_index(text, self.__lang)
+        return self._legacy_round(metrics.smog_index(text, self.__lang))
 
     def coleman_liau_index(self, text: str) -> float:
         r"""Calculate the Coleman-Liaux index.
@@ -546,7 +541,7 @@ class textstatistics:
             (0.058*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
 
         """
-        return metrics.coleman_liau_index(text)
+        return self._legacy_round(metrics.coleman_liau_index(text))
 
     def automated_readability_index(self, text: str) -> float:
         r"""Calculate the Automated Readability Index (ARI).
@@ -570,7 +565,7 @@ class textstatistics:
             (4.71*n\ characters/n\ words)+(0.5*n\ words/n\ sentences)-21.43
 
         """
-        return metrics.automated_readability_index(text)
+        return self._legacy_round(metrics.automated_readability_index(text))
 
     def linsear_write_formula(self, text: str) -> float:
         r"""Calculate the Linsear-Write (Lw) metric.
@@ -598,8 +593,10 @@ class textstatistics:
         easy words are defined as words with 2 syllables or less.
         difficult words are defined as words with 3 syllables or more.
         r"""
-        return metrics.linsear_write_formula(
-            text, self.__lang, strict_lower=False, strict_upper=True
+        return self._legacy_round(
+            metrics.linsear_write_formula(
+                text, self.__lang, strict_lower=False, strict_upper=True
+            )
         )
 
     def difficult_words(
@@ -708,10 +705,12 @@ class textstatistics:
         If the percentage of difficult words is > 5, 3.6365 is added to the
         score.
         """
-        return metrics.dale_chall_readability_score(text, self.__lang)
+        return self._legacy_round(
+            metrics.dale_chall_readability_score(text, self.__lang)
+        )
 
     def gunning_fog(self, text: str) -> float:
-        return metrics.gunning_fog(text, self.__lang)
+        return self._legacy_round(metrics.gunning_fog(text, self.__lang))
 
     def lix(self, text: str) -> float:
         r"""Calculate the LIX for `text`
@@ -746,7 +745,7 @@ class textstatistics:
         call `textstat.set_rm_apostrophe(False)` before calculating the LIX.
 
         """
-        return metrics.lix(text)
+        return self._legacy_round(metrics.lix(text))
 
     def rix(self, text: str) -> float:
         r"""Calculate the RIX for `text`
@@ -781,7 +780,7 @@ class textstatistics:
         calculating the RIX.
 
         """
-        return self._legacy_round(metrics.rix(text), 2)
+        return self._legacy_round(metrics.rix(text))
 
     def spache_readability(self, text: str, float_output: bool = True) -> float:
         """
@@ -791,8 +790,9 @@ class textstatistics:
         """
         readability_score = metrics.spache_readability(text, self.__lang)
         if float_output:
-            return self._legacy_round(readability_score, 2)
+            return self._legacy_round(readability_score)
         else:
+            # TODO: should this be rounded instead of int-ed?
             return int(readability_score)
 
     def dale_chall_readability_score_v2(self, text: str) -> float:
@@ -802,13 +802,13 @@ class textstatistics:
         O/P - an int Dale Chall Readability Index/Grade Level
         """
         return self._legacy_round(
-            metrics.dale_chall_readability_score_v2(text, self.__lang), 2
+            metrics.dale_chall_readability_score_v2(text, self.__lang)
         )
 
     def text_standard(self, text: str, float_output: bool = False) -> float | str:
         standard_value = metrics.text_standard(text, self.__lang)
         if float_output:
-            return self._legacy_round(standard_value, 2)
+            return self._legacy_round(standard_value)
         else:
             lower_score = int(standard_value) - 1
             upper_score = lower_score + 1
@@ -825,7 +825,7 @@ class textstatistics:
         I/P - a text
         O/P - reading time in second
         """
-        return self._legacy_round(metrics.reading_time(text, ms_per_char), 2)
+        return self._legacy_round(metrics.reading_time(text, ms_per_char))
 
     # Spanish readability tests
     def fernandez_huerta(self, text: str) -> float:
@@ -833,42 +833,42 @@ class textstatistics:
         Fernandez Huerta readability score
         https://legible.es/blog/lecturabilidad-fernandez-huerta/
         """
-        return self._legacy_round(metrics.fernandez_huerta(text, self.__lang), 2)
+        return self._legacy_round(metrics.fernandez_huerta(text, self.__lang))
 
     def szigriszt_pazos(self, text: str) -> float:
         """
         Szigriszt Pazos readability score (1992)
         https://legible.es/blog/perspicuidad-szigriszt-pazos/
         """
-        return self._legacy_round(metrics.szigriszt_pazos(text, self.__lang), 2)
+        return self._legacy_round(metrics.szigriszt_pazos(text, self.__lang))
 
     def gutierrez_polini(self, text: str) -> float:
         """
         Guttierrez de Polini index
         https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
         """
-        return self._legacy_round(metrics.gutierrez_polini(text), 2)
+        return self._legacy_round(metrics.gutierrez_polini(text))
 
     def crawford(self, text: str) -> float:
         """
         Crawford index
         https://legible.es/blog/formula-de-crawford/
         """
-        return self._legacy_round(metrics.crawford(text, self.__lang), 2)
+        return self._legacy_round(metrics.crawford(text, self.__lang))
 
     def osman(self, text: str) -> float:
         """
         Osman index for Arabic texts
         https://www.aclweb.org/anthology/L16-1038.pdf
         """
-        return self._legacy_round(metrics.osman(text), 2)
+        return self._legacy_round(metrics.osman(text))
 
     def gulpease_index(self, text: str) -> float:
         """
         Indice Gulpease Index for Italian texts
         https://it.wikipedia.org/wiki/Indice_Gulpease
         """
-        return self._legacy_round(metrics.gulpease_index(text), 2)
+        return self._legacy_round(metrics.gulpease_index(text))
 
     def long_word_count(self, text: str) -> int:
         """counts words with more than 6 characters"""
@@ -885,7 +885,7 @@ class textstatistics:
         https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
         """
         return self._legacy_round(
-            metrics.wiener_sachtextformel(text, variant, self.__lang), 1
+            metrics.wiener_sachtextformel(text, variant, self.__lang)
         )
 
     def mcalpine_eflaw(self, text: str) -> float:
@@ -895,7 +895,7 @@ class textstatistics:
 
         https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/
         """
-        return self._legacy_round(metrics.mcalpine_eflaw(text), 1)
+        return self._legacy_round(metrics.mcalpine_eflaw(text))
 
 
 textstat = textstatistics()
