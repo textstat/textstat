@@ -18,7 +18,7 @@ from .. import resources
             resources.EASY_HUNGARIAN_TEXT,
             "hu_HU",
             4.8,
-        ),  # TODO: why this one change so much (from 2.5)
+        ),
         (resources.HARD_HUNGARIAN_TEXT, "hu_HU", 9.705),
         (resources.HARD_ACADEMIC_HUNGARIAN_TEXT, "hu_HU", 15.363),
     ],

@@ -13,7 +13,10 @@ from .. import resources
             counts.count_words,
             [metrics.chars_per_word, metrics.words_per_sentence],
         ),
-        # TODO: add more tests
+        (
+            counts.count_letters,
+            [metrics.letters_per_word, counts.count_letters, counts.count_letters],
+        ),
     ],
 )
 def test_typed_chache(

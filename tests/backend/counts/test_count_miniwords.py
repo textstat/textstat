@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 from textstat.backend import counts
+from .. import resources
 
 
 @pytest.mark.parametrize(
@@ -18,7 +19,13 @@ from textstat.backend import counts
         ("who is me man, I, ye rogue", 1, 1),
         ("who is me man, I, ye rogue", 2, 4),
         ("who is me man, I, ye rogue", 3, 6),
-        # TODO: at least one or two based on the standard strings/texts
+        (resources.EASY_TEXT, 1, 5),
+        (resources.EASY_TEXT, 2, 17),
+        (resources.EASY_TEXT, 3, 35),
+        (resources.EASY_TEXT, 4, 63),
+        (resources.PUNCT_TEXT, 3, 23),
+        (resources.SHORT_TEXT, 3, 1),
+        (resources.LONG_TEXT, 3, 151),
     ],
 )
 def test_count_miniwords(text: str, max_size: int, expected: int) -> None:
