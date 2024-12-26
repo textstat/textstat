@@ -889,7 +889,7 @@ class textstatistics:
         """
         return self._legacy_round(metrics.rix(text))
 
-    def spache_readability(self, text: str, float_output: bool = True) -> float:
+    def spache_readability(self, text: str, float_output: bool = True) -> float | int:
         """Calculate SPACHE readability formula for young readers. If `float_output`
         is True, the function returns a float. Otherwise, it rounds down to an int.
 
@@ -902,7 +902,7 @@ class textstatistics:
 
         Returns
         -------
-        float
+        float or int
             The SPACHE readability score for `text`
         """
         readability_score = metrics.spache_readability(text, self.__lang)
@@ -1161,13 +1161,11 @@ class textstatistics:
         """
         return self._legacy_round(metrics.mcalpine_eflaw(text))
 
-    def __get_lang_cfg(self, lang: str, key: str) -> float:
+    def __get_lang_cfg(self, key: str) -> float:
         """Get a value from the configuration for a specific language.
 
         Parameters
         ----------
-        lang : str
-            The language of the text.
         key : str
             The key to retrieve from the configuration.
 
@@ -1177,37 +1175,35 @@ class textstatistics:
             The value from the configuration.
 
         """
-        return utils.get_lang_cfg(lang, key)
+        return utils.get_lang_cfg(self.__lang, key)
 
-    def __get_lang_root(self, lang: str) -> str:
+    def __get_lang_root(self) -> str:
         """Get the root language of a language.
 
         Parameters
         ----------
-        lang : str
-            The language of the text.
+        None
 
         Returns
         -------
         str
             The root language of the given language.
         """
-        return utils.get_lang_root(lang)
+        return utils.get_lang_root(self.__lang)
 
-    def __get_lang_easy_words(self, lang: str) -> set[str]:
+    def __get_lang_easy_words(self) -> set[str]:
         """Get the easy words for a language.
 
         Parameters
         ----------
-        lang : str
-            The language of the text.
+        None
 
         Returns
         -------
         set[str]
             The easy words for the given language.
         """
-        return utils.get_lang_easy_words(lang)
+        return utils.get_lang_easy_words(self.__lang)
 
 
 textstat = textstatistics()
