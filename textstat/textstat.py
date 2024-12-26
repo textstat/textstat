@@ -207,9 +207,9 @@ class textstatistics:
     def lexicon_count(self, text: str, removepunct: bool = True) -> int:
         """Count the number of words in a text.
 
-        English contractions (e.g. "aren't") and hyphenated words are counted as one word.
-        If `removepunct` is set to False, "words" with no letters (e.g. " .? ") are
-        counted as words.
+        English contractions (e.g. "aren't") and hyphenated words are counted as one
+        word. If `removepunct` is set to False, "words" with no letters (e.g. " .? ")
+        are counted as words.
 
         Parameters
         ----------
@@ -1088,8 +1088,8 @@ class textstatistics:
         )
 
     def mcalpine_eflaw(self, text: str) -> float:
-        """Calculate McAlpine EFLAW score, which asseses the readability of English texts
-        for English foreign learners.
+        """Calculate McAlpine EFLAW score, which asseses the readability of English
+        texts for English foreign learners.
 
         https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/
 
