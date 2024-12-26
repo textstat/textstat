@@ -1,14 +1,16 @@
 from __future__ import annotations
+import typing
 
-import sys
+if typing.TYPE_CHECKING:
+    import sys
 
-if sys.version_info < (3, 10):
-    from typing_extensions import ParamSpec, TypeVar
-else:
-    from typing import ParamSpec, TypeVar
+    if sys.version_info < (3, 10):
+        from typing_extensions import ParamSpec, TypeVar
+    else:
+        from typing import ParamSpec, TypeVar
 
-P = ParamSpec("P")
-T = TypeVar("T")
+    P = ParamSpec("P")
+    T = TypeVar("T")
 
 LANG_CONFIGS: dict[str, dict[str, float]] = {
     "en": {  # Default config

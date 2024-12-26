@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Callable
+from typing import Callable, TYPE_CHECKING
 
-from .constants import CACHE_SIZE, T, P
+from .constants import CACHE_SIZE
+
+if TYPE_CHECKING:
+    from .constants import T, P
 
 
 def typed_cache(func: Callable[P, T]) -> Callable[P, T]:
