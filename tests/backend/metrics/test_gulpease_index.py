@@ -13,7 +13,7 @@ from .. import resources
         (resources.EASY_TEXT, 78.798),
         (resources.SHORT_TEXT, 99.0),
         (resources.PUNCT_TEXT, 70.698),
-        (resources.LONG_TEXT, 55.72),
+        (resources.LONG_TEXT, 56.22),
         (resources.ITALIAN_TEXT, 40.111),
     ],
 )

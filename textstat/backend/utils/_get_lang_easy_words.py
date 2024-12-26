@@ -6,7 +6,7 @@ from ._typed_cache import typed_cache
 from ._get_lang_root import get_lang_root
 import sys
 
-if sys.version_info < (3, 10):
+if sys.version_info < (3, 9):
     import pkg_resources
 
     def _set_words(lang_root: str) -> set[str]:

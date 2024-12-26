@@ -7,14 +7,28 @@ from .. import resources
 
 
 @pytest.mark.parametrize(
-    "text, lang, expected",
+    "text, lang, strict_lower, strict_upper, expected",
     [
-        (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 4.045),
-        (resources.SHORT_TEXT, "en_US", 2.5),
-        (resources.PUNCT_TEXT, "en_US", 5.3),
-        (resources.LONG_TEXT, "en_US", 14.5),
+        (resources.EMPTY_STR, "en_US", False, False, 0.0),
+        (resources.EASY_TEXT, "en_US", False, False, 4.045),
+        (resources.EASY_TEXT, "en_US", False, True, 4.045),
+        (resources.EASY_TEXT, "en_US", True, False, 0.0),
+        (resources.EASY_TEXT, "en_US", True, True, 0.0),
+        (resources.SHORT_TEXT, "en_US", False, True, 2.5),
+        (resources.PUNCT_TEXT, "en_US", False, True, 5.3),
+        (resources.LONG_TEXT, "en_US", False, True, 14.5),
+        (resources.LONG_TEXT, "en_US", True, True, 14.5),
     ],
 )
-def test_linsear_write_formula(text: str, lang: str, expected: float) -> None:
-    assert round(metrics.linsear_write_formula(text, lang, False, True), 3) == expected
+def test_linsear_write_formula(
+    text: str, lang: str, strict_lower: bool, strict_upper: bool, expected: float
+) -> None:
+    assert (
+        round(
+            metrics.linsear_write_formula(
+                text, lang, strict_lower=strict_lower, strict_upper=strict_upper
+            ),
+            3,
+        )
+        == expected
+    )

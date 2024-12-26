@@ -11,7 +11,7 @@ from .. import resources
     [
         (
             counts.count_words,
-            [metrics.chars_per_word, metrics.words_per_sentence],
+            [metrics.sentences_per_word, metrics.words_per_sentence],
         ),
         (
             counts.count_letters,

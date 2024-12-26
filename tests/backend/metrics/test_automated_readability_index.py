@@ -13,7 +13,7 @@ from .. import resources
         (resources.EASY_TEXT, 3.575),
         (resources.SHORT_TEXT, 4.62),
         (resources.PUNCT_TEXT, 5.82),
-        (resources.LONG_TEXT, 11.643),
+        (resources.LONG_TEXT, 11.408),
     ],
 )
 def test_automated_readability_index(text: str, expected: float) -> None:

@@ -25,7 +25,10 @@ def chars_per_word(text: str, ignore_spaces: bool = True) -> float:
         The average number of characters per word.
 
     """
+    # We count puntuation-words as words because those characters get counted
     try:
-        return count_chars(text, ignore_spaces=ignore_spaces) / count_words(text)
+        return count_chars(text, ignore_spaces=ignore_spaces) / count_words(
+            text, rm_punctuation=False
+        )
     except ZeroDivisionError:
         return 0.0

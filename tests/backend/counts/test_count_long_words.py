@@ -6,13 +6,15 @@ from .. import resources
 
 
 @pytest.mark.parametrize(
-    "test,expected",
+    "test, threshold, expected",
     [
-        (resources.EASY_TEXT, 13),
-        (resources.SHORT_TEXT, 1),
-        (resources.PUNCT_TEXT, 7),
-        (resources.LONG_TEXT, 77),
+        (resources.EASY_TEXT, 6, 13),
+        (resources.SHORT_TEXT, 6, 1),
+        (resources.SHORT_TEXT, 5, 1),
+        (resources.SHORT_TEXT, 4, 1),
+        (resources.PUNCT_TEXT, 6, 7),
+        (resources.LONG_TEXT, 6, 77),
     ],
 )
-def test_count_long_words(test: str, expected: int) -> None:
-    assert counts.count_long_words(test) == expected
+def test_count_long_words(test: str, threshold: int, expected: int) -> None:
+    assert counts.count_long_words(test, threshold) == expected

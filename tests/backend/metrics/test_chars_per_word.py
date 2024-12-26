@@ -13,7 +13,7 @@ from .. import resources
         (resources.EASY_TEXT, 4.354),
         (resources.SHORT_TEXT, 5.0),
         (resources.PUNCT_TEXT, 4.66),
-        (resources.LONG_TEXT, 4.699),
+        (resources.LONG_TEXT, 4.649),
     ],
 )
 def test_chars_per_word(text: str, expected: float) -> None:
