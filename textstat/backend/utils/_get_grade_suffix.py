@@ -7,4 +7,7 @@ def get_grade_suffix(grade: int) -> str:
     """
     ordinal_map = {1: "st", 2: "nd", 3: "rd"}
     teens_map = {11: "th", 12: "th", 13: "th"}
-    return teens_map.get(grade % 100, ordinal_map.get(grade % 10, "th"))
+    ordinal_value = grade % 10
+    teen_value = grade % 100
+    ordinal_suffix = ordinal_map.get(ordinal_value, "th")
+    return teens_map.get(teen_value, ordinal_suffix)
