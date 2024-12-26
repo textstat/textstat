@@ -14,6 +14,16 @@ class textstatistics:
         Default: "utf-8"
     __lang : str
         Default : "en_US"
+    __easy_word_sets : dict
+        Dictionary of easy word sets.
+
+        .. deprecated:: <version>
+            This attribute has no effect. It will be removed in the future.
+    __round_outputs : bool or None
+        Whether to round the outputs of all textstat methods. Default: None
+
+        .. deprecated:: <version>
+            This attribute has no effect. It will be removed in the future.
     __round_points : int or None
         The number of decimals to use when rounding outputs. If round_points is set to
         None, the outputs will not be rounded. Default: None
@@ -25,6 +35,8 @@ class textstatistics:
     """
 
     __lang = "en_US"
+    __easy_word_sets = {}
+    __round_outputs = None
     __round_points = None
     __rm_apostrophe = True
     text_encoding = "utf-8"
@@ -230,12 +242,20 @@ class textstatistics:
         """
         return transformations.remove_punctuation(text, self.__rm_apostrophe)
 
-    def lexicon_count(self, text: str, removepunct: bool = True) -> int:
+    def lexicon_count(
+        self,
+        text: str,
+        removepunct: bool = True,
+        split_contractions: bool = False,
+        split_hyphens: bool = False,
+    ) -> int:
         """Count the number of words in a text.
 
         English contractions (e.g. "aren't") and hyphenated words are counted as one
-        word. If `removepunct` is set to False, "words" with no letters (e.g. " .? ")
-        are counted as words.
+        words by default, but can be counted as multiple words with
+        `split_contractions=True` and `split_hyphens=True` respectively. If
+        `removepunct` is set to False, "words" with no letters (e.g. " .? ") are
+        counted as words.
 
         Parameters
         ----------
@@ -243,6 +263,10 @@ class textstatistics:
             A text string.
         removepunct : bool, optional
             Remove punctuation. The default is True.
+        split_contractions : bool, optional
+            Split common English contractions. The default is False.
+        split_hyphens : bool, optional
+            Split hyphenated words. The default is False.
 
         Returns
         -------
