@@ -74,7 +74,8 @@ class textstatistics:
         """
         if points is not None:
             warnings.warn(
-                "The points argument is deprecated and has no effect. Use set_rounding_points instead.",
+                "The points argument is deprecated and has no effect. Use "
+                "set_rounding_points instead.",
                 DeprecationWarning,
             )
         if self.__round_points is None:
@@ -643,9 +644,11 @@ class textstatistics:
         lang : str
             The language of the text.
         strict_lower : bool, optional
-            If True, the Lw is only calculated if the number of words is at least 100. The default is False.
+            If True, the Lw is only calculated if the number of words is at least
+            100. The default is False.
         strict_upper : bool, optional
-            If True, the Lw is only calculated on the first 100 words. The default is True.
+            If True, the Lw is only calculated on the first 100 words. The default is
+            True.
 
         Returns
         -------
