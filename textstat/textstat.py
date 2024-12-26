@@ -32,7 +32,24 @@ class textstatistics:
     def __init__(self):
         self.set_lang(self.__lang)
 
-    def _legacy_round(self, number: float) -> float:
+    def _cache_clear(self) -> None:
+        """Clear the cache.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        .. deprecated:: <version>
+            This method has no effect due to a caching redesign
+
+        """
+        pass
+
+    def _legacy_round(self, number: float, points: int | None = None) -> float:
         """Round `number`, unless the attribute `__round_outputs` is `False`.
 
         Round floating point outputs for backwards compatibility.
@@ -47,11 +64,19 @@ class textstatistics:
             `__round_points` is not None, the value of `__round_point` will
             override the value passed for `points`. The default is 0.
 
+            .. deprecated:: <version>
+                Use set_rounding_points instead
+
         Returns
         -------
         float
 
         """
+        if points is not None:
+            warnings.warn(
+                "The points argument is deprecated and has no effect. Use set_rounding_points instead.",
+                DeprecationWarning,
+            )
         if self.__round_points is None:
             return number
         return round(number, self.__round_points)
@@ -111,11 +136,9 @@ class textstatistics:
         Parameters
         ----------
         rm_apostrophe : bool
-            If True, all textstat methods that use the remove_punctuataion
-            function for the word count, syllable count or character count,
-            remove the apostrophe in contractions along with other punctuation.
-            If False, punctuation is removed with the exception of apostrophes
-            in common English contractions.
+            If True, the remove_punctuation method will remove the apostrophe in
+            contractions along with other punctuation. If False, punctuation is
+            removed with the exception of apostrophes in common English contractions.
 
         Returns
         -------
@@ -605,15 +628,24 @@ class textstatistics:
         """
         return self._legacy_round(metrics.automated_readability_index(text))
 
-    def linsear_write_formula(self, text: str) -> float:
+    def linsear_write_formula(
+        self, text: str, strict_lower: bool = False, strict_upper: bool = True
+    ) -> float:
         r"""Calculate the Linsear-Write (Lw) metric.
 
-        The Lw only uses the first 100 words of text!
+        Canonically the Lw only uses the first 100 words of text. To disable this
+        functionality, set `strict_upper` to False.
 
         Parameters
         ----------
         text : str
             A text string.
+        lang : str
+            The language of the text.
+        strict_lower : bool, optional
+            If True, the Lw is only calculated if the number of words is at least 100. The default is False.
+        strict_upper : bool, optional
+            If True, the Lw is only calculated on the first 100 words. The default is True.
 
         Returns
         -------
@@ -633,7 +665,7 @@ class textstatistics:
         r"""
         return self._legacy_round(
             metrics.linsear_write_formula(
-                text, self.__lang, strict_lower=False, strict_upper=True
+                text, self.__lang, strict_lower=strict_lower, strict_upper=strict_upper
             )
         )
 
@@ -665,7 +697,9 @@ class textstatistics:
             text, self.__lang, syllable_threshold, unique
         )
 
-    def difficult_words_list(self, text: str, syllable_threshold: int = 2) -> list[str]:
+    def difficult_words_list(
+        self, text: str, syllable_threshold: int = 2, unique: bool = True
+    ) -> list[str]:
         """Get a list of the difficult words in the text.
 
         Parameters
@@ -675,6 +709,8 @@ class textstatistics:
         syllable_threshold : int, optional
             The cut-off for the number of syllables difficult words are
             required to have. The default is 2.
+        unique : bool, optional
+            Count only unique words. The default is True.
 
         Returns
         -------
@@ -682,6 +718,10 @@ class textstatistics:
             A list of the words deemed difficult.
 
         """
+        if unique:
+            return list(
+                selections.set_difficult_words(text, syllable_threshold, self.__lang)
+            )
         return selections.list_difficult_words(text, syllable_threshold, self.__lang)
 
     def is_difficult_word(self, word: str, syllable_threshold: int = 2) -> bool:
@@ -1050,20 +1090,22 @@ class textstatistics:
         """
         return self._legacy_round(metrics.gulpease_index(text))
 
-    def long_word_count(self, text: str) -> int:
-        """Counts words with more than 6 letters.
+    def long_word_count(self, text: str, threshold: int = 6) -> int:
+        """Counts words with more than `threshold` (default 6) letters.
 
         Parameters
         ----------
         text : str
             A text string.
+        threshold : int
+            The minimum number of letters in a word for it to be counted.
 
         Returns
         -------
         int
-            Number of words with more than 6 letters.
+            Number of words with more than `threshold` letters.
         """
-        return counts.count_long_words(text)
+        return counts.count_long_words(text, threshold=threshold)
 
     def monosyllabcount(self, text: str) -> int:
         """Counts words with only one syllable in a text.
@@ -1118,6 +1160,54 @@ class textstatistics:
             The McAlpine EFLAW readability score for `text`
         """
         return self._legacy_round(metrics.mcalpine_eflaw(text))
+
+    def __get_lang_cfg(self, lang: str, key: str) -> float:
+        """Get a value from the configuration for a specific language.
+
+        Parameters
+        ----------
+        lang : str
+            The language of the text.
+        key : str
+            The key to retrieve from the configuration.
+
+        Returns
+        -------
+        float
+            The value from the configuration.
+
+        """
+        return utils.get_lang_cfg(lang, key)
+
+    def __get_lang_root(self, lang: str) -> str:
+        """Get the root language of a language.
+
+        Parameters
+        ----------
+        lang : str
+            The language of the text.
+
+        Returns
+        -------
+        str
+            The root language of the given language.
+        """
+        return utils.get_lang_root(lang)
+
+    def __get_lang_easy_words(self, lang: str) -> set[str]:
+        """Get the easy words for a language.
+
+        Parameters
+        ----------
+        lang : str
+            The language of the text.
+
+        Returns
+        -------
+        set[str]
+            The easy words for the given language.
+        """
+        return utils.get_lang_easy_words(lang)
 
 
 textstat = textstatistics()
