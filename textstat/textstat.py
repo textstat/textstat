@@ -5,26 +5,6 @@ import warnings
 from .backend import transformations, validations, selections, counts, metrics, utils
 
 
-def get_grade_suffix(grade: int) -> str:
-    """
-    Select correct ordinal suffix. This function has been moved to `textstat.backend.utils.get_grade_suffix`.
-
-    Parameters
-    ----------
-    grade : int
-        The grade of the text.
-
-    Returns
-    -------
-    str
-        The ordinal suffix.
-
-    .. deprecated:: <version>
-        This function has been moved to `textstat.backend.utils.get_grade_suffix`.
-    """
-    return utils.get_grade_suffix(grade)
-
-
 class textstatistics:
     """Main textstat class with methods to calculate readability indices.
 
@@ -34,14 +14,14 @@ class textstatistics:
         Default: "utf-8"
     __lang : str
         Default : "en_US"
-    __round_outputs : bool
-        Whether to round floating point outputs. Default: True
     __round_points : int or None
-        The number of decimals to use when rounding outputs. round_points will
-        override any argument passed to the _legacy_round method. If
-        round_points is set to None, the number of decimals will be determined
-        by the argument passed to the method. Default: None
+        The number of decimals to use when rounding outputs. If round_points is set to
+        None, the outputs will not be rounded. Default: None
     __rm_apostrophe : bool
+        If True, the remove_punctuation method will remove the apostrophe in
+        contractions along with other punctuation. If False, punctuation is
+        removed with the exception of apostrophes in common English contractions.
+        Default: True
     """
 
     __lang = "en_US"
@@ -70,19 +50,16 @@ class textstatistics:
         pass
 
     def _legacy_round(self, number: float, points: int | None = None) -> float:
-        """Round `number`, unless the attribute `__round_outputs` is `False`.
+        """Round `number`, unless the attribute `__round_points` is `None`.
 
-        Round floating point outputs for backwards compatibility.
-        Rounding can be turned off by setting the instance attribute
-        `__round_outputs` to False.
+        Round floating point outputs for backwards compatibility. Rounding can be
+        turned on or off by calling `set_rounding_points`.
 
         Parameters
         ----------
         number : float
         points : int, optional
-            The number of decimal digits to return. If the instance attribute
-            `__round_points` is not None, the value of `__round_point` will
-            override the value passed for `points`. The default is 0.
+            This argument is deprecated and has no effect.
 
             .. deprecated:: <version>
                 Use set_rounding_points instead
