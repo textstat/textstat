@@ -907,8 +907,6 @@ class textstatistics:
 
         Anderson (1983) specifies that punctuation should be removed and that
         hyphenated sequences and abbreviations count as single words.
-        Therefore, make sure to call `textstat.set_rm_apostrophe(False)` before
-        calculating the RIX.
 
         """
         return self._legacy_round(metrics.rix(text))
