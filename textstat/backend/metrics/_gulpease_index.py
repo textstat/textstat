@@ -7,9 +7,18 @@ from ._chars_per_word import chars_per_word
 
 @typed_cache
 def gulpease_index(text: str) -> float:
-    """
-    Indice Gulpease Index for Italian texts
+    """Calculate Indice Gulpease Index for Italian texts
     https://it.wikipedia.org/wiki/Indice_Gulpease
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+
+    Returns
+    -------
+    float
+        The Gulpease Index for `text`
     """
     spw = sentences_per_word(text)
     cpw = chars_per_word(text)

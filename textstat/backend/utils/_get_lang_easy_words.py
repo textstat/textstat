@@ -30,6 +30,19 @@ else:
 
 @typed_cache
 def get_lang_easy_words(lang: str) -> set[str]:
+    """Get the easy words for a given language. If the language is not supported,
+    the easy words for english are returned.
+
+    Parameters
+    ----------
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    set[str]
+        A set of easy words.
+    """
     lang_root = get_lang_root(lang)
     try:
         return _set_words(lang_root)

@@ -13,8 +13,8 @@ def syllables_per_word(text: str, lang: str) -> float:
     ----------
     text : str
         A text string.
-    interval : int or None, optional
-        The default is None.
+    lang : str
+        The language of the text.
 
     Returns
     -------

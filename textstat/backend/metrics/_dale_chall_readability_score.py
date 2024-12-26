@@ -15,13 +15,15 @@ def dale_chall_readability_score(text: str, lang: str) -> float:
         words are counted as difficult words
         (see documentation for `is_difficult_word`). This may change in the
         future.
-    - Poper names are also counted as difficult words. This is unlikely to
+    - Proper names are also counted as difficult words. This is unlikely to
         change.
 
     Parameters
     ----------
     text : str
         A text string.
+    lang : str
+        The language of the text.
 
     Returns
     -------

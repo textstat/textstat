@@ -8,10 +8,19 @@ from ._words_per_sentence import words_per_sentence
 
 @typed_cache
 def dale_chall_readability_score_v2(text: str, lang: str) -> float:
-    """
-    Function to calculate New Dale Chall Readability formula.
-    I/P - a text
-    O/P - an int Dale Chall Readability Index/Grade Level
+    """Calculate New Dale Chall Readability formula.
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The New Dale Chall Readability Score for `text`
     """
     total_no_of_words = count_words(text)
     try:

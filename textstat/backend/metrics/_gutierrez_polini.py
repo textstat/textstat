@@ -8,9 +8,18 @@ from ._words_per_sentence import words_per_sentence
 
 @typed_cache
 def gutierrez_polini(text: str) -> float:
-    """
-    Guttierrez de Polini index
+    """Calculate Guttierrez de Polini index
     https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+
+    Returns
+    -------
+    float
+        The Gutierrez de Polini index for `text`
     """
     lpw = letters_per_word(text)
     wps = words_per_sentence(text)

@@ -9,9 +9,20 @@ from ..counts._count_sentences import count_sentences
 
 @typed_cache
 def szigriszt_pazos(text: str, lang: str) -> float:
-    """
-    Szigriszt Pazos readability score (1992)
+    """Calculate Szigriszt Pazos readability score (1992)
     https://legible.es/blog/perspicuidad-szigriszt-pazos/
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The Szigriszt Pazos readability score for `text`
     """
     syllables = count_syllables(text, lang)
     total_words = count_words(text)

@@ -8,11 +8,20 @@ from ..counts._count_miniwords import count_miniwords
 
 @typed_cache
 def mcalpine_eflaw(text: str) -> float:
-    """
-    McAlpine EFLAW score that asseses the readability of English texts
-    for English foreign learners
+    """Calculate McAlpine EFLAW score, which asseses the readability of English texts
+    for English foreign learners.
 
     https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+
+    Returns
+    -------
+    float
+        The McAlpine EFLAW readability score for `text`
     """
     if len(text) == 0:
         return 0.0

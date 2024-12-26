@@ -12,16 +12,20 @@ def list_words(
     rm_apostrophe: bool = False,
     lowercase: bool = False,
 ) -> list[str]:
-    """Get a list of all words in the text. Words are lowercased and
-    punctuation is removed. By default apostrophes are not removed but
-    they can be using `rm_apostrophe=True`.
+    """Get a list of all words in the text. If specified by args, words can be
+    lowercased and punctuation removed. By default apostrophes are not removed with
+    other punctuation but they can be by using `rm_apostrophe=True`.
 
     Parameters
     ----------
     text : str
         A text string.
+    rm_punctuation : bool, optional
+        Remove punctuation. The default is True.
     rm_apostrophe : bool, optional
         Remove apostrophes. The default is False.
+    lowercase : bool, optional
+        Lowercase words. The default is False.
 
     Returns
     -------

@@ -17,8 +17,8 @@ def lix(text: str) -> float:
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    float
+        The LIX score for `text`.
 
     Notes
     -----
@@ -31,13 +31,6 @@ def lix(text: str) -> float:
     A= Number of words
     B= Number of sentences
     C= Number of long words (More than 6 letters)
-
-    `A` is obtained with `len(text.split())`, which counts
-    contractions as one word. `A/B` is
-    calculated using the method `textstat.words_per_sentence()`, which
-    counts contractions as two words, unless `__rm_apostrophe` is set to
-    False. Therefore, the definition of a word is only consistent if you
-    call `textstat.set_rm_apostrophe(False)` before calculating the LIX.
 
     """
     words_len = count_words(text)

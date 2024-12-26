@@ -11,7 +11,7 @@ def count_difficult_words(
     text: str, lang: str, syllable_threshold: int = 2, unique: bool = False
 ) -> int:
     """Count the number of difficult words. By default, counts all words,
-    but can be set to count all only unique words by using `unique=True`.
+    but can be set to count only unique words by using `unique=True`.
 
     Parameters
     ----------

@@ -13,6 +13,9 @@ def is_difficult_word(word: str, syllable_threshold: int, lang: str) -> bool:
     easy words. However, it currently doesn't check if the word is a
     regular inflection of a word in the Dale-Chall list!
 
+    If the word is not a word, is not in the easy words list, or is shorter
+    than `syllable_threshold`, the function returns False. Else, True.
+
     Parameters
     ----------
     word : str
@@ -24,8 +27,8 @@ def is_difficult_word(word: str, syllable_threshold: int, lang: str) -> bool:
     Returns
     -------
     bool
-        True if the word is not in the easy words list and is longer than
-        `syllable_threshold`; else False.
+        False if the word is not a word, is not in the easy words list, or is shorter
+        than `syllable_threshold`, else True.
 
     """
     # Not a word

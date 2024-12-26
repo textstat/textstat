@@ -16,6 +16,21 @@ from ._gunning_fog import gunning_fog
 
 @typed_cache
 def text_standard(text: str, lang: str) -> float:
+    """Calculate the Text Standard for `text`. This function specifically calculates
+    the numerical value.
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The Text Standard for `text`.
+    """
     grade: list[int] = []
 
     # Appending Flesch Kincaid Grade

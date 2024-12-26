@@ -8,7 +8,7 @@ from ..selections._list_words import list_words
 
 
 @typed_cache
-def count_arabic_long_words(text: str) -> int:
+def count_arabic_long_words(text: str, rm_apostrophe: bool = True) -> int:
     """Counts long arabic words (>5 letters) without short vowels (tashkeel).
 
 
@@ -16,6 +16,8 @@ def count_arabic_long_words(text: str) -> int:
     ----------
     text : str
         A text string.
+    rm_apostrophe : bool, optional
+        Remove apostrophes with other punctuation. The default is True.
 
     Returns
     -------
@@ -31,7 +33,7 @@ def count_arabic_long_words(text: str) -> int:
     text = re.sub(tashkeel, "", text)
 
     count = 0
-    for t in list_words(text, rm_apostrophe=True):
+    for t in list_words(text, rm_apostrophe=rm_apostrophe):
         if len(t) > 5:
             count += 1
 

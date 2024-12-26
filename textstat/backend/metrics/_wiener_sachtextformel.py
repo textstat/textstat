@@ -10,10 +10,23 @@ from ._words_per_sentence import words_per_sentence
 
 @typed_cache
 def wiener_sachtextformel(text: str, variant: int, lang: str) -> float:
-    """
-    Wiener Sachtextformel for readability assessment of German texts
+    """Calculate Wiener Sachtextformel for readability assessment of German texts
 
     https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    variant : int
+        The variant of the formula.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The Wiener Sachtextformel readability score for `text`
     """
 
     if len(text) < 1:

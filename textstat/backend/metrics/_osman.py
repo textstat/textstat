@@ -11,9 +11,18 @@ from ._words_per_sentence import words_per_sentence
 
 @typed_cache
 def osman(text: str) -> float:
-    """
-    Osman index for Arabic texts
+    """Calculate Osman index for Arabic texts
     https://www.aclweb.org/anthology/L16-1038.pdf
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+
+    Returns
+    -------
+    float
+        The Osman index for `text`
     """
     try:
         complex_word_rate = count_complex_arabic_words(text) / count_words(text)

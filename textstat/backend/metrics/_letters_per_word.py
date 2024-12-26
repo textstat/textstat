@@ -7,10 +7,10 @@ from ..counts._count_words import count_words
 
 @typed_cache
 def letters_per_word(text: str) -> float:
-    """Calculate the average sentence word length in letters.
+    """Calculate the average word length in letters.
 
-    This function is a combination of the functions `counts.letter_count` and
-    `counts.lexicon_count`.
+    This function is a combination of the functions `counts.count_letters` and
+    `counts.count_words`.
 
     Parameters
     ----------

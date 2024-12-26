@@ -8,7 +8,7 @@ from ._list_words import list_words
 
 @typed_cache
 def list_difficult_words(text: str, syllable_threshold: int, lang: str) -> list[str]:
-    """Get a list of difficult words
+    """Get a list of the difficult words in the text.
 
     Parameters
     ----------
@@ -17,6 +17,8 @@ def list_difficult_words(text: str, syllable_threshold: int, lang: str) -> list[
     syllable_threshold : int, optional
         The cut-off for the number of syllables difficult words are
         required to have.
+    lang : str
+        The language of the text.
 
     Returns
     -------

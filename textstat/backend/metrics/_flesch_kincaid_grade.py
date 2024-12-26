@@ -13,6 +13,8 @@ def flesch_kincaid_grade(text: str, lang: str) -> float:
     ----------
     text : str
         A text string.
+    lang : str
+        The language of the text.
 
     Returns
     -------

@@ -7,7 +7,7 @@ from ._list_difficult_words import list_difficult_words
 
 @typed_cache
 def set_difficult_words(text: str, syllable_threshold: int, lang: str) -> set[str]:
-    """Get a set of difficult words
+    """Get a set (no duplicates) of the difficult words in the text.
 
     Parameters
     ----------
@@ -16,6 +16,8 @@ def set_difficult_words(text: str, syllable_threshold: int, lang: str) -> set[st
     syllable_threshold : int, optional
         The cut-off for the number of syllables difficult words are
         required to have.
+    lang : str
+        The language of the text.
 
     Returns
     -------

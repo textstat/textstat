@@ -9,8 +9,8 @@ from ..counts._count_sentences import count_sentences
 def words_per_sentence(text: str) -> float:
     """Calculate the average number of words per sentence.
 
-    This function is a combination of the functions `counts.lexicon_count` and
-    `counts.sentence_count`.
+    This function is a combination of the functions `counts.count_words` and
+    `counts.count_sentences`.
 
     Parameters
     ----------

@@ -9,6 +9,20 @@ from ._words_per_sentence import words_per_sentence
 
 @typed_cache
 def flesch_reading_ease(text: str, lang: str) -> float:
+    """Calculate the Flesch Reading Ease formula.
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The Flesch Reading Ease for `text`.
+    """
     lang_root = get_lang_root(lang)
     sentence_length = words_per_sentence(text)
     syllables = syllables_per_word(text, lang)

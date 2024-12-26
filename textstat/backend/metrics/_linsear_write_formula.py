@@ -14,12 +14,19 @@ def linsear_write_formula(
 ) -> float:
     r"""Calculate the Linsear-Write (Lw) metric.
 
-    The Lw only uses the first 100 words of text!
+    Canonically the Lw only uses the first 100 words of text. To enable this
+    functionality, set `strict_upper` to True.
 
     Parameters
     ----------
     text : str
         A text string.
+    lang : str
+        The language of the text.
+    strict_lower : bool
+        If True, the Lw is only calculated if the number of words is at least 100.
+    strict_upper : bool
+        If True, the Lw is only calculated on the first 100 words.
 
     Returns
     -------

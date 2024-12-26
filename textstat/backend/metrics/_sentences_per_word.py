@@ -9,7 +9,7 @@ from ..counts._count_words import count_words
 def sentences_per_word(text: str) -> float:
     """Get the number of sentences per word.
 
-    A combination of the functions counts.sentence_count and lecicon_count.
+    A combination of the functions counts.count_sentences and counts.count_words.
 
     Parameters
     ----------

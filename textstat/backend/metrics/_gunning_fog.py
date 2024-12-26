@@ -10,6 +10,20 @@ from ._words_per_sentence import words_per_sentence
 
 @typed_cache
 def gunning_fog(text: str, lang: str) -> float:
+    """Calculate the Gunning Fog Index formula.
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The Gunning Fog Index for `text`.
+    """
     syllable_threshold = int(get_lang_cfg(lang, "syllable_threshold"))
     diff_words = count_difficult_words(text, lang, syllable_threshold)
     tot_words = count_words(text)

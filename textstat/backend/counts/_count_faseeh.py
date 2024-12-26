@@ -8,13 +8,15 @@ from ..selections._list_words import list_words
 
 
 @typed_cache
-def count_faseeh(text: str) -> int:
+def count_faseeh(text: str, rm_apostrophe: bool = True) -> int:
     """Counts faseeh in arabic texts.
 
     Parameters
     ----------
     text : str
         A text string.
+    rm_apostrophe : bool, optional
+        Remove apostrophes with other punctuation. The default is True.
 
     Returns
     -------
@@ -31,7 +33,7 @@ def count_faseeh(text: str) -> int:
     # double faseeh char's: waw wa alef | waw wa noon
     bipattern = re.compile(r"(\u0648\u0627|\u0648\u0646)")
 
-    for w in list_words(text, rm_apostrophe=True):
+    for w in list_words(text, rm_apostrophe=rm_apostrophe):
         faseeh_count = len(unipattern.findall(w)) + len(bipattern.findall(w))
 
         if count_arabic_syllables(w) > 5 and faseeh_count > 0:

@@ -7,7 +7,7 @@ from ..selections._list_words import list_words
 
 
 @typed_cache
-def count_arabic_syllables(text: str) -> int:
+def count_arabic_syllables(text: str, rm_apostrophe: bool = True) -> int:
     """Count arabic syllables.
 
     Long and stressed syllables are counted double.
@@ -16,6 +16,8 @@ def count_arabic_syllables(text: str) -> int:
     ----------
     text : str
         A text string.
+    rm_apostrophe : bool, optional
+        Remove apostrophes with other punctuation. The default is True.
 
     Returns
     -------
@@ -28,7 +30,7 @@ def count_arabic_syllables(text: str) -> int:
 
     # tashkeel: fatha | damma | kasra
     tashkeel = [r"\u064E", r"\u064F", r"\u0650"]
-    char_list = [c for w in list_words(text, rm_apostrophe=True) for c in w]
+    char_list = [c for w in list_words(text, rm_apostrophe=rm_apostrophe) for c in w]
 
     for t in tashkeel:
         for i, c in enumerate(char_list):

@@ -7,17 +7,19 @@ from ..utils._typed_cache import typed_cache
 
 @typed_cache
 def count_syllables(text: str, lang: str) -> int:
-    """Calculate syllable words in a text using pyphen.
+    """Estimate the total number of syllables in a text.
 
     Parameters
     ----------
     text : str
         A text string.
+    lang : str
+        The language of the text.
 
     Returns
     -------
     int
-        Number of syllables in `text`.
+        Number of syllables in the text.
     """
     text = text.lower()
     text = remove_punctuation(text, rm_apostrophe=False)

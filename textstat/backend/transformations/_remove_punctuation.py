@@ -10,13 +10,12 @@ def remove_punctuation(
     text: str,
     rm_apostrophe: bool,
 ) -> str:
-    """Remove punctuation.
+    """Get a copy of the text with punctuation removed.
 
-    If the parameter `rm_apostrophe` is set to True, all
-    punctuation is removed, including apostrophes.
-    If the parameter `rm_apostrophe` is set to False,
-    punctuation is removed with the exception of apostrophes in common
-    English contractions.
+    If the parameter `rm_apostrophe` is set to True, all punctuation is removed,
+    including apostrophes.
+    If the parameter `rm_apostrophe` is set to False, punctuation is removed with
+    the exception of apostrophes in common English contractions.
     Hyphens are always removed.
 
     Parameters

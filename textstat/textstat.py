@@ -103,7 +103,8 @@ class textstatistics:
             self.__round_points = None
 
     def set_rm_apostrophe(self, rm_apostrophe: bool) -> None:
-        """Set the attribute `__round_point`.
+        """Sets whether other methods should remove apostrophes in common
+        English contractions when removing punctuation.
 
         Parameters
         ----------
@@ -164,7 +165,7 @@ class textstatistics:
         text : str
             A text string.
         ignore_spaces : bool, optional
-            Ignore whitespaces. The default is True.
+            Ignore whitespaces if True. This argument is deprecated and has no effect.
 
         Returns
         -------
@@ -197,32 +198,30 @@ class textstatistics:
 
         Returns
         -------
-        text : TYPE
-            DESCRIPTION.
+        text : str
+            A copy of the input text with punctuation removed.
 
         """
         return transformations.remove_punctuation(text, self.__rm_apostrophe)
 
     def lexicon_count(self, text: str, removepunct: bool = True) -> int:
-        """Count types (words) in a text.
+        """Count the number of words in a text.
 
-        If `removepunct` is set to True and
-        the instance attribute `__rm_apostrophe` is set to False,
-        English contractions (e.g. "aren't") are counted as one word.
-        Hyphenated words are counted as a single word
-        (e.g. "singer-songwriter").
+        English contractions (e.g. "aren't") and hyphenated words are counted as one word.
+        If `removepunct` is set to False, "words" with no letters (e.g. " .? ") are
+        counted as words.
 
         Parameters
         ----------
         text : str
             A text string.
         removepunct : bool, optional
-            DESCRIPTION. The default is True.
+            Remove punctuation. The default is True.
 
         Returns
         -------
         count : int
-            DESCRIPTION.
+            Number of words.
 
         """
         return counts.count_words(text, rm_punctuation=removepunct)
@@ -273,7 +272,7 @@ class textstatistics:
         return counts.count_syllables(text, self.__lang)
 
     def sentence_count(self, text: str) -> int:
-        """Count the sentences of the text.
+        """Count the sentences in the text.
 
         Parameters
         ----------
@@ -289,10 +288,7 @@ class textstatistics:
         return counts.count_sentences(text)
 
     def avg_sentence_length(self, text: str) -> float:
-        """Calculate the average sentence length.
-
-        This function is a combination of the functions `lexicon_count` and
-        `sentence_count`.
+        """Calculate the average sentence length in words.
 
         Parameters
         ----------
@@ -308,31 +304,30 @@ class textstatistics:
         return self._legacy_round(metrics.words_per_sentence(text))
 
     def avg_syllables_per_word(self, text: str, interval: int | None = None) -> float:
-        """Get the average number of syllables per word.
+        """Get the average number of syllables per `interval` words. If
+        `interval` is None, it will be interpreted as 1.
 
         Parameters
         ----------
         text : str
             A text string.
         interval : int or None, optional
-            The default is None.
+            The interval. The default is None (1).
 
         Returns
         -------
         float
-            The average number of syllables per word.
+            The average number of syllables per `interval` words.
 
         """
+        if interval is None:
+            interval = 1
         aspw = metrics.syllables_per_word(text, self.__lang)
-        if interval:
-            aspw *= interval
+        aspw *= interval
         return self._legacy_round(aspw)
 
     def avg_character_per_word(self, text: str) -> float:
-        """Calculate the average sentence word length in characters.
-
-        This function is a combination of the functions `char_count` and
-        `lexicon_count`.
+        """Calculate the average word length in characters.
 
         Parameters
         ----------
@@ -348,10 +343,7 @@ class textstatistics:
         return self._legacy_round(metrics.chars_per_word(text))
 
     def avg_letter_per_word(self, text: str) -> float:
-        """Calculate the average sentence word length in letters.
-
-        This function is a combination of the functions `letter_count` and
-        `lexicon_count`.
+        """Calculate the average  word length in letters.
 
         Parameters
         ----------
@@ -369,8 +361,6 @@ class textstatistics:
     def avg_sentence_per_word(self, text: str) -> float:
         """Get the number of sentences per word.
 
-        A combination of the functions sentence_count and lecicon_count.
-
         Parameters
         ----------
         text : str
@@ -386,9 +376,6 @@ class textstatistics:
 
     def words_per_sentence(self, text: str) -> float:
         """Calculate the average number of words per sentence.
-
-        This function is a combination of the functions `lexicon_count` and
-        `sentence_count`.
 
         Parameters
         ----------
@@ -472,6 +459,18 @@ class textstatistics:
         return counts.count_arabic_long_words(text)
 
     def flesch_reading_ease(self, text: str) -> float:
+        """Calculate the Flesch Reading Ease formula.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Flesch Reading Ease for `text`.
+        """
         return self._legacy_round(metrics.flesch_reading_ease(text, self.__lang))
 
     def flesch_kincaid_grade(self, text: str) -> float:
@@ -499,7 +498,7 @@ class textstatistics:
         return self._legacy_round(metrics.flesch_kincaid_grade(text, self.__lang))
 
     def polysyllabcount(self, text: str) -> int:
-        """Count the words with three or more syllables.
+        """Count the number of words with three or more syllables.
 
         Parameters
         ----------
@@ -628,7 +627,7 @@ class textstatistics:
         self, text: str, syllable_threshold: int = 2, unique: bool = True
     ) -> int:
         """Count the number of difficult words. By default, counts all words,
-        but can be set to count all only unique words by using `unique=True`.
+        but can be set to count only unique words by using `unique=True`.
 
         Parameters
         ----------
@@ -640,7 +639,7 @@ class textstatistics:
             The cut-off for the number of syllables difficult words are
             required to have. The default is 2.
         unique : bool, optional
-            Count only unique words. The default is False.
+            Count only unique words. The default is True.
 
         Returns
         -------
@@ -653,7 +652,7 @@ class textstatistics:
         )
 
     def difficult_words_list(self, text: str, syllable_threshold: int = 2) -> list[str]:
-        """Get a list of difficult words
+        """Get a list of the difficult words in the text.
 
         Parameters
         ----------
@@ -665,8 +664,8 @@ class textstatistics:
 
         Returns
         -------
-        list[str]
-            DESCRIPTION.
+        List[str]
+            A list of the words deemed difficult.
 
         """
         return selections.list_difficult_words(text, syllable_threshold, self.__lang)
@@ -677,6 +676,9 @@ class textstatistics:
         The function checks if if the word is in the Dale-Chall list of
         easy words. However, it currently doesn't check if the word is a
         regular inflection of a word in the Dale-Chall list!
+
+        If the word is not a word, is not in the easy words list, or is shorter
+        than `syllable_threshold`, the function returns False. Else, True.
 
         Parameters
         ----------
@@ -689,14 +691,35 @@ class textstatistics:
         Returns
         -------
         bool
-            True if the word is not in the easy words list and is longer than
-            `syllable_threshold`; else False.
+            False if the word is not a word (i.e. `word` contains whitespace), is not
+            in the easy words list, or is shorter than `syllable_threshold`, else
+            True.
 
         """
         return validations.is_difficult_word(word, syllable_threshold, self.__lang)
 
     def is_easy_word(self, word: str, syllable_threshold: int = 2) -> bool:
-        return not self.is_difficult_word(word, syllable_threshold)
+        """Return True if `word` is not a difficult word. See the docstring for
+        `is_difficult_word` for details.
+
+        Parameters
+        ----------
+        word : str
+            A word.
+        syllable_threshold : int, optional
+            Minimum number of syllables a difficult word must have. The
+            default is 2.
+
+        Returns
+        -------
+        bool
+            True if the word is a word (no whitespace), is not in the easy words list,
+            and is shorter than `syllable_threshold`, else False.
+
+        """
+        return (len(word.split()) == 1) and (
+            not self.is_difficult_word(word, syllable_threshold)
+        )
 
     def dale_chall_readability_score(self, text: str) -> float:
         r"""Estimate the Dale-Chall readability score.
@@ -706,7 +729,7 @@ class textstatistics:
           words are counted as difficult words
           (see documentation for `is_difficult_word`). This may change in the
           future.
-        - Poper names are also counted as difficult words. This is unlikely to
+        - Proper names are also counted as difficult words. This is unlikely to
           change.
 
         Parameters
@@ -735,6 +758,18 @@ class textstatistics:
         )
 
     def gunning_fog(self, text: str) -> float:
+        """Calculate the Gunning Fog Index formula.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Gunning Fog Index for `text`.
+        """
         return self._legacy_round(metrics.gunning_fog(text, self.__lang))
 
     def lix(self, text: str) -> float:
@@ -747,8 +782,8 @@ class textstatistics:
 
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        float
+            The LIX score for `text`.
 
         Notes
         -----
@@ -761,13 +796,6 @@ class textstatistics:
         A= Number of words
         B= Number of sentences
         C= Number of long words (More than 6 letters)
-
-        `A` is obtained with `len(text.split())`, which counts
-        contractions as one word. `A/B` is
-        calculated using the method `textstat.avg_sentence_length()`, which
-        counts contractions as two words, unless `__rm_apostrophe` is set to
-        False. Therefore, the definition of a word is only consistent if you
-        call `textstat.set_rm_apostrophe(False)` before calculating the LIX.
 
         """
         return self._legacy_round(metrics.lix(text))
@@ -808,10 +836,20 @@ class textstatistics:
         return self._legacy_round(metrics.rix(text))
 
     def spache_readability(self, text: str, float_output: bool = True) -> float:
-        """
-        Function to calculate SPACHE readability formula for young readers.
-        I/P - a text
-        O/P - an int Spache Readability Index/Grade Level
+        """Calculate SPACHE readability formula for young readers. If `float_output`
+        is True, the function returns a float. Otherwise, it rounds down to an int.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        float_output : bool, optional
+            Whether to return a float or an int. The default is True.
+
+        Returns
+        -------
+        float
+            The SPACHE readability score for `text`
         """
         readability_score = metrics.spache_readability(text, self.__lang)
         if float_output:
@@ -821,16 +859,40 @@ class textstatistics:
             return int(readability_score)
 
     def dale_chall_readability_score_v2(self, text: str) -> float:
-        """
-        Function to calculate New Dale Chall Readability formula.
-        I/P - a text
-        O/P - an int Dale Chall Readability Index/Grade Level
+        """Calculate New Dale Chall Readability formula.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The New Dale Chall Readability Score for `text`
         """
         return self._legacy_round(
             metrics.dale_chall_readability_score_v2(text, self.__lang)
         )
 
     def text_standard(self, text: str, float_output: bool = False) -> float | str:
+        """Calculate the Text Standard for `text`. If `float_output` is True,
+        calculates the numerical value. Otherwise, returns a string of the form
+        "XX and YY grade" where XX and YY are gotten by rounding the float value
+        down and up, respectively.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        float_output : bool, optional
+            Whether to return a float or a string. The default is False.
+
+        Returns
+        -------
+        float
+            The Text Standard for `text`.
+        """
         standard_value = metrics.text_standard(text, self.__lang)
         if float_output:
             return self._legacy_round(standard_value)
@@ -845,80 +907,201 @@ class textstatistics:
             )
 
     def reading_time(self, text: str, ms_per_char: float = 14.69) -> float:
-        """
-        Function to calculate reading time (Demberg & Keller, 2008)
-        I/P - a text
-        O/P - reading time in second
+        """Calculate reading time (Demberg & Keller, 2008).
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        ms_per_char : float
+            The reading speed in milliseconds per character. The default is 14.69.
+
+        Returns
+        -------
+        float
+            The reading time for `text`.
         """
         return self._legacy_round(metrics.reading_time(text, ms_per_char))
 
     # Spanish readability tests
     def fernandez_huerta(self, text: str) -> float:
-        """
-        Fernandez Huerta readability score
+        """Calculate Fernandez Huerta readability score
         https://legible.es/blog/lecturabilidad-fernandez-huerta/
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        lang : str
+            The language of the text.
+
+        Returns
+        -------
+        float
+            The Fernandez Huerta readability score for `text`
         """
         return self._legacy_round(metrics.fernandez_huerta(text, self.__lang))
 
     def szigriszt_pazos(self, text: str) -> float:
-        """
-        Szigriszt Pazos readability score (1992)
+        """Calculate Szigriszt Pazos readability score (1992)
         https://legible.es/blog/perspicuidad-szigriszt-pazos/
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        lang : str
+            The language of the text.
+
+        Returns
+        -------
+        float
+            The Szigriszt Pazos readability score for `text`
         """
         return self._legacy_round(metrics.szigriszt_pazos(text, self.__lang))
 
     def gutierrez_polini(self, text: str) -> float:
-        """
-        Guttierrez de Polini index
+        """Calculate Guttierrez de Polini index
         https://legible.es/blog/comprensibilidad-gutierrez-de-polini/
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Gutierrez de Polini index for `text`
         """
         return self._legacy_round(metrics.gutierrez_polini(text))
 
     def crawford(self, text: str) -> float:
-        """
-        Crawford index
+        r"""Calculate the Crawford index for the text.
+
         https://legible.es/blog/formula-de-crawford/
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        lang : str
+            The language of the text.
+
+        Returns
+        -------
+        float
+            The Crawford index for `text`.
+
+        Notes
+        -----
+        The Crawford index is calculated as:
+
+        .. math::
+
+            (-0.205*n\ sentences/n\ words)+(0.049*n\ syllables/n\ words)-3.407
+
         """
         return self._legacy_round(metrics.crawford(text, self.__lang))
 
     def osman(self, text: str) -> float:
-        """
-        Osman index for Arabic texts
+        """Calculate Osman index for Arabic texts
         https://www.aclweb.org/anthology/L16-1038.pdf
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Osman index for `text`
         """
         return self._legacy_round(metrics.osman(text))
 
     def gulpease_index(self, text: str) -> float:
-        """
-        Indice Gulpease Index for Italian texts
+        """Calculate Indice Gulpease Index for Italian texts
         https://it.wikipedia.org/wiki/Indice_Gulpease
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Gulpease Index for `text`
         """
         return self._legacy_round(metrics.gulpease_index(text))
 
     def long_word_count(self, text: str) -> int:
-        """counts words with more than 6 characters"""
+        """Counts words with more than 6 letters.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+            Number of words with more than 6 letters.
+        """
         return counts.count_long_words(text)
 
     def monosyllabcount(self, text: str) -> int:
-        """counts monosyllables"""
+        """Counts words with only one syllable in a text.
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        int
+        Number of monosyllable words in the text.
+        """
         return counts.count_monosyllable_words(text, self.__lang)
 
     def wiener_sachtextformel(self, text: str, variant: int) -> float:
-        """
-        Wiener Sachtextformel for readability assessment of German texts
+        """Calculate Wiener Sachtextformel for readability assessment of German texts
 
         https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+        variant : int
+            The variant of the formula.
+
+        Returns
+        -------
+        float
+            The Wiener Sachtextformel readability score for `text`
         """
         return self._legacy_round(
             metrics.wiener_sachtextformel(text, variant, self.__lang)
         )
 
     def mcalpine_eflaw(self, text: str) -> float:
-        """
-        McAlpine EFLAW score that asseses the readability of English texts
-        for English foreign learners
+        """Calculate McAlpine EFLAW score, which asseses the readability of English texts
+        for English foreign learners.
 
         https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The McAlpine EFLAW readability score for `text`
         """
         return self._legacy_round(metrics.mcalpine_eflaw(text))
 

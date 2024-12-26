@@ -7,14 +7,14 @@ from ..selections._list_words import list_words
 
 
 @typed_cache
-def count_complex_arabic_words(text: str) -> int:
+def count_complex_arabic_words(text: str, rm_apostrophe: bool = True) -> int:
     """
     Count complex arabic words. Complex arabic words are word with
     more than 5 instances between the following:
-    - fatHa
-    - tanween fatH
+    - fatha
+    - tanween fath
     - dhamma
-    - tanween Dhamm
+    - tanween dhamm
     - kasra
     - tanween kasr
     - shaddah
@@ -23,6 +23,8 @@ def count_complex_arabic_words(text: str) -> int:
     ----------
     text : str
         A text string.
+    rm_apostrophe : bool, optional
+        Remove apostrophes with other punctuation. The default is True.
 
     Returns
     -------
@@ -36,7 +38,7 @@ def count_complex_arabic_words(text: str) -> int:
     # | kasra | tanween kasr | shaddah
     pattern = re.compile("[\u064e\u064b\u064f\u064c\u0650\u064d\u0651]")
 
-    for w in list_words(text, rm_apostrophe=True):
+    for w in list_words(text, rm_apostrophe=rm_apostrophe):
         if len(pattern.findall(w)) > 5:
             count += 1
 

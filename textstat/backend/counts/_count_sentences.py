@@ -18,7 +18,7 @@ def count_sentences(text: str) -> int:
     Returns
     -------
     int
-        Number of sentences in `text`. Will be 0 for empty string, otherwise >= 1.
+        Number of sentences in the text. Will be 0 for empty string, otherwise >= 1.
 
     """
     if len(text) == 0:

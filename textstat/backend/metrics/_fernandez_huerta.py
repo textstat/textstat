@@ -7,9 +7,20 @@ from ._syllables_per_word import syllables_per_word
 
 @typed_cache
 def fernandez_huerta(text: str, lang: str) -> float:
-    """
-    Fernandez Huerta readability score
+    """Calculate Fernandez Huerta readability score
     https://legible.es/blog/lecturabilidad-fernandez-huerta/
+
+    Parameters
+    ----------
+    text : str
+        A text string.
+    lang : str
+        The language of the text.
+
+    Returns
+    -------
+    float
+        The Fernandez Huerta readability score for `text`
     """
     sentence_length = words_per_sentence(text)
     syllables = syllables_per_word(text, lang)

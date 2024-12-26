@@ -13,6 +13,8 @@ def smog_index(text: str, lang: str) -> float:
     ----------
     text : str
         A text string.
+    lang : str
+        The language of the text.
 
     Returns
     -------
