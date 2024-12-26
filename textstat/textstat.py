@@ -74,8 +74,7 @@ class textstatistics:
         self.__round_points = points
 
     def set_rounding(self, rounding: bool, points: int | None = None) -> None:
-        """*Deprecated, use set_rounding_points instead*
-        Set the rounding behavior. Setting `rounding` to True will round all
+        """Set the rounding behavior. Setting `rounding` to True will round all
         textstat outputs to the number of decimal digits specified by `points`.
         Setting `rounding` to False will disable rounding as will setting `points`
         to None.
@@ -91,6 +90,9 @@ class textstatistics:
         Returns
         -----
         None.
+
+        .. deprecated:: <version>
+            Use set_rounding_points instead
 
         """
         warnings.warn(
@@ -166,6 +168,9 @@ class textstatistics:
             A text string.
         ignore_spaces : bool, optional
             Ignore whitespaces if True. This argument is deprecated and has no effect.
+
+            .. deprecated:: <version>
+                This argument has no effect.
 
         Returns
         -------
@@ -300,7 +305,16 @@ class textstatistics:
         float
             The average sentence length.
 
+        .. deprecated:: <version>
+            Use `words_per_sentence` instead.
+
         """
+        warnings.warn(
+            "The 'avg_sentence_length' method has been deprecated due to being "
+            "the same as 'words_per_sentence'. This method will be removed in the"
+            "future.",
+            DeprecationWarning,
+        )
         return self._legacy_round(metrics.words_per_sentence(text))
 
     def avg_syllables_per_word(self, text: str, interval: int | None = None) -> float:
