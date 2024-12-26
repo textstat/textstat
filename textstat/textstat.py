@@ -5,6 +5,26 @@ import warnings
 from .backend import transformations, validations, selections, counts, metrics, utils
 
 
+def get_grade_suffix(grade: int) -> str:
+    """
+    Select correct ordinal suffix. This function has been moved to `textstat.backend.utils.get_grade_suffix`.
+
+    Parameters
+    ----------
+    grade : int
+        The grade of the text.
+
+    Returns
+    -------
+    str
+        The ordinal suffix.
+
+    .. deprecated:: <version>
+        This function has been moved to `textstat.backend.utils.get_grade_suffix`.
+    """
+    return utils.get_grade_suffix(grade)
+
+
 class textstatistics:
     """Main textstat class with methods to calculate readability indices.
 
