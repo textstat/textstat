@@ -62,7 +62,7 @@ LANG_CONFIGS: dict[str, dict[str, float]] = {
     },
 }
 
-RE_CONTRACTION_ENDINGS = r"[tsd]\b|ve\b|ll\b|re\b"
+RE_CONTRACTION_ENDINGS = r"[tsd]|ve|ll|re"
 RE_CONTRACTION_APOSTROPHE = r"\'(?=" + RE_CONTRACTION_ENDINGS + ")"
 RE_NONCONTRACTION_APOSTROPHE = r"\'(?!" + RE_CONTRACTION_ENDINGS + ")"
 
