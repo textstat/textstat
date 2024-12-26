@@ -22,7 +22,12 @@ def test_legacy_round(num: float, points: int, expected: float) -> None:
     # Check default non-rounding behavior
     assert textstat._legacy_round(num) == num
 
-    # Check rounding (note this test covers the set_rounding method as well)
+    # Check rounding (note this test covers the set_rounding_points method as well)
     ts = type(textstat)()
     ts.set_rounding(True, points)
+    assert ts._legacy_round(num) == expected
+
+    # Check rounding (note this test covers the set_rounding method as well)
+    ts = type(textstat)()
+    ts.set_rounding_points(points)
     assert ts._legacy_round(num) == expected
