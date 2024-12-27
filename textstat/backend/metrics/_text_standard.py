@@ -34,12 +34,13 @@ def text_standard(text: str, lang: str) -> float:
     grade: list[int] = []
 
     # Appending Flesch Kincaid Grade
-    lower = math.floor(flesch_kincaid_grade(text, lang))
-    upper = math.ceil(flesch_kincaid_grade(text, lang))
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = flesch_kincaid_grade(text, lang)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
-    # Appending Flesch Reading Easy
+    # Appending Flesch Reading Ease
     score = flesch_reading_ease(text, lang)
     if score < 100 and score >= 90:
         grade.append(5)
@@ -60,44 +61,46 @@ def text_standard(text: str, lang: str) -> float:
         grade.append(13)
 
     # Appending SMOG Index
-    lower = math.floor(smog_index(text, lang))
-    upper = math.ceil(smog_index(text, lang))
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = smog_index(text, lang)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
     # Appending Coleman_Liau_Index
-    lower = math.floor(coleman_liau_index(text))
-    upper = math.ceil(coleman_liau_index(text))
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = coleman_liau_index(text)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
     # Appending Automated_Readability_Index
-    lower = math.floor(automated_readability_index(text))
-    upper = math.ceil(automated_readability_index(text))
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = automated_readability_index(text)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
     # Appending Dale_Chall_Readability_Score
-    lower = math.floor(dale_chall_readability_score(text, lang))
-    upper = math.ceil(dale_chall_readability_score(text, lang))
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = dale_chall_readability_score(text, lang)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
     # Appending Linsear_Write_Formula
-    lower = math.floor(
-        linsear_write_formula(text, lang, strict_lower=False, strict_upper=True)
-    )
-    upper = math.ceil(
-        linsear_write_formula(text, lang, strict_lower=False, strict_upper=True)
-    )
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = linsear_write_formula(text, lang, strict_lower=False, strict_upper=True)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
     # Appending Gunning Fog Index
-    lower = math.floor(gunning_fog(text, lang))
-    upper = math.ceil(gunning_fog(text, lang))
-    grade.append(int(lower))
-    grade.append(int(upper))
+    score = gunning_fog(text, lang)
+    lower = math.floor(score)
+    upper = math.ceil(score)
+    near = round(score)
+    grade.extend([lower, upper, near])
 
     # Finding the Readability Consensus based upon all the above tests
     d = Counter(grade)

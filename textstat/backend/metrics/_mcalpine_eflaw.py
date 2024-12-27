@@ -23,9 +23,6 @@ def mcalpine_eflaw(text: str) -> float:
     float
         The McAlpine EFLAW readability score for `text`
     """
-    if len(text) == 0:
-        return 0.0
-
     n_words = count_words(text)
     n_sentences = count_sentences(text)
     n_miniwords = count_miniwords(text, max_size=3)

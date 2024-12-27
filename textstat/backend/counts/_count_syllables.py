@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ..transformations._remove_punctuation import remove_punctuation
+from ..selections._list_words import list_words
 from ..utils._get_pyphen import get_pyphen
 from ..utils._typed_cache import typed_cache
 
@@ -21,12 +21,6 @@ def count_syllables(text: str, lang: str) -> int:
     int
         Number of syllables in the text.
     """
-    text = text.lower()
-    text = remove_punctuation(text, rm_apostrophe=False)
-
-    if not text:
-        return 0
-
     pyphen = get_pyphen(lang)
 
-    return sum([len(pyphen.positions(w)) + 1 for w in text.split()])
+    return sum([len(pyphen.positions(w)) + 1 for w in list_words(text, lowercase=True)])

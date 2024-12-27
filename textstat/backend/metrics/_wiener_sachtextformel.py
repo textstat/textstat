@@ -28,16 +28,15 @@ def wiener_sachtextformel(text: str, variant: int, lang: str) -> float:
     float
         The Wiener Sachtextformel readability score for `text`
     """
-
-    if len(text) < 1:
-        return 0.0
-
     n_words = count_words(text)
 
-    ms = 100 * count_polysyllable_words(text, lang) / n_words
-    sl = words_per_sentence(text)
-    iw = 100 * count_long_words(text) / n_words
-    es = 100 * count_monosyllable_words(text, lang) / n_words
+    try:
+        ms = 100 * count_polysyllable_words(text, lang) / n_words
+        sl = words_per_sentence(text)
+        iw = 100 * count_long_words(text) / n_words
+        es = 100 * count_monosyllable_words(text, lang) / n_words
+    except ZeroDivisionError:
+        return 0.0
 
     if variant == 1:
         return (0.1935 * ms) + (0.1672 * sl) + (0.1297 * iw) - (0.0327 * es) - 0.875

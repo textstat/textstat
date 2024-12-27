@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 
 from ..utils._typed_cache import typed_cache
+from ..utils.constants import RE_NONCONTRACTION_APOSTROPHE
 
 
 @typed_cache
@@ -34,7 +35,7 @@ def remove_punctuation(
         punctuation_regex = r"[^\w\s]"
     else:
         # remove non-apostrophe single quotation marks
-        text = re.sub(r"\'(?![tsd]\b|ve\b|ll\b|re\b)", "", text)
+        text = re.sub(RE_NONCONTRACTION_APOSTROPHE, "", text)
         # remove all punctuation except apostrophes
         punctuation_regex = r"[^\w\s\']"
 

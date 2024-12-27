@@ -36,7 +36,7 @@ def lix(text: str) -> float:
     words_len = count_words(text)
     long_words = count_long_words(text)
     try:
-        per_long_words = (long_words * 100) / words_len
+        per_long_words = 100 * long_words / words_len
     except ZeroDivisionError:
         return 0.0
     asl = words_per_sentence(text)

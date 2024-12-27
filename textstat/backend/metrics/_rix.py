@@ -35,8 +35,6 @@ def rix(text: str) -> float:
 
     Anderson (1983) specifies that punctuation should be removed and that
     hyphenated sequences and abbreviations count as single words.
-    Therefore, make sure to call `textstat.set_rm_apostrophe(False)` before
-    calculating the RIX.
 
     """
     long_words_count = count_long_words(text)

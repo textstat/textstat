@@ -25,7 +25,7 @@ def dale_chall_readability_score_v2(text: str, lang: str) -> float:
     total_no_of_words = count_words(text)
     try:
         asl = words_per_sentence(text)
-        pdw = (count_difficult_words(text, lang) / total_no_of_words) * 100
+        pdw = 100 * count_difficult_words(text, lang) / total_no_of_words
     except ZeroDivisionError:
         return 0.0
     raw_score = 0.1579 * (pdw) + 0.0496 * asl
