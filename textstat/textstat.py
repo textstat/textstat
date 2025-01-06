@@ -366,7 +366,7 @@ class textstatistics:
         for word in text.split():
             try:
                 cmu_phones = self.cmu_dict[word][0]
-                count += len([None for p in cmu_phones if p[-1].isdigit()])
+                count += sum(1 for p in cmu_phones if p[-1].isdigit())
             except (TypeError, IndexError):
                 count += len(self.pyphen.positions(word)) + 1
 
