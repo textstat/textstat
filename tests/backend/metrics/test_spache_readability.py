@@ -10,10 +10,10 @@ from .. import resources
     "text, lang, expected",
     [
         (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 3.411),
+        (resources.EASY_TEXT, "en_US", 3.585),
         (resources.SHORT_TEXT, "en_US", 3.264),
-        (resources.PUNCT_TEXT, "en_US", 3.307),
-        (resources.LONG_TEXT, "en_US", 5.219),
+        (resources.PUNCT_TEXT, "en_US", 3.469),
+        (resources.LONG_TEXT, "en_US", 5.473),
     ],
 )
 def test_spache_readability(text: str, lang: str, expected: float) -> None:

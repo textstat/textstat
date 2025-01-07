@@ -13,7 +13,7 @@ from .. import resources
         (resources.EASY_TEXT, "en_US", 4.0),
         (resources.SHORT_TEXT, "en_US", 2.0),
         (resources.PUNCT_TEXT, "en_US", 6.0),
-        (resources.LONG_TEXT, "en_US", 9.0),
+        (resources.LONG_TEXT, "en_US", 11.0),
     ],
 )
 def test_text_standard(text: str, lang: str, expected: float) -> None:

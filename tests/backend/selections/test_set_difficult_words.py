@@ -60,6 +60,7 @@ from textstat.backend import selections
                 "puzzles",
                 "medium",
                 "Anna's",
+                "pieces",
             },
         ),
         (
@@ -73,6 +74,7 @@ from textstat.backend import selections
                 "suffice",
                 "removing",
                 "characters",
+                "it'll",
             },
         ),
     ],

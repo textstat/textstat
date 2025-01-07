@@ -10,8 +10,8 @@ from .. import resources
     [
         (resources.EASY_TEXT, "en_US", 6),
         (resources.SHORT_TEXT, "en_US", 1),
-        (resources.PUNCT_TEXT, "en_US", 5),
-        (resources.LONG_TEXT, "en_US", 32),
+        (resources.PUNCT_TEXT, "en_US", 4),
+        (resources.LONG_TEXT, "en_US", 38),
     ],
 )
 def test_count_polysyllable_words(test: str, lang: str, expected: int) -> None:

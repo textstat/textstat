@@ -16,8 +16,8 @@ from ..backend import resources
         (resources.SHORT_TEXT, False, "1st and 2nd grade"),
         (resources.PUNCT_TEXT, True, 6.0),
         (resources.PUNCT_TEXT, False, "5th and 6th grade"),
-        (resources.LONG_TEXT, True, 9.0),
-        (resources.LONG_TEXT, False, "8th and 9th grade"),
+        (resources.LONG_TEXT, True, 11.0),
+        (resources.LONG_TEXT, False, "10th and 11th grade"),
     ],
 )
 def test_text_standard(text: str, float_output: bool, expected: float | str) -> None:

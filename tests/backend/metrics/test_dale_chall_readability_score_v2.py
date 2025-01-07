@@ -10,10 +10,10 @@ from .. import resources
     "text, lang, expected",
     [
         (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 6.475),
+        (resources.EASY_TEXT, "en_US", 6.794),
         (resources.SHORT_TEXT, "en_US", 7.043),
-        (resources.PUNCT_TEXT, "en_US", 5.95),
-        (resources.LONG_TEXT, "en_US", 7.099),
+        (resources.PUNCT_TEXT, "en_US", 6.248),
+        (resources.LONG_TEXT, "en_US", 7.566),
     ],
 )
 def test_dale_chall_readability_score_v2(text: str, lang: str, expected: float) -> None:

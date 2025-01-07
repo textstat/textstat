@@ -10,12 +10,12 @@ from .. import resources
     [
         (resources.EASY_TEXT, "en_US", 1, True, 11),
         (resources.EASY_TEXT, "en_US", 1, False, 22),
-        (resources.EASY_TEXT, "en_US", 2, True, 5),
-        (resources.EASY_TEXT, "en_US", 2, False, 15),
-        (resources.EASY_TEXT, "en_US", 3, True, 0),
+        (resources.EASY_TEXT, "en_US", 2, True, 6),
+        (resources.EASY_TEXT, "en_US", 2, False, 17),
+        (resources.EASY_TEXT, "en_US", 3, True, 1),
         (resources.SHORT_TEXT, "en_US", 2, True, 1),
-        (resources.PUNCT_TEXT, "en_US", 2, True, 6),
-        (resources.LONG_TEXT, "en_US", 2, True, 51),
+        (resources.PUNCT_TEXT, "en_US", 2, True, 7),
+        (resources.LONG_TEXT, "en_US", 2, True, 57),
     ],
 )
 def test_count_difficult_words(

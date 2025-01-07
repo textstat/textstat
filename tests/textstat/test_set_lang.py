@@ -8,9 +8,9 @@ from ..backend import resources
 @pytest.mark.parametrize(
     "lang,expected",
     [
-        ("en_US", 136),
-        ("en_GB", 115),
-        ("en", 115),
+        ("en_US", 139),
+        ("en_GB", 139),
+        ("en", 139),
         ("de_DE", 145),
         ("de", 145),
         ("es_ES", 172),

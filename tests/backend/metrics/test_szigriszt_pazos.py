@@ -10,10 +10,10 @@ from .. import resources
     "text, lang, expected",
     [
         (resources.EMPTY_STR, "en_US", 0.0),
-        (resources.EASY_TEXT, "en_US", 112.251),
+        (resources.EASY_TEXT, "en_US", 110.363),
         (resources.SHORT_TEXT, "en_US", 114.615),
         (resources.PUNCT_TEXT, "en_US", 111.601),
-        (resources.LONG_TEXT, "en_US", 98.034),
+        (resources.LONG_TEXT, "en_US", 93.01),
         (resources.LONG_SPANISH_TEXT, "es_ES", 62.162),
     ],
 )

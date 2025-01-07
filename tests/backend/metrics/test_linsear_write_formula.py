@@ -15,9 +15,9 @@ from .. import resources
         (resources.EASY_TEXT, "en_US", True, False, 0.0),
         (resources.EASY_TEXT, "en_US", True, True, 0.0),
         (resources.SHORT_TEXT, "en_US", False, True, 2.5),
-        (resources.PUNCT_TEXT, "en_US", False, True, 5.3),
-        (resources.LONG_TEXT, "en_US", False, True, 14.5),
-        (resources.LONG_TEXT, "en_US", True, True, 14.5),
+        (resources.PUNCT_TEXT, "en_US", False, True, 5.1),
+        (resources.LONG_TEXT, "en_US", False, True, 15.25),
+        (resources.LONG_TEXT, "en_US", True, True, 15.25),
     ],
 )
 def test_linsear_write_formula(
