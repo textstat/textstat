@@ -5,49 +5,44 @@ name: Textstat
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install pipenv
-        pipenv install --dev
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pipenv
+          pipenv install --dev
 
-    - name: Check code spelling
-      if: ${{ !cancelled() }}
-      run: |
-        pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*,./.git/* --exclude-file=.codespellignorelines
+      - name: Check code spelling
+        run: |
+          pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*,./.git/* --exclude-file=.codespellignorelines
 
-    - name: Lint with flake8
-      if: ${{ !cancelled() }}
-      run: |
-        pipenv run flake8 . --exclude=build/
+      - name: Lint with flake8
+        run: |
+          pipenv run flake8 . --exclude=build/
 
-    - name: Test with pytest
-      if: ${{ !cancelled() }}
-      run: |
-        pipenv run pytest test.py
+      - name: Test with pytest
+        run: |
+          pipenv run pytest test.py
 
-    - name: Test installing
-      if: ${{ !cancelled() }}
-      run: |
-        pip install .
+      - name: Test installing
+        run: |
+          pip install .
