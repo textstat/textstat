@@ -2,6 +2,8 @@
 Changelog
 =========
 
+- :release:`0.7.5 <2025-02-05>`
+- :feature:`201` Use `cmudict` for `syllable_count` for *en_US*
 - :release:`0.7.4 <2024-01-09>`
 - :feature:`189` Add Hungarian support.
 - :release:`0.7.3 <2022-03-15>`
