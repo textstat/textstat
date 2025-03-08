@@ -18,5 +18,5 @@ dist:
 	pipenv run python3 setup.py sdist bdist_wheel
 
 upload:
-	twine upload dist/*
+	pipenv run twine upload dist/*
 

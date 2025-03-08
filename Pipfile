@@ -15,4 +15,5 @@ flake8 = "*"
 ipython = "*"
 pytest = "*"
 wheel = "*"
+twine = "*"
 textstat = {file = "."}
