@@ -33,15 +33,15 @@ jobs:
 
       - name: Check code spelling
         run: |
-          pipenv run codespell -L paket --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*,./.git/* --exclude-file=.codespellignorelines
+          pipenv run codespell -L paket,nd --skip=./textstat/resources/**/easy_words.txt,./build/*,./textstat.egg-info/*,./.git/*,./tests/* --exclude-file=.codespellignorelines
 
       - name: Lint with flake8
         run: |
-          pipenv run flake8 . --exclude=build/
+          pipenv run flake8 . --exclude=build/ --max-line-length=88
 
       - name: Test with pytest
         run: |
-          pipenv run pytest test.py
+          pipenv run pytest .
 
       - name: Test installing
         run: |

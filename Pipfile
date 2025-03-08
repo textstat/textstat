@@ -16,3 +16,4 @@ ipython = "*"
 pytest = "*"
 wheel = "*"
 twine = "*"
+textstat = {file = "."}

@@ -640,8 +640,6 @@ cries
 cub
 cuff
 cup
-cuff
-cup
 cupboard
 cupful
 cure
@@ -768,7 +766,6 @@ drain
 drank
 draw
 drawer
-draw
 drawing
 dream
 dress
@@ -1093,7 +1090,6 @@ goal
 goat
 gobble
 god
-god
 godmother
 gold
 golden
@@ -1104,7 +1100,6 @@ good
 goods
 goodbye
 good-by
-goodbye
 good-bye
 good-looking
 goodness
@@ -1586,7 +1581,6 @@ map
 maple
 marble
 march
-march
 mare
 mark
 market
@@ -1600,7 +1594,6 @@ mat
 match
 matter
 mattress
-may
 may
 maybe
 mayor
@@ -1645,7 +1638,6 @@ mint
 minute
 mirror
 mischief
-miss
 miss
 misspell
 mistake
