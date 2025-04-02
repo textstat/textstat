@@ -342,7 +342,7 @@ Attempts to quantify how understandable a text is.
 textstat.gutierrez_polini(text)
 ```
 
-Returns the Guttiérrez de Polini understandability index.
+Returns the Gutiérrez de Polini understandability index.
 
 Specifically designed for the texts in spanish, not an adaptation.
 Conceived for grade-school level texts.
