@@ -2,6 +2,31 @@
 Changelog
 =========
 
+- :release:`0.7.6 <2025-05-10>`
+- :feature:`203` Restructure of internal logic to avoid intermediate-math rounding.
+- :feature:`203` Enhanced word counting capabilities:
+  - Added `split_contractions` and `split_hyphens` options to `lexicon_count`
+  - Added `unique` parameter to `difficult_words` and `difficult_words_list`
+  - Added `threshold` parameter to `long_word_count`
+  - Added `strict_lower` and `strict_upper` parameters to `linsear_write_formula`
+- :feature:`203` Improved text processing:
+  - Enhanced punctuation handling with context-aware apostrophe removal
+  - Improved word boundary detection in Linsear-Write formula
+  - Added word validation to `is_difficult_word` and `is_easy_word`
+  - Changed `chars_per_word` to exclude whitespace
+- :feature:`203` Metric improvements:
+  - Added floor rounding option to `text_standard` grade scores
+  - Standardized empty text handling across metrics
+  - Adjusted `count_monosyllable_words` to only count words with exactly 1 syllable
+  - Removed Spanish and Italian sentence interval from Flesch Reading Ease
+- :deprecated:`203` The following features are deprecated and will be removed in version 0.8.0:
+  - `__round_outputs` attribute (no longer used)
+  - `__easy_word_sets` attribute (no longer used)
+  - `_cache_clear()` method (no longer needed)
+  - `points` parameter in `_legacy_round()` (no longer used)
+  - `set_rounding()` method (use `set_rounding_points()` instead)
+  - `ignore_spaces` parameter in `letter_count()` (spaces are always ignored)
+  - `avg_sentence_length()` method (use `words_per_sentence()` instead)
 - :release:`0.7.5 <2025-02-05>`
 - :feature:`201` Use `cmudict` for `syllable_count` for *en_US*
 - :release:`0.7.4 <2024-01-09>`
@@ -19,9 +44,9 @@ Changelog
 - :feature:`147` Added Arabic readability support
 - :feature:`142` Added Indice Gulpease index for Italian language support
 - :feature:`141` Added German readability support
-- :bug`143`: Update ``dale_chall_readability_score`` to use new ``syllable_threshold=`` kwarg.
+- :bug:`143`: Update ``dale_chall_readability_score`` to use new ``syllable_threshold=`` kwarg.
 - :release:`0.7.1 <2021-05-20>`
-- :bug`138` Improved performance of ``difficult_words`` function.
+- :bug:`138` Improved performance of ``difficult_words`` function.
 - :release:`0.7.0 <2020-11-22>`
 - :feature:`129` Added Fernandez-Huerta test.
 - :feature:`129` Added szigriszt-Pasos formula.
