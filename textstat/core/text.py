@@ -10,8 +10,7 @@ from textstat.core.word_collection import WordCollection
 
 
 class __Readable(Protocol):  # pragma: no cover
-    def read(self) -> str:
-        ...
+    def read(self) -> str: ...
 
 
 class Text(WordCollection, Stats):

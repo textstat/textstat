@@ -2,6 +2,7 @@
     "files.exclude": {
         ".pytest_cache/": true,
         ".coverage": true,
+        ".ruff_cache": true,
         "**/__pytest__": true,
         "**/__pycache__": true,
         "**/*.pyc": {
@@ -9,8 +10,6 @@
         },
         "**/.mypy_cache": true
     },
-    "python.formatting.provider": "black",
-    "python.formatting.blackPath": ".venv/bin/black",
     "[python]": {
         "editor.formatOnSave": true,
     },

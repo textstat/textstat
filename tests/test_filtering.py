@@ -94,9 +94,7 @@ def test_words_endswith_ly(example_sentence):
 
 def test_sentences_greater_than_four_words():
     text = core.Text(
-        "Welcome to the Carpathians. "
-        "I am anxiously expecting you. "
-        "Sleep well to-night."
+        "Welcome to the Carpathians. I am anxiously expecting you. Sleep well to-night."
     )
 
     sentences = text.filter(core.Sentence.length > 4)
@@ -106,9 +104,7 @@ def test_sentences_greater_than_four_words():
 
 def test_sentences_ends_with_you():
     text = core.Text(
-        "Welcome to the Carpathians. "
-        "I am anxiously expecting you. "
-        "Sleep well to-night."
+        "Welcome to the Carpathians. I am anxiously expecting you. Sleep well to-night."
     )
 
     sentences = text.filter(core.Sentence.text.endswith("you."))

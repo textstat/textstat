@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from textstat import core
-from textstat.filtering import filterable
-
 from textstat.en.word import Word
+from textstat.filtering import filterable
 
 
 class WordCollection(core.WordCollection):
