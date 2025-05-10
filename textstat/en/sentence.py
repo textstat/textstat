@@ -1,5 +1,6 @@
 from textstat import core
-from textstat.en.word_collection import WordCollection
+from textstat.en.span import Span
 
 
-class Sentence(core.Sentence, WordCollection): ...
+class Sentence(core.Sentence, Span):
+    pass

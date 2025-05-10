@@ -5,7 +5,7 @@ from textstat.en.word import Word
 from textstat.filtering import filterable
 
 
-class WordCollection(core.WordCollection):
+class Span(core.Span):
     word_class = Word
 
     @property

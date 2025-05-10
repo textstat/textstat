@@ -3,11 +3,11 @@ from math import sqrt
 
 from textstat import core
 from textstat.en.sentence import Sentence
+from textstat.en.span import Span
 from textstat.en.word import Word
-from textstat.en.word_collection import WordCollection
 
 
-class Text(core.Text, WordCollection):
+class Text(core.Text, Span):
     sentence_class = Sentence
 
     def flesch_reading_ease(self) -> float:

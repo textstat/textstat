@@ -5,17 +5,19 @@ import re
 from typing_extensions import Protocol
 
 from textstat.core.sentence import Sentence
+from textstat.core.span import Span
 from textstat.core.stats import Stats
-from textstat.core.word_collection import WordCollection
+from textstat.core.word import Word
+from textstat.filtering import Comparison
 
 
 class __Readable(Protocol):  # pragma: no cover
     def read(self) -> str: ...
 
 
-class Text(WordCollection, Stats):
+class Text(Span, Stats):
     sentence_class = Sentence
-    properties: list[str] = WordCollection.properties + [
+    properties: list[str] = Span.properties + [
         "sentences",
     ]
 

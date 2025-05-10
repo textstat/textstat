@@ -1,11 +1,11 @@
 from .sentence import Sentence
+from .span import Span
 from .text import Text
 from .word import Word
-from .word_collection import WordCollection
 
 __all__ = [
     "Sentence",
+    "Span",
     "Text",
     "Word",
-    "WordCollection",
 ]

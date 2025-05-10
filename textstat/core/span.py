@@ -11,7 +11,9 @@ if TYPE_CHECKING:  # pragma: no cover
     from .sentence import Sentence
 
 
-class WordCollection:
+class Span:
+    """A span can be a paragraph, a sentence, or a whole text."""
+
     word_class = Word
     properties: list[str] = Stats.properties + [
         "words",
