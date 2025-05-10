@@ -1,8 +1,8 @@
 # Textstat
 
 [![PyPI](https://img.shields.io/pypi/v/textstat.svg)](https://pypi.org/project/textstat/)
-[![Build Status](https://github.com/shivam5992/textstat/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/shivam5992/textstat/actions/workflows/test.yml)
-[![Downloads](https://img.shields.io/badge/dynamic/json.svg?url=https://pypistats.org/api/packages/textstat/recent?mirrors=false&label=downloads&query=$.data.last_month&suffix=/month)](https://pypistats.org/packages/textstat)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/textstat/textstat/test.yml?branch=main&label=main&logo=github&logoColor=white)](https://github.com/textstat/textstat/actions/workflows/test.yml)
+[![Downloads](https://img.shields.io/pypi/dm/textstat?logo=pypi&logoColor=white)](https://pypistats.org/packages/textstat)
 
 **Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level.**
 
