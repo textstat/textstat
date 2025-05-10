@@ -48,7 +48,7 @@ def get_lang_easy_words(lang: str) -> set[str]:
         return _set_words(lang_root)
     except FileNotFoundError:
         warnings.warn(
-            "There is no easy words vocabulary for " f"{lang_root}, using english.",
+            f"There is no easy words vocabulary for {lang_root}, using english.",
             Warning,
         )
         return _set_words("en")

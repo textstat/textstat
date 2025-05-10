@@ -4,11 +4,10 @@ install:
 	python setup.py install
 
 test:
-	pipenv run pytest test.py
+	pipenv run pytest tests/
 
 style:
-	pipenv run pycodestyle textstat/
-	pipenv run pycodestyle test.py
+	pipenv run flake8 . --exclude=build/,.venv --max-line-length=88
 
 clean:
 	rm -rf build/ dist/ textstat.egg-info/ __pycache__/ */__pycache__/

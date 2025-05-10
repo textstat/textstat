@@ -4,7 +4,7 @@ master_doc = 'index'
 
 extensions = ['releases']
 
-releases_github_path = 'shivam5992/textstat'
+releases_github_path = 'textstat/textstat'
 releases_unstable_prehistory = True
 
 html_theme = 'alabaster'

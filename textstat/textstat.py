@@ -14,16 +14,16 @@ class textstatistics:
         Default: "utf-8"
     __lang : str
         Default : "en_US"
-    __easy_word_sets : dict
+    __easy_word_sets (deprecated) : dict
         Dictionary of easy word sets.
 
-        .. deprecated:: <version>
-            This attribute has no effect. It will be removed in the future.
-    __round_outputs : bool or None
+        deprecated:: 0.7.6
+            This attribute has no effect. It will be removed in version 0.8.0.
+    __round_outputs (deprecated) : bool or None
         Whether to round the outputs of all textstat methods. Default: None
 
-        .. deprecated:: <version>
-            This attribute has no effect. It will be removed in the future.
+        deprecated:: 0.7.6
+            This attribute has no effect. It will be removed in version 0.8.0.
     __round_points : int or None
         The number of decimals to use when rounding outputs. If round_points is set to
         None, the outputs will not be rounded. Default: None
@@ -55,10 +55,18 @@ class textstatistics:
         -------
         None
 
-        .. deprecated:: <version>
-            This method has no effect due to a caching redesign
+        deprecated:: 0.7.6
+            This method has no effect due to a caching redesign.
+            It will be removed in version 0.8.0.
 
         """
+        warnings.warn(
+            "The _cache_clear() method is deprecated and "
+            "will be removed in version 0.8.0. "
+            "It has no effect due to a caching redesign.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         pass
 
     def _legacy_round(self, number: float, points: int | None = None) -> float:
@@ -70,11 +78,12 @@ class textstatistics:
         Parameters
         ----------
         number : float
-        points : int, optional
+        points (deprecated) : int, optional
             This argument is deprecated and has no effect.
 
-            .. deprecated:: <version>
-                Use set_rounding_points instead
+            deprecated:: 0.7.6
+                Use set_rounding_points instead.
+                It will be removed in version 0.8.0.
 
         Returns
         -------
@@ -83,9 +92,11 @@ class textstatistics:
         """
         if points is not None:
             warnings.warn(
-                "The points argument is deprecated and has no effect. Use "
-                "set_rounding_points instead.",
+                "The points argument is deprecated and "
+                "will be removed in version 0.8.0. "
+                "Use set_rounding_points instead.",
                 DeprecationWarning,
+                stacklevel=2,
             )
         if self.__round_points is None:
             return number
@@ -99,7 +110,7 @@ class textstatistics:
         ----------
         points : int or None
             The number of decimal digits for the outputs of all textstat
-            methods. The default is None (no ronding).
+            methods. The default is None (no rounding).
 
         Returns
         -------
@@ -116,9 +127,9 @@ class textstatistics:
 
         Parameters
         ----------
-        rounding : bool
+        rounding (deprecated) : bool
             Whether to round the outputs of all textstat methods.
-        points : int or None, optional
+        points (deprecated) : int or None, optional
             The number of decimal digits for the outputs of all textstat
             methods. The default is None.
 
@@ -126,13 +137,16 @@ class textstatistics:
         -----
         None.
 
-        .. deprecated:: <version>
-            Use set_rounding_points instead
+        deprecated:: 0.7.6
+            Use set_rounding_points instead.
+            It will be removed in version 0.8.0.
 
         """
         warnings.warn(
-            "set_rounding is deprecated, use set_rounding_points instead",
+            "set_rounding is deprecated and will be removed in version 0.8.0. "
+            "Use set_rounding_points instead",
             DeprecationWarning,
+            stacklevel=2,
         )
         if rounding:
             self.__round_points = points
@@ -199,11 +213,12 @@ class textstatistics:
         ----------
         text : str
             A text string.
-        ignore_spaces : bool, optional
-            Ignore whitespaces if True. This argument is deprecated and has no effect.
+        ignore_spaces (deprecated) : bool, optional
+            Ignore whitespaces if True.
 
-            .. deprecated:: <version>
-                This argument has no effect.
+            deprecated:: 0.7.6
+                This argument is deprecated and has no effect.
+                It will be removed in version 0.8.0.
 
         Returns
         -------
@@ -213,9 +228,11 @@ class textstatistics:
         """
         if ignore_spaces is not None:
             warnings.warn(
-                "The 'ignore_spaces' argument has been deprecated due "
-                "to having no effect. This argument will be removed in the future.",
+                "The 'ignore_spaces' argument has been deprecated "
+                "and will be removed in version 0.8.0. "
+                "This argument has no effect.",
                 DeprecationWarning,
+                stacklevel=2,
             )
         return counts.count_letters(text)
 
@@ -274,7 +291,12 @@ class textstatistics:
             Number of words.
 
         """
-        return counts.count_words(text, rm_punctuation=removepunct)
+        return counts.count_words(
+            text,
+            rm_punctuation=removepunct,
+            split_contractions=split_contractions,
+            split_hyphens=split_hyphens,
+        )
 
     def miniword_count(self, text: str, max_size: int = 3) -> int:
         """Count common words with `max_size` letters or less in a text.
@@ -304,7 +326,9 @@ class textstatistics:
         lang : str or None
             The language of the text.
 
-            .. deprecated:: 0.5.7
+            deprecated:: 0.5.7
+                This argument is deprecated and has no effect.
+                It will be removed in version 0.8.0.
 
         Returns
         -------
@@ -317,6 +341,7 @@ class textstatistics:
                 "'textstat.set_lang(<lang>)'. This argument will be removed "
                 "in the future.",
                 DeprecationWarning,
+                stacklevel=2,
             )
 
         return counts.count_syllables(text, self.__lang)
@@ -350,8 +375,9 @@ class textstatistics:
         float
             The average sentence length.
 
-        .. deprecated:: <version>
+        deprecated:: 0.7.6
             Use `words_per_sentence` instead.
+            It will be removed in version 0.8.0.
 
         """
         warnings.warn(
@@ -359,6 +385,7 @@ class textstatistics:
             "the same as 'words_per_sentence'. This method will be removed in the"
             "future.",
             DeprecationWarning,
+            stacklevel=2,
         )
         return self._legacy_round(metrics.words_per_sentence(text))
 
