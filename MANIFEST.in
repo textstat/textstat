@@ -1,2 +1,8 @@
 include README.md
+
+global-exclude **/*.pyc
+
 graft textstat/resources
+graft textstat/backend
+
+recursive-include textstat *.py

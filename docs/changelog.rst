@@ -2,6 +2,7 @@
 Changelog
 =========
 
+- :release:`0.7.7 <2025-05-17>` Fixed broken release
 - :release:`0.7.6 <2025-05-10>`
 - :feature:`203` Restructure of internal logic to avoid intermediate-math rounding.
 - :feature:`203` Enhanced word counting capabilities:

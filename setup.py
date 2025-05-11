@@ -1,10 +1,10 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from io import open
 
 setup(
     name="textstat",
-    packages=["textstat"],
-    version="0.7.6",
+    packages=find_packages(),
+    version="0.7.7",
     description="Calculate statistical features from text",
     author="Shivam Bansal, Chaitanya Aggarwal",
     author_email="shivam5992@gmail.com",
@@ -19,12 +19,11 @@ setup(
     classifiers=(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3 :: Only",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
