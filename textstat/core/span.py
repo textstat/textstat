@@ -11,7 +11,7 @@ if TYPE_CHECKING:  # pragma: no cover
     from .sentence import Sentence
 
 
-class Span:
+class Span(Stats):
     """A span can be a paragraph, a sentence, or a whole text."""
 
     word_class = Word

@@ -75,6 +75,7 @@ class Stats:
             return lambda self: collections.Counter(getattr(self, value))
 
         for prop in self.__class__.properties:
+            prop = prop[:-1] if prop.endswith("s") else prop
             setattr(self.__class__, prop[:-1] + "_count", property(make_getter(prop)))
 
     def __eq__(self, other: object) -> bool:
