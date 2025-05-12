@@ -1,16 +1,14 @@
 from __future__ import annotations
 
+import re
+
 from textstat.core.stats import Stats
-from textstat.filtering import filterable
+from textstat.properties import filterableproperty
 
 
 class Word(Stats):
-    properties: list[str] = Stats.properties + [
-        "letters",
-        "length",
-    ]
+    regex = re.compile(r"\b[\w\’\'\-]+\b", re.UNICODE)
 
-    @filterable
-    @property
+    @filterableproperty
     def length(self) -> int:
         return len(self.letters)

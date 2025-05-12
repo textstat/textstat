@@ -3,11 +3,23 @@ from __future__ import annotations
 import collections
 from unicodedata import category
 
-from textstat.filtering import filterable
+from textstat.properties import filterableproperty, textproperty
 
 
-class Stats:
-    properties: list[str] = ["letters", "characters"]
+class StatsMeta(type):
+    @classmethod
+    def __prepare__(cls, name, bases):
+        inherited_properties = [
+            *[prop for base in bases for prop in getattr(base, "properties", [])]
+        ]
+
+        namespace = super().__prepare__(name, bases)
+        namespace["properties"] = [*inherited_properties]
+        return namespace
+
+
+class Stats(metaclass=StatsMeta):
+    properties: list[str]
 
     def __new__(cls, *_):
         if cls is Stats:
@@ -21,12 +33,11 @@ class Stats:
         self.__add_unique_properties()
         self.__add_count_properties()
 
-    @filterable
-    @property
+    @filterableproperty
     def text(self) -> str:
         return self.__text
 
-    @property
+    @textproperty
     def letters(self) -> list[str]:
         return [
             *(
@@ -36,7 +47,7 @@ class Stats:
             )
         ]
 
-    @property
+    @textproperty
     def characters(self) -> list[str]:
         return [*"".join(self.text.split())]
 
@@ -75,8 +86,8 @@ class Stats:
             return lambda self: collections.Counter(getattr(self, value))
 
         for prop in self.__class__.properties:
-            prop = prop[:-1] if prop.endswith("s") else prop
-            setattr(self.__class__, prop[:-1] + "_count", property(make_getter(prop)))
+            count_name = prop[:-1] if prop.endswith("s") else prop
+            setattr(self.__class__, count_name + "_count", property(make_getter(prop)))
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, (str, self.__class__)):

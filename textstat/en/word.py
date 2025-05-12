@@ -2,14 +2,13 @@ import cmudict
 import syllables
 
 from textstat import core
-from textstat.filtering import filterable
+from textstat.properties import filterableproperty
 
 
 class Word(core.Word):
     __pronunciation_dictionary = cmudict.dict()
 
-    @filterable
-    @property
+    @filterableproperty
     def syllables(self) -> int:
         """Returns the number of syllables in the word."""
         if self.text.lower() in self.__pronunciation_dictionary:

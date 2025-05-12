@@ -1,14 +1,14 @@
 from __future__ import annotations
 
+import re
+
 from textstat.core.span import Span
-from textstat.core.stats import Stats
-from textstat.filtering import filterable
+from textstat.properties import filterableproperty
 
 
-class Sentence(Span, Stats):
-    properties: list[str] = Span.properties + []
+class Sentence(Span):
+    regex = re.compile(r"\b[^.!?]+[.!?]+", re.UNICODE)
 
-    @filterable
-    @property
+    @filterableproperty
     def length(self) -> int:
         return len(self.words)

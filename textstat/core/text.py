@@ -6,22 +6,16 @@ from typing_extensions import Protocol
 
 from textstat.core.sentence import Sentence
 from textstat.core.span import Span
-from textstat.core.stats import Stats
-from textstat.core.word import Word
-from textstat.filtering import Comparison
+from textstat.properties import textproperty
 
 
 class __Readable(Protocol):  # pragma: no cover
     def read(self) -> str: ...
 
 
-class Text(Span, Stats):
+class Text(Span):
     sentence_class = Sentence
-    properties: list[str] = Span.properties + [
-        "sentences",
-    ]
 
-    __sentence_regex = re.compile(r"\b[^.!?]+[.!?]+", re.UNICODE)
     __acronym_regex = re.compile(r"\b(?:[^\W\d_][\.]){2,}", re.UNICODE)
 
     @classmethod
@@ -39,11 +33,11 @@ class Text(Span, Stats):
             text = text.replace(result, result.replace(".", ""))
         return text
 
-    @property
+    @textproperty
     def sentences(self) -> list[Sentence]:
         return [
             self.sentence_class(sentence)
-            for sentence in self.__sentence_regex.findall(
+            for sentence in self.sentence_class.regex.findall(
                 self.__remove_acronyms(self.text)
             )
         ]
