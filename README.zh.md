@@ -213,3 +213,51 @@ $ # 进行代码修改
 
 $ python -m pytest test.py  # 运行测试
 
+阅读时间
+python复制代码
+textstat.reading_time(text, ms_per_char=14.69)
+计算文本的预估阅读时间。
+默认按每个字符 14.69 毫秒计算。
+学术依据请参考
+这篇论文
+
+语言专用公式
+Fernández Huerta 阅读易度指数（西班牙语）
+python复制代码
+textstat.fernandez_huerta(text)
+西班牙语专用版 Flesch 阅读易度公式，结果解读方式与英语原版相同。
+扩展阅读请参考
+这篇博客文章
+Szigriszt-Pazos 清晰度指数（西班牙语）
+python复制代码
+textstat.szigriszt_pazos(text)
+西班牙语版 Flesch 阅读易度公式改进版，量化文本理解难易度。
+扩展阅读请参考
+这篇博客文章
+Gutiérrez de Polini 可理解性公式（西班牙语）
+python复制代码
+textstat.gutierrez_polini(text)
+返回 Gutiérrez de Polini 可理解性指数。
+专为西班牙语中小学教材设计，复杂文本的评分可能不可靠。
+扩展阅读请参考
+这篇博客文章
+Crawford 公式（西班牙语）
+python复制代码
+textstat.crawford(text)
+返回理解文本所需的预估受教育年限。
+仅适用于小学水平文本。
+扩展阅读请参考
+这篇博客文章
+Osman 指数（阿拉伯语）
+python复制代码
+textstat.osman(text)
+阿拉伯语专用可读性评分，结合 Flesch 和 Fog 公式改进，引入"Faseeh"因子。
+扩展阅读请参考
+这篇学术论文
+Gulpease 指数（意大利语）
+python复制代码
+textstat.gulpease_index(text)
+评估意大利语文本的阅读难度，分数越低表示需要更高教育水平才能轻松阅读。
+扩展阅读请参考
+维基百科
+
