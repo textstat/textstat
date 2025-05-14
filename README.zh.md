@@ -148,7 +148,7 @@ textstat.spache_readability(text)
 返回英语文本的年级水平。
 特别适用于四年级及以下儿童读物。
 扩展阅读请参考
-维基百科
+维基百科 https://de.wikipedia.org/wiki/Lesbarkeitsindex#Wiener_Sachtextformel
 McAlpine EFLaw 可读性分数
 python   复制代码
 textstat.mcalpine_eflaw(text)
@@ -156,4 +156,60 @@ textstat.mcalpine_eflaw(text)
 建议目标分数≤ 25。
 扩展阅读请参考
 这篇博客文章
+Wiener Sachtextformel（德语）
+python复制代码
+textstat.wiener_sachtextformel(text, variant)
+返回德语文本的年级水平评分。4 分表示非常容易，15 分表示非常困难。
+扩展阅读请参考
+维基百科
+________________________________________
+统计指标
+音节计数
+python复制代码
+textstat.syllable_count(text)
+统计文本总音节数。
+英语使用 cmudict 词典，其他语言使用 Pyphen 模块。
+词汇统计
+python复制代码
+textstat.lexicon_count(text, removepunct=True)
+统计有效词汇数量。
+可选参数 removepunct 控制是否过滤标点符号（默认开启）。
+句子统计
+python复制代码
+textstat.sentence_count(text)
+统计文本中的句子总数。
+字符统计
+python复制代码
+textstat.char_count(text, ignore_spaces=True)
+统计字符数量。
+可选参数 ignore_spaces 控制是否忽略空格（默认开启）。
+字母统计
+python复制代码
+textstat.letter_count(text, ignore_spaces=True)
+统计不含标点的纯字母数量。
+多音节词统计
+python复制代码
+textstat.polysyllabcount(text)
+统计音节数 ≥3 的复杂词汇数量。
+单音节词统计
+python复制代码
+textstat.monosyllabcount(text)
+统计单音节简单词汇数量。
+________________________________________
+贡献指南
+发现问题请提交 issue。
+修复问题请提交 pull request。
+1.	在 GitHub 上 Fork 本仓库（基于 master 分支开发）
+2.	编写验证问题修复/功能实现的测试用例
+3.	提交 Pull Request
+开发环境配置
+推荐使用 虚拟环境 或 Pipenv 隔离开发环境
+bash复制代码
+$ git clone https://github.com/<你的用户名>/textstat.git  # 克隆你的fork仓库
+$ cd textstat
+$ pip install -r requirements.txt  # 安装依赖
+
+$ # 进行代码修改
+
+$ python -m pytest test.py  # 运行测试
 
