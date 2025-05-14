@@ -81,3 +81,38 @@ textstat.flesch_reading_ease(text)
 |0-29 | 非常难以理解 | 
 > 扩展阅读：
  [维基百科](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease) ```
+Flesch-Kincaid 年级水平
+python复制代码
+textstat.flesch_kincaid_grade(text)
+返回文本的 Flesch-Kincaid 年级水平评分。该评分对应美国学制，例如得分为 9.3 表示九年级学生可理解该文本。
+扩展阅读请参考
+维基百科
+
+雾化指数（Gunning FOG 公式）
+python复制代码
+textstat.gunning_fog(text)
+返回文本的 FOG 指数。该评分对应美国学制，例如得分为 9.3 表示九年级学生可理解该文本。
+扩展阅读请参考
+维基百科
+
+SMOG 指数
+python复制代码
+textstat.smog_index(text)
+返回文本的 SMOG 指数。该评分对应美国学制，例如得分为 9.3 表示九年级学生可理解该文本。
+注意：原始 SMOG 公式基于 30 个句子的样本验证，若文本少于 30 句统计结果可能不准确。本库要求至少 3 个句子才进行计算。
+扩展阅读请参考
+维基百科
+
+自动可读性指数
+python复制代码
+textstat.automated_readability_index(text)
+返回自动可读性指数（ARI），该数值近似表示理解文本所需的年级水平。例如得分为 6.5 表示适合 6-7 年级学生阅读。
+扩展阅读请参考
+维基百科
+
+Coleman-Liau 指数
+python复制代码
+textstat.coleman_liau_index(text)
+使用 Coleman-Liau 公式计算文本的年级水平。例如得分为 9.3 表示九年级学生可理解该文本。
+扩展阅读请参考
+维基百科
