@@ -2,12 +2,12 @@ import warnings
 from math import sqrt
 
 from textstat import core
+from textstat.en import mixins
 from textstat.en.sentence import Sentence
-from textstat.en.span import Span
 from textstat.en.word import Word
 
 
-class Text(core.Text, Span):
+class Text(mixins.Span, core.Text):
     sentence_class = Sentence
 
     def flesch_reading_ease(self) -> float:

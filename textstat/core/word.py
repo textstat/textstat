@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import re
 
-from textstat.core.stats import Stats
+from textstat.core import mixins
 from textstat.properties import filterableproperty
 
 
-class Word(Stats):
+class Word(mixins.Stats):
     regex = re.compile(r"\b[\w\’\'\-]+\b", re.UNICODE)
 
     @filterableproperty

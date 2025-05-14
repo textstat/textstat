@@ -4,8 +4,8 @@ import re
 
 from typing_extensions import Protocol
 
+from textstat.core import mixins
 from textstat.core.sentence import Sentence
-from textstat.core.span import Span
 from textstat.properties import textproperty
 
 
@@ -13,7 +13,7 @@ class __Readable(Protocol):  # pragma: no cover
     def read(self) -> str: ...
 
 
-class Text(Span):
+class Text(mixins.Stats, mixins.Span):
     sentence_class = Sentence
 
     __acronym_regex = re.compile(r"\b(?:[^\W\d_][\.]){2,}", re.UNICODE)

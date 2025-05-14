@@ -9,12 +9,10 @@ from textstat.properties import filterableproperty, textproperty
 class StatsMeta(type):
     @classmethod
     def __prepare__(cls, name, bases):
-        inherited_properties = [
-            *[prop for base in bases for prop in getattr(base, "properties", [])]
-        ]
-
         namespace = super().__prepare__(name, bases)
-        namespace["properties"] = [*inherited_properties]
+        namespace["properties"] = [
+            *[*[prop for base in bases for prop in getattr(base, "properties", [])]]
+        ]
         return namespace
 
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Callable, Type
 
 if TYPE_CHECKING:  # pragma: no cover
-    from textstat.core.stats import Stats
+    from textstat.core.mixins.stats import Stats
 
 
 import operator
@@ -80,6 +80,9 @@ class textproperty(_textstatproperty):
 
     def __set_name__(self, owner: Type["Stats"], name: str) -> None:
         super().__set_name__(owner, name)
+
+        if not hasattr(owner, "properties"):
+            owner.properties = []
 
         if name not in owner.properties:
             owner.properties.append(name)

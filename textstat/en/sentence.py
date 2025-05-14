@@ -1,6 +1,6 @@
 from textstat import core
-from textstat.en.span import Span
+from textstat.en import mixins
 
 
-class Sentence(core.Sentence, Span):
+class Sentence(core.Sentence, mixins.Span):
     pass

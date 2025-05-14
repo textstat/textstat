@@ -2,15 +2,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from textstat.core.stats import Stats
 from textstat.core.word import Word
 from textstat.properties import Comparison, textproperty
 
 if TYPE_CHECKING:  # pragma: no cover
-    from .sentence import Sentence
+    from ..sentence import Sentence
 
 
-class Span(Stats):
+class Span:
     """A span can be a paragraph, a sentence, or a whole text."""
 
     word_class = Word

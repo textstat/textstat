@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from textstat import core
 from textstat.en.word import Word
 from textstat.properties import filterabletextproperty
 
 
-class Span(core.Span):
+class Span:
     word_class = Word
 
     @property
