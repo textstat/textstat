@@ -137,7 +137,7 @@ textstat.dale_chall_readability_score(text)
 扩展阅读请参考
 维基百科
 综合可读性评估
-python复制代码
+python 复制代码
 textstat.text_standard(text, float_output=False)
 综合所有测试结果，返回文本所需的预估年级水平。
 可选参数 float_output 控制是否返回浮点数结果，默认 False 返回字符串格式。
