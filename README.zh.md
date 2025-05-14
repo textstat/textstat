@@ -141,6 +141,7 @@ python复制代码
 textstat.text_standard(text, float_output=False)
 综合所有测试结果，返回文本所需的预估年级水平。
 可选参数 float_output 控制是否返回浮点数结果，默认 False 返回字符串格式。
+
 Spache 可读性公式
 python复制代码
 textstat.spache_readability(text)
