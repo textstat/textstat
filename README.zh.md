@@ -57,3 +57,27 @@ textstat.set_lang(lang)  # 设置分析语言（控制音节分割和公式版�
 函数名称	英语	德语	西班牙语	法语	意大利语	荷兰语	波兰语	俄语
 flesch_reading_ease	✔	✔	✔	✔	✔	✔		✔
 gunning_fog	✔						✔	
+
+#### 西班牙语专用测试 
+以下函数专为西班牙语设计（也可用于其他语言，但不推荐）： 
+```python 
+textstat.fernandez_huerta(text) # Fernández Huerta指数 textstat.szigriszt_pazos(text) # Szigriszt-Pazos指数 textstat.gutierrez_polini(text) # Gutiérrez de Polini公式 textstat.crawford(text) # Crawford公式 
+``` 
+各公式的详细信息请参考对应的文档注释。 
+## 核心算法说明 
+### Flesch 阅读易度公式 
+```python 
+textstat.flesch_reading_ease(text) 
+``` 
+返回 Flesch 阅读易度分数，分数对照表如下： 
+| 分数 | 难度等级 |
+ |-------|------------------| 
+|90-100 | 非常容易 | 
+|80-89 | 容易 | 
+|70-79 | 较为容易 | 
+|60-69 | 标准 | 
+|50-59 | 较为困难 |
+ |30-49 | 困难 | 
+|0-29 | 非常难以理解 | 
+> 扩展阅读：
+ [维基百科](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease) ```
