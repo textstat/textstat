@@ -117,4 +117,42 @@ textstat.coleman_liau_index(text)
 扩展阅读请参考
 (https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index)
 
+Linsear 写作公式
+python复制代码
+textstat.linsear_write_formula(text)
+使用 Linsear Write 公式计算文本的年级水平。例如得分为 9.3 表示九年级学生可理解该文本。
+扩展阅读请参考
+维基百科
+Dale-Chall 可读性分数
+python复制代码
+textstat.dale_chall_readability_score(text)
+使用新 Dale-Chall 公式计算文本可读性，基于 3000 个常用英语单词表。评分对应如下年级水平：
+分数	理解群体
+4.9 或更低	平均四年级及以下学生
+5.0–5.9	平均五至六年级学生
+6.0–6.9	平均七至八年级学生
+7.0–7.9	平均九至十年级学生
+8.0–8.9	平均十一至十二年级学生
+9.0–9.9	平均大学一至三年级学生
+扩展阅读请参考
+维基百科
+综合可读性评估
+python复制代码
+textstat.text_standard(text, float_output=False)
+综合所有测试结果，返回文本所需的预估年级水平。
+可选参数 float_output 控制是否返回浮点数结果，默认 False 返回字符串格式。
+Spache 可读性公式
+python复制代码
+textstat.spache_readability(text)
+返回英语文本的年级水平。
+特别适用于四年级及以下儿童读物。
+扩展阅读请参考
+维基百科
+McAlpine EFLaw 可读性分数
+python复制代码
+textstat.mcalpine_eflaw(text)
+评估英语作为外语学习者的文本可读性，重点关注"迷你词汇"数量和句子长度。
+建议目标分数 ≤ 25。
+扩展阅读请参考
+这篇博客文章
 
