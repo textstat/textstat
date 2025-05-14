@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from textstat.en.word import Word
-from textstat.properties import filterabletextproperty
+from textstat.properties import filterableproperty
 
 
 class Span:
@@ -37,6 +37,6 @@ class Span:
 
         return total
 
-    @filterabletextproperty
+    @filterableproperty
     def syllables(self):
         return sum(word.syllables for word in self.words)

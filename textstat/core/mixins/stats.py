@@ -59,10 +59,10 @@ class Stats(metaclass=StatsMeta):
         except ZeroDivisionError:
             return 0.0
 
-    def raw_stats(self) -> dict[str, int]:
+    def stats(self) -> dict[str, int]:
         return {prop: len(getattr(self, prop)) for prop in self.__class__.properties}
 
-    def raw_stats_full(self) -> dict[str, int]:
+    def stats_full(self) -> dict[str, int]:
         return {
             prop: len(getattr(self, prop))
             for prop in [
@@ -94,6 +94,9 @@ class Stats(metaclass=StatsMeta):
 
     def __hash__(self) -> int:
         return hash(self.text)
+
+    def __str__(self) -> str:
+        return self.__text
 
     def __repr__(self) -> str:
         shown_text = self.text[:20] + "..." if len(self.text) > 20 else self.text

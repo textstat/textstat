@@ -22,6 +22,19 @@ _Textstat is an easy to use library to calculate statistics from text. It helps 
 ## Usage
 
 ```python
-import textstat
+>>> from textstat import Text, Sentence, Word
 
+>>> my_text = Text(
+  "Alice was beginning to get very tired of sitting by her sister on the "
+  "bank, and of having nothing to do: once or twice she had peeped into "
+  "the book her sister was reading, but it had no pictures or "
+  "conversations in it, “and what is the use of a book,” thought Alice "
+  "“without pictures or conversations?”"
+)
+
+>>> my_text.stats()
+{'letters': 236, 'characters': 246, 'words': 57, 'sentences': 1}
+
+>>> my_text.flesch_reading_ease()
+31.727368421052645
 ```

@@ -80,8 +80,8 @@ class Text(mixins.Span, core.Text):
         Cincinnati Univ OH, 1967.
         """
         return (
-            (4.71 * self.avg("characters", per="word"))
-            + (0.5 * self.avg("characters", per="word"))
+            (4.71 * self.avg("characters", per="words"))
+            + (0.5 * self.avg("characters", per="words"))
             - 21.43
         )
 
