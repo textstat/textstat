@@ -113,18 +113,18 @@ textstat.automated_readability_index(text)
 Coleman-Liau 指数
 python复制代码
 textstat.coleman_liau_index(text)
-使用 Coleman-Liau 公式计算文本的年级水平。例如得分为 9.3 表示九年级学生可理解该文本。
+使用 Coleman-Liau  公式计算文本的年级水平。例如得分为 9.3 表示九年级学生可理解该文本。
 扩展阅读请参考
 (https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index)
 
 Linsear 写作公式
-python复制代码
+python  复制代码
 textstat.linsear_write_formula(text)
 使用 Linsear Write 公式计算文本的年级水平。例如得分为 9.3 表示九年级学生可理解该文本。
 扩展阅读请参考
 [维基百科](https://en.wikipedia.org/wiki/Linsear_Write)
 Dale-Chall 可读性分数
-python复制代码
+python     复制代码
 textstat.dale_chall_readability_score(text)
 使用新 Dale-Chall 公式计算文本可读性，基于 3000 个常用英语单词表。评分对应如下年级水平：
 分数	理解群体
