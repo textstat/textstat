@@ -150,7 +150,7 @@ textstat.spache_readability(text)
 扩展阅读请参考
 维基百科
 McAlpine EFLaw 可读性分数
-python复制代码
+python   复制代码
 textstat.mcalpine_eflaw(text)
 评估英语作为外语学习者的文本可读性，重点关注"迷你词汇"数量和句子长度。
 建议目标分数≤25。
