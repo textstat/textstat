@@ -122,7 +122,7 @@ python复制代码
 textstat.linsear_write_formula(text)
 使用 Linsear Write 公式计算文本的年级水平。例如得分为 9.3 表示九年级学生可理解该文本。
 扩展阅读请参考
-维基百科
+[维基百科](https://en.wikipedia.org/wiki/Linsear_Write)
 Dale-Chall 可读性分数
 python复制代码
 textstat.dale_chall_readability_score(text)
@@ -152,7 +152,7 @@ McAlpine EFLaw 可读性分数
 python复制代码
 textstat.mcalpine_eflaw(text)
 评估英语作为外语学习者的文本可读性，重点关注"迷你词汇"数量和句子长度。
-建议目标分数 ≤ 25。
+建议目标分数≤25。
 扩展阅读请参考
 这篇博客文章
 
