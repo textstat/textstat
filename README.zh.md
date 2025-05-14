@@ -157,7 +157,7 @@ textstat.mcalpine_eflaw(text)
 扩展阅读请参考
 这篇博客文章
 Wiener Sachtextformel（德语）
-python复制代码
+python 复制代码
 textstat.wiener_sachtextformel(text, variant)
 返回德语文本的年级水平评分。4 分表示非常容易，15 分表示非常困难。
 扩展阅读请参考
