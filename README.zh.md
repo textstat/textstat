@@ -142,8 +142,8 @@ textstat.text_standard(text, float_output=False)
 综合所有测试结果，返回文本所需的预估年级水平。
 可选参数 float_output 控制是否返回浮点数结果，默认 False 返回字符串格式。
 
-Spache 可读性公式
-python 复制代码
+Spache  可读性公式
+python  复制代码
 textstat.spache_readability(text)
 返回英语文本的年级水平。
 特别适用于四年级及以下儿童读物。
@@ -153,7 +153,7 @@ McAlpine EFLaw 可读性分数
 python   复制代码
 textstat.mcalpine_eflaw(text)
 评估英语作为外语学习者的文本可读性，重点关注"迷你词汇"数量和句子长度。
-建议目标分数≤25。
+建议目标分数≤ 25。
 扩展阅读请参考
 这篇博客文章
 
