@@ -80,8 +80,8 @@ class Text(mixins.Span, core.Text):
         Cincinnati Univ OH, 1967.
         """
         return (
-            (4.71 * self.avg("characters", per="words"))
-            + (0.5 * self.avg("characters", per="words"))
+            4.71 * self.avg("characters", per="words")
+            + 0.5 * self.avg("words", per="sentences")
             - 21.43
         )
 
@@ -128,8 +128,8 @@ class Text(mixins.Span, core.Text):
         """
         Björnsson, C. H. (1968). Läsbarhet. Stockholm: Liber.
         """
-        return (len(self.words) / len(self.sentences)) + (len(self.words) * 100) / len(
-            self.filter(Word.length > 6)
+        return (len(self.words) / len(self.sentences)) + (
+            len(self.words) / len(self.filter(Word.length > 6) * 100)
         )
 
     def rix(self) -> float:
