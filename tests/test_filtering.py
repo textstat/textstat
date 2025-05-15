@@ -92,6 +92,14 @@ def test_words_endswith_ly(example_sentence):
     assert words == ["suddenly"]
 
 
+def test_words_equality(example_sentence):
+    text = core.Text(example_sentence)
+
+    words = text.filter(core.Word.text == "suddenly")
+
+    assert words == ["suddenly"]
+
+
 def test_sentences_greater_than_four_words():
     text = core.Text(
         "Welcome to the Carpathians. I am anxiously expecting you. Sleep well to-night."

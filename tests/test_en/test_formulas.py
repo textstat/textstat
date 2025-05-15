@@ -15,6 +15,20 @@ def test_reading_time(all_test_texts, text_name, expected):
     assert text.reading_time == pytest.approx(expected, abs=1)
 
 
+def test_sentence_reading_time():
+    text = Text("This is an example sentence")
+    assert text.reading_time == pytest.approx(1712, abs=1)
+
+
+def test_reading_time_gets_shorter():
+    test_text = "This is an example text. It will get shorter."
+
+    first = Text(test_text).reading_time
+    second = Text(test_text[:24]).reading_time
+
+    assert first > second
+
+
 @pytest.mark.parametrize(
     "text_name,expected",
     [

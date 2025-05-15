@@ -9,8 +9,9 @@ class Span:
 
     @property
     def reading_time(self) -> float:
-        """Calculates the reading time, based on:
-        https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.685.9115&rep=rep1&type=pdf
+        """Demberg, Vera, and Frank Keller.
+        "Data from eye-tracking corpora as evidence for theories of syntactic processing complexity."
+        Cognition 109.2 (2008): 193-210.
         """
         total: float = 0.0
 

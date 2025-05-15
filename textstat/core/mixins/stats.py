@@ -69,6 +69,9 @@ class Stats(metaclass=StatsMeta):
                 *self.__class__.properties,
                 *["unique_" + u for u in self.__class__.properties],
                 *[c[:-1] + "_count" for c in self.__class__.properties],
+                # TODO: I think this getting the length of unique props and
+                #  the length of the Counter for each prop is functionally
+                #  equivilant, so maybe one of these can be removed?
             ]
         }
 
