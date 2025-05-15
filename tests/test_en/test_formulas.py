@@ -1,61 +1,145 @@
+import pytest
 from textstat.en import Text
 
 
-def test_reading_time(test_text):
-    text = Text(test_text["text"])
-
-    assert text.reading_time == test_text["statistics"]["reading_time"]
-
-
-def test_flesch_reading_ease(test_text):
-    text = Text(test_text["text"])
-
-    assert text.flesch_reading_ease() == 0
-
-
-def test_flesch_kincaid_grade(test_text):
-    text = Text(test_text["text"])
-
-    assert text.flesch_kincaid_grade() == 0
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 85916),
+        ("moby_dick", 52122),
+        ("war_of_the_worlds", 31106),
+    ],
+)
+def test_reading_time(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.reading_time == pytest.approx(expected, abs=1)
 
 
-def test_smog(test_text):
-    text = Text(test_text["text"])
-
-    assert text.smog() == 0
-
-
-def test_smog_grade(test_text):
-    text = Text(test_text["text"])
-
-    assert text.smog_grade() == 0
-
-
-def test_coleman_liau_index(test_text):
-    text = Text(test_text["text"])
-
-    assert text.coleman_liau_index() == 0
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 75),
+        ("moby_dick", 10),
+        ("war_of_the_worlds", 61),
+    ],
+)
+def test_flesch_reading_ease(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.flesch_reading_ease() == pytest.approx(expected, abs=1)
 
 
-def test_linsear_write_formula(test_text):
-    text = Text(test_text["text"])
-
-    assert text.linsear_write_formula() == 0
-
-
-def test_gunning_fog(test_text):
-    text = Text(test_text["text"])
-
-    assert text.gunning_fog() == 0
-
-
-def test_lix(test_text):
-    text = Text(test_text["text"])
-
-    assert text.lix() == 0
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 8),
+        ("moby_dick", 24),
+        ("war_of_the_worlds", 10),
+    ],
+)
+def test_flesch_kincaid_grade(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.flesch_kincaid_grade() == pytest.approx(expected, abs=1)
 
 
-def test_rix(test_text):
-    text = Text(test_text["text"])
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 6),
+        ("moby_dick", 18),
+        ("war_of_the_worlds", 9),
+    ],
+)
+def test_smog(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.smog() == pytest.approx(expected, abs=1)
 
-    assert text.rix() == 0
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 8),
+        ("moby_dick", 20),
+        ("war_of_the_worlds", 11),
+    ],
+)
+def test_smog_grade(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.smog_grade() == pytest.approx(expected, abs=1)
+
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 6),
+        ("moby_dick", 13),
+        ("war_of_the_worlds", 9),
+    ],
+)
+def test_coleman_liau_index(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.coleman_liau_index() == pytest.approx(expected, abs=1)
+
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 10),
+        ("moby_dick", 29),
+        ("war_of_the_worlds", 12),
+    ],
+)
+def test_automated_readability_index(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.automated_readability_index() == pytest.approx(expected, abs=1)
+
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 13),
+        ("moby_dick", 36),
+        ("war_of_the_worlds", 14),
+    ],
+)
+def test_linsear_write_formula(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.linsear_write_formula() == pytest.approx(expected, abs=1)
+
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 11),
+        ("moby_dick", 28),
+        ("war_of_the_worlds", 13),
+    ],
+)
+def test_gunning_fog(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.gunning_fog() == pytest.approx(expected, abs=1)
+
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 24),
+        ("moby_dick", 51),
+        ("war_of_the_worlds", 23),
+    ],
+)
+def test_lix(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.lix() == pytest.approx(expected, abs=1)
+
+
+@pytest.mark.parametrize(
+    "text_name,expected",
+    [
+        ("fairy_tales", 2),
+        ("moby_dick", 12),
+        ("war_of_the_worlds", 4.5),
+    ],
+)
+def test_rix(all_test_texts, text_name, expected):
+    text = Text(all_test_texts[text_name]["text"])
+    assert text.rix() == pytest.approx(expected, abs=1)
