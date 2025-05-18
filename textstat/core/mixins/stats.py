@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+from typing import Optional
 from unicodedata import category
 
 from textstat.properties import filterableproperty, textproperty
@@ -49,7 +50,7 @@ class Stats(metaclass=StatsMeta):
     def characters(self) -> list[str]:
         return [*"".join(self.text.split())]
 
-    def avg(self, attribute: str, per: str = None) -> float:
+    def avg(self, attribute: str, per: Optional[str] = None) -> float:
         try:
             attribute = getattr(self, attribute)
             per = getattr(self, per)

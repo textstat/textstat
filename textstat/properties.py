@@ -32,28 +32,28 @@ def make_comparable(name: str, objtype):
         def __init__(self, prop_name: str):
             self.prop_name = prop_name
 
-        def __eq__(self, other: object) -> bool:
+        def __eq__(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, operator.eq, other)
 
-        def __lt__(self, other: object) -> bool:
+        def __lt__(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, operator.lt, other)
 
-        def __gt__(self, other: object) -> bool:
+        def __gt__(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, operator.gt, other)
 
-        def __le__(self, other: object) -> bool:
+        def __le__(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, operator.le, other)
 
-        def __ge__(self, other: object) -> bool:
+        def __ge__(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, operator.ge, other)
 
-        def contains(self, other: object) -> bool:
+        def contains(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, operator.contains, other)
 
-        def startswith(self, other: object) -> bool:
+        def startswith(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, str.startswith, other)
 
-        def endswith(self, other: object):
+        def endswith(self, other: object) -> Comparison:
             return Comparison(objtype, self.prop_name, str.endswith, other)
 
     return Comparable(name)
