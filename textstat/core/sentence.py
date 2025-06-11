@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import re
 
-from textstat.core import mixins
+from textstat.core.mixins.span import Span
+from textstat.core.mixins.stats import Stats
 from textstat.properties import filterableproperty
 
 
-class Sentence(mixins.Span, mixins.Stats):
+class Sentence(Span, Stats):
     regex = re.compile(r"\b[^.!?]+[.!?]+", re.UNICODE)
 
     @filterableproperty
