@@ -1,7 +1,7 @@
 [project]
 name = "textstat"
 version = "1.0.0-alpha.0"
-description = "Textstat is an easy to use library to calculate statistics from text. It helps determine readability, complexity, and grade level."
+description = "Textstat is an easy to use Python library that analyzes text to provide detailed statistics, readability scores, and complexity metrics. Perfect for content analysis, education, and natural language processing."
 authors = [{ name = "Alex Ward", email = "alxwrd@googlemail.com" }]
 requires-python = ">=3.9.0,<4.0.0"
 readme = "README.md"
