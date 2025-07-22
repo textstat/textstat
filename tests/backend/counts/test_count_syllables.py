@@ -46,3 +46,10 @@ def test_syllable_count(lang: str, text: str, n_syllables: int, margin: int):
     count = counts.count_syllables(text, lang)
     diff = abs(count - n_syllables)
     assert diff <= margin
+
+
+def test_count_syllables_with_unknown_word():
+    """Test that count_syllables still produces an output when counting
+    an unknown word.
+    """
+    assert counts.count_syllables("text_a", "en_US") == 2
