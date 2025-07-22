@@ -29,6 +29,6 @@ def count_syllables(text: str, lang: str) -> int:
         try:
             cmu_phones = cmu_dict[word][0]
             count += sum(1 for p in cmu_phones if p[-1].isdigit())
-        except (TypeError, IndexError):
+        except (TypeError, IndexError, KeyError):
             count += len(pyphen.positions(word)) + 1
     return count
