@@ -4,7 +4,7 @@ from io import open
 setup(
     name="textstat",
     packages=find_packages(),
-    version="0.7.8",
+    version="0.7.9",
     description="Calculate statistical features from text",
     author="Shivam Bansal, Chaitanya Aggarwal",
     author_email="shivam5992@gmail.com",
@@ -13,7 +13,7 @@ setup(
     long_description_content_type="text/markdown",
     package_data={"": ["easy_word_list"]},
     include_package_data=True,
-    install_requires=["pyphen", "cmudict", "setuptools"],
+    install_requires=["pyphen", "nltk", "setuptools"],
     license="MIT",
     python_requires=">=3.6",
     classifiers=(

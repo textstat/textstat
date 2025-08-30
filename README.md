@@ -419,8 +419,8 @@ textstat.syllable_count(text)
 Returns the number of syllables present in the given text.
 
 Uses the Python module [Pyphen](https://github.com/Kozea/Pyphen)
-for syllable calculation in most languages, but defaults to 
-[cmudict](https://github.com/prosegrinder/python-cmudict) for
+for syllable calculation in most languages, but defaults to
+[nltk.corpus.cmudict](https://www.nltk.org/) for
 en_US.
 
 #### Lexicon Count

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import cmudict
+from nltk.corpus import cmudict
 from ._typed_cache import typed_cache
 from ._get_lang_root import get_lang_root
 

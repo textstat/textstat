@@ -2,9 +2,10 @@
 Changelog
 =========
 
-- :release:`0.7.8 <2025-01-27>` Fixed compatibility with [`python-cmudict@1.1.0`](https://github.com/prosegrinder/python-cmudict)
-- :release:`0.7.7 <2025-05-17>` Fixed broken release
-- :release:`0.7.6 <2025-05-10>`
+- :release:`0.7.9 <2025-01-27>` Replaced GPL-licensed `cmudict` dependency with MIT-compatible `nltk.corpus.cmudict` for syllable counting
+- :release:`0.7.8 <2025-01-27>` **YANKED** Fixed compatibility with [`python-cmudict@1.1.0`](https://github.com/prosegrinder/python-cmudict) 
+- :release:`0.7.7 <2025-05-17>` **YANKED** Fixed broken release 
+- :release:`0.7.6 <2025-05-10>` **YANKED**
 - :feature:`203` Restructure of internal logic to avoid intermediate-math rounding.
 - :feature:`203` Enhanced word counting capabilities:
   - Added `split_contractions` and `split_hyphens` options to `lexicon_count`
@@ -29,8 +30,8 @@ Changelog
   - `set_rounding()` method (use `set_rounding_points()` instead)
   - `ignore_spaces` parameter in `letter_count()` (spaces are always ignored)
   - `avg_sentence_length()` method (use `words_per_sentence()` instead)
-- :release:`0.7.5 <2025-02-05>`
-- :feature:`201` Use `cmudict` for `syllable_count` for *en_US*
+- :release:`0.7.5 <2025-02-05>` **YANKED**
+- :feature:`201` Use `cmudict` for `syllable_count` for *en_US* **REVERTED**
 - :release:`0.7.4 <2024-01-09>`
 - :feature:`189` Add Hungarian support.
 - :release:`0.7.3 <2022-03-15>`
