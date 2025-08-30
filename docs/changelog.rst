@@ -2,6 +2,7 @@
 Changelog
 =========
 
+- :release:`0.7.10 <2025-01-27>` Fixed broken release
 - :release:`0.7.9 <2025-01-27>` Replaced GPL-licensed `cmudict` dependency with MIT-compatible `nltk.corpus.cmudict` for syllable counting
 - :release:`0.7.8 <2025-01-27>` **YANKED** Fixed compatibility with [`python-cmudict@1.1.0`](https://github.com/prosegrinder/python-cmudict) 
 - :release:`0.7.7 <2025-05-17>` **YANKED** Fixed broken release 

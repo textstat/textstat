@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from nltk.corpus import cmudict
+import nltk
 from ._typed_cache import typed_cache
 from ._get_lang_root import get_lang_root
 
@@ -19,6 +19,7 @@ def get_cmudict(lang: str) -> dict[str, list[list[str]]] | None:
         supported).
     """
     if get_lang_root(lang) == "en":
-        return cmudict.dict()
+        nltk.download('cmudict', quiet=True)
+        return nltk.corpus.cmudict.dict()
     else:
         return None
