@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 
-from typing_extensions import Protocol
+from typing import Protocol
 
 from textstat.core import mixins
 from textstat.core.sentence import Sentence
