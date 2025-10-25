@@ -1,4 +1,5 @@
 import pytest
+
 from textstat.en import Text
 
 
