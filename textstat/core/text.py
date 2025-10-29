@@ -6,6 +6,7 @@ from typing import Protocol
 
 from textstat.core import mixins
 from textstat.core.sentence import Sentence
+from textstat.core.word import Word
 from textstat.properties import textproperty
 
 
@@ -15,6 +16,7 @@ class __Readable(Protocol):  # pragma: no cover
 
 class Text(mixins.Stats, mixins.Span):
     sentence_class = Sentence
+    word_class = Word
 
     __acronym_regex = re.compile(r"\b(?:[^\W\d_][\.]){2,}", re.UNICODE)
 

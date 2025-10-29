@@ -9,6 +9,7 @@ from textstat.en.word import Word
 
 class Text(mixins.Span, core.Text):
     sentence_class = Sentence
+    word_class = Word
 
     def flesch_reading_ease(self) -> float:
         """
