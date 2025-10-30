@@ -137,9 +137,9 @@ def test_gunning_fog(all_test_texts, text_name, expected):
 @pytest.mark.parametrize(
     "text_name,expected",
     [
-        ("fairy_tales", 24),
-        ("moby_dick", 51),
-        ("war_of_the_worlds", 23),
+        ("fairy_tales", 36),
+        ("moby_dick", 76),
+        ("war_of_the_worlds", 43),
     ],
 )
 def test_lix(all_test_texts, text_name, expected):

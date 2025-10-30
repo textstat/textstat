@@ -130,7 +130,7 @@ class Text(mixins.Span, core.Text):
         Björnsson, C. H. (1968). Läsbarhet. Stockholm: Liber.
         """
         return (len(self.words) / len(self.sentences)) + (
-            len(self.words) / len(self.filter(Word.length > 6) * 100)
+            (len(self.filter(Word.length > 6)) / len(self.words)) * 100
         )
 
     def rix(self) -> float:
