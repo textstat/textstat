@@ -8,6 +8,17 @@ from textstat.en.word import Word
 
 
 class Text(mixins.Span, core.Text):
+    """English Text class with readability formulas and text statistics.
+
+    Extends the core Text class with English-specific readability formulas
+    and analysis methods. Provides various standardized readability scores
+    used in education and publishing.
+
+    Attributes:
+        sentence_class: The Sentence class to use (English version).
+        word_class: The Word class to use (English version).
+    """
+
     sentence_class = Sentence
     word_class = Word
 

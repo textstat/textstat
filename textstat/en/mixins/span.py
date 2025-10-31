@@ -5,13 +5,38 @@ from textstat.properties import filterableproperty
 
 
 class Span:
+    """English-specific span mixin providing reading time and syllable counting.
+
+    This mixin extends the base Span class with English-specific properties
+    such as estimated reading time and syllable counts.
+    """
+
     word_class = Word
 
     @property
     def reading_time(self) -> float:
-        """Demberg, Vera, and Frank Keller.
-        "Data from eye-tracking corpora as evidence for theories of syntactic processing complexity."
-        Cognition 109.2 (2008): 193-210.
+        """Estimate the reading time in milliseconds.
+
+        Uses a regression model based on eye-tracking data to estimate
+        how long it would take to read this text. The model accounts for:
+        - Base time per word (275ms)
+        - Character length effects (14.69ms per character)
+        - Word frequency effects (-12.16ms for repeated words)
+        - Sentence position effects (-0.23ms per position)
+
+        Reference:
+            Demberg, Vera, and Frank Keller.
+            "Data from eye-tracking corpora as evidence for theories of
+            syntactic processing complexity."
+            Cognition 109.2 (2008): 193-210.
+
+        Returns:
+            Estimated reading time in milliseconds.
+
+        Examples:
+            >>> text = Text("This is a sample sentence.")
+            >>> text.reading_time  # Returns time in milliseconds
+            1523.45
         """
         total: float = 0.0
 
@@ -40,4 +65,18 @@ class Span:
 
     @filterableproperty
     def syllables(self):
+        """The total number of syllables in all words.
+
+        Sums the syllable counts from all words in this span.
+        Syllable counting uses CMU Pronouncing Dictionary when available,
+        falling back to algorithmic estimation.
+
+        Returns:
+            Total count of syllables.
+
+        Examples:
+            >>> text = Text("Hello world")
+            >>> text.syllables
+            3
+        """
         return sum(word.syllables for word in self.words)

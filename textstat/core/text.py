@@ -15,6 +15,17 @@ class __Readable(Protocol):  # pragma: no cover
 
 
 class Text(mixins.Stats, mixins.Span):
+    """Represents a text document for analysis.
+
+    The Text class provides methods for analyzing text at the document level,
+    including extracting sentences and words, and computing various statistics.
+    It combines functionality from Stats and Span mixins.
+
+    Attributes:
+        sentence_class: The class to use for creating Sentence objects.
+        word_class: The class to use for creating Word objects.
+    """
+
     sentence_class = Sentence
     word_class = Word
 
@@ -22,6 +33,24 @@ class Text(mixins.Stats, mixins.Span):
 
     @classmethod
     def load(cls, file_or_path: __Readable | str) -> Text:
+        """Load text from a file or file-like object.
+
+        Args:
+            file_or_path: Either a file path (string) or a file-like object
+                with a read() method. Files are opened with UTF-8 encoding
+                (with BOM support via utf-8-sig).
+
+        Returns:
+            A Text instance containing the loaded text.
+
+        Examples:
+            >>> text = Text.load("document.txt")
+
+            or:
+
+            >>> with open("file.txt") as f:
+            ...     text = Text.load(f)
+        """
         if hasattr(file_or_path, "read"):
             text: str = file_or_path.read()
         else:
@@ -37,6 +66,14 @@ class Text(mixins.Stats, mixins.Span):
 
     @textproperty
     def sentences(self) -> list[Sentence]:
+        """A list of all sentences found in the text.
+
+        Sentences are extracted using the sentence_class regex pattern.
+        Acronyms (e.g., "U.S.A.") are handled to avoid incorrect splitting.
+
+        Returns:
+            List of Sentence objects found in the text.
+        """
         return [
             self.sentence_class(sentence)
             for sentence in self.sentence_class.regex.findall(
