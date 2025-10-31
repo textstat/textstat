@@ -5,6 +5,8 @@ from textstat import core
 from textstat.en import mixins
 from textstat.en.sentence import Sentence
 from textstat.en.word import Word
+from textstat.citation import citeable
+from textstat.citation.metadata import JournalSource, BookSource
 
 
 class Text(mixins.Span, core.Text):
@@ -22,10 +24,23 @@ class Text(mixins.Span, core.Text):
     sentence_class = Sentence
     word_class = Word
 
+    @citeable(
+        authors=["Flesch, R."],
+        title="A new readability yardstick",
+        year=1948,
+        source=JournalSource(
+            name="Journal of Applied Psychology", volume=32, issue=3, pages="221-232"
+        ),
+        doi="10.1037/h0057532",
+    )
     def flesch_reading_ease(self) -> float:
-        """
-        Flesch, Rudolph. "A new readability yardstick."
-        Journal of applied psychology 32.3 (1948): 221.
+        """Calculate Flesch Reading Ease score.
+
+        Returns a score from 0-100, where higher scores indicate easier readability.
+
+        Citation:
+            Flesch, R. (1948). A new readability yardstick.
+            Journal of Applied Psychology, 32(3), 221-232.
         """
         return (
             206.835
@@ -33,11 +48,21 @@ class Text(mixins.Span, core.Text):
             - (84.6 * self.avg("syllables", per="words"))
         )
 
+    @citeable(
+        authors=["Kincaid, J.P.", "Fishburne, R.P.", "Rogers, R.L.", "Chissom, B.S."],
+        title="Derivation of new readability formulas for Navy enlisted personnel",
+        year=1975,
+        source=BookSource(publisher="Naval Technical Training Command"),
+    )
     def flesch_kincaid_grade(self) -> float:
-        """
-        Kincaid, J. Peter, et al.
-        "Derivation of new readability formulas (automated readability index,
-        fog count and flesch reading ease formula) for navy enlisted personnel."
+        """Calculate Flesch-Kincaid Grade Level.
+
+        Returns the US grade level required to understand the text.
+
+        Citation:
+            Kincaid, J.P., Fishburne, R.P., Rogers, R.L. and Chissom, B.S. (1975).
+            Derivation of new readability formulas for Navy enlisted personnel.
+            Naval Technical Training Command.
         """
         return (
             (0.39 * self.avg("words", per="sentences"))
@@ -59,10 +84,22 @@ class Text(mixins.Span, core.Text):
             len(self.filter(Word.syllables >= 3)) * (30 / len(self.sentences)) + 3.1291
         )
 
+    @citeable(
+        authors=["Mc Laughlin, G.H."],
+        title="SMOG grading-a new readability formula",
+        year=1969,
+        source=JournalSource(
+            name="Journal of Reading", volume=12, issue=8, pages="639-646"
+        ),
+    )
     def smog_grade(self) -> float:
-        """Mc Laughlin, G. Harry.
-        "SMOG grading-a new readability formula."
-        Journal of reading 12.8 (1969): 639-646.
+        """Calculate SMOG (Simple Measure of Gobbledygook) grade level.
+
+        Returns the years of education required to understand the text.
+
+        Citation:
+            Mc Laughlin, G.H. (1969). SMOG grading-a new readability formula.
+            Journal of Reading, 12(8), 639-646.
         """
         # TODO: Implement sampling
         if len(self.sentences) < 30:
@@ -74,11 +111,22 @@ class Text(mixins.Span, core.Text):
             sqrt(len(self.filter(Word.syllables >= 3)) * (30 / len(self.sentences))) + 3
         )
 
+    @citeable(
+        authors=["Coleman, M.", "Liau, T.L."],
+        title="A computer readability formula designed for machine scoring",
+        year=1975,
+        source=JournalSource(
+            name="Journal of Applied Psychology", volume=60, issue=2, pages="283-284"
+        ),
+    )
     def coleman_liau_index(self) -> float:
-        """
-        Coleman, Meri, and Ta Lin Liau.
-        "A computer readability formula designed for machine scoring."
-        Journal of Applied Psychology 60.2 (1975): 283.
+        """Calculate Coleman-Liau Index.
+
+        Returns the US grade level required to understand the text.
+
+        Citation:
+            Coleman, M. and Liau, T.L. (1975). A computer readability formula
+            designed for machine scoring. Journal of Applied Psychology, 60(2), 283-284.
         """
         return (
             (0.0588 * (self.avg("letters", per="words") * 100))
@@ -86,10 +134,20 @@ class Text(mixins.Span, core.Text):
             - 15.8
         )
 
+    @citeable(
+        authors=["Senter, R.J.", "Smith, E.A."],
+        title="Automated readability index",
+        year=1967,
+        source=BookSource(publisher="Cincinnati University"),
+    )
     def automated_readability_index(self) -> float:
-        """
-        Senter, R. J., and Edgar A. Smith. "Automated readability index."
-        Cincinnati Univ OH, 1967.
+        """Calculate Automated Readability Index (ARI).
+
+        Returns the US grade level required to understand the text.
+
+        Citation:
+            Senter, R.J. and Smith, E.A. (1967). Automated readability index.
+            Cincinnati University.
         """
         return (
             4.71 * self.avg("characters", per="words")
@@ -128,8 +186,20 @@ class Text(mixins.Span, core.Text):
         # TODO: Needs Dale-Chall 763 word list
         ...
 
+    @citeable(
+        authors=["Gunning, R."],
+        title="Technique of clear writing",
+        year=1952,
+        source=BookSource(publisher="McGraw-Hill"),
+    )
     def gunning_fog(self) -> float:
-        """Gunning, Robert. "Technique of clear writing." (1952)."""
+        """Calculate Gunning Fog Index.
+
+        Returns the years of education required to understand the text.
+
+        Citation:
+            Gunning, R. (1952). Technique of clear writing. McGraw-Hill.
+        """
         # TODO: Implement sampling
         return 0.4 * (
             self.avg("words", per="sentences")
