@@ -17,7 +17,9 @@ class Word(Stats):
             Matches word characters including apostrophes and hyphens.
     """
 
-    regex = re.compile(r"\b[\w\'\'\-]+\b", re.UNICODE)
+    # Important: the apostrophe (’) character is intentionally
+    #  - don't change it to a single quote (').
+    regex = re.compile(r"\b[\w\’\'\-]+\b", re.UNICODE)
 
     @filterableproperty
     def length(self) -> int:
