@@ -1,9 +1,10 @@
 """Decorator for adding citation metadata to methods."""
 
 import functools
-from typing import Callable, Any
-from .metadata import Citation
+from typing import Any, Callable
+
 from .formatters import get_formatter, list_formatters
+from .metadata import Citation
 
 
 class CitableMethod:

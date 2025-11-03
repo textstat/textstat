@@ -1,6 +1,6 @@
 """Citation metadata dataclass."""
 
-from dataclasses import dataclass, asdict, fields
+from dataclasses import asdict, dataclass, fields
 from typing import Optional, Union
 
 

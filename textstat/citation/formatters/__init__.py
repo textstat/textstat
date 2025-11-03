@@ -1,11 +1,11 @@
 """Citation formatter registry and base classes."""
 
-from .base import CitationFormatter
-from .harvard import HarvardFormatter
 from .apa import APAFormatter
-from .mla import MLAFormatter
-from .chicago import ChicagoFormatter
+from .base import CitationFormatter
 from .bibtex import BibTeXFormatter
+from .chicago import ChicagoFormatter
+from .harvard import HarvardFormatter
+from .mla import MLAFormatter
 
 # Global formatter registry
 _FORMATTERS: dict[str, CitationFormatter] = {}
@@ -13,7 +13,7 @@ _FORMATTERS: dict[str, CitationFormatter] = {}
 
 def register_formatter(name: str, formatter: CitationFormatter) -> None:
     """Register a citation formatter.
-    
+
     Args:
         name: Name of the citation style (e.g., "harvard", "apa").
         formatter: CitationFormatter instance.
@@ -23,13 +23,13 @@ def register_formatter(name: str, formatter: CitationFormatter) -> None:
 
 def get_formatter(name: str) -> CitationFormatter:
     """Get a formatter by name.
-    
+
     Args:
         name: Name of the citation style.
-        
+
     Returns:
         CitationFormatter instance.
-        
+
     Raises:
         ValueError: If the citation style is not found.
     """
@@ -37,15 +37,14 @@ def get_formatter(name: str) -> CitationFormatter:
     if name_lower not in _FORMATTERS:
         available = ", ".join(sorted(_FORMATTERS.keys()))
         raise ValueError(
-            f"Unknown citation style: {name}. "
-            f"Available styles: {available}"
+            f"Unknown citation style: {name}. Available styles: {available}"
         )
     return _FORMATTERS[name_lower]
 
 
 def list_formatters() -> list[str]:
     """List all registered formatter names.
-    
+
     Returns:
         Sorted list of registered formatter names.
     """
@@ -70,4 +69,3 @@ __all__ = [
     "get_formatter",
     "list_formatters",
 ]
-

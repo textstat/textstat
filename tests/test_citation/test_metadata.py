@@ -1,8 +1,9 @@
 """Tests for Citation metadata dataclass."""
 
 import pytest
+
 from textstat.citation import Citation
-from textstat.citation.metadata import JournalSource, BookSource, WebSource
+from textstat.citation.metadata import BookSource, JournalSource, WebSource
 
 
 class TestCitationDataclass:

@@ -1,6 +1,7 @@
 """Integration tests for citation feature with Text class."""
 
 import pytest
+
 from textstat import Text
 from textstat.citation import Citation
 

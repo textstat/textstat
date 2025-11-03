@@ -19,14 +19,15 @@ class StatsMeta(type):
 
 class Stats(metaclass=StatsMeta):
     """Base class providing statistical properties and methods for text analysis.
-    
+
     This class serves as a foundation for text, sentence, and word analysis,
     providing properties for counting elements (letters, characters, words, etc.)
     and methods for computing averages and statistics.
-    
+
     Attributes:
         properties: List of property names that are tracked for statistics.
     """
+
     properties: list[str]
 
     def __new__(cls, *_):
@@ -44,7 +45,7 @@ class Stats(metaclass=StatsMeta):
     @filterableproperty
     def text(self) -> str:
         """The original text string.
-        
+
         Returns:
             The text string that this object was initialized with.
         """
@@ -53,7 +54,7 @@ class Stats(metaclass=StatsMeta):
     @textproperty
     def letters(self) -> list[str]:
         """A list of all letter characters in the text (excluding whitespace).
-        
+
         Returns:
             List of individual letter characters (Unicode category starting with 'L').
         """
@@ -68,7 +69,7 @@ class Stats(metaclass=StatsMeta):
     @textproperty
     def characters(self) -> list[str]:
         """A list of all characters in the text, excluding whitespace.
-        
+
         Returns:
             List of individual characters with whitespace removed.
         """
@@ -76,18 +77,18 @@ class Stats(metaclass=StatsMeta):
 
     def avg(self, attribute: str, per: Optional[str] = None) -> float:
         """Calculate the average of one attribute per another attribute.
-        
-        Useful for computing ratios like average words per sentence or 
+
+        Useful for computing ratios like average words per sentence or
         average syllables per word.
-        
+
         Args:
             attribute: The attribute to measure (e.g., 'words', 'syllables').
-            per: The attribute to divide by (e.g., 'sentences', 'words'). 
+            per: The attribute to divide by (e.g., 'sentences', 'words').
                 If None, returns the count or length of the attribute.
-        
+
         Returns:
             The average value as a float. Returns 0.0 if division by zero occurs.
-            
+
         Examples:
             >>> text.avg("words", per="sentences")  # Average words per sentence
             >>> text.avg("syllables", per="words")  # Average syllables per word
@@ -103,10 +104,10 @@ class Stats(metaclass=StatsMeta):
 
     def stats(self) -> dict[str, int]:
         """Get a dictionary of basic statistics for all tracked properties.
-        
+
         Returns:
             Dictionary mapping property names to their counts (lengths).
-            
+
         Examples:
             >>> text.stats()
             {'words': 42, 'sentences': 3, 'letters': 189, ...}
@@ -115,11 +116,11 @@ class Stats(metaclass=StatsMeta):
 
     def stats_full(self) -> dict[str, int]:
         """Get a comprehensive dictionary of statistics including unique counts.
-        
+
         Returns:
             Dictionary containing counts for properties, unique properties,
             and count properties (frequency counts).
-            
+
         Examples:
             >>> text.stats_full()
             {'words': 42, 'unique_words': 35, 'word_count': {...}, ...}

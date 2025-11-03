@@ -2,11 +2,11 @@ import warnings
 from math import sqrt
 
 from textstat import core
+from textstat.citation import citeable
+from textstat.citation.metadata import BookSource, JournalSource
 from textstat.en import mixins
 from textstat.en.sentence import Sentence
 from textstat.en.word import Word
-from textstat.citation import citeable
-from textstat.citation.metadata import JournalSource, BookSource
 
 
 class Text(mixins.Span, core.Text):

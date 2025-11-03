@@ -1,6 +1,6 @@
 [project]
 name = "textstat"
-version = "1.0.0-alpha.0"
+version = "1.0.0-alpha.1"
 description = "Textstat is an easy to use Python library that analyzes text to provide detailed statistics, readability scores, and complexity metrics. Perfect for content analysis, education, and natural language processing."
 authors = [{ name = "Alex Ward", email = "alxwrd@googlemail.com" }]
 requires-python = ">=3.9.0,<4.0.0"

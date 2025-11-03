@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-
 from typing import Protocol
 
 from textstat.core import mixins

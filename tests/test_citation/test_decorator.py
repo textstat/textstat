@@ -1,8 +1,10 @@
 """Tests for @citeable decorator and CitableMethod."""
 
-import pytest
 import inspect
-from textstat.citation import citeable, Citation, CitableMethod
+
+import pytest
+
+from textstat.citation import CitableMethod, Citation, citeable
 from textstat.citation.metadata import JournalSource
 
 
@@ -312,8 +314,8 @@ class TestCitableMethod:
         obj2 = TestClass()
 
         # Both should access the same citation
-        citation1 = TestClass.test_method.citation
-        citation2 = TestClass.test_method.citation
+        citation1 = obj1.test_method.citation
+        citation2 = obj2.test_method.citation
         assert citation1 is citation2
 
     def test_decorated_method_with_property(self):

@@ -1,12 +1,13 @@
 """Tests for citation formatter registry."""
 
 import pytest
+
 from textstat.citation import Citation
 from textstat.citation.formatters import (
-    register_formatter,
+    CitationFormatter,
     get_formatter,
     list_formatters,
-    CitationFormatter,
+    register_formatter,
 )
 
 
@@ -143,7 +144,7 @@ class TestFormatterRegistry:
     def test_all_standard_formatters_instantiable(self):
         """All standard formatters should be instantiable and usable."""
         from textstat.citation.metadata import JournalSource
-        
+
         standard_styles = ["harvard", "apa", "mla", "chicago", "bibtex"]
         source = JournalSource(name="Test Journal")
         citation = Citation(
@@ -224,7 +225,11 @@ class TestCitationFormatterABC:
 
         class TestFormatter(CitationFormatter):
             def format(self, citation):
-                if citation.source and hasattr(citation.source, 'pages') and citation.source.pages:
+                if (
+                    citation.source
+                    and hasattr(citation.source, "pages")
+                    and citation.source.pages
+                ):
                     return self.format_pages(citation.source.pages)
                 return ""
 
@@ -233,7 +238,9 @@ class TestCitationFormatterABC:
 
         formatter = TestFormatter()
         source = JournalSource(pages="123-456")
-        citation = Citation(authors=["Test, A."], title="Test", year=2020, source=source)
+        citation = Citation(
+            authors=["Test, A."], title="Test", year=2020, source=source
+        )
 
         result = formatter.format(citation)
         assert "123" in result

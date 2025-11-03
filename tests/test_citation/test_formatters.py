@@ -1,15 +1,16 @@
 """Tests for citation formatters."""
 
 import pytest
+
 from textstat.citation import Citation
-from textstat.citation.metadata import JournalSource, BookSource
 from textstat.citation.formatters import (
-    HarvardFormatter,
     APAFormatter,
-    MLAFormatter,
-    ChicagoFormatter,
     BibTeXFormatter,
+    ChicagoFormatter,
+    HarvardFormatter,
+    MLAFormatter,
 )
+from textstat.citation.metadata import BookSource, JournalSource
 
 
 class TestHarvardFormatter:

@@ -6,20 +6,20 @@ citations in various academic styles.
 
 Example:
     from textstat import Text
-    
+
     # Get citation in Harvard style
     citation = Text.flesch_reading_ease.cite("harvard")
-    
+
     # Get citation metadata
     metadata = Text.flesch_reading_ease.citation
-    
+
     # List available citation styles
     styles = Text.flesch_reading_ease.citation_styles
 """
 
+from .decorator import CitableMethod, citeable
+from .formatters import CitationFormatter, list_formatters, register_formatter
 from .metadata import Citation
-from .decorator import citeable, CitableMethod
-from .formatters import CitationFormatter, register_formatter, list_formatters
 
 __all__ = [
     "Citation",
@@ -29,4 +29,3 @@ __all__ = [
     "register_formatter",
     "list_formatters",
 ]
-
