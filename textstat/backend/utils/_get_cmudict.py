@@ -19,7 +19,10 @@ def get_cmudict(lang: str) -> dict[str, list[list[str]]] | None:
         supported).
     """
     if get_lang_root(lang) == "en":
-        nltk.download('cmudict', quiet=True)
+        try:
+            nltk.data.find("corpora/cmudict")
+        except LookupError:
+            nltk.download('cmudict', quiet=True)
         return nltk.corpus.cmudict.dict()
     else:
         return None
