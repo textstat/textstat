@@ -337,3 +337,126 @@ class TestCitableMethod:
 
         obj = TestClass()
         assert obj.test_method() == 20
+
+    def test_citeable_on_property_preserves_behavior(self):
+        """@citeable decorator should work on @property decorated methods."""
+
+        class TestClass:
+            def __init__(self, value):
+                self.value = value
+
+            @citeable(
+                authors=["Property Author"],
+                title="A property-based calculation",
+                year=2023,
+            )
+            @property
+            def calculated_value(self):
+                return self.value * 3
+
+        obj = TestClass(5)
+        result = obj.calculated_value
+        assert result == 15
+
+    def test_citeable_on_property_class_level_access(self):
+        """Class-level access to @citeable property should return CitableMethod."""
+
+        class TestClass:
+            @citeable(
+                authors=["Property Author"],
+                title="A property-based calculation",
+                year=2023,
+            )
+            @property
+            def calculated_value(self):
+                return 42
+
+        prop = TestClass.calculated_value
+        assert isinstance(prop, CitableMethod)
+
+    def test_citeable_on_property_citation_access(self):
+        """Citation access should work for @citeable properties."""
+
+        class TestClass:
+            @citeable(
+                authors=["Property Author"],
+                title="A property-based calculation",
+                year=2023,
+                doi="10.1234/test",
+            )
+            @property
+            def calculated_value(self):
+                return 42
+
+        citation = TestClass.calculated_value.citation
+        assert isinstance(citation, Citation)
+        assert citation.authors == ["Property Author"]
+        assert citation.title == "A property-based calculation"
+        assert citation.year == 2023
+        assert citation.doi == "10.1234/test"
+
+    def test_citeable_on_property_cite_method(self):
+        """cite() method should work for @citeable properties."""
+
+        class TestClass:
+            @citeable(
+                authors=["Property Author"],
+                title="A property-based calculation",
+                year=2023,
+            )
+            @property
+            def calculated_value(self):
+                return 42
+
+        citation_string = TestClass.calculated_value.cite("harvard")
+        assert isinstance(citation_string, str)
+        assert len(citation_string) > 0
+        assert "Property Author" in citation_string
+        assert "2023" in citation_string
+
+    def test_citeable_on_property_citation_styles(self):
+        """citation_styles property should work for @citeable properties."""
+
+        class TestClass:
+            @citeable(
+                authors=["Property Author"],
+                title="A property-based calculation",
+                year=2023,
+            )
+            @property
+            def calculated_value(self):
+                return 42
+
+        styles = TestClass.calculated_value.citation_styles
+        assert isinstance(styles, list)
+        assert len(styles) > 0
+        assert "harvard" in styles
+        assert "apa" in styles
+
+    def test_citeable_on_property_preserves_property_behavior(self):
+        """@citeable on property should preserve property getter behavior."""
+
+        class TestClass:
+            def __init__(self):
+                self._counter = 0
+
+            @citeable(
+                authors=["Property Author"],
+                title="A property-based calculation",
+                year=2023,
+            )
+            @property
+            def counter(self):
+                self._counter += 1
+                return self._counter
+
+        obj = TestClass()
+
+        # Access multiple times to ensure property behavior is preserved
+        first = obj.counter
+        second = obj.counter
+        assert first == 1
+        assert second == 2
+
+        # Verify citation still works
+        assert hasattr(TestClass.counter, "citation")

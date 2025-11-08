@@ -19,13 +19,23 @@ class CitableMethod:
         citation: Citation metadata for this method
     """
 
-    def __init__(self, func: Callable, citation: Citation):
+    def __init__(self, func: Callable, citation: Citation, is_property: bool = False):
         self.func = func
         self.citation = citation
         self.instance = None
         self.owner = None
+        self._is_property = is_property
 
         functools.update_wrapper(self, func)
+
+    def __repr__(self) -> str:
+        """Return a string representation similar to functions/methods."""
+        if self._is_property:
+            return f"<citeable property {self.__qualname__} at {hex(id(self))}>"
+        elif self.instance is not None:
+            return f"<bound citeable method {self.__qualname__} of {self.instance!r}>"
+        else:
+            return f"<citeable function {self.__qualname__} at {hex(id(self))}>"
 
     def __get__(self, instance: Any, owner: type) -> Any:
         """Descriptor protocol: handle instance vs class access.
@@ -35,10 +45,15 @@ class CitableMethod:
             owner: The class that owns the method.
 
         Returns:
-            self (CitableMethod) - bound to instance if called on an instance
+            For properties on instance access: the computed property value
+            For methods on instance access: self (CitableMethod) bound to instance
+            For class access: self (CitableMethod) for citation access
         """
         self.instance = instance
         self.owner = owner
+
+        if instance is not None and self._is_property:
+            return self.func(instance)
         return self
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
@@ -147,7 +162,7 @@ def citeable(**metadata: Any) -> Callable[[Callable], CitableMethod]:
         styles = Text.flesch_reading_ease.citation_styles  # Returns list
     """
 
-    def decorator(func: Callable) -> CitableMethod:
+    def decorator(target: Callable | property) -> CitableMethod:
         """Inner decorator that creates CitableMethod wrapper.
 
         Args:
@@ -156,6 +171,12 @@ def citeable(**metadata: Any) -> Callable[[Callable], CitableMethod]:
         Returns:
             CitableMethod wrapper around the function.
         """
-        return CitableMethod(func, Citation(**metadata))
+        if is_property := isinstance(target, property):
+            target = target.fget
+
+        if not callable(target):
+            raise TypeError(f"Cannot decorate {type(target).__name__}: not callable")
+
+        return CitableMethod(target, Citation(**metadata), is_property)
 
     return decorator

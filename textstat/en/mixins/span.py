@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from textstat.citation import JournalSource, citeable
 from textstat.en.word import Word
 from textstat.properties import filterableproperty
 
@@ -13,6 +14,13 @@ class Span:
 
     word_class = Word
 
+    @citeable(
+        authors=["Demberg, Vera", "Frank Keller"],
+        title="Data from eye-tracking corpora as evidence for theories of syntactic processing complexity",
+        year=2008,
+        source=JournalSource(name="Cognition", volume=109, issue=2, pages="193-210"),
+        doi="10.1016/j.cognition.2008.07.008",
+    )
     @property
     def reading_time(self) -> float:
         """Estimate the reading time in milliseconds.

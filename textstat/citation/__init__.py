@@ -19,13 +19,16 @@ Example:
 
 from .decorator import CitableMethod, citeable
 from .formatters import CitationFormatter, list_formatters, register_formatter
-from .metadata import Citation
+from .metadata import BookSource, Citation, JournalSource, WebSource
 
 __all__ = [
-    "Citation",
     "citeable",
     "CitableMethod",
     "CitationFormatter",
     "register_formatter",
     "list_formatters",
+    "Citation",
+    "JournalSource",
+    "BookSource",
+    "WebSource",
 ]
