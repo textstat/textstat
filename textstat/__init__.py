@@ -2,7 +2,7 @@ from .textstat import textstat
 from . import backend
 
 
-__version__ = (0, 7, 12)
+__version__ = (0, 7, 13)
 
 
 for attribute in dir(textstat):
