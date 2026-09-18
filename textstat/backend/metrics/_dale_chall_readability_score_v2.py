@@ -30,6 +30,6 @@ def dale_chall_readability_score_v2(text: str, lang: str) -> float:
         return 0.0
     raw_score = 0.1579 * (pdw) + 0.0496 * asl
     adjusted_score = raw_score
-    if raw_score > 0.05:
+    if pdw > 5:
         adjusted_score = raw_score + 3.6365
     return adjusted_score
