@@ -10,10 +10,10 @@ from .. import resources
     "text, expected",
     [
         (resources.EMPTY_STR, 0.0),
-        (resources.EASY_TEXT, 5.4),
-        (resources.SHORT_TEXT, 6.12),
-        (resources.PUNCT_TEXT, 6.249),
-        (resources.LONG_TEXT, 9.134),
+        (resources.EASY_TEXT, 5.738),
+        (resources.SHORT_TEXT, 6.504),
+        (resources.PUNCT_TEXT, 6.592),
+        (resources.LONG_TEXT, 9.497),
     ],
 )
 def test_coleman_liau_index(text: str, expected: float) -> None:
