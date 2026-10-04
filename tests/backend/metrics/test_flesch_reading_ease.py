@@ -15,7 +15,7 @@ from .. import resources
         (resources.PUNCT_TEXT, "en_US", 81.148),
         (resources.LONG_TEXT, "en_US", 59.771),
         (resources.LONG_TEXT, "de_DE", 66.279),
-        (resources.LONG_TEXT, "es_ES", 86.778),
+        (resources.LONG_SPANISH_TEXT, "es_ES", 65.967),
         (resources.LONG_TEXT, "fr_FR", 82.303),
         (resources.LONG_TEXT, "it_IT", 91.617),
         (resources.LONG_TEXT, "nl_NL", 66.017),
