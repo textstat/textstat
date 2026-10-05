@@ -6,20 +6,20 @@ from ..backend import resources
 
 
 @pytest.mark.parametrize(
-    "lang,expected",
+    "text,lang,expected",
     [
-        ("en_US", 139),
-        ("en_GB", 139),
-        ("en", 139),
-        ("de_DE", 145),
-        ("de", 145),
-        ("es_ES", 172),
-        ("fr_FR", 122),
-        ("it_IT", 151),
-        ("nl_NL", 147),
+        (resources.EASY_TEXT, "en_US", 139),
+        (resources.EASY_TEXT, "en_GB", 139),
+        (resources.EASY_TEXT, "en", 139),
+        (resources.EASY_TEXT, "de_DE", 145),
+        (resources.EASY_TEXT, "de", 145),
+        (resources.LONG_SPANISH_TEXT, "es_ES", 306),
+        (resources.EASY_TEXT, "fr_FR", 122),
+        (resources.EASY_TEXT, "it_IT", 151),
+        (resources.EASY_TEXT, "nl_NL", 147),
     ],
 )
-def test_set_lang(lang: str, expected: int) -> None:
+def test_set_lang(text: str, lang: str, expected: int) -> None:
     ts = type(textstat)()
     ts.set_lang(lang)
-    assert ts.syllable_count(resources.EASY_TEXT) == expected
+    assert ts.syllable_count(text) == expected
