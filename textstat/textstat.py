@@ -4,6 +4,11 @@ import warnings
 
 from .backend import transformations, validations, selections, counts, metrics, utils
 
+def _is_empty_text(text: str) -> bool:
+    """Helper function to check if text is empty, None, or contains only whitespace."""
+    if not text or not isinstance(text, str) or not text.strip():
+        return True
+    return False
 
 class textstatistics:
     """Main textstat class with methods to calculate readability indices.
@@ -189,6 +194,8 @@ class textstatistics:
         self.__lang = lang
 
     def char_count(self, text: str, ignore_spaces: bool = True) -> int:
+        if _is_empty_text(text):
+            return 0
         """Count the number of characters in a text.
 
         Parameters
@@ -207,6 +214,8 @@ class textstatistics:
         return counts.count_chars(text, ignore_spaces)
 
     def letter_count(self, text: str, ignore_spaces: bool | None = None) -> int:
+        if _is_empty_text(text):
+            return 0
         """Count letters in a text.
 
         Parameters
@@ -266,6 +275,8 @@ class textstatistics:
         split_contractions: bool = False,
         split_hyphens: bool = False,
     ) -> int:
+        if _is_empty_text(text):
+            return 0
         """Count the number of words in a text.
 
         English contractions (e.g. "aren't") and hyphenated words are counted as one
@@ -317,6 +328,8 @@ class textstatistics:
         return counts.count_miniwords(text, max_size)
 
     def syllable_count(self, text: str, lang: str | None = None) -> int:
+        if _is_empty_text(text):
+            return 0
         """Estimate the number of syllables in a text using Pyphen.
 
         Parameters
@@ -347,6 +360,8 @@ class textstatistics:
         return counts.count_syllables(text, self.__lang)
 
     def sentence_count(self, text: str) -> int:
+        if _is_empty_text(text):
+            return 0
         """Count the sentences in the text.
 
         Parameters
@@ -545,6 +560,8 @@ class textstatistics:
         return counts.count_arabic_long_words(text)
 
     def flesch_reading_ease(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         """Calculate the Flesch Reading Ease formula.
 
         Parameters
@@ -560,6 +577,8 @@ class textstatistics:
         return self._legacy_round(metrics.flesch_reading_ease(text, self.__lang))
 
     def flesch_kincaid_grade(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         r"""Calculate the Flesh-Kincaid Grade for `text`.
 
         Parameters
@@ -605,6 +624,8 @@ class textstatistics:
         return counts.count_polysyllable_words(text, self.__lang)
 
     def smog_index(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         r"""Calculate the SMOG index.
 
         Parameters
@@ -630,6 +651,8 @@ class textstatistics:
         return self._legacy_round(metrics.smog_index(text, self.__lang))
 
     def coleman_liau_index(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         r"""Calculate the Coleman-Liaux index.
 
         Parameters
@@ -654,6 +677,8 @@ class textstatistics:
         return self._legacy_round(metrics.coleman_liau_index(text))
 
     def automated_readability_index(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         r"""Calculate the Automated Readability Index (ARI).
 
         Parameters
@@ -680,6 +705,8 @@ class textstatistics:
     def linsear_write_formula(
         self, text: str, strict_lower: bool = False, strict_upper: bool = True
     ) -> float:
+        if _is_empty_text(text):
+            return 0.0
         r"""Calculate the Linsear-Write (Lw) metric.
 
         Canonically the Lw only uses the first 100 words of text. To disable this
@@ -827,6 +854,8 @@ class textstatistics:
         )
 
     def dale_chall_readability_score(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         r"""Estimate the Dale-Chall readability score.
 
         Deviations from the original Dale-Chall readability score:
@@ -863,6 +892,8 @@ class textstatistics:
         )
 
     def gunning_fog(self, text: str) -> float:
+        if _is_empty_text(text):
+            return 0.0
         """Calculate the Gunning Fog Index formula.
 
         Parameters
