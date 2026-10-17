@@ -648,7 +648,7 @@ class textstatistics:
 
         .. math::
 
-            (0.058*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
+            (0.0588*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
 
         """
         return self._legacy_round(metrics.coleman_liau_index(text))
