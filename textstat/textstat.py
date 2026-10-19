@@ -648,7 +648,10 @@ class textstatistics:
 
         .. math::
 
-            (0.0588*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
+            (0.0588*L)-(0.296*S)-15.8
+
+        where :math:`L` is the average number of letters per 100 words and
+        :math:`S` is the average number of sentences per 100 words.
 
         """
         return self._legacy_round(metrics.coleman_liau_index(text))

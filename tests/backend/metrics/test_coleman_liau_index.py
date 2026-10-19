@@ -26,4 +26,3 @@ from .. import resources
 )
 def test_coleman_liau_index(text: str, expected: float) -> None:
     assert round(metrics.coleman_liau_index(text), 3) == expected
-

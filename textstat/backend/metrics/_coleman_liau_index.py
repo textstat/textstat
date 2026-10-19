@@ -25,7 +25,10 @@ def coleman_liau_index(text: str) -> float:
 
     .. math::
 
-        (0.0588*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
+        (0.0588*L)-(0.296*S)-15.8
+
+    where :math:`L` is the average number of letters per 100 words and
+    :math:`S` is the average number of sentences per 100 words.
 
     """
     letters = letters_per_word(text) * 100
@@ -35,4 +38,3 @@ def coleman_liau_index(text: str) -> float:
         return 0.0
 
     return (0.0588 * letters) - (0.296 * sentences) - 15.8
-
