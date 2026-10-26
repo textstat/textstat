@@ -630,7 +630,7 @@ class textstatistics:
         return self._legacy_round(metrics.smog_index(text, self.__lang))
 
     def coleman_liau_index(self, text: str) -> float:
-        r"""Calculate the Coleman-Liaux index.
+        r"""Calculate the Coleman-Liau index.
 
         Parameters
         ----------
@@ -640,15 +640,18 @@ class textstatistics:
         Returns
         -------
         float
-            The Coleman-Liaux index for `text`.
+            The Coleman-Liau index for `text`.
 
         Notes
         -----
-        The Coleman-Liaux index is calculated as:
+        The Coleman-Liau index is calculated as:
 
         .. math::
 
-            (0.058*n\ letters/n\ words)-(0.296*n\ sentences/n\ words)-15.8
+            (0.0588*L)-(0.296*S)-15.8
+
+        where :math:`L` is the average number of letters per 100 words and
+        :math:`S` is the average number of sentences per 100 words.
 
         """
         return self._legacy_round(metrics.coleman_liau_index(text))
