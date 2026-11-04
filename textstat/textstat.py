@@ -776,7 +776,9 @@ class textstatistics:
             return list(
                 selections.set_difficult_words(text, syllable_threshold, self.__lang)
             )
-        return selections.list_difficult_words(text, syllable_threshold, self.__lang)
+        return list(
+            selections.list_difficult_words(text, syllable_threshold, self.__lang)
+        )
 
     def is_difficult_word(self, word: str, syllable_threshold: int = 2) -> bool:
         """Return True if `word` is a difficult word.
