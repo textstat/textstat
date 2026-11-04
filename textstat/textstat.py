@@ -1218,6 +1218,33 @@ class textstatistics:
         """
         return self._legacy_round(metrics.mcalpine_eflaw(text))
 
+    def powers_sumner_kearl(self, text: str) -> float:
+        r"""Calculate the Powers-Sumner-Kearl grade level for `text`.
+
+        Powers, Sumner and Kearl (1958) recalculated the Flesch formula for
+        texts written for primary school readers (grades 1 to 4).
+
+        Parameters
+        ----------
+        text : str
+            A text string.
+
+        Returns
+        -------
+        float
+            The Powers-Sumner-Kearl grade level for `text`.
+
+        Notes
+        -----
+        The Powers-Sumner-Kearl grade level is calculated as:
+
+        .. math::
+
+            (0.0778*avg\ sentence\ length)+(0.0455*syllables\ per\ 100\ words)-2.2029
+
+        """
+        return self._legacy_round(metrics.powers_sumner_kearl(text, self.__lang))
+
     def __get_lang_cfg(self, key: str) -> float:
         """Get a value from the configuration for a specific language.
 

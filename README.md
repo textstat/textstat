@@ -298,6 +298,21 @@ It is recommended to aim for a score equal to or lower than 25.
 > Further reading on
 [This blog post](https://strainindex.wordpress.com/2009/04/30/mcalpine-eflaw-readability-score/)
 
+#### Powers-Sumner-Kearl Readability Formula
+
+```python
+textstat.powers_sumner_kearl(text)
+```
+
+Returns the grade level of an English text, using the recalculation of the
+Flesch formula by Powers, Sumner and Kearl (1958).
+
+Intended for text written for children in grades one to four.
+
+> Further reading: Powers, R. D., Sumner, W. A., and Kearl, B. E. (1958).
+A recalculation of four adult readability formulas. *Journal of Educational
+Psychology*, 49(2), 99-105.
+
 #### Reading Time
 
 ```python
