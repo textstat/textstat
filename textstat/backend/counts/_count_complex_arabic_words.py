@@ -24,7 +24,7 @@ def count_complex_arabic_words(text: str, rm_apostrophe: bool = True) -> int:
     text : str
         A text string.
     rm_apostrophe : bool, optional
-        Remove apostrophes with other punctuation. The default is True.
+        Retained for compatibility. Apostrophes do not affect the mark count.
 
     Returns
     -------
@@ -38,7 +38,9 @@ def count_complex_arabic_words(text: str, rm_apostrophe: bool = True) -> int:
     # | kasra | tanween kasr | shaddah
     pattern = re.compile("[\u064e\u064b\u064f\u064c\u0650\u064d\u0651]")
 
-    for w in list_words(text, rm_apostrophe=rm_apostrophe):
+    # Punctuation removal also strips the combining marks counted below.
+    # Other punctuation does not match the pattern, so keep each word intact.
+    for w in list_words(text, rm_punctuation=False):
         if len(pattern.findall(w)) > 5:
             count += 1
 
